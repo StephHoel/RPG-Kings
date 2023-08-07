@@ -1,13 +1,19 @@
 export default function Home() {
   return (
     <div className="body">
-      <header className="justify-between flex m-4">
+      <header className="justify-between flex m-6">
         <p>King&apos;s Academy</p>
 
-        <nav className="space-x-6">
-          <a href="">Home</a>
-          <a href="">Home</a>
-          <a href="">Home</a>
+        <nav className="space-x-6 flex">
+          <p className="cursor-pointer hover:text-[#f1db31] hover:font-bold">
+            Home
+          </p>
+          <p className="cursor-pointer hover:text-[#f1db31] hover:font-bold">
+            Cadastrar
+          </p>
+          <p className="cursor-pointer hover:text-[#f1db31] hover:font-bold">
+            Entrar
+          </p>
         </nav>
       </header>
 
