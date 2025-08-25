@@ -1,8 +1,4 @@
-export interface User {
-  id: string
-  email: string
-  name?: string
-}
+import type { User } from './user'
 
 export interface AuthContextType {
   user: User | null
