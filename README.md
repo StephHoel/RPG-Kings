@@ -1,57 +1,34 @@
-# Scaffold React com React Router DOM e TailwindCSS
+# RPG Kings
 
-Este projeto é um scaffold básico para iniciar o desenvolvimento de aplicações React utilizando **React Router DOM** para roteamento e **TailwindCSS** para estilização. Ele serve como ponto de partida para criar aplicações modernas e escaláveis com as ferramentas mencionadas.
-
----
-
-## 🛠 Tecnologias Utilizadas
-
-- **React**: Biblioteca para construção de interfaces de usuário.
-- **React Router DOM**: Biblioteca para gerenciar o roteamento da aplicação.
-- **TailwindCSS**: Framework CSS utilitário para estilização rápida e responsiva.
+Aplicação Web RPG escolar para sobrenaturais, construída com React, React Router DOM, TailwindCSS e integração backend via REST.
 
 ---
 
-## ⚡️ Como Executar o Projeto
+## Tecnologias
 
-### Pré-requisitos
+- React + React Router DOM
+- TailwindCSS
+- SQL.js (leitura de tabelas locais)
+- Integração REST (.NET backend)
+- Clean Code: tipos centralizados, componentes reutilizáveis, feedback visual (toasts/loaders), rotas protegidas
 
-- Node.js (versão 16 ou superior)
-- npm ou yarn
-- GitHub CLI (gh)
-- Estar autenticado com `gh auth login`
+---
 
-### Passo a passo
+## Como Executar
 
-1. Crie um novo repositório com este template (lembre de trocar os valores das variáveis para os valores certos):
+1. Instale dependências:
 
-   ```bash
-   PROJECT_NAME=nome-do-novo-repo
-   USER_NAME=seu-nome-de-usuario
-   gh repo create $PROJECT_NAME --template stephhoel/scaffold-vite-react-tailwind-and-routes --public
-   git clone https://github.com/$USER_NAME/$PROJECT_NAME.git
-   cd $PROJECT_NAME
-   ```
+    ```bash
+    npm install
+    ```
 
-2. Instale as dependências:
+2. Inicie o servidor:
 
-   ```bash
-   npm install
-   # ou
-   yarn install
-   ```
+    ```bash
+    npm run dev
+    ```
 
-3. Inicie o servidor de desenvolvimento:
-
-   ```bash
-   npm run dev
-   # ou
-   yarn run dev
-   ```
-
-4. Abra o navegador e acesse: `http://localhost:5173/`
-
-5. Faça uma busca geral no código (CTRL + SHIFT + F) pela palavra `scaffold`, você precisa alterar para o nome do seu projeto onde ela aparecer.
+3. Acesse: [http://localhost:5173/RPG-Kings/](http://localhost:5173/RPG-Kings/)
 
 ---
 
@@ -59,95 +36,46 @@ Este projeto é um scaffold básico para iniciar o desenvolvimento de aplicaçõ
 
 ```plaintext
 src/
-├── components/         # Componentes reutilizáveis
-├── pages/              # Páginas da aplicação
-├── router/             # Configuração de rotas
-├── index.css           # Estilos globais (inclui TailwindCSS)
-├── main.jsx            # Ponto de entrada da aplicação
-└── tailwind.config.js  # Configuração do TailwindCSS
+├── auth/           # Contexto e serviços de autenticação JWT
+├── components/     # Componentes reutilizáveis (Loader, Toasts, etc)
+├── constants/      # Constantes globais (rotas, etc)
+├── data/           # Dados fixos (personagens, eventos)
+├── logic/          # Lógica de negócio (engine do jogo, sqljs)
+├── pages/          # Páginas principais (Home, Game, NotFound)
+├── router/         # Configuração de rotas e proteção
+├── types/          # Tipos e interfaces centralizados
+└── index.css       # Estilos globais
 ```
 
 ---
 
-## 📜 Configuração do Roteamento
+## Autenticação & Rotas Protegidas
 
-O arquivo de configuração das rotas está localizado em `src/router/index.tsx`. O exemplo abaixo mostra como configurar uma rota simples:
-
-```jsx
-import { createBrowserRouter, Navigate } from 'react-router-dom'
-import { Layout } from '@/components/layout/Layout'
-import { URL_BASE, url } from '@/constants/routes'
-import { Home } from '@/pages/Home'
-
-export const router = createBrowserRouter(
-  [
-    {
-      element: <Layout />,
-      children: [
-        {
-          path: url.index.replace(URL_BASE, ''),
-          element: <Home />,
-        },
-        {
-          path: url.notFound.replace(URL_BASE, ''),
-          element: <Navigate to={'/'} replace={true} />,
-        },
-      ],
-    },
-  ],
-  {
-    basename: URL_BASE,
-  },
-)
-```
+- Login/registro com JWT
+- Rotas protegidas para páginas sensíveis
+- Contexto global de autenticação
 
 ---
 
-## 🎨 Como Utilizar o TailwindCSS
+## 🎨 UI & Feedback Visual
 
-TailwindCSS já está configurado e pronto para uso. Basta adicionar as classes diretamente nos elementos.
-
-Exemplo:
-
-```jsx
-<div className="flex items-center justify-center h-screen bg-gray-100">
-  <h1 className="text-3xl font-bold text-blue-500">Bem-vindo ao Scaffold!</h1>
-</div>
-```
-
----
-
-## 🚀 Personalização
-
-1. **Configuração do TailwindCSS**:
-   O arquivo `tailwind.config.js` pode ser ajustado para atender às suas necessidades. Por exemplo, você pode adicionar novas cores ou configurações.
-
-2. **Estrutura das Rotas**:
-   Modifique ou adicione novas rotas no arquivo `src/router/index.tsx`.
-
-3. **Componentes e Páginas**:
-   Adicione novos componentes em `src/components/` e páginas em `src/pages/`.
-
-4. **[SUGESTÃO] Usar Shadcn para componentes como button, card e afins**:
-   O projeto já está configurado para usar o Shadcn.
-   Para iniciar use o comando `npx shadcn@latest init` e escolha qual cor base do seu projeto.
-   Para adicionar componentes use o comando `npx shadcn@latest add button` onde button é o componente a ser adicionado.
-   Para mais informações, veja na documentação: `https://ui.shadcn.com/docs/installation/vite`
+- Dark mode sempre ativo
+- Toasts globais para feedback
+- Loader componentizado para estados de carregamento
+- Componentes e páginas responsivas
 
 ---
 
 ## 📝 Contribuição
 
-Se você deseja contribuir com este scaffold:
-
-1. Faça um fork deste repositório.
-2. Crie uma branch para sua funcionalidade: `git checkout -b minha-feature`.
-3. Faça commit das suas alterações: `git commit -m "Minha nova feature"`.
-4. Envie para o repositório remoto: `git push origin minha-feature`.
-5. Abra um Pull Request.
+1. Fork do repositório
+2. Branch para sua feature: `git checkout -b minha-feature`
+3. Commit: `git commit -m "Minha nova feature"`
+4. Push: `git push origin minha-feature`
+5. Pull Request
 
 ---
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Consulte o arquivo `LICENSE` para mais detalhes.
+MIT
