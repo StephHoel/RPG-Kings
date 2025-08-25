@@ -1,14 +1,8 @@
-import type { GameState } from '../types/game'
+import type { GameUi } from '@/types/gameUI'
 import { Choices } from './Choices'
 import { StatusBar } from './StatusBar'
 
-export function GameUI({
-  state,
-  setState,
-}: {
-  state: GameState
-  setState: (s: GameState) => void
-}) {
+export function GameUI({ state, setState }: GameUi) {
   const scene = state.currentEvent
 
   function onChoose(choiceIdx: number) {

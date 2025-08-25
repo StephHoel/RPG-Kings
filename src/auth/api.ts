@@ -10,10 +10,13 @@ export async function api<T = unknown>(
   }
   try {
     const response = await fetch(endpoint, { ...options, headers })
+
     if (!response.ok) {
       const errorText = await response.text()
+
       throw new Error(errorText || 'Erro na requisição')
     }
+
     return response.json()
   } catch {
     throw new Error('Falha na comunicação com o servidor')
