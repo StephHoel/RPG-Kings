@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { GameUI } from '@/components/GameUI'
 import { loadInitialState } from '@/logic/gameEngine'
-import type { GameState } from '@/types/game'
+import type { GameState } from '@/types/GameState'
 
 export function Game() {
   const [state, setState] = useState<GameState | null>(null)

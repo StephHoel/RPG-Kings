@@ -1,9 +1,16 @@
-import { createContext, useContext, useEffect, useState } from 'react'
-import type { AuthContextType, User } from '../types/auth'
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
+import type { User } from '@/types/user'
+import type { AuthContextType } from '../types/authContextType'
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [token, setToken] = useState<string | null>(null)
 
@@ -19,11 +26,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       })
+
       if (!res.ok) return false
+
       const data = await res.json()
       setToken(data.token)
+
       localStorage.setItem('jwt', data.token)
       setUser(data.user)
+
       return true
     } catch {
       return false
@@ -37,11 +48,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       })
+
       if (!res.ok) return false
+
       const data = await res.json()
       setToken(data.token)
+
       localStorage.setItem('jwt', data.token)
       setUser(data.user)
+
       return true
     } catch {
       return false
@@ -51,6 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   function logout() {
     setToken(null)
     setUser(null)
+
     localStorage.removeItem('jwt')
   }
 
@@ -63,6 +79,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const ctx = useContext(AuthContext)
+
   if (!ctx) throw new Error('useAuth must be used within AuthProvider')
+
   return ctx
 }
