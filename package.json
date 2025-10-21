@@ -4,26 +4,25 @@
   "version": "1.0.0",
   "type": "module",
   "homepage": "https://stephhoel.github.io/RPG-Kings/",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "deploy": "gh-pages -d dist",
-    "predeploy": "npm run build",
-    "format": "biome format --write",
-    "lint": "biome lint --error-on-warnings",
-    "ci:lint": "biome check",
-    "precommit": "biome check --staged"
+    "predeploy": "npm run build"
   },
   "dependencies": {
     "axios": "^1.11.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.62.0",
     "react-router-dom": "^7.6.3",
     "sql.js": "^1.13.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.1.1",
     "@tailwindcss/vite": "^4.1.11",
     "@types/node": "^24.0.13",
     "@types/react": "^19.1.8",

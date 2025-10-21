@@ -3,8 +3,10 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
+const BASE = process.env.VITE_BASE ?? '/RPG-Kings'
+
 export default defineConfig({
-  base: '/RPG-Kings',
+  base: BASE,
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

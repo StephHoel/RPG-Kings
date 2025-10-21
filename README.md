@@ -7,14 +7,14 @@ Aplicação Web RPG escolar para sobrenaturais, construída com React, React Rou
 ## Tecnologias
 
 - React + React Router DOM
+- Vite (dev server)
 - TailwindCSS
 - SQL.js (leitura de tabelas locais)
 - Integração REST (.NET backend)
-- Clean Code: tipos centralizados, componentes reutilizáveis, feedback visual (toasts/loaders), rotas protegidas
 
 ---
 
-## Como Executar
+## Como Executar (desenvolvimento)
 
 1. Instale dependências:
 
@@ -22,13 +22,37 @@ Aplicação Web RPG escolar para sobrenaturais, construída com React, React Rou
     npm install
     ```
 
-2. Inicie o servidor:
+2. Rodar em modo desenvolvimento (Vite):
 
     ```bash
     npm run dev
     ```
 
-3. Acesse: [http://localhost:5173/RPG-Kings/](http://localhost:5173/RPG-Kings/)
+3. Build para produção:
+
+    ```bash
+    npm run build
+    npm run preview
+    ```
+
+4. Acesse: [http://localhost:5173/](http://localhost:5173/) (verifique base path se estiver hospedando em subpasta)
+
+---
+
+## Variáveis de ambiente (exemplo)
+
+- `VITE_API_BASE=https://api.exemplo.com`
+- `VITE_APP_NAME="King's Academy"`
+
+Defina em um arquivo `.env` na raiz para desenvolvimento.
+
+---
+
+## Dicas rápidas de desenvolvimento
+
+- Habilite a fonte Inter via index.html ou import no CSS.
+- Para Tailwind: verifique tailwind.config.js content paths ao adicionar novos diretórios.
+- Use o plugin `@tailwindcss/forms` para inputs e `@tailwindcss/typography` para conteúdo rico (já configurados).
 
 ---
 
@@ -49,24 +73,7 @@ src/
 
 ---
 
-## Autenticação & Rotas Protegidas
-
-- Login/registro com JWT
-- Rotas protegidas para páginas sensíveis
-- Contexto global de autenticação
-
----
-
-## 🎨 UI & Feedback Visual
-
-- Dark mode sempre ativo
-- Toasts globais para feedback
-- Loader componentizado para estados de carregamento
-- Componentes e páginas responsivas
-
----
-
-## 📝 Contribuição
+## Contribuição
 
 1. Fork do repositório
 2. Branch para sua feature: `git checkout -b minha-feature`
@@ -76,6 +83,6 @@ src/
 
 ---
 
-## 📄 Licença
+## Licença
 
 MIT
