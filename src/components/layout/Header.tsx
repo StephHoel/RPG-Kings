@@ -1,8 +1,14 @@
-export function Header() {
+import { useAuth } from '@/auth/AuthContext'
+
+export function Header() {  
+  const { user } = useAuth()
+
   return (
     <header className='bg-gray-900 text-white shadow-md'>
-      <div className='container mx-auto px-4 py-2 text-center'>
-        <h1 className='text-2xl font-bold tracking-wide'>King's Academy</h1>
+      <div className='container mx-auto px-4 py-2 text-center justify-between flex'>
+        <div className='w-full'></div>
+        <h1 className='text-2xl font-bold tracking-wide min-w-fit'>King's Academy</h1>
+        <div className='w-full text-right'>Olá, {user?.name ?? 'Visitante'}!</div>
       </div>
     </header>
   )
