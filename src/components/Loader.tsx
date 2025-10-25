@@ -1,6 +1,6 @@
 export function Loader({ text = 'Carregando...' }: { text?: string }) {
   return (
-    <span className='flex items-center gap-2'>
+    <span className='flex items-center gap-2 justify-center'>
       <svg
         className='animate-spin h-5 w-5 text-violet-400'
         xmlns='http://www.w3.org/2000/svg'
