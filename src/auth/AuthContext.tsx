@@ -13,27 +13,42 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [token, setToken] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const storedToken = localStorage.getItem('jwt')
     if (storedToken) setToken(storedToken)
+
+    const storedUser = localStorage.getItem('user')
+    if (storedUser) setUser(JSON.parse(storedUser))
+
+    setLoading(false)
   }, [])
 
-  async function login(email: string, password: string) {
+  async function login(_email: string, _passwordd: string) {
     try {
-      const res = await fetch('/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      })
+      // const res = await fetch('/auth/login', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email, password }),
+      // })
 
-      if (!res.ok) return false
+      // if (!res.ok) return false
 
-      const data = await res.json()
+      // const data = await res.json()
+      const data = {
+        token: 'abc.anc',
+        user: {
+          id: 'string',
+          email: 'steph@hoel.com',
+          name: 'Steph',
+        },
+      }
       setToken(data.token)
-
       localStorage.setItem('jwt', data.token)
+
       setUser(data.user)
+      localStorage.setItem('user', JSON.stringify(data.user))
 
       return true
     } catch {
@@ -41,12 +56,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  async function register(email: string, password: string) {
+  async function register(name: string, email: string, password: string) {
     try {
       const res = await fetch('/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ name, email, password }),
       })
 
       if (!res.ok) return false
@@ -71,7 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, register }}>
+    <AuthContext.Provider value={{ user, token, loading, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   )

@@ -1,4 +1,4 @@
-import type { GameUi } from '@/types/gameUI'
+import type { GameUi } from '@/types/gameUi'
 import { Choices } from './Choices'
 import { StatusBar } from './StatusBar'
 

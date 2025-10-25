@@ -1,0 +1,6 @@
+{
+  "creditosSemana": [
+    { "sem": 1, "reqs": { "historia": 30, "alquimia": 20 } },
+    { "sem": 2, "reqs": { "historia": 60, "alquimia": 40, "combate": 30 } }
+  ]
+}
