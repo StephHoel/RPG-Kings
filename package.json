@@ -1,39 +1,34 @@
 {
   "name": "kings-academy",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.1.0",
   "type": "module",
   "homepage": "https://stephhoel.github.io/RPG-Kings/",
-  "engines": {
-    "node": ">=18"
-  },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "deploy": "gh-pages -d dist",
-    "predeploy": "npm run build"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "axios": "^1.11.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-hook-form": "^7.62.0",
-    "react-router-dom": "^7.6.3",
-    "sql.js": "^1.13.0"
+    "@tanstack/react-query": "^5.90.5",
+    "dexie": "^4.2.1",
+    "nanoid": "^5.1.6",
+    "next": "^16.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "sonner": "^2.0.7",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.11",
-    "@types/node": "^24.0.13",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "@types/sql.js": "^1.4.9",
-    "@vitejs/plugin-react": "^5.0.4",
-    "gh-pages": "^6.3.0",
-    "globals": "^16.3.0",
-    "tailwindcss": "^4.1.11",
-    "tw-animate-css": "^1.3.5",
-    "typescript": "^5.8.3",
-    "vite": "^7.1.12"
+    "@tailwindcss/postcss": "^4.1.16",
+    "@types/css-modules": "^1.0.5",
+    "@types/node": "^20.19.23",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "eslint": "^9.38.0",
+    "eslint-config-next": "^16.0.0",
+    "tailwindcss": "^4.1.16",
+    "typescript": "^5.9.3"
   }
 }
