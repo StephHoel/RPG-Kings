@@ -1,7 +1,7 @@
-ideia 1
+#
 
-ideia 2
+O que precisa ser feito:
 
-ideia 3
-
-...
+- menu em telas grandes
+- adequação do template das demais telas
+- clique para voltar a home no header
