@@ -1,9 +1,9 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react'
 import { exportLogsNDJSON, clearLogs } from '@/utils/logger'
-import { seedAllIfEmpty } from '@/seed'
 import { LogRow } from '@/data/types'
 import { db } from '@/data/db'
+import { seedAllIfEmpty } from '@/data/seed'
 
 export default function DebugClient() {
   const [logs, setLogs] = useState<LogRow[]>([])
@@ -106,4 +106,4 @@ export default function DebugClient() {
       <p className="text-xs text-gray-500">Local-only (Dexie). Nenhum dado é enviado para servidores.</p>
     </div>
   )
-};
+}
