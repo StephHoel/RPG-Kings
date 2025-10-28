@@ -5,6 +5,7 @@ import { ReactQueryProvider } from '@/providers/ReactQueryProvider'
 import { Header } from '@/components/Header'
 import { FooterNav } from '@/components/FooterNav'
 import { Toaster } from 'sonner'
+import { BackPanel } from '@/components'
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -21,7 +22,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Header />
 
           <main className='grow px-4 py-6 mx-auto lg:max-w-3/4 2xl:max-w-2/4'>
-            {children}
+            <BackPanel>
+              {children}
+            </BackPanel>
           </main>
 
           <FooterNav />

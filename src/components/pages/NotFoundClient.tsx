@@ -1,5 +1,5 @@
 'use client'
-import { Buttons } from '@/components/Buttons'
+import { Buttons } from '@/components'
 import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/config/routes'
 
@@ -17,4 +17,4 @@ export default function NotFoundClient() {
       </div>
     </div>
   )
-};
+}
