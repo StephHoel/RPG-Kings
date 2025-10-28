@@ -1,17 +1,11 @@
 'use client'
 import { useParams } from 'next/navigation'
-import { useQuery } from '@tanstack/react-query'
-import { db } from '@/data/db'
+import { getMilestones } from '@/hooks'
 
 export default function ProgressClient() {
   const params = useParams()
   const saveId = params?.saveId as string
-
-  const { data: milestones } = useQuery({
-    queryKey: ['milestones', saveId],
-    queryFn: async () => db.milestones.where({ saveId }).toArray() ?? [],
-    enabled: !!saveId,
-  })
+  const milestones = getMilestones(saveId)
 
   return (
     <div className="mx-auto max-w-2xl p-4">

@@ -8,6 +8,7 @@ export default function SavesNewClient() {
   const [name, setName] = useState('')
   const router = useRouter()
 
+  // TODO transformar em hook
   async function create() {
     const id = nanoid(10)
     await db.saves.toCollection().modify({ isActive: false })

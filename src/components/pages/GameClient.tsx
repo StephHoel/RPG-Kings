@@ -1,32 +1,23 @@
 'use client'
-import { db } from '@/data/db'
-import { resolveSceneForNow } from '@/utils/timeslot'
-import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
-import { ChoiceList } from '../ChoiceList'
-import { SceneCard } from '@/components/SceneCard'
+import { getSave, getScene } from '@/hooks'
+import { ChoiceList, SceneCard } from '@/components'
 
 export default function GameClient() {
   const params = useParams()
-  const saveId = params?.saveId as string | undefined
+  const saveId = params?.saveId as string
+  const save = getSave(saveId)!
 
-  const { data: save } = useQuery({
-    queryKey: ['save', saveId],
-    queryFn: async () => (saveId ? db.saves.get(saveId) : undefined),
-    enabled: !!saveId,
-  })
+  // if (save == undefined) {
+  //   toast(save) // mensagem de erro
 
-  const { data: scene } = useQuery({
-    queryKey: ['timeslots', 'scene', saveId, save?.currentWeek, save?.currentDay, save?.currentHour],
-    queryFn: async () => {
-      if (!saveId || !save) return null
-      return resolveSceneForNow(save)
-    },
-    enabled: !!save,
-  })
+  //   return useRouter().push(ROUTES.ROOT)
+  // }
+
+  const scene = getScene(save)
 
   return (
-    <div className="space-y-3">
+    <div className='space-y-3'>
       <SceneCard>
         <h2 className="m-0">{scene?.title ?? '—'}</h2>
         <p>{scene?.content ?? 'Nenhuma cena disponível neste horário.'}</p>
@@ -34,4 +25,4 @@ export default function GameClient() {
       <ChoiceList />
     </div>
   )
-};
+}

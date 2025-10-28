@@ -5,4 +5,4 @@ export default function AuthClient() {
       <p className="opacity-70 text-sm">(placeholder para futuro login online)</p>
     </div>
   )
-};
+}

@@ -1,30 +1,17 @@
 'use client'
 import { useParams } from 'next/navigation'
-import { useQuery } from '@tanstack/react-query'
-import { db } from '@/data/db'
+import { getInventory, getSheet } from '@/hooks'
 
 export default function SheetClient() {
   const params = useParams()
   const saveId = params?.saveId as string
-
-  const { data: sheet } = useQuery({
-    queryKey: ['sheet', saveId],
-    queryFn: async () => {
-      const s = await db.sheets.get(saveId)
-      return s ?? null
-    },
-    enabled: !!saveId,
-  })
-  const { data: items } = useQuery({
-    queryKey: ['inventory', saveId],
-    queryFn: async () => db.inventory.where('saveId').equals(saveId).toArray(),
-    enabled: !!saveId,
-  })
+  const sheet = getSheet(saveId)
+  const items = getInventory(saveId)
 
   return (
     <div className="mx-auto max-w-2xl p-4 space-y-4">
       <h1 className="text-lg font-semibold">Ficha</h1>
-      <pre className="rounded border p-3 bg-gray-50 overflow-auto text-sm">{JSON.stringify(sheet ?? 'Sem sheet', null, 2)}</pre>
+      <pre className="rounded border p-3 bg-gray-500 overflow-auto text-sm">{JSON.stringify(sheet ?? 'Sem sheet', null, 2)}</pre>
       <h2 className="font-medium">Inventário</h2>
       <ul className="space-y-2">
         {!items?.length && "Sem itens"}
