@@ -6,16 +6,17 @@
 
 - id: string (UUID ou slug) — obrigatório, único
 - title: string — obrigatório
-- scheduled_day: number | null — dia agendado (nullable para cenas não agendadas)
-- scheduled_hour: number | null — hora agendada (0-23) (nullable)
-- content: string — texto ou payload serializado (pode ser markdown ou JSON)
+- scheduledDay: number | null — dia agendado (nullable para cenas não agendadas)
+- scheduledHour: number | null — hora agendada (0-23) (nullable)
+- weekdays?: string[] | null — dias da semana (opcional, ex.: ['Mon','Wed'])
+- content: object — estrutura do conteúdo (ver seção abaixo)
 - choices: Choice[] — array (pode ser vazio)
 - priority?: number — inteiro, default 0
 
 Validações:
 
 - `id` único
-- `scheduled_hour` entre 0 e 23 se não-nulo
+- `scheduledHour` entre 0 e 23 se não-nulo
 
 ### Choice
 
@@ -54,6 +55,12 @@ Validações:
 - `storage.migrateSave(raw)` deve inspecionar `schemaVersion` e aplicar
   transformações até o formato atual. Sempre registrar mudanças no `CHANGELOG`.
 
+Observação de compatibilidade: históricamente alguns saves podem usar
+`snake_case` (por ex.: `scheduled_day`, `scheduled_hour`, `current_day`).
+Implementações devem documentar o mapeamento para a forma canônica usada no
+código (camelCase). Recomenda-se que `migrateSave` realize a transformação
+automática destes campos para o formato camelCase no momento do load.
+
 ## Considerações de performance
 
 - Saves e loads devem ser atômicos e rápidos; usar operações síncronas de
@@ -62,4 +69,6 @@ Validações:
 
 ## Notas de alinhamento com spec
 
-- O `Scene` deve suportar tanto `scheduled_day` (número) quanto `weekdays` (array de `WeekdaysEnum`) conforme decisão de clarificação registrada em `specs/002-time-based-scenes/spec.md`.
+- O `Scene` deve suportar tanto `scheduledDay` (número) quanto `weekdays` (array de `WeekdaysEnum`) conforme decisão de clarificação registrada em `specs/002-time-based-scenes/spec.md`.
+
+Legacy note: saves antigos podem usar `scheduled_day`/`scheduled_hour`; ver seção de migração acima.

@@ -32,9 +32,9 @@ npm run dev
 const scene = {
   id: 'scene-001',
   title: 'Encontro ao entardecer',
-  scheduled_day: 1,
-  scheduled_hour: 18,
-  content: 'Você encontra um estranho na praça...',
+  scheduledDay: 1,
+  scheduledHour: 18,
+  content: { kind: 'md', body: 'Você encontra um estranho na praça...' },
   choices: [
     { id: 'c1', label: 'Cumprimentar', outcome: { type: 'resource_delta', payload: { resourceKey: 'reputation', delta: 1 } } },
     { id: 'c2', label: 'Ignorar', outcome: { type: 'resource_delta', payload: { resourceKey: 'reputation', delta: -1 } } }
@@ -45,10 +45,12 @@ localStorage.setItem('scenes:001', JSON.stringify([scene]));
 
 ## Passos de aceitação manual (por User Story)
 
-- US1 (Agendamento): avançar o relógio do jogo para o `currentDay/currentHour`
-  correspondente e confirmar que a cena aparece/é disparada.
+- US1 (Agendamento): avançar o relógio do jogo para o `currentDay`/`currentHour`
+  correspondente e confirmar que a cena aparece/é disparada. Use `scheduledDay`/`scheduledHour` na definição das cenas.
+
 - US2 (Decisões): selecionar cada opção e confirmar que o `PlayerState` é
   atualizado conforme o outcome (checar `localStorage` ou o HUD do jogo).
+
 - US3 (Visual): inspecionar contrastes e botões para conformidade com a paleta
   roxo/lilás/cinza e verificar legibilidade.
 

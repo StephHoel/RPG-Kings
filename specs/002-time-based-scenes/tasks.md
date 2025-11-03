@@ -26,7 +26,7 @@ Objetivo: cenas programadas por `scheduled_day`/`weekdays` e `scheduled_hour` s�
 - [ ] T008 [US1] Implementar loader de cenas de `localStorage`/Dixie (arquivo: src/lib/storage.ts)
 - [ ] T009 [US1] Implementar lógica de trigger: verificar cenas ativas no avanço de hora (arquivo: src/lib/time.ts e src/lib/sceneScheduler.ts)
 - [ ] T010 [US1] Criar componente `SceneCard` e ponto de entrada UI para exibir cena quando ativada (arquivo: src/components/scenes/SceneCard.tsx)
-- [ ] T011 [US1] Integração com HUD: exibir notificação/entrada de cena no fluxo do jogador (arquivo: app/game/[saveId]/page.tsx ou src/components/StatusPanel.tsx)
+- [ ] T011 [US1] Integração com HUD: exibir notificação/entrada de cena no fluxo do jogador (arquivo: src/app/game/[saveId]/page.tsx ou src/components/StatusPanel.tsx)
 - [ ] T012 [US1] Teste manual de aceitação: executar checklist US1 (documentar resultados em specs/001-time-based-scenes/checklists/requirements.md)
 
 ## Phase 4 — User Story 2 (US2) — Decisões com consequências (P1)
@@ -37,7 +37,7 @@ Objetivo: escolhas em cenas aplicam outcomes ao PlayerState e persistem.
 - [ ] T014 [US2] Implementar UI de escolha e ligação com handlers (arquivo: src/components/scenes/SceneRenderer.tsx)
 - [ ] T015 [US2] Atualizar storage para persistir mudanças no PlayerState após escolha (arquivo: src/lib/storage.ts)
 - [ ] T016 [US2] Criar migração/compatibilidade de saves para incluir flags/resources (arquivo: src/lib/storage.ts)
-- [ ] T017 [US2] Adicionar páginas/fluxos que dependem de flags (arquivo: `src/pages/*` ou `app/*` conforme projeto)
+- [ ] T017 [US2] Adicionar páginas/fluxos que dependem de flags (arquivo: `src/app/*` conforme App Router)
 - [ ] T018 [US2] Teste manual de aceitação: executar checklist US2 (documentar em specs/001-time-based-scenes/checklists/requirements.md)
 
 ## Phase 5 — User Story 3 (US3) — Visual identity & acessibilidade (P2)

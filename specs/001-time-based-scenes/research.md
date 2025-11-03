@@ -22,9 +22,9 @@ Decision: usar JSON serializável com a seguinte forma mínima:
 {
   "id": "string",
   "title": "string",
-  "scheduled_day": 1,
-  "scheduled_hour": 14,
-  "content": "string",
+  "scheduledDay": 1,
+  "scheduledHour": 14,
+  "content": { "kind": "md", "body": "string" },
   "choices": [ { "id": "c1", "label": "...", "outcome": {...} } ]
 }
 ```

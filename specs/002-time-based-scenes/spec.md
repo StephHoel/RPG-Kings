@@ -9,7 +9,7 @@
 
 ### Session 2025-11-03
 
-- Q: Agendamento das cenas — usar dia numérico (ex.: day=3), dias da semana (ex.: weekdays=['Mon']), ou ambos? → A: C (Suportar ambos: `scheduled_day` opcional e `weekdays` opcional; `scheduled_hour` comum).  
+-- Q: Agendamento das cenas — usar dia numérico (ex.: day=3), dias da semana (ex.: weekdays=['Mon']), ou ambos? → A: C (Suportar ambos: `scheduledDay` opcional e `weekdays` opcional; `scheduledHour` comum).  
   Rationale: compatibilidade com os schemas existentes e cobertura para cenas pontuais e recorrentes.
 
 ## User Scenarios & Acceptance *(mandatory)*
