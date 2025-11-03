@@ -1,5 +1,5 @@
 'use client'
-import { Buttons } from '@/components'
+import { Button } from '@/components'
 import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/config/routes'
 
@@ -13,7 +13,7 @@ export default function NotFoundClient() {
           404 - Página não encontrada
         </h2>
 
-        <Buttons onClick={() => router.push(ROUTES.ROOT)}>Voltar para Início</Buttons>
+        <Button onClick={() => router.push(ROUTES.ROOT)}>Voltar para Início</Button>
       </div>
     </div>
   )
