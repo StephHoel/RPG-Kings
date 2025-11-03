@@ -1,0 +1,23 @@
+[
+  {
+    "id": "prova-alquimia-n1",
+    "nome": "Prova de Alquimia N1",
+    "categoria": "academico",
+    "reqs": [
+      { "tipo": "disciplinaXp", "alvo": "alquimia", "min": 60 },
+      { "tipo": "coreMin", "alvo": "energia", "min": 50 },
+      { "tipo": "item", "alvo": "kit-basico", "qtd": 1 }
+    ],
+    "efeitos": [
+      { "tipo": "darTraco", "id": "maos-firmes" },
+      { "tipo": "desbloquearArea", "id": "lab-2" }
+    ]
+  },
+  {
+    "id": "amizade-verdadeira",
+    "nome": "Primeiro Amigo Verdadeiro",
+    "categoria": "social",
+    "reqs": [{ "tipo": "afinidadeQualquer", "min": 40 }],
+    "efeitos": [{ "tipo": "desbloquearEvento", "id": "passeio-lago" }]
+  }
+]
