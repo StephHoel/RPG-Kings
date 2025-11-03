@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export function Header() {
   return (
-    <header className='bg-gray-900 text-white shadow-md w-full'>
+    <header className='bg-panel-bg text-primary-fg shadow-md w-full'>
       <div className='container mx-auto px-4 py-2 text-center justify-between flex'>
         <div className='w-full'></div>
         <Link href={ROUTES.ROOT}>
