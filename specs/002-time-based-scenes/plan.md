@@ -1,4 +1,4 @@
-# Plano de Implementação: Cenas baseadas em tempo (dia/hora)
+# Plano de Implementação: Cenas Baseadas em Tempo (dia / hora)
 
 **Branch**: `001-time-based-scenes` | **Data**: 2025-11-03 | **Spec**: ../001-time-based-scenes/spec.md
 **Input**: Especificação de recurso em `/specs/001-time-based-scenes/spec.md`
@@ -47,7 +47,7 @@ de emenda documentado na constituição.
 
 Organização proposta (arquivos específicos para esta feature):
 
-``text
+```text
 src/
 ├── app/
 │   └── game/

@@ -1,16 +1,16 @@
-# Feature Specification: [FEATURE NAME]
+# Especificação da Feature: [NOME_DA_FEATURE]
 
-**Feature Branch**: `[###-feature-name]`  
-**Created**: [DATE]  
-**Status**: Draft  
-**Input**: User description: "$ARGUMENTS"
+**Branch da Feature**: `[###-feature-name]`  
+**Criado**: [DATE]  
+**Status**: Rascunho  
+**Input**: Descrição do usuário: "$ARGUMENTS"
 
 ## Clarifications
 
-### Session 2025-11-03
+### Sessão 2025-11-03
 
--- Q: Agendamento das cenas — usar dia numérico (ex.: day=3), dias da semana (ex.: weekdays=['Mon']), ou ambos? → A: C (Suportar ambos: `scheduledDay` opcional e `weekdays` opcional; `scheduledHour` comum).  
-  Rationale: compatibilidade com os schemas existentes e cobertura para cenas pontuais e recorrentes.
+- Pergunta: Como agendar cenas — usar dia numérico (ex.: day=3), dias da semana (ex.: weekdays=['Mon']) ou ambos? → Resposta: Suportar ambos: `scheduledDay` (opcional) e `weekdays` (opcional); `scheduledHour` é comum.
+  Racional: compatibilidade com schemas existentes e cobertura para cenas pontuais e recorrentes.
 
 ## User Scenarios & Acceptance *(mandatory)*
 
