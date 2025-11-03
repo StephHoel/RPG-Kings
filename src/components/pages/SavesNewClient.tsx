@@ -1,33 +1,48 @@
 'use client'
-import { useState } from 'react'
-import { db } from '@/data/db'
-import { nanoid } from 'nanoid'
+import { createSave } from '@/hooks'
+import { Button } from '@/components'
+import { useForm } from 'react-hook-form'
+import { ROUTES } from '@/config/routes'
 import { useRouter } from 'next/navigation'
+import { CreateSaveFormValues } from '@/interfaces'
 
 export default function SavesNewClient() {
-  const [name, setName] = useState('')
   const router = useRouter()
+  const { register, handleSubmit, formState } = useForm<CreateSaveFormValues>({
+    defaultValues: { name: '' },
+  })
+  const { errors, isSubmitting } = formState
 
-  // TODO transformar em hook
-  async function create() {
-    const id = nanoid(10)
-    await db.saves.toCollection().modify({ isActive: false })
-    await db.saves.add({
-      id,
-      name: name || 'Novo personagem',
-      isActive: true,
-      currentWeek: 1,
-      currentDay: 'Monday',
-      currentHour: 8,
-    })
-    router.push(`/game/${id}`)
+  const onSubmit = async (data: CreateSaveFormValues) => {
+    const saveId = await createSave(data.name)
+    router.push(ROUTES.GAME(saveId))
   }
 
   return (
     <div className="mx-auto max-w-xl p-4 space-y-3">
-      <h1 className="text-lg font-semibold">Criar save</h1>
-      <input className="border rounded px-3 py-2 w-full" placeholder="Nome do personagem" value={name} onChange={(e) => setName(e.target.value)} />
-      <button className="border rounded-lg px-4 py-2" onClick={create}>Criar</button>
+      <h1 className="text-lg font-semibold">
+        Criar save
+      </h1>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+        <input
+          className="border rounded px-3 py-2 w-full"
+          placeholder="Nome do personagem"
+          {...register('name', { required: 'Nome é obrigatório' })}
+          aria-invalid={errors.name ? 'true' : 'false'}
+        />
+        {errors.name && (
+          <p className="text-sm text-red-400" role="alert">{errors.name.message}</p>
+        )}
+
+        <Button
+          type="submit"
+          className="border rounded-lg px-4 py-2"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Criando...' : 'Criar'}
+        </Button>
+      </form>
     </div>
   )
 }
