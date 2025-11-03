@@ -1,11 +1,9 @@
 "use client"
 import '@/styles/globals.css'
-import type { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { ReactQueryProvider } from '@/providers/ReactQueryProvider'
-import { Header } from '@/components/Header'
-import { FooterNav } from '@/components/FooterNav'
 import { Toaster } from 'sonner'
-import { BackPanel } from '@/components'
+import { BackPanel, FooterNav, Header } from '@/components'
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -21,7 +19,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ReactQueryProvider>
           <Header />
 
-          <main className='grow px-4 py-6 mx-auto lg:max-w-3/4 2xl:max-w-2/4'>
+          <main className='grow px-4 py-6 mx-auto w-full lg:max-w-3/4 2xl:max-w-2/4'>
             <BackPanel>
               {children}
             </BackPanel>
