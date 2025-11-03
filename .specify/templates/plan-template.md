@@ -1,49 +1,43 @@
-# Implementation Plan: [FEATURE]
+# Plano de Implementação: [FEATURE]
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+**Branch**: `[###-feature-name]` | **Data**: [DATE] | **Spec**: [link]
+**Input**: Especificação da feature em `/specs/[###-feature-name]/spec.md`
 
-**Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/commands/plan.md` for the execution workflow.
+**Nota**: Este template é preenchido pelo comando `/speckit.plan`. Veja `.specify/templates/commands/plan.md` para o fluxo de execução.
 
-## Summary
+## Resumo
 
-[Extract from feature spec: primary requirement + technical approach from research]
+[Extrair da spec: requisito primário + abordagem técnica a partir da pesquisa]
 
-## Technical Context
+## Contexto Técnico
 
 <!--
-  ACTION REQUIRED: Replace the content in this section with the technical details
-  for the project. The structure here is presented in advisory capacity to guide
-  the iteration process.
+  AÇÃO: Substitua o conteúdo desta seção pelos detalhes técnicos do projeto.
+  A estrutura é orientativa para guiar a iteração.
 -->
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Linguagem/Versão**: [ex.: TypeScript 4.x, Python 3.11 ou NECESSITA_CLARIFICAÇÃO]
+**Dependências Principais**: [ex.: Next.js, TailwindCSS ou NECESSITA_CLARIFICAÇÃO]
+**Storage**: [ex.: Dixie, localStorage, PostgreSQL ou N/A]
+**Testes**: [ex.: manual/checagens estáticas - documentar se houver testes automatizados]
+**Plataforma alvo**: [ex.: Web (navegadores modernos) ou NECESSITA_CLARIFICAÇÃO]
+**Tipo de projeto**: [single/web/mobile - determina estrutura de fontes]
+**Objetivos de Performance**: [domínio-específico, ex.: <100ms para saves locais ou NECESSITA_CLARIFICAÇÃO]
+**Restrições**: [ex.: offline-capable, sem chamadas HTTP, limites de memória]
+**Escopo/Escala**: [ex.: 10k usuários, 50 telas ou NECESSITA_CLARIFICAÇÃO]
 
-## Constitution Check
+## Verificação da Constituição
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+*PORTÃO: Deve passar antes da Fase 0 (pesquisa). Revalidar após o design da Fase 1.*
 
-Gates determined based on the constitution. At minimum the plan MUST include a
-short Compliance Checklist demonstrating how the planned work will adhere to
-the Core Principles. Typical checks include:
+Com base na constituição, o plano deve incluir uma breve Checklist de Conformidade demonstrando como o trabalho seguirá os Princípios Centrais. Itens típicos:
 
-- Linters and formatters configured and documented
-- Type checking or static analysis enabled and passing locally
-- Minimal public interfaces and API surface documented
-- Manual acceptance criteria / reproduction steps provided for reviewers
+- Linters e formatadores configurados e documentados
+- Verificação de tipos / análise estática habilitada e passando localmente
+- Interfaces públicas mínimas e superfície de API documentadas
+- Critérios de aceitação manual / passos de reprodução fornecidos para revisores
 
-Note: The constitution disallows requiring automated test suites in the
-canonical repository. If the team proposes adding automated tests, the plan
-MUST document the rationale and follow the amendment procedure in the
-Constitution; automated tests remain optional unless amended into governance.
+Observação: A constituição proíbe exigir suites de testes automatizados no repositório canônico; se houver proposta para incluí-los, o plano deve documentar a justificativa e seguir o procedimento de emenda.
 
 ## Project Structure
 
