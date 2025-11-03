@@ -1,4 +1,4 @@
-import { Save, SaveId, Scene } from '@/data/types'
+import { Save, Scene } from '@/data/types'
 import { resolveSceneForNow } from '@/utils/timeslot'
 import { useQuery } from '@tanstack/react-query'
 

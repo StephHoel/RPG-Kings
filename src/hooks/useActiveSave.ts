@@ -7,6 +7,8 @@ export function useActiveSave() {
     queryKey: ['saves', 'active'],
     queryFn: async () => {
       const all = await db.saves.toArray()
+
+      console.log('all ', all)
       return all.find((s: any) => Boolean(s?.isActive)) ?? null
     },
   })
