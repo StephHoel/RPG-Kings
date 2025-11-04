@@ -1,5 +1,5 @@
 import { Save, Scene } from '@/data/types'
-import { resolveSceneForNow } from '@/utils/timeslot'
+import { resolveSceneForNow } from '@/libs'
 import { useQuery } from '@tanstack/react-query'
 
 export function getScene(save: Save): Scene | null {

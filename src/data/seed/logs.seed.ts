@@ -1,4 +1,4 @@
-import { log } from '@/utils/logger'
+import { log } from '@/libs'
 
 export async function seedLogs() {
   await log('info', 'Seed inicial de logs')

@@ -1,4 +1,4 @@
-import { MilestoneTypeEnum } from './enums/MilestoneType'
+import { MilestoneTypeEnum } from '@/data/enums'
 
 export const milestones = [
   {
