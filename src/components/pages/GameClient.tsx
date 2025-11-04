@@ -1,23 +1,23 @@
 'use client'
 import { useParams, useRouter } from 'next/navigation'
-import { getSave, getScene } from '@/hooks'
+import { deleteSave, getSave, getScene } from '@/hooks'
 import { ChoiceList, SceneCard } from '@/components'
 import { ROUTES } from '@/config/routes'
-import { useEffect } from 'react'
 
 export default function GameClient() {
+  const router = useRouter()
   const params = useParams()
   const saveId = params?.saveId as string
   const save = getSave(saveId)
+  
+  console.log('save ', save)
+  if (save == undefined || save == null) {
+    // toast(save) // mensagem de erro
 
-  useEffect(() => {
-
-    if (save == undefined || save == null) {
-      // toast(save) // mensagem de erro
-
-      return useRouter().push(ROUTES.ROOT)
-    }
-  }, [save])
+    deleteSave(saveId)
+    
+    router.push(ROUTES.ROOT)
+  }
 
   const scene = getScene(save!)
 

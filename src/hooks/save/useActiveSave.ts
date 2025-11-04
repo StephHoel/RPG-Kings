@@ -1,16 +1,24 @@
 'use client'
 import { useQuery } from '@tanstack/react-query'
 import { db } from '@/data/db'
+import { Save } from '@/data/types'
+import { useQueryKeys } from '@/hooks'
 
 export function useActiveSave() {
-  const { data: active } = useQuery({
-    queryKey: ['saves', 'active'],
-    queryFn: async () => {
-      const all = await db.saves.toArray()
+  const { data: active, isLoading, error } = useQuery({
+    queryKey: useQueryKeys.saveActive(),
+    
+    // Consider data fresh for 1 hour to reduce redundant IndexedDB reads
+    staleTime: 1000 * 60 * 60,
 
-      console.log('all ', all)
-      return all.find((s: any) => Boolean(s?.isActive)) ?? null
+    queryFn: async (): Promise<Save | null> => {
+      const active = await db.saves.where('isActive').equals(1).first()
+
+      console.log('active save', active)
+
+      return (active as Save) ?? null
     },
   })
-  return { activeSaveId: active?.id ?? null }
+
+  return { activeSaveId: active?.id ?? null, isLoading, error }
 }
