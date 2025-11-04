@@ -5,12 +5,7 @@
 
 ## Resumo
 
-Adicionar cenas narrativas agendadas por dia/hora do jogo e pontos de decisão
-que produzem resultados observáveis (positivos/negativos) armazenados no
-save local do jogador. Implementação 100% cliente (sem chamadas HTTP) usando
-TypeScript + React (Next.js App Router), TailwindCSS para estilos e Dixie para
-persistência local. Testes automatizados não são exigidos por governança —
-validação por revisão, checagens estáticas e aceitação manual.
+Adicionar cenas narrativas agendadas por dia/hora do jogo e pontos de decisão que produzem resultados observáveis (positivos/negativos) armazenados no save local do jogador. Implementação 100% cliente (sem chamadas HTTP) usando TypeScript + React (Next.js App Router), TailwindCSS para estilos e Dixie para persistência local. Testes automatizados não são exigidos por governança — validação por revisão, checagens estáticas e aceitação manual.
 
 ## Contexto Técnico
 
@@ -18,30 +13,22 @@ validação por revisão, checagens estáticas e aceitação manual.
 **Framework**: React com Next.js (App Router)
 **Estilização**: TailwindCSS (tokens/paleta roxo/lilás/cinza)
 **Persistência**: Dixie (armazenamento local no navegador)
-**Testes**: Validação manual e checklist em PRs (conforme constituição). Não
-implementar suites automatizadas neste ciclo.
+**Testes**: Validação manual e checklist em PRs (conforme constituição). Não implementar suites automatizadas neste ciclo.
 **Plataforma alvo**: Web (navegador moderno, Next.js App Router)
-**Tipo de projeto**: Aplicação single-player, cliente-first
-**Objetivos de performance**: Operações de save/recuperação com latência
-perceptível baixa (alvo < 100ms em saves locais em dispositivos razoáveis)
-**Restrições**: Offline-capable para sessão atual; sem chamadas HTTP nesta
-versão; saves persistidos via storage local do navegador.
+**Tipo de projeto**: Aplicação web single-player, cliente-first, mobile-first
+**Objetivos de performance**: Operações de save/recuperação com latência perceptível baixa (alvo < 100ms em saves locais em dispositivos razoáveis)
+**Restrições**: Offline-capable para sessão atual; sem chamadas HTTP nesta versão; saves persistidos via storage local do navegador.
 
 ## Verificação da Constituição (Constitution Check)
 
-Este plano obedece aos princípios da constituição do projeto. Antes de iniciar
-Fase 0, o plano deve demonstrar os seguintes pontos de compliance na PR:
+Este plano obedece aos princípios da constituição do projeto. Antes de iniciar Fase 0, o plano deve demonstrar os seguintes pontos de compliance na PR:
 
 - Linters e formatadores configurados e documentados (ESLint + Prettier)
 - Type checking ativado e passing localmente (tsconfig com strict recomendado)
-- Interfaces públicas mínimas documentadas para agendamento de cenas e API de
-  armazenamento (tipos TypeScript em `src/lib/types/scenes.ts`)
-- Critérios de aceitação manual e passos de reprodução incluídos na spec e na
-  PR
+- Interfaces públicas mínimas documentadas para agendamento de cenas e API de armazenamento (tipos TypeScript em `src/interfaces/Scenes.ts`)
+- Critérios de aceitação manual e passos de reprodução incluídos na spec e na PR
 
-Observação: A constituição proíbe exigir testes automatizados como parte do
-fluxo de governança; se houver proposta para adicioná-los, seguir o processo
-de emenda documentado na constituição.
+Observação: A constituição proíbe exigir testes automatizados como parte do fluxo de governança; se houver proposta para adicioná-los, seguir o processo de emenda documentado na constituição.
 
 ## Estrutura do Projeto (selecionada)
 
@@ -50,20 +37,45 @@ Organização proposta (arquivos específicos para esta feature):
 ```text
 src/
 ├── app/
-│   └── game/
-│       └── [saveId]/
+│   ├── game/
+│   |   └── [saveId]/
+│   |       └── page.tsx
+│   ├── progress/
+│   |   └── [saveId]/
+│   |       └── page.tsx
+│   ├── saves/
+│   |   ├── new/
+│   |   |   └── page.tsx
+│   |   └── page.tsx
+│   ├── settings/
+│   |   └── page.tsx
+│   ├── sheet/
+│   |   └── [saveId]/
+│   |       └── page.tsx
+│   ├── layout.tsx
+│   ├── not-found.tsx
+│   └── page.tsx
 ├── components/
+│   ├── layout/                    # Componentes do Layout (Header e Footer)
+│   ├── pages/                     # Páginas com 'use client'
+│   └── standard/                  # Componentes padrão (Button, Input, etc)
+│   └── index.tsx                  # export global
 │   └── scenes/
 │       ├── SceneRenderer.tsx      # Renderiza cenas a partir do modelo serializado
 │       ├── SceneCard.tsx          # UI de listagem/preview de cenas
 │       └── ChoiceButton.tsx       # Botões de decisão reutilizáveis
-├── lib/
+├── config/                        # Configurações gerais
+├── data/                          # Enums, Schemas, Seed, Db
+├── hooks/
+├── images/                        # Imagens
+├── interfaces/
+│   └── Scene.ts                   # Tipagens: Scene, Choice, Outcome, PlayerState
+├── libs/
 │   ├── time.ts                    # Relógio do jogo, avanço de horas/dias
 │   ├── storage.ts                 # Wrapper para operações com Dixie + migrações
-│   └── types/
-│       └── scenes.ts              # Tipagens: Scene, Choice, Outcome, PlayerState
+└── providers/
 └── styles/
-    └── scenes.css                 # Tokens e utilitários Tailwind para a paleta
+    └── globals.css                # Tokens e utilitários Tailwind para a paleta
 
 specs/001-time-based-scenes/
 ├── spec.md
