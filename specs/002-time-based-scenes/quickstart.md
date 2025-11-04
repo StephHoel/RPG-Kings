@@ -35,8 +35,8 @@ const scene = {
   scheduledHour: 18,
   content: { kind: 'md', body: 'Você encontra um estranho na praça...' },
   choices: [
-    { id: 'c1', label: 'Cumprimentar', outcome: { type: 'resource_delta', payload: { resourceKey: 'reputation', delta: 1 } } },
-    { id: 'c2', label: 'Ignorar', outcome: { type: 'resource_delta', payload: { resourceKey: 'reputation', delta: -1 } } }
+    { id: 'c1', label: 'Cumprimentar' },
+    { id: 'c2', label: 'Ignorar' }
   ]
 };
 localStorage.setItem('scenes:001', JSON.stringify([scene]));

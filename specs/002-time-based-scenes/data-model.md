@@ -22,19 +22,6 @@ Validações:
 
 - id: string — obrigatório
 - label: string — obrigatório
-- outcome: Outcome — obrigatório
-
-### Outcome
-
-- id?: string
-- type: 'resource_delta' | 'flag_set' | 'narrative_branch' — obrigatório
-- payload: any — estrutura dependente do `type`
-
-Exemplos de payload por tipo:
-
-- resource_delta: { resourceKey: string, delta: number }
-- flag_set: { flag: string, value: boolean }
-- narrative_branch: { nextSceneId: string }
 
 ### PlayerState
 

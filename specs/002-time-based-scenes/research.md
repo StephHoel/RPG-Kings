@@ -25,7 +25,7 @@ Decision: usar JSON serializável com a seguinte forma mínima:
   "scheduledDay": 1,
   "scheduledHour": 14,
   "content": { "kind": "md", "body": "string" },
-  "choices": [ { "id": "c1", "label": "...", "outcome": {...} } ]
+  "choices": [ { "id": "c1", "label": "..." } ]
 }
 ```
 

@@ -12,7 +12,7 @@ Tech stack: TypeScript, Next.js (App Router), TailwindCSS, Dixie (armazenamento 
 - [x] T001 Configurar tipagens base e schemas Zod para Scene e Save em `src/data/schemas/SceneSchema.ts` e `src/data/schemas/SaveSchema.ts`
 - [x] T002 Definir enums e utilitários compartilhados em `src/data/enums/*` (`Weekdays`, `TimeslotId`, `SceneTag`) — arquivos já presentes
 - [x] T003 Adicionar utilitário `_schemas.ts` com helper `s` (tipos reutilizáveis) em `src/data/schemas/_schemas.ts`
-- [ ] T004 [P] Criar `src/lib/types/scenes.ts` com as interfaces TypeScript exportadas (Scene, Choice, Outcome, PlayerState)
+- [ ] T004 [P] Criar `src/interfaces/scenes.ts` com as interfaces TypeScript exportadas (Scene, Choice, PlayerState)
 - [ ] T005 Configurar `src/lib/storage.ts` — wrapper para Dixie + função `migrateSave(raw)` com versionamento do schema
 
 ## Phase 2 — Fundacionais (pré-requisitos para todas as US)
@@ -29,14 +29,14 @@ Tech stack: TypeScript, Next.js (App Router), TailwindCSS, Dixie (armazenamento 
 - [ ] T010 [US1] Implementar carga de cenas por save em `src/hooks/getSceneBySave.ts` (consulta ao storage/dixie)
 - [ ] T011 [US1] Implementar verificação de gatilho por tempo em `src/lib/time.ts` → função `getScenesToTrigger(save: PlayerState, scenes: Scene[]) : Scene[]`
 - [ ] T012 [US1] Integrar disparo de cenas no fluxo de jogo: `src/app/game/[saveId]/page.tsx` (ou equivalente) para mostrar `SceneRenderer` quando cena for acionada
-- [ ] T013 [US1] Persistir estado após escolha (aplicar `Outcome`) via `src/lib/storage.ts::savePlayerState`
+- [ ] T013 [DISCONTINUED] [US1] Persistir estado após escolha (aplicar `Outcome`) via `src/lib/storage.ts::savePlayerState`
 - [ ] T014 [US1] Criar aceitação manual em quickstart: passos para adicionar cena via console e avançar relógio (documentado em `specs/002-time-based-scenes/quickstart.md`) — já existe documentação
 
 ### US2 — Decisões e Efeitos (Priority: P2)
 
-- [ ] T015 [US2] Implementar aplicação de `Outcome` no `PlayerState` em `src/lib/outcomes.ts` (resource_delta, flag_set, narrative_branch)
+- [ ] T015 [DISCONTINUED] [US2] Implementar aplicação de `Outcome` no `PlayerState` em `src/lib/outcomes.ts` (resource_delta, flag_set, narrative_branch)
 - [ ] T016 [US2] Criar componentes de UI que exibam escolhas e apliquem efeitos em `src/components/scenes/*.tsx`
-- [ ] T017 [US2] Atualizar `src/data/schemas/SceneSchema.ts` para validar `outcome.payload` por `type` (Zod refinements)
+- [ ] T017 [DISCONTINUED] [US2] Atualizar `src/data/schemas/SceneSchema.ts` para validar `outcome.payload` por `type` (Zod refinements)
 
 ### US3 — Interface de Gerenciamento e Visual (Priority: P3)
 
@@ -47,7 +47,7 @@ Tech stack: TypeScript, Next.js (App Router), TailwindCSS, Dixie (armazenamento 
 ## Final Phase — Polish & Cross-cutting
 
 - [ ] T021 Ajustar `storage.migrateSave` para mapear campos snake_case → camelCase e aumentar `schemaVersion` quando necessário (`src/lib/storage.ts`)
-- [ ] T022 Adicionar documentação de API interna em `src/lib/types/scenes.ts` e `specs/002-time-based-scenes/data-model.md` (com exemplos JSON)
+- [ ] T022 Adicionar documentação de API interna em `src/interfaces/scenes.ts` e `specs/002-time-based-scenes/data-model.md` (com exemplos JSON)
 - [ ] T023 [P] Revisão geral de acessibilidade e contraste para os componentes de cena (documentar resultados em `specs/002-time-based-scenes/checklists/requirements.md`)
 
 ## Dependências (ordem de execução recomendada)
@@ -59,7 +59,7 @@ Tech stack: TypeScript, Next.js (App Router), TailwindCSS, Dixie (armazenamento 
 ## Paralelismo sugerido
 
 - Enquanto `src/lib/storage.ts` (T005) é implementado, a equipe pode trabalhar em `src/components/scenes/*` (T008/T009/T016) em paralelo [P]
-- Implementação de `outcomes.ts` (T015) é paralelizável com UI de escolhas (T016) — concentrar integração ao final
+- [DISCONTINUED] Implementação de `outcomes.ts` (T015) é paralelizável com UI de escolhas (T016) — concentrar integração ao final
 
 ## Implementação mínima recomendada (MVP)
 
