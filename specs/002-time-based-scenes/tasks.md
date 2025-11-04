@@ -1,69 +1,81 @@
-# tasks.md — Tarefas geradas para 001-time-based-scenes (gerado por /speckit.tasks)
+# tasks.md — Tarefas: Cenas Baseadas em Tempo
 
-## Sumário
+Este arquivo lista tarefas executáveis, organizadas por user story (PT-BR).
 
-Total estimado de tarefas: 24
+Marquei como concluídas as tarefas cujo código correspondente já existe no repositório.
 
-- Tarefas por user story: US1=6, US2=6, US3=3, Setup/Foundation/Polish=9
+Feature: Cenas Baseadas em Tempo
+Tech stack: TypeScript, Next.js (App Router), TailwindCSS, Dixie (armazenamento local)
 
-## Phase 1 — Setup
+## Phase 1 — Setup (tarefas de infraestrutura e configuração)
 
-- [ ] T001 Configurar keys e wrappers de storage (src/lib/storage.ts) — documentar uso de Dixie e fallback para localStorage (arquivo: src/lib/storage.ts)
-- [ ] T002 [P] Ajustar configuração TypeScript/ESLint/Prettier para nova feature (arquivos: tsconfig.json, .eslintrc, package.json)
-- [ ] T003 [P] Adicionar tokens Tailwind para paleta roxo/lilás/cinza (arquivo: src/styles/tokens.css ou tailwind.config.js)
+- [x] T001 Configurar tipagens base e schemas Zod para Scene e Save em `src/data/schemas/SceneSchema.ts` e `src/data/schemas/SaveSchema.ts`
+- [x] T002 Definir enums e utilitários compartilhados em `src/data/enums/*` (`Weekdays`, `TimeslotId`, `SceneTag`) — arquivos já presentes
+- [x] T003 Adicionar utilitário `_schemas.ts` com helper `s` (tipos reutilizáveis) em `src/data/schemas/_schemas.ts`
+- [ ] T004 [P] Criar `src/lib/types/scenes.ts` com as interfaces TypeScript exportadas (Scene, Choice, Outcome, PlayerState)
+- [ ] T005 Configurar `src/lib/storage.ts` — wrapper para Dixie + função `migrateSave(raw)` com versionamento do schema
 
-## Phase 2 — Foundation (bloqueantes comuns)
+## Phase 2 — Fundacionais (pré-requisitos para todas as US)
 
-- [ ] T004 Implementar GameClock e hook de consumo `useGameClock()` (arquivo: src/lib/time.ts)
-- [ ] T005 Implementar storage migrate/load/save completos com `schemaVersion` (arquivo: src/lib/storage.ts)
-- [ ] T006 Criar tipagens compartilhadas e contratos TypeScript (arquivo: src/lib/types/scenes.ts)
+- [x] T006 Criar `src/components/SceneCard.tsx` (UI de preview de cena) — já existe em `src/components/SceneCard.tsx`
+- [ ] T007 Implementar `src/lib/time.ts` com relógio do jogo (advanceHour, setHour, subscribe)
+- [ ] T008 Criar `src/components/scenes/SceneRenderer.tsx` para renderizar `content` em `{ kind: 'md'|'json', body: ... }`
+- [ ] T009 Criar `src/components/scenes/ChoiceButton.tsx` para decisões reutilizáveis
 
-## Phase 3 — User Story 1 (US1) — Agendamento e ativação de cenas (P1)
+## Phase 3 — User Stories (ordenadas por prioridade)
 
-Objetivo: cenas programadas por `scheduled_day`/`weekdays` e `scheduled_hour` são ativadas no relógio do jogo.
+### US1 — Agendamento e Disparo de Cenas (Priority: P1)
 
-- [ ] T007 [US1] Criar modelo de Scene e validação (arquivo: src/lib/types/scenes.ts e specs/001-time-based-scenes/data-model.md)
-- [ ] T008 [US1] Implementar loader de cenas de `localStorage`/Dixie (arquivo: src/lib/storage.ts)
-- [ ] T009 [US1] Implementar lógica de trigger: verificar cenas ativas no avanço de hora (arquivo: src/lib/time.ts e src/lib/sceneScheduler.ts)
-- [ ] T010 [US1] Criar componente `SceneCard` e ponto de entrada UI para exibir cena quando ativada (arquivo: src/components/scenes/SceneCard.tsx)
-- [ ] T011 [US1] Integração com HUD: exibir notificação/entrada de cena no fluxo do jogador (arquivo: src/app/game/[saveId]/page.tsx ou src/components/StatusPanel.tsx)
-- [ ] T012 [US1] Teste manual de aceitação: executar checklist US1 (documentar resultados em specs/001-time-based-scenes/checklists/requirements.md)
+- [ ] T010 [US1] Implementar carga de cenas por save em `src/hooks/getSceneBySave.ts` (consulta ao storage/dixie)
+- [ ] T011 [US1] Implementar verificação de gatilho por tempo em `src/lib/time.ts` → função `getScenesToTrigger(save: PlayerState, scenes: Scene[]) : Scene[]`
+- [ ] T012 [US1] Integrar disparo de cenas no fluxo de jogo: `src/app/game/[saveId]/page.tsx` (ou equivalente) para mostrar `SceneRenderer` quando cena for acionada
+- [ ] T013 [US1] Persistir estado após escolha (aplicar `Outcome`) via `src/lib/storage.ts::savePlayerState`
+- [ ] T014 [US1] Criar aceitação manual em quickstart: passos para adicionar cena via console e avançar relógio (documentado em `specs/002-time-based-scenes/quickstart.md`) — já existe documentação
 
-## Phase 4 — User Story 2 (US2) — Decisões com consequências (P1)
+### US2 — Decisões e Efeitos (Priority: P2)
 
-Objetivo: escolhas em cenas aplicam outcomes ao PlayerState e persistem.
+- [ ] T015 [US2] Implementar aplicação de `Outcome` no `PlayerState` em `src/lib/outcomes.ts` (resource_delta, flag_set, narrative_branch)
+- [ ] T016 [US2] Criar componentes de UI que exibam escolhas e apliquem efeitos em `src/components/scenes/*.tsx`
+- [ ] T017 [US2] Atualizar `src/data/schemas/SceneSchema.ts` para validar `outcome.payload` por `type` (Zod refinements)
 
-- [ ] T013 [US2] Implementar aplicação de `Outcome` (resource_delta, flag_set, narrative_branch) no PlayerState (arquivo: src/lib/outcomes.ts)
-- [ ] T014 [US2] Implementar UI de escolha e ligação com handlers (arquivo: src/components/scenes/SceneRenderer.tsx)
-- [ ] T015 [US2] Atualizar storage para persistir mudanças no PlayerState após escolha (arquivo: src/lib/storage.ts)
-- [ ] T016 [US2] Criar migração/compatibilidade de saves para incluir flags/resources (arquivo: src/lib/storage.ts)
-- [ ] T017 [US2] Adicionar páginas/fluxos que dependem de flags (arquivo: `src/app/*` conforme App Router)
-- [ ] T018 [US2] Teste manual de aceitação: executar checklist US2 (documentar em specs/001-time-based-scenes/checklists/requirements.md)
+### US3 — Interface de Gerenciamento e Visual (Priority: P3)
 
-## Phase 5 — User Story 3 (US3) — Visual identity & acessibilidade (P2)
+- [ ] T018 [US3] Criar `src/app/dev/seed/scenes.ts` ou UI de edição para inserir/editar cenas no storage
+- [ ] T019 [US3] Criar `src/components/scenes/SceneCard.tsx` versão detalhada com tags, timeslots e prioridade (aprimorar o existente)
+- [ ] T020 [US3] Aplicar estilos Tailwind conforme tokens da paleta (arquivo `src/styles/scenes.css` sugerido)
 
-Objetivo: UI e cenas seguem paleta e regras de contraste.
+## Final Phase — Polish & Cross-cutting
 
-- [ ] T019 [US3] Aplicar tokens Tailwind e classes utilitárias nos componentes de cena (arquivo: src/components/scenes/*.tsx)
-- [ ] T020 [US3] Verificar contraste e legibilidade (documentar passos em specs/001-time-based-scenes/checklists/requirements.md)
-- [ ] T021 [US3] Ajustes finais de UX (botões, foco, navegação) (arquivo: src/components/scenes/*.tsx)
+- [ ] T021 Ajustar `storage.migrateSave` para mapear campos snake_case → camelCase e aumentar `schemaVersion` quando necessário (`src/lib/storage.ts`)
+- [ ] T022 Adicionar documentação de API interna em `src/lib/types/scenes.ts` e `specs/002-time-based-scenes/data-model.md` (com exemplos JSON)
+- [ ] T023 [P] Revisão geral de acessibilidade e contraste para os componentes de cena (documentar resultados em `specs/002-time-based-scenes/checklists/requirements.md`)
 
-## Phase 6 — Polish & Cross-cutting
+## Dependências (ordem de execução recomendada)
 
-- [ ] T022 Polir mensagens de erro e logs observáveis (arquivos: src/lib/*, src/components/*)
-- [ ] T023 Atualizar `quickstart.md` e adicionar instruções de PR/aceitação (arquivo: specs/001-time-based-scenes/quickstart.md)
-- [ ] T024 Criar PR com Compliance Checklist e passos de aceitação (PR body/description)
+- US1 depende de: Phase1 (T001..T006), T007, T008
+- US2 depende de: US1 (T010..T014) e T015
+- US3 pode ser implementada em paralelo com US2 (marca [P] quando aplicável)
 
-## Dependências e ordem de execução
+## Paralelismo sugerido
 
-Recomendação de ordem (bloqueios): T001,T002,T003 → T004,T005,T006 → T007..T012 (US1) → T013..T018 (US2) → T019..T021 (US3) → T022..T024 (Polish)
+- Enquanto `src/lib/storage.ts` (T005) é implementado, a equipe pode trabalhar em `src/components/scenes/*` (T008/T009/T016) em paralelo [P]
+- Implementação de `outcomes.ts` (T015) é paralelizável com UI de escolhas (T016) — concentrar integração ao final
 
-## Paralelização (exemplos)
+## Implementação mínima recomendada (MVP)
 
-- T002 e T003 podem rodar em paralelo (configuração).  
-- T007 (model) e T006 (tipagens) são paralelizáveis com coordenação mínima (T006 deve pelo menos expor interfaces).  
-- T014 (UI de escolhas) e T015 (persistência pós-escolha) podem ser desenvolvidas em paralelo por desenvolvedores diferentes.
+- MVP: Implementar US1 apenas (T010..T014) + storage/migration (T005, T021) e time.ts (T007). Isso permite agendar e disparar cenas e aplicar escolhas básicas.
 
-## MVP sugerido
+## Métricas e critérios independentes de aceitação (por história)
 
-- Implementar apenas US1 (T007..T012) para entrega rápida e válida; isso garante o core loop de cenas agendadas.
+- US1 (T010..T014): cena dispara quando `currentDay/currentHour` coincide com `scheduledDay/scheduledHour` ou `weekdays`, e o `PlayerState` reflete a escolha feita. Teste manual: adicionar cena via console e usar controles do relógio.
+- US2 (T015..T017): aplicar `resource_delta` altera `PlayerState.resources[resourceKey]` conforme o `delta`. Teste manual: escolha opção e verificar `localStorage` ou HUD.
+- US3 (T018..T020): UI permite listar cenas existentes e mostrar metadados (timeslots, tags, prioridade). Teste manual: usar UI para criar cena e verificar aparecimento no fluxo do jogo.
+
+## Contagem de tarefas
+
+- Total: 23 tarefas
+- Por user story: US1 — 5 tarefas; US2 — 3 tarefas; US3 — 3 tarefas; Setup/Foundational/Polish — 12 tarefas
+
+## Validação de formato
+
+Todos os itens acima seguem o formato de checklist exigido pelo template de tasks. Arquivos e caminhos estão especificados para cada tarefa.
