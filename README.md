@@ -98,6 +98,39 @@ Stack: **Next.js (App Router) + React + TS + Tailwind + TanStack Query + Dexie +
 - `npm run start` — roda o build.
 - Seed: abra `/dev/seed` no navegador e clique no botão.
 
+## Deploy no GitHub Pages
+
+Este repositório está configurado para ser hospedado em GitHub Pages sob o caminho `/rpg-kings`.
+
+O Next.js está configurado com `basePath: '/rpg-kings'` e `assetPrefix: '/rpg-kings/'` em `next.config.js`.
+
+Workflow automático (já incluído): existe uma GitHub Action (`.github/workflows/deploy-gh-pages.yml`) que faz:
+
+- checkout
+- npm ci
+- npm run build
+- npm run export
+- publica o diretório `out/rpg-kings` para a branch `gh-pages`
+
+Como publicar manualmente (local):
+
+1. Build e export
+
+    ```bash
+    npm ci
+    npm run build
+    npm run export
+    ```
+
+2. O conteúdo gerado estará em `out/rpg-kings`. Faça deploy desse diretório para a branch `gh-pages` (ou envie para um servidor estático).
+
+3. No GitHub: configure GitHub Pages para servir a partir da branch `gh-pages` (root).
+
+Notas:
+
+- Use `ROUTES.BASE` (em `src/config/routes.ts`) nas construções de URL se gerar caminhos manualmente.
+- Teste localmente servindo `out/` por um servidor estático (por exemplo `npx serve out`) e acessando `http://localhost:3000/rpg-kings`.
+
 ## Rotas
 
 - `/`, `/auth`
