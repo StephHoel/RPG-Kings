@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
 
+const isProd = process.env.NODE_ENV === 'production'
+
 const nextConfig = {
-  basePath: '/rpg-kings',
-  assetPrefix: '/rpg-kings/',
+  basePath: isProd ? '/rpg-kings' : '',
+  assetPrefix: isProd ? '/rpg-kings/' : '',
   trailingSlash: true,
   turbopack: {
     rules: {
