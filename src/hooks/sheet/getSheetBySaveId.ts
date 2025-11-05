@@ -14,5 +14,5 @@ export function getSheet(saveId: string): Sheet | null {
     enabled: !!saveId,
   })
 
-  return sheet !== undefined && sheet !== null ? sheet as Sheet : null
+  return sheet ?? null
 }
