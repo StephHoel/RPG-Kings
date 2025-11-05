@@ -11,5 +11,5 @@ export function getMilestones(saveId: string): Milestone[] | null {
     enabled: !!saveId,
   })
 
-  return milestones !== undefined && milestones !== null && milestones.length > 0 ? milestones as Milestone[] : null
+  return milestones && milestones.length > 0 ? milestones : null
 }
