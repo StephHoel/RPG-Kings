@@ -11,5 +11,5 @@ export function getInventory(saveId: string): InventoryItem[] | null {
     enabled: !!saveId,
   })
 
-  return items !== undefined && items !== null && items.length > 0 ? items as InventoryItem[] : null
+  return items && items.length > 0 ? items : null
 }
