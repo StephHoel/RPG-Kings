@@ -1,51 +1,41 @@
-# data-model.md — Modelos de dados e regras de validação (unificado)
+# Notas do modelo de dados para integração com o Frontend
 
-## Entidades
+Este arquivo lista as entidades relevantes para a feature Cenas Baseadas em Tempo e seus campos principais do ponto de vista do frontend (como a UI as consumirá).
 
-### Scene
+## Scene (Cena)
 
-- id: string (UUID ou slug) — obrigatório, único
-- title: string — obrigatório
-- scheduledDay: number | null — dia agendado (nullable para cenas não agendadas)
-- scheduledHour: number | null — hora agendada (0-23) (nullable)
-- weekdays?: string[] | null — dias da semana (opcional, ex.: ['Mon','Wed'])
-- content: object — estrutura do conteúdo (ver seção abaixo)
-- choices: Choice[] — array (pode ser vazio)
-- priority?: number — inteiro, default 0
+- id: string
+- title: string
+- content: string (markdown/HTML payload)
+- scheduled_day?: number | null
+- weekdays?: string[] | null (ex.: ['Mon','Wed'])
+- scheduled_hour?: number | null (0-23)
+- choices: Choice[]
+- priority?: number
 
-Validações:
+Regras de validação no frontend:
 
-- `id` único
-- `scheduledHour` entre 0 e 23 se não-nulo
+- `title` obrigatório, tamanho <= 120
+- `scheduled_hour` quando presente deve estar entre 0 e 23
+- `choices` pode ser um array vazio para cenas passivas
 
-### Choice
+## Choice (Escolha)
 
-- id: string — obrigatório
-- label: string — obrigatório
+- id: string
+- label: string
 
-### PlayerState
+Preocupações do frontend:
 
-- playerId: string
-- resources: Record<string, number>
-- flags: Record<string, boolean>
-- currentDay: number
-- currentHour: number
-- activeSceneId?: string
-- schemaVersion: number
-
-Validações:
-
-- `schemaVersion` presente e suportado pela `storage.migrateSave`
+- Botões que renderizam escolhas devem ser acessíveis e suportar estados desabilitados
+- Labels longos devem quebrar linha e a UI deve suportar truncamento em telas pequenas
 
 ## Regras de migração
 
-- `storage.migrateSave(raw)` deve inspecionar `schemaVersion` e aplicar
-  transformações até o formato atual. Sempre registrar mudanças no `CHANGELOG`.
+- `storage.migrateSave(raw)` deve inspecionar `schemaVersion` e aplicar transformações até o formato atual. Sempre registrar mudanças no `CHANGELOG`.
 
-Observação de compatibilidade: históricos saves podem usar
-`snake_case` (ex.: `scheduled_day`, `scheduled_hour`, `current_day`).
-Implementações devem documentar o mapeamento para o formato canônico
-camelCase. Recomenda-se que `migrateSave` realize essa transformação automaticamente no load.
+Observação de compatibilidade: históricos saves podem usar `snake_case` (ex.: `scheduled_day`, `scheduled_hour`, `current_day`).
+
+Implementações devem documentar o mapeamento para o formato canônico camelCase. Recomenda-se que `migrateSave` realize essa transformação automaticamente no load.
 
 ## Considerações de performance
 

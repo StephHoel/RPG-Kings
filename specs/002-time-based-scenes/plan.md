@@ -1,89 +1,110 @@
-# Plano de Implementação: Cenas Baseadas em Tempo (dia / hora)
+# Plano de Implementação: [FEATURE]
 
-**Branch**: `001-time-based-scenes` | **Data**: 2025-11-03 | **Spec**: ../001-time-based-scenes/spec.md
-**Input**: Especificação de recurso em `/specs/001-time-based-scenes/spec.md`
+**Branch**: `[###-feature-name]` | **Data**: [DATE] | **Spec**: [link]
+**Input**: Especificação da feature em `/specs/[###-feature-name]/spec.md`
+
+**Nota**: Este template é preenchido pelo comando `/speckit.plan`. Veja `.specify/templates/commands/plan.md` para o fluxo de execução.
 
 ## Resumo
 
-Adicionar cenas narrativas agendadas por dia/hora do jogo e pontos de decisão que produzem resultados observáveis (positivos/negativos) armazenados no save local do jogador. Implementação 100% cliente (sem chamadas HTTP) usando TypeScript + React (Next.js App Router), TailwindCSS para estilos e Dixie para persistência local. Testes automatizados não são exigidos por governança — validação por revisão, checagens estáticas e aceitação manual.
+[Extrair da spec: requisito primário + abordagem técnica a partir da pesquisa]
 
 ## Contexto Técnico
 
-**Linguagem/Versão**: TypeScript (>=4.8)
-**Framework**: React com Next.js (App Router)
-**Estilização**: TailwindCSS (tokens/paleta roxo/lilás/cinza)
-**Persistência**: Dixie (armazenamento local no navegador)
-**Testes**: Validação manual e checklist em PRs (conforme constituição). Não implementar suites automatizadas neste ciclo.
-**Plataforma alvo**: Web (navegador moderno, Next.js App Router)
-**Tipo de projeto**: Aplicação web single-player, cliente-first, mobile-first
-**Objetivos de performance**: Operações de save/recuperação com latência perceptível baixa (alvo < 100ms em saves locais em dispositivos razoáveis)
-**Restrições**: Offline-capable para sessão atual; sem chamadas HTTP nesta versão; saves persistidos via storage local do navegador.
+<!--
+  AÇÃO: Substitua o conteúdo desta seção pelos detalhes técnicos do projeto.
+  A estrutura é orientativa para guiar a iteração.
+-->
 
-## Verificação da Constituição (Constitution Check)
+**Linguagem/Versão**: [ex.: TypeScript 4.x, Python 3.11 ou NECESSITA_CLARIFICAÇÃO]
+**Dependências Principais**: [ex.: Next.js, TailwindCSS ou NECESSITA_CLARIFICAÇÃO]
+**Storage**: [ex.: Dixie, localStorage, PostgreSQL ou N/A]
+**Testes**: [ex.: manual/checagens estáticas - documentar se houver testes automatizados]
+**Plataforma alvo**: [ex.: Web (navegadores modernos) ou NECESSITA_CLARIFICAÇÃO]
+**Tipo de projeto**: [single/web/mobile - determina estrutura de fontes]
+**Objetivos de Performance**: [domínio-específico, ex.: <100ms para saves locais ou NECESSITA_CLARIFICAÇÃO]
+**Restrições**: [ex.: offline-capable, sem chamadas HTTP, limites de memória]
+**Escopo/Escala**: [ex.: 10k usuários, 50 telas ou NECESSITA_CLARIFICAÇÃO]
 
-Este plano obedece aos princípios da constituição do projeto. Antes de iniciar Fase 0, o plano deve demonstrar os seguintes pontos de compliance na PR:
+## Verificação da Constituição
 
-- Linters e formatadores configurados e documentados (ESLint + Prettier)
-- Type checking ativado e passing localmente (tsconfig com strict recomendado)
-- Interfaces públicas mínimas documentadas para agendamento de cenas e API de armazenamento (tipos TypeScript em `src/interfaces/Scenes.ts`)
-- Critérios de aceitação manual e passos de reprodução incluídos na spec e na PR
+*PORTÃO: Deve passar antes da Fase 0 (pesquisa). Revalidar após o design da Fase 1.*
 
-Observação: A constituição proíbe exigir testes automatizados como parte do fluxo de governança; se houver proposta para adicioná-los, seguir o processo de emenda documentado na constituição.
+Com base na constituição, o plano deve incluir uma breve Checklist de Conformidade demonstrando como o trabalho seguirá os Princípios Centrais. Itens típicos:
 
-## Estrutura do Projeto (selecionada)
+- Linters e formatadores configurados e documentados
+- Verificação de tipos / análise estática habilitada e passando localmente
+- Interfaces públicas mínimas e superfície de API documentadas
+- Critérios de aceitação manual / passos de reprodução fornecidos para revisores
 
-Organização proposta (arquivos específicos para esta feature):
+Observação: A constituição proíbe exigir suites de testes automatizados no repositório canônico; se houver proposta para incluí-los, o plano deve documentar a justificativa e seguir o procedimento de emenda.
+
+## Project Structure
+
+### Documentation (this feature)
 
 ```text
-src/
-├── app/
-│   ├── game/
-│   |   └── [saveId]/
-│   |       └── page.tsx
-│   ├── progress/
-│   |   └── [saveId]/
-│   |       └── page.tsx
-│   ├── saves/
-│   |   ├── new/
-│   |   |   └── page.tsx
-│   |   └── page.tsx
-│   ├── settings/
-│   |   └── page.tsx
-│   ├── sheet/
-│   |   └── [saveId]/
-│   |       └── page.tsx
-│   ├── layout.tsx
-│   ├── not-found.tsx
-│   └── page.tsx
-├── components/
-│   ├── layout/                    # Componentes do Layout (Header e Footer)
-│   ├── pages/                     # Páginas com 'use client'
-│   └── standard/                  # Componentes padrão (Button, Input, etc)
-│   └── index.tsx                  # export global
-│   └── scenes/
-│       ├── SceneRenderer.tsx      # Renderiza cenas a partir do modelo serializado
-│       ├── SceneCard.tsx          # UI de listagem/preview de cenas
-│       └── ChoiceButton.tsx       # Botões de decisão reutilizáveis
-├── config/                        # Configurações gerais
-├── data/                          # Enums, Schemas, Seed, Db
-├── hooks/
-├── images/                        # Imagens
-├── interfaces/
-│   └── Scene.ts                   # Tipagens: Scene, Choice, Outcome, PlayerState
-├── libs/
-│   ├── time.ts                    # Relógio do jogo, avanço de horas/dias
-│   ├── storage.ts                 # Wrapper para operações com Dixie + migrações
-└── providers/
-└── styles/
-    └── globals.css                # Tokens e utilitários Tailwind para a paleta
-
-specs/001-time-based-scenes/
-├── spec.md
-├── plan.md
-├── research.md
-├── data-model.md
-├── quickstart.md
-└── checklists/
-    └── requirements.md
-
+specs/[###-feature]/
+├── plan.md              # This file (/speckit.plan command output)
+├── research.md          # Phase 0 output (/speckit.plan command)
+├── data-model.md        # Phase 1 output (/speckit.plan command)
+├── quickstart.md        # Phase 1 output (/speckit.plan command)
+├── contracts/           # Phase 1 output (/speckit.plan command)
+└── tasks.md             # Phase 2 output (/speckit.tasks command - NOT created by /speckit.plan)
 ```
+
+### Source Code (repository root)
+<!--
+  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
+  for this feature. Delete unused options and expand the chosen structure with
+  real paths (e.g., apps/admin, packages/something). The delivered plan must
+  not include Option labels.
+-->
+
+```text
+# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
+src/
+├── models/
+├── services/
+├── cli/
+└── lib/
+
+tests/
+├── contract/
+├── integration/
+└── unit/
+
+# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
+backend/
+├── src/
+│   ├── models/
+│   ├── services/
+│   └── api/
+└── tests/
+
+frontend/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   └── services/
+└── tests/
+
+# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
+api/
+└── [same as backend above]
+
+ios/ or android/
+└── [platform-specific structure: feature modules, UI flows, platform tests]
+```
+
+**Structure Decision**: [Document the selected structure and reference the real
+directories captured above]
+
+## Complexity Tracking
+
+> **Fill ONLY if Constitution Check has violations that must be justified**
+
+| Violation | Why Needed | Simpler Alternative Rejected Because |
+|-----------|------------|-------------------------------------|
+| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
+| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
