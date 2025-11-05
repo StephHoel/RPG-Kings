@@ -9,5 +9,5 @@ export function getAllSaves(): Save[] | null {
     queryFn: () => db.saves.toArray()
   })
 
-  return saves != undefined && saves != null && saves.length > 0 ? saves as Save[] : null
+  return saves && saves.length > 0 ? saves : null
 }
