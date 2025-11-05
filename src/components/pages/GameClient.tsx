@@ -11,7 +11,7 @@ export default function GameClient() {
   const save = getSave(saveId)
   
   console.log('save ', save)
-  if (save == undefined || save == null) {
+  if (save === undefined || save === null) {
     // toast(save) // mensagem de erro
 
     deleteSave(saveId)
