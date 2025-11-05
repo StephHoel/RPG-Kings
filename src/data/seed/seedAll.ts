@@ -1,4 +1,4 @@
-import { db } from '../db'
+import { db } from '@/data/db'
 
 export async function seedAll() {
   const candidateSeeds: Record<string, any[]> = {

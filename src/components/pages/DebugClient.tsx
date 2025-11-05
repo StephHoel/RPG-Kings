@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react'
-import { exportLogsNDJSON, clearLogs } from '@/utils/logger'
+import { exportLogsNDJSON, clearLogs } from '@/libs'
 import { LogRow } from '@/data/types'
 import { db } from '@/data/db'
 import { seedAllIfEmpty } from '@/data/seed'

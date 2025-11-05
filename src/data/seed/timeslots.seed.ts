@@ -1,4 +1,4 @@
-import { TimeslotEnum } from '@/data/enums/TimeslotId'
+import { TimeslotEnum } from '@/data/enums'
 import { TimeslotRule } from '@/data/types'
 
 export const timeslotSeed: TimeslotRule[] = [

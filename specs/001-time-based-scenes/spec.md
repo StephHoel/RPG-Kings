@@ -73,25 +73,28 @@ As a player, I want the UI and scenes to use the established color palette (purp
 
 ### Key Entities *(include if feature involves data)*
 
-- **Scene**: {id, title, scheduled_day, scheduled_hour, content, choices[]}
-- **Choice**: {id, label, outcome_id}
-- **Outcome**: {id, effect_type, payload} — effect types: resource_delta, flag_set, narrative_branch
-- **PlayerState**: {player_id, resources, flags, current_day, current_hour, active_scene_id}
+- **Scene**: { id, title, scheduledDay?, scheduledHour?, weekdays?, content }
+
+  - `content` should be an object describing the scene payload. Minimal canonical shape:
+    - `{ kind: 'md'|'json', body: string|object }` — `md` for markdown text, `json` for structured payloads the renderer understands.
+- **Choice**: { id, label, outcomeId }
+- **Outcome**: { id, type, payload } — effect types: `resource_delta`, `flag_set`, `narrative_branch`
+- **PlayerState**: { playerId, resources, flags, currentDay, currentHour, activeSceneId, schemaVersion }
 
 ## Success Criteria *(mandatory)*
 
 ### Measurable Outcomes
 
-- **SC-001**: 100% of scheduled scenes trigger at their configured day/hour during manual test runs.
-- **SC-002**: 100% of choices produce the documented outcome and update player state in manual verification.
-- **SC-003**: Playtesters (N=5) report that scene timing and decision consequences are clear in at least 80% of sample playthroughs.
-- **SC-004**: Visual checks confirm that primary screens use the purple/lilac/gray palette and meet minimum contrast recommendations for main text/buttons.
+- **SC-001**: Em um conjunto de teste controlado (ex.: 10 cenas representativas cobrindo pontos pontuais e recorrentes), 100% das cenas agendadas devem disparar no `scheduledDay`/`scheduledHour` quando o `GameClock` for avançado conforme os passos de quickstart. Recomenda-se documentar o conjunto de testes em `specs/001-time-based-scenes/test-cases.md`.
+- **SC-002**: Para os casos de teste definidos, 100% das escolhas atualizam o `PlayerState` conforme o `Outcome` (verificar `localStorage`/Dixie ou HUD).
+- **SC-003**: Playtesters (N=5) relatam que o timing e as consequências são claros em ≥80% das execuções amostradas.
+- **SC-004**: Verificações visuais confirmam uso da paleta roxo/lilás/cinza e conformidade de contraste para textos/botões principais.
 
 ## Assumptions
 
-- Time progression is deterministic for the player's session and can be advanced manually for testing.
-- Persistence is available (save/load) via existing project save mechanisms; integration details are to be decided by implementers.
-- Performance targets are reasonable for a single-player web RPG; no concurrent multi-user scaling required.
+- Time progression é determinística na sessão do jogador e pode ser avançada manualmente via API do `GameClock` (ex.: `advanceHour()`, `setHour()`), facilitando QA manual.
+- A persistência está disponível via camada de storage; a implementação deve expor `storage.migrateSave(raw)` que mapeie automaticamente campos legados em `snake_case` (ex.: `scheduled_day`) para o modelo canônico `camelCase` ao carregar saves.
+- Targets de performance são moderados para um jogo single-player; não há necessidade de escalabilidade multi-usuário nesta versão.
 
 ## Dependencies
 

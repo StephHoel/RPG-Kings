@@ -1,5 +1,4 @@
-import { SceneTagEnum } from '@/data/enums/SceneTag'
-import { TimeslotEnum } from '@/data/enums/TimeslotId'
+import { SceneTagEnum, TimeslotEnum } from '@/data/enums'
 import { Scene } from '@/data/types'
 
 export const sceneSeed: Scene[] = [
