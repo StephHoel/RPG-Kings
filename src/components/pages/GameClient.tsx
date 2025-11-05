@@ -1,6 +1,6 @@
 'use client'
 import { useParams, useRouter } from 'next/navigation'
-import { deleteSave, getSave, getScene } from '@/hooks'
+import { getSave, getScene, useDeleteSave } from '@/hooks'
 import { ChoiceList, SceneCard } from '@/components'
 import { ROUTES } from '@/config/routes'
 
@@ -14,7 +14,7 @@ export default function GameClient() {
   if (save === undefined || save === null) {
     // toast(save) // mensagem de erro
 
-    deleteSave(saveId)
+    useDeleteSave()
     
     router.push(ROUTES.ROOT)
   }
