@@ -1,9 +1,6 @@
 import { db } from '@/data/db'
-import { timeslotSeed } from './timeslots.seed'
-import { sceneSeed } from './scenes.seed'
-import { milestoneSeed } from './milestones.seed'
-import { seedLogs } from './logs.seed'
-import { log } from '@/utils/logger'
+import { milestoneSeed, sceneSeed, seedLogs, timeslotSeed } from '@/data/seed'
+import { log } from '@/libs'
 
 export async function seedAllIfEmpty() {
   const [cScenes, cSlots, cMilestones] = await Promise.all([

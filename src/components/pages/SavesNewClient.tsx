@@ -1,5 +1,5 @@
 'use client'
-import { createSave } from '@/hooks'
+import { useCreateSave } from '@/hooks'
 import { Button } from '@/components'
 import { useForm } from 'react-hook-form'
 import { ROUTES } from '@/config/routes'
@@ -8,14 +8,18 @@ import { CreateSaveFormValues } from '@/interfaces'
 
 export default function SavesNewClient() {
   const router = useRouter()
+  const createSave = useCreateSave()
   const { register, handleSubmit, formState } = useForm<CreateSaveFormValues>({
     defaultValues: { name: '' },
   })
   const { errors, isSubmitting } = formState
 
   const onSubmit = async (data: CreateSaveFormValues) => {
-    const saveId = await createSave(data.name)
-    router.push(ROUTES.GAME(saveId))
+    createSave.mutate(data.name, {
+      onSuccess(id) {
+        router.push(ROUTES.GAME(id))
+      }
+    })
   }
 
   return (

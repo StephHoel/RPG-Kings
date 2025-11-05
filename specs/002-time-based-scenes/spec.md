@@ -1,9 +1,16 @@
-# Feature Specification: [FEATURE NAME]
+# Especificação da Feature: [NOME_DA_FEATURE]
 
-**Feature Branch**: `[###-feature-name]`  
-**Created**: [DATE]  
-**Status**: Draft  
-**Input**: User description: "$ARGUMENTS"
+**Branch da Feature**: `[###-feature-name]`  
+**Criado**: [DATE]  
+**Status**: Rascunho  
+**Input**: Descrição do usuário: "$ARGUMENTS"
+
+## Clarifications
+
+### Sessão 2025-11-03
+
+- Pergunta: Como agendar cenas — usar dia numérico (ex.: day=3), dias da semana (ex.: weekdays=['Mon']) ou ambos? → Resposta: Suportar ambos: `scheduledDay` (opcional) e `weekdays` (opcional); `scheduledHour` é comum.
+  Racional: compatibilidade com schemas existentes e cobertura para cenas pontuais e recorrentes.
 
 ## User Scenarios & Acceptance *(mandatory)*
 
@@ -93,8 +100,19 @@ optional and follow the amendment procedure to include them in governance.*
 
 ### Key Entities *(include if feature involves data)*
 
-- **[Entity 1]**: [What it represents, key attributes without implementation]
-- **[Entity 2]**: [What it represents, relationships to other entities]
+- **Scene**: representa um conteúdo narrativo agendável. Campos principais (sugestão):
+  - `id: string` — identificador único
+  - `title: string`
+  - `content: string` — texto/markdown ou payload serializado
+  - `scheduled_day?: number | null` — dia numérico (opcional, para cenas pontuais)
+  - `weekdays?: WeekdaysEnum[] | null` — dias da semana (opcional, para recorrência)
+  - `scheduled_hour?: number | null` — 0-23
+  - `choices: Choice[]`
+  - `priority?: number` — ordem de resolução em conflitos
+
+- **Choice**: { id, label, outcome } — opção apresentada ao jogador dentro de uma cena
+
+- **Outcome**: { type, payload } — efeitos aplicáveis ao `PlayerState` (resource_delta, flag_set, narrative_branch)
 
 ## Success Criteria *(mandatory)*
 
