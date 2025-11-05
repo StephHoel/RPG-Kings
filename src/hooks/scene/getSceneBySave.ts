@@ -15,5 +15,5 @@ export function getScene(save: Save): Scene | null {
     enabled: !!save,
   })
 
-  return scene !== undefined && scene !== null ? scene as Scene : null
+  return scene ?? null
 }
