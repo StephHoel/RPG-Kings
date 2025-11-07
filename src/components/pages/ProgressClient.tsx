@@ -1,11 +1,18 @@
 'use client'
-import { useParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { getMilestones } from '@/hooks'
+import { ROUTES } from '@/config/routes'
 
 export default function ProgressClient() {
-  const params = useParams()
-  const saveId = params?.saveId as string
-  const milestones = getMilestones(saveId)
+  const router = useRouter()
+  const search = useSearchParams()
+  const saveId = search?.get('saveId')
+  
+  const back = () => router.push(ROUTES.ROOT)
+  
+  if (saveId === null) back()
+  
+  const milestones = getMilestones(saveId!)
 
   return (
     <div className="mx-auto max-w-2xl p-4">

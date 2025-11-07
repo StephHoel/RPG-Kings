@@ -1,22 +1,28 @@
-'use client'
-import { useParams, useRouter } from 'next/navigation'
+"use client"
+import { useSearchParams, useRouter } from 'next/navigation'
 import { getSave, getScene, useDeleteSave } from '@/hooks'
 import { ChoiceList, SceneCard } from '@/components'
 import { ROUTES } from '@/config/routes'
 
 export default function GameClient() {
   const router = useRouter()
-  const params = useParams()
-  const saveId = params?.saveId as string
-  const save = getSave(saveId)
+  const search = useSearchParams()
+  const saveId = search?.get('saveId')
+
+const back = () => router.push(ROUTES.ROOT)
+
+  if(saveId === null) back()
+
+  const save = getSave(saveId!)
   
   console.log('save ', save)
-  if (save === undefined || save === null) {
+
+  if (save === null) {
     // toast(save) // mensagem de erro
 
     useDeleteSave()
     
-    router.push(ROUTES.ROOT)
+    back()
   }
 
   const scene = getScene(save!)

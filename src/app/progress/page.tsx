@@ -1,8 +1,13 @@
+import { Suspense } from 'react'
 import ProgressClient from '@/components/pages/ProgressClient'
 import { metadatas } from '@/config/metadatas'
 
 export const metadata = metadatas.progress
 
 export default function Progress() {
-  return <ProgressClient />
+  return (
+    <Suspense fallback={<div>Carregando...</div>}>
+      <ProgressClient />
+    </Suspense>
+  )
 }

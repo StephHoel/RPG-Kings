@@ -1,13 +1,14 @@
-const BASE = '/rpg-kings'
+const BASE = '/RPG-Kings'
 
 export const ROUTES = {
   ROOT: `/`,
   AUTH: `/auth`,
   SAVES: `/saves`,
   SAVE_NEW: `/saves/new`,
-  GAME: (id: string) => `/game/${id}`,
-  PROGRESS: (id: string) => `/progress/${id}`,
-  SHEET: (id: string) => `/sheet/${id}`,
+  // Use query param `?saveId=` so pages can be statically exported
+  GAME: (id: string) => `/game?saveId=${id}`,
+  PROGRESS: (id: string) => `/progress?saveId=${id}`,
+  SHEET: (id: string) => `/sheet?saveId=${id}`,
   SETTINGS: `/settings`,
   // Expose BASE for templates or runtime use
   BASE,

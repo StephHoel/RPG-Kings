@@ -1,12 +1,19 @@
-'use client'
-import { useParams } from 'next/navigation'
+"use client"
+import { useRouter, useSearchParams } from 'next/navigation'
 import { getInventory, getSheet } from '@/hooks'
+import { ROUTES } from '@/config/routes'
 
 export default function SheetClient() {
-  const params = useParams()
-  const saveId = params?.saveId as string
-  const sheet = getSheet(saveId)
-  const items = getInventory(saveId)
+  const router = useRouter()
+  const search = useSearchParams()
+  const saveId = search?.get('saveId')
+
+const back = () => router.push(ROUTES.ROOT)
+
+  if (saveId === null) back()
+  
+  const sheet = getSheet(saveId!)
+  const items = getInventory(saveId!)
 
   return (
     <div className="mx-auto max-w-2xl p-4 space-y-4">
