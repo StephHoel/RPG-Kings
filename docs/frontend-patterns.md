@@ -7,13 +7,13 @@ e orientado ao Tailwind para que desenvolvedores possam copiar snippets para
 
 ## Tokens de design (semânticos)
 
-- color-primary: #0b63d6 (ação primária)
-- color-primary-foreground: #ffffff
-- color-secondary: #6b7280 (ação secundária / sutil)
-- color-accent: #f59e0b (destaque)
-- color-surface: #ffffff
-- color-muted-surface: #f3f4f6
-- color-bg: #0f172a
+- color-primary: #8B5CF6 (ação primária)
+- color-primary-foreground: #D1D5DB
+- color-secondary: #7C3AED (ação secundária / sutil)
+- color-accent: #5d00ffff (destaque)
+- color-surface: #F3F4F6
+- color-muted-surface: #9CA3AF
+- color-bg: #4B5563
 - color-error: #ef4444
 - color-success: #10b981
 

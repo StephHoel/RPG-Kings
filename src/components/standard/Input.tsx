@@ -1,11 +1,16 @@
 import { InputHTMLAttributes } from 'react'
 
-export function Input({ className, ...rest }: InputHTMLAttributes<HTMLInputElement>) {
-
+export function Input({ className, children, ...rest }: InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <input
-      className={`w-full rounded border border-primary-bg px-3 py-2 focus:outline-2 focus:outline-primary ${className}`}
-      {...rest}
-    />
+    <div className={`w-full ${className}`}>
+      <label className="space-y-2">
+        <p>{children}</p>
+
+        <input
+          className='w-full px-3 py-2 rounded border border-primary-bg focus:outline-2 focus:outline-primary'
+          {...rest}
+        />
+      </label>
+    </div>
   )
 }
