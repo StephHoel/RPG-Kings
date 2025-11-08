@@ -1,10 +1,10 @@
 'use client'
 import Link from 'next/link'
-import { useActiveSave } from '@/hooks'
-import { MENUS } from '../../config/menu'
+import { useActiveSaveContext } from '@/providers/useActiveSaveContext'
+import { MENUS } from '@/config/menu'
 
 export function FooterNav() {
-  const { activeSaveId } = useActiveSave()
+  const { activeSaveId } = useActiveSaveContext()
 
   return (
     <footer className='text-sm w-full bg-panel-bg py-1'>

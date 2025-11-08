@@ -1,10 +1,10 @@
 import '@/styles/globals.css'
-import { ReactNode } from 'react'
+import { PropsWithChildren } from 'react'
 import { ReactQueryProvider } from '@/providers/ReactQueryProvider'
 import { Toaster } from 'sonner'
 import { FooterNav, Header } from '@/components'
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="pt-br" className="h-dvh bg-panel-bg bg-gradient-to-br from-neutral-900 via-violet-950 to-neutral-800 bg-fixed bg-no-repeat">
       <head>

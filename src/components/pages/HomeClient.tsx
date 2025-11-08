@@ -1,13 +1,13 @@
 "use client"
-import { useActiveSave } from "@/hooks"
 import { Button, H1, Panel } from "@/components"
 import { ROUTES } from "@/config/routes"
 import { useRouter } from 'next/navigation'
 import { Activity } from 'react'
+import { useActiveSaveContext } from '@/providers/useActiveSaveContext'
 
 export default function HomeClient() {
   const router = useRouter()
-  const { activeSaveId } = useActiveSave()
+  const { activeSaveId } = useActiveSaveContext()
 
   const goToGame = () => router.push(ROUTES.GAME(activeSaveId!))
 
