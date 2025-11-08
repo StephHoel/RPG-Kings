@@ -2,7 +2,7 @@ import '@/styles/globals.css'
 import { ReactNode } from 'react'
 import { ReactQueryProvider } from '@/providers/ReactQueryProvider'
 import { Toaster } from 'sonner'
-import { BackPanel, FooterNav, Header } from '@/components'
+import { FooterNav, Header } from '@/components'
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -18,10 +18,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ReactQueryProvider>
           <Header />
 
-          <main className='grow px-4 py-6 mx-auto w-full lg:max-w-3/4 2xl:max-w-2/4'>
-            <BackPanel>
+          <main className='grow px-4 py-6 mx-auto w-full lg:max-w-3/4 2xl:max-w-2/4 flex items-center justify-center p-6 h-full md:w-3/4 mx-auto'>
+            <div className='h-full w-full max-w-3xl rounded-2xl border border-primary-bg bg-muted-fg/70 p-8 shadow-2xl backdrop-blur-xl'>
               {children}
-            </BackPanel>
+            </div>
           </main>
 
           <FooterNav />
