@@ -1,6 +1,5 @@
 import { z } from 'zod'
-import { InventoryItemSchema, LogRowSchema, MilestoneSchema, SaveSchema, SceneSchema, SettingsSchema, SheetSchema, TimeslotRuleSchema } from '@/data/schemas'
-import { LogTypeEnum } from './enums'
+import { InventoryItemSchema, LogRowSchema, LogTypeEnum, MilestoneSchema, SaveSchema, SceneSchema, SettingsSchema, SheetSchema, TimeslotRuleSchema } from '@/data'
 
 // schemas
 export type Save = z.infer<typeof SaveSchema>

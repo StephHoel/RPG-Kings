@@ -1,4 +1,4 @@
-import { WeekdaysEnum } from '@/data/enums'
+import { WeekdaysEnum } from '@/data'
 import { z } from 'zod'
 import { s } from './_schemas'
 

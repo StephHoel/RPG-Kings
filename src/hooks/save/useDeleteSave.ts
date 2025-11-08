@@ -1,4 +1,4 @@
-import { db } from '@/data/db'
+import { db } from '@/data'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { refreshSaves } from '@/hooks'
 

@@ -1,4 +1,4 @@
-import { Milestone } from '@/data/types'
+import { Milestone } from '@/interfaces'
 
 export const milestoneSeed: Milestone[] = [
   {
@@ -25,4 +25,4 @@ export const milestoneSeed: Milestone[] = [
     achievedAtWeek: 0,
     createdAt: new Date()
   },
-];
+]

@@ -1,5 +1,5 @@
-import { TimeslotEnum } from '@/data/enums'
-import { TimeslotRule } from '@/data/types'
+import { TimeslotEnum } from '@/data'
+import { TimeslotRule } from '@/interfaces'
 
 export const timeslotSeed: TimeslotRule[] = [
   {
@@ -14,4 +14,4 @@ export const timeslotSeed: TimeslotRule[] = [
     id: TimeslotEnum.enum.night,
     scenes: []
   },
-];
+]

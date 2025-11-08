@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { WeekdaysEnum } from '../enums/Weekdays'
+import { WeekdaysEnum } from '@/data'
 
 export const s = {
   sequencialId: z.number().nonnegative().min(1),

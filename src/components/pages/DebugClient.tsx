@@ -1,6 +1,7 @@
 'use client'
 import { Button, GenericTable, H1, Input, Panel } from '@/components'
-import { LogRow, LogCategoryLabels, db, LogTypeEnum } from '@/data'
+import { db, LogTypeEnum } from '@/data'
+import { LogCategoryLabels, LogRow } from '@/interfaces'
 import { exportLogsNDJSON, clearLogs, formatDate, formatPayload, LogTypeLabels } from '@/libs'
 import { useState, useEffect, useMemo, Activity } from 'react'
 import { toast } from 'sonner'

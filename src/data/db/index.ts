@@ -1,5 +1,5 @@
 import Dexie, { Table } from 'dexie'
-import { Save, Sheet, Scene, TimeslotRule, Milestone, InventoryItem, Settings, LogRow } from '@/data/types'
+import { Save, Sheet, Scene, TimeslotRule, Milestone, InventoryItem, Settings, LogRow } from '@/interfaces'
 
 class RPGDatabase extends Dexie {
   saves!: Table<Save, string>
