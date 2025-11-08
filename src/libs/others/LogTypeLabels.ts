@@ -1,4 +1,4 @@
-import { LogCategoryLabels } from '@/data'
+import { LogCategoryLabels } from '@/interfaces'
 
 export const LogTypeLabels: Record<LogCategoryLabels, string> = {
   all: 'All',

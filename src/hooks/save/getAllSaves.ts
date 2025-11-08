@@ -1,4 +1,5 @@
-import { db, Save } from '@/data'
+import { db } from '@/data'
+import { Save } from '@/interfaces'
 import { useQuery } from '@tanstack/react-query'
 
 export function getAllSaves(): Save[] | null {

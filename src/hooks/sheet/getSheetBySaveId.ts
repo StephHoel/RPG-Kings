@@ -1,4 +1,5 @@
-import { db, Sheet } from '@/data'
+import { db } from '@/data'
+import { Sheet } from '@/interfaces'
 import { useQuery } from '@tanstack/react-query'
 
 export function getSheet(saveId: string): Sheet | null {

@@ -6,7 +6,7 @@ O que precisa ser feito:
 - [x] Adequação do template da tela: Home
 - [x] Adequação do template da tela: New Saves
 - [x] Adequação do template da tela: Debug
-- [ ] Adequação do template da tela: Dev Seed
+- [x] Adequação do template da tela: Dev Seed
 - [ ] Adequação do template da tela: Game
 - [ ] Adequação do template da tela: Not Found
 - [ ] Adequação do template da tela: Progress
