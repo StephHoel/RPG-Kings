@@ -7,6 +7,7 @@ export * from './layout/Panel'
 // Standard Components
 export * from './standard/AlertError'
 export * from './standard/Button'
+export * from './standard/GenericTable'
 export * from './standard/H1'
 export * from './standard/Input'
 

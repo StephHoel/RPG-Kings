@@ -1,5 +1,5 @@
 'use client'
-import { seedAll } from '@/data/seed'
+import { seedAll, seedAllIfEmpty } from '@/data'
 import { useState } from 'react'
 
 export default function SeedDevClient() {
@@ -7,6 +7,9 @@ export default function SeedDevClient() {
 
   const run = async () => {
     await seedAll()
+
+    await seedAllIfEmpty()
+
     setDone(true)
   }
 
