@@ -3,11 +3,11 @@ import Link from 'next/link'
 
 export function Header() {
   return (
-    <header className='bg-panel-bg text-primary-fg shadow-md w-full'>
-      <div className='container mx-auto px-4 py-2 text-center justify-between flex'>
+    <header className='w-full bg-panel-bg shadow-md'>
+      <div className='container mx-auto flex justify-between px-4 py-2 text-center'>
         <div className='w-full'></div>
 
-        <Link href={ROUTES.ROOT} className='text-2xl font-bold tracking-wide min-w-fit'>
+        <Link href={ROUTES.ROOT} className='min-w-fit text-2xl font-bold tracking-wide'>
           King's Academy
         </Link>
 
