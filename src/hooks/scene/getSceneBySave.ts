@@ -1,4 +1,4 @@
-import { Save, Scene } from '@/data/types'
+import { Save, Scene } from '@/data'
 import { resolveSceneForNow } from '@/libs'
 import { useQuery } from '@tanstack/react-query'
 

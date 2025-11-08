@@ -1,5 +1,4 @@
-import { db } from '@/data/db'
-import { InventoryItem } from '@/data/types'
+import { db, InventoryItem } from '@/data'
 import { useQuery } from '@tanstack/react-query'
 
 export function getInventory(saveId: string): InventoryItem[] | null {

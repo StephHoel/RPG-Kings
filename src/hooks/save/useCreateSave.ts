@@ -1,9 +1,7 @@
-import { db } from '@/data/db'
 import { nanoid } from 'nanoid'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import type { Save } from '@/data/types'
-import { useQueryKeys } from '@/hooks'
-import { refreshSaves } from '@/hooks'
+import { db, Save } from '@/data'
+import { refreshSaves, useQueryKeys } from '@/hooks'
 
 // Hook que cria o save e atualiza o cache do React Query
 export function useCreateSave() {

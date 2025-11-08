@@ -1,5 +1,4 @@
-import { db } from '@/data/db'
-import { Milestone } from '@/data/types'
+import { db, Milestone } from '@/data'
 import { useQuery } from '@tanstack/react-query'
 
 export function getMilestones(saveId: string): Milestone[] | null {

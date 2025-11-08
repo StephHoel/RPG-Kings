@@ -1,5 +1,4 @@
-import { db } from '@/data/db'
-import { Save, SaveId } from '@/data/types'
+import { db, Save, SaveId } from '@/data'
 import { useQuery } from '@tanstack/react-query'
 
 export function getSave(saveId: SaveId): Save | null {

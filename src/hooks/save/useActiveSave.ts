@@ -1,7 +1,6 @@
 'use client'
 import { useQuery } from '@tanstack/react-query'
-import { db } from '@/data/db'
-import { Save } from '@/data/types'
+import { db, Save } from '@/data'
 import { useQueryKeys } from '@/hooks'
 
 export function useActiveSave() {
