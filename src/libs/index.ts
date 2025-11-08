@@ -1,7 +1,7 @@
 export * from './format/FormatPayload'
 export * from './format/FormatDate'
 
-export * from './logger'
-export * from './timeslot'
+export * from './others/logger'
+export * from './others/timeslot'
 
-export * from './LogTypeLabels'
+export * from './others/LogTypeLabels'
