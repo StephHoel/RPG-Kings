@@ -1,3 +1,3 @@
-export type CreateSaveFormValues = {
+export interface CreateSaveFormValues {
   name: string
 }
