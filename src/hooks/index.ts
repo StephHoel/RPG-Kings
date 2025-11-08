@@ -20,3 +20,6 @@ export * from './scene/getSceneBySave'
 
 // Sheet
 export * from './sheet/getSheetBySaveId'
+
+// Seed
+export * from './seed/useSeedAll'

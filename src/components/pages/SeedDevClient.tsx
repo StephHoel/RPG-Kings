@@ -1,23 +1,31 @@
 'use client'
-import { seedAll, seedAllIfEmpty } from '@/data'
 import { useState } from 'react'
+import { Button, H1, Panel } from '@/components'
+import { useSeedAll } from '@/hooks'
 
 export default function SeedDevClient() {
-  const [done, setDone] = useState(false)
+  const [isSeed, setIsSeed] = useState(false)
 
-  const run = async () => {
-    await seedAll()
-
-    await seedAllIfEmpty()
-
-    setDone(true)
+  const seed = async () => {
+    setIsSeed(await useSeedAll().mutateAsync())
   }
 
   return (
-    <div className="mx-auto max-w-xl p-4 space-y-3">
-      <h1 className="text-lg font-semibold">Seed de Cenas & Timeslots</h1>
-      <button className="border rounded px-4 py-2" onClick={run}>Rodar seed</button>
-      {done && <div className="text-green-600">Seed concluído!</div>}
-    </div>
+    <Panel>
+      <H1>/dev/seed – Semeando Amor</H1>
+
+      <Button
+        onClick={seed}
+        disabled={isSeed}
+      >
+        {isSeed ?
+          <p className='text-sucess'>
+            ✅ Semeado com amor!
+          </p>
+          :
+          <p>Semear tudo!</p>
+        }
+      </Button>
+    </Panel>
   )
 }

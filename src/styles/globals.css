@@ -17,6 +17,8 @@
   --color-danger: #EF4444;
   --color-danger-bg: #DC2626;
   --color-danger-fg: #FFFFFF;
+
+  --color-sucess: var(--color-green-400);
   
   /* --color-foreground: #D1D5DB;
   --color-foreground-strong: #FFFFFF;
