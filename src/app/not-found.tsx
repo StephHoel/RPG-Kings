@@ -1,5 +1,5 @@
-import { metadatas } from '@/config/metadatas'
 import NotFoundClient from '@/components/pages/NotFoundClient'
+import { metadatas } from '@/config'
 
 export const metadata = metadatas.not_found
 

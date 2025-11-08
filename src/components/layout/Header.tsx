@@ -1,4 +1,4 @@
-import { ROUTES } from '@/config/routes'
+import { ROUTES } from '@/config'
 import Link from 'next/link'
 
 export function Header() {

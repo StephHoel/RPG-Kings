@@ -1,12 +1,14 @@
 'use client'
-import { Button } from '@/components'
+import { Button, Panel } from '@/components'
 import { useRouter } from 'next/navigation'
-import { ROUTES } from '@/config/routes'
+import { ROUTES } from '@/config'
 
 export default function NotFoundClient() {
   const router = useRouter()
 
   return (
+    <Panel>
+
     <div className='min-h-full flex items-center justify-center'>
       <div className='bg-neutral-800/80 rounded-2xl shadow-2xl border-violet-900 p-8 text-center'>
         <h2 className='text-3xl font-bold text-violet-400 mb-4'>
@@ -16,5 +18,6 @@ export default function NotFoundClient() {
         <Button onClick={() => router.push(ROUTES.ROOT)}>Voltar para Início</Button>
       </div>
     </div>
+    </Panel>
   )
 }

@@ -1,17 +1,17 @@
 "use client"
 import { useRouter, useSearchParams } from 'next/navigation'
 import { getInventory, getSheet } from '@/hooks'
-import { ROUTES } from '@/config/routes'
+import { ROUTES } from '@/config'
 
 export default function SheetClient() {
   const router = useRouter()
   const search = useSearchParams()
   const saveId = search?.get('saveId')
 
-const back = () => router.push(ROUTES.ROOT)
+  const back = () => router.push(ROUTES.ROOT)
 
   if (saveId === null) back()
-  
+
   const sheet = getSheet(saveId!)
   const items = getInventory(saveId!)
 

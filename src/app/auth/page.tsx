@@ -1,5 +1,5 @@
 import AuthClient from '@/components/pages/AuthClient'
-import { metadatas } from '@/config/metadatas'
+import { metadatas } from '@/config'
 
 export const metadata = metadatas.auth
 

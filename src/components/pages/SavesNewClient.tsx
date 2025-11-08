@@ -2,7 +2,7 @@
 import { useCreateSave } from '@/hooks'
 import { AlertError, Button, H1, Input, Loader, Panel } from '@/components'
 import { useForm } from 'react-hook-form'
-import { ROUTES } from '@/config/routes'
+import { ROUTES } from '@/config'
 import { useRouter } from 'next/navigation'
 import { CreateSaveFormValues } from '@/interfaces'
 

@@ -1,6 +1,6 @@
 "use client"
 import { Button, H1, Panel } from "@/components"
-import { ROUTES } from "@/config/routes"
+import { ROUTES } from "@/config"
 import { useRouter } from 'next/navigation'
 import { Activity } from 'react'
 import { useActiveSaveContext } from '@/providers/useActiveSaveContext'

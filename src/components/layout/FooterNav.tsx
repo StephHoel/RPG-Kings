@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useActiveSaveContext } from '@/providers/useActiveSaveContext'
-import { MENUS } from '@/config/menu'
+import { MENUS } from '@/config'
 
 export function FooterNav() {
   const { activeSaveId } = useActiveSaveContext()

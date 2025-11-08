@@ -1,5 +1,5 @@
 import DebugClient from '@/components/pages/DebugClient'
-import { metadatas } from '@/config/metadatas'
+import { metadatas } from '@/config'
 
 export const metadata = metadatas.debug
 

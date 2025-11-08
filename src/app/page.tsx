@@ -1,5 +1,5 @@
-import { metadatas } from '@/config/metadatas'
 import HomeClient from '@/components/pages/HomeClient'
+import { metadatas } from '@/config'
 
 export const metadata = metadatas.home
 

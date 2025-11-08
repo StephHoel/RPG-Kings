@@ -1,5 +1,5 @@
 import SeedDevClient from '@/components/pages/SeedDevClient'
-import { metadatas } from '@/config/metadatas'
+import { metadatas } from '@/config'
 
 export const metadata = metadatas.dev_seed
 
