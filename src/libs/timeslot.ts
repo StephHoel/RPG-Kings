@@ -1,10 +1,12 @@
-import { db } from '@/data/db'
-import { Save, Scene, TimeslotRule } from '@/data/types'
+import { Save, TimeslotRule, Scene, db } from '@/data'
 
 function matchesRule(save: Save, rule: TimeslotRule) {
   const dayOk = !rule.weekdays || rule.weekdays.includes(save.currentDay)
+  
   const hourOk = !rule.hours || rule.hours.includes(save.currentHour)
+  
   const weekOk = !rule.weeks || rule.weeks.includes(save.currentWeek)
+
   return dayOk && hourOk && weekOk
 }
 
