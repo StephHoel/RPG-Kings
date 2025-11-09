@@ -8,7 +8,7 @@ O que precisa ser feito:
 - [x] Adequação do template da tela: Debug
 - [x] Adequação do template da tela: Dev Seed
 - [x] Adequação do template da tela: Not Found
-- [ ] Adequação do template da tela: Setting
+- [x] Adequação do template da tela: Setting
 - [ ] Adequação do template da tela: Game
 - [ ] Adequação do template da tela: Progress
 - [ ] Adequação do template da tela: Saves
