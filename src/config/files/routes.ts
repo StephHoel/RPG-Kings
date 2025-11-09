@@ -10,6 +10,10 @@ export const ROUTES = {
   PROGRESS: (id: string) => `/progress?saveId=${id}`,
   SHEET: (id: string) => `/sheet?saveId=${id}`,
   SETTINGS: '/settings',
+
+  DEV_SEED: '/dev/seed',
+  DEBUG: '/debug',
+
   // Expose BASE for templates or runtime use
   BASE,
 } as const

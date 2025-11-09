@@ -1,8 +1,11 @@
 // Layout Components
+export * from './layout/Background'
 export * from './layout/FooterNav'
 export * from './layout/Header'
 export * from './layout/Loader'
+export * from './layout/Menu'
 export * from './layout/Panel'
+export * from './layout/Sidebar'
 
 // Standard Components
 export * from './standard/AlertError'

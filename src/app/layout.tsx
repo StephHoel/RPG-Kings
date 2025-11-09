@@ -2,7 +2,7 @@ import '@/styles/globals.css'
 import { PropsWithChildren } from 'react'
 import { ReactQueryProvider } from '@/providers/ReactQueryProvider'
 import { Toaster } from 'sonner'
-import { FooterNav, Header } from '@/components'
+import { Background, FooterNav, Header, Sidebar } from '@/components'
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
@@ -10,7 +10,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        {/* Use NEXT_PUBLIC_BASE_PATH so favicon resolves on GH Pages when app is served under a repo subpath */}
         <link
           rel="icon"
           href={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/favicon.svg`}
@@ -23,8 +22,14 @@ export default function RootLayout({ children }: PropsWithChildren) {
           <Header />
 
           <main className='mx-auto flex h-fit w-full grow items-center justify-center p-6 px-4 py-6 md:w-3/4 lg:max-w-3/4 2xl:max-w-2/4'>
-            <div className='min-w-[80dvw] min-h-[65dvh] rounded-2xl border border-highlight bg-muted/70 p-8 shadow-2xl backdrop-blur-xl'>
-              {children}
+            <div className='min-w-[80dvw] min-h-[65dvh] p-8 flex gap-4'>
+              <Background className='hidden md:block'>
+                <Sidebar />
+              </Background>
+
+              <Background className='w-full justify-center'>
+                {children}
+              </Background>
             </div>
           </main>
 
