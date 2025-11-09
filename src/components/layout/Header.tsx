@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export function Header() {
   return (
-    <header className='w-full bg-panel-bg shadow-md'>
+    <header className='w-full bg-background shadow-md'>
       <div className='container mx-auto flex justify-between px-4 py-2 text-center'>
         <div className='w-full'></div>
 

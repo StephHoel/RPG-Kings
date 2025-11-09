@@ -1,69 +1,12 @@
-/* @config "../../tailwind.config.js"; */
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #8B5CF6;
-  --color-primary-bg: #7C3AED;
-  --color-primary-fg: #D1D5DB;
-  
-  --color-muted: #9CA3AF;
-  --color-muted-bg: #F3F4F6;
-  --color-muted-fg: #4B5563;
-  
-  --color-panel: #4B5563;
-  --color-panel-bg: #101828;
-  --color-panel-fg: #FFFFFF;
-  
-  --color-danger: #EF4444;
-  --color-danger-bg: #DC2626;
-  --color-danger-fg: #FFFFFF;
-
-  --color-sucess: var(--color-green-400);
-  
-  /* --color-foreground: #D1D5DB;
-  --color-foreground-strong: #FFFFFF;
-  --color-muted-bg-fg: #4B5563;
-
-  --color-accent: #8B5CF6;
-  --color-accent-hover: #7C3AED;
-
-  --color-link: #7C3AED;
-  --color-link-hover: #6D28D9;
-  
-  --color-border: #E5E7EB; */
+  --color-background: var(--color-gray-900); /* oklch(21% 0.034 264.665) */
+  --color-foreground: var(--color-gray-300); /* oklch(87.2% 0.01 258.338) */
+  --color-highlight: var(--color-violet-600); /* oklch(54.1% 0.281 293.009) */
+  --color-primary: var(--color-violet-700); /* oklch(49.1% 0.27 292.581) */
+  --color-secundary: var(--color-violet-500); /* oklch(60.6% 0.25 292.717) */
+  --color-muted: var(--color-gray-600); /* oklch(44.6% 0.03 256.802) */
+  --color-danger: var(--color-red-600); /* oklch(57.7% 0.245 27.325) */
+  --color-success: var(--color-green-600); /* oklch(62.7% 0.194 149.214) */
 }
-
-/*
-.dark {
-  --color-foreground: #9CA3AF;
-  --color-foreground-strong: #E5E7EB;
-
-  --color-muted: #6B7280;
-  --color-muted-fg: #D1D5DB;
-  --color-muted-bg: #111827;
-  --color-muted-bg-fg: #D1D5DB;
-
-  --color-accent: #A78BFA;
-  --color-accent-hover: #8B5CF6;
-
-  --color-link: #C4B5FD;
-  --color-link-hover: #A78BFA;
-
-  --color-primary: #A78BFA;
-  --color-primary-hover: #8B5CF6;
-  --color-primary-fg: #9CA3AF;
-
-  --color-panel: #1F2937;
-  --color-panel-fg: #FFFFFF;
-  --color-panel-bg: #101828;
-
-  --color-border: #374151;
-
-  --color-danger: #F87171;
-  --color-danger-hover: #EF4444;
-  --color-danger-fg: #111827;
-}
-*/
-
-/* ...existing global rules... */
-html, body { height: 100%; }

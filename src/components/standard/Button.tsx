@@ -5,7 +5,7 @@ export function Button({ className, onClick, type = "button", disabled, children
   return (
     <button
       type={type}
-      className={`w-full rounded-xl bg-primary-bg px-4 py-2 text-center font-bold text-panel-fg hover:bg-primary focus:outline-2 focus:outline-primary ${onClick !== undefined ? "cursor-pointer" : ""} ${disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : ""} ${className ?? ''}`}
+      className={`w-full rounded-xl bg-primary px-4 py-2 text-center font-bold text-white/80 hover:bg-primary focus:outline-2 focus:outline-primary ${onClick !== undefined ? "cursor-pointer" : ""} ${disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : ""} ${className ?? ''}`}
       onClick={onClick}
       disabled={disabled}
       {...rest}

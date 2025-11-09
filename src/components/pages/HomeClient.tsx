@@ -17,7 +17,7 @@ export default function HomeClient() {
     <Panel>
       <H1>Bem-vindo(a)</H1>
 
-      <p className="mb-6 text-lg text-primary-fg text-center">
+      <p className="mb-6 text-lg text-center">
         Continue seu jogo ou crie um novo save.
       </p>
 

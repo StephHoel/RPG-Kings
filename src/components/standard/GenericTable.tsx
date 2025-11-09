@@ -5,8 +5,8 @@ export function GenericTable<T>({ header: headers, rows, rowKey }: GenericTableP
   const keyFn = rowKey ?? ((r: any) => r.id ?? JSON.stringify(r))
 
   return (
-    <table className="min-w-full rounded border border-primary-bg bg-primary text-sm">
-      <thead className="bg-primary-bg">
+    <table className="min-w-full rounded border border-highlight bg-secundary text-sm">
+      <thead className="bg-primary">
         <tr>
           {headers.map(h => (
             <th key={h.key} className={`text-left p-2 not-first:border-l`}>
@@ -25,7 +25,7 @@ export function GenericTable<T>({ header: headers, rows, rowKey }: GenericTableP
         {rows.map(row => (
           <tr key={String(keyFn(row))} className="border-t">
             {headers.map(h => (
-              <td key={h.key} className={`p-2`}>
+              <td key={h.key} className={`p-2 not-first:border-l`}>
                 {h.render ? h.render(row) : (row as any)[h.key]}
               </td>
             ))}

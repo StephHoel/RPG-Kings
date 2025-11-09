@@ -93,7 +93,7 @@ export default function DebugClient() {
   ]
 
   return (
-    <Panel className="text-primary-fg">
+    <Panel>
       <div>
         <H1>/debug – Logs locais</H1>
 
@@ -104,12 +104,12 @@ export default function DebugClient() {
         <div className='flex space-x-2 w-full items-center justify-between'>
           <select
             aria-label="Filtrar por tipo de log"
-            className="border border-primary-bg px-3 py-2 rounded"
+            className="border border-highlight px-3 py-2 rounded"
             value={type}
             onChange={e => setType(e.target.value as any)}
           >
             {types.map(t => (
-              <option key={t} value={t} className="bg-primary hover:bg-primary-bg hover:text-danger">
+              <option key={t} value={t} className="bg-primary hover:bg-secundary">
                 {LogTypeLabels[t]}
               </option>
             ))}
@@ -121,7 +121,7 @@ export default function DebugClient() {
             onChange={e => setQ(e.target.value)}
           />
 
-          <span className="text-sm text-gray-500 min-w-fit">Total: {filtered.length}</span>
+          <span className="text-sm min-w-fit">Total: {filtered.length}</span>
         </div>
 
         <div className="flex space-x-2 w-full">

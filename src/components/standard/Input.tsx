@@ -9,7 +9,7 @@ export function Input({ className, children, ...rest }: InputHTMLAttributes<HTML
         </Activity>
 
         <input
-          className='w-full px-3 py-2 rounded border border-primary-bg focus:outline-2 focus:outline-primary'
+          className='w-full px-3 py-2 rounded border border-highlight focus:outline-2 focus:outline-primary'
           {...rest}
         />
       </label>

@@ -19,7 +19,7 @@ export default function SeedDevClient() {
         disabled={isSeed}
       >
         {isSeed ?
-          <p className='text-sucess'>
+          <p className='text-success'>
             ✅ Semeado com amor!
           </p>
           :

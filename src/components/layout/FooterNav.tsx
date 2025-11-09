@@ -7,7 +7,7 @@ export function FooterNav() {
   const { activeSaveId } = useActiveSaveContext()
 
   return (
-    <footer className='text-sm w-full bg-panel-bg py-1'>
+    <footer className='text-sm w-full bg-background py-1'>
       <nav className="sticky bottom-0 z-20  backdrop-blur mb-2 border-y border-primary md:hidden">
         <div className="mx-auto max-w-6xl grid grid-cols-5 text-center">
           {MENUS.map((menu) => (
