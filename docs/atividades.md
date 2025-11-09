@@ -17,6 +17,7 @@ O que precisa ser feito:
 - [ ] Adicionar menu (no header) em telas grandes
 - [ ] Configurar toast
 - [ ] Garantir que todas as telas estão em mobile-first
+- [ ] Entender porque seed não funciona no gh pages
 <!-- - [ ]  -->
 <!-- - [ ]  -->
 <!-- - [ ]  -->
