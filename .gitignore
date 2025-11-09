@@ -70,3 +70,17 @@ $RECYCLE.BIN/
 .next/
 /package-lock.json
 /out
+
+# Node/Next/Tailwind common
+node_modules/
+dist/
+build/
+coverage/
+*.log
+.env
+.env.local
+.env.*.local
+/.parcel-cache
+
+# Tailwind generated CSS (if any)
+public/styles/*.css
