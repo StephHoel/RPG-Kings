@@ -9,7 +9,7 @@ export default function SeedDevClient() {
 
   const seed = async () => {
     await seedMutation.mutateAsync()
-    
+
     setIsSeed(true)
   }
 

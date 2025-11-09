@@ -6,6 +6,7 @@ export * from './layout/Loader'
 export * from './layout/Menu'
 export * from './layout/Panel'
 export * from './layout/Sidebar'
+export * from './layout/ToasterResponsive'
 
 // Standard Components
 export * from './standard/AlertError'

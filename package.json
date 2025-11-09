@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "export": "next export",
+    "lint": "npx eslint \"src/**/*.{ts,tsx}\" --fix ",
     "check": "npx tsc"
   },
   "dependencies": {

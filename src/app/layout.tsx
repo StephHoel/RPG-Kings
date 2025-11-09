@@ -1,8 +1,7 @@
 import '@/styles/globals.css'
 import { PropsWithChildren } from 'react'
 import { ReactQueryProvider } from '@/providers/ReactQueryProvider'
-import { Toaster } from 'sonner'
-import { Background, FooterNav, Header, Sidebar } from '@/components'
+import { Background, FooterNav, Header, Sidebar, ToasterResponsive } from '@/components'
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
@@ -35,7 +34,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 
           <FooterNav />
 
-          <Toaster richColors position="top-right" />
+          <ToasterResponsive />
         </ReactQueryProvider>
       </body>
     </html>

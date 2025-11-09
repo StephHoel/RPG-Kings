@@ -17,7 +17,7 @@ O que precisa ser feito:
 - [x] Adequação do template da tela: Game
 - [x] Adicionar menu em telas grandes
 - [x] Adequar páginas para ocupar full size
-- [ ] Configurar toast
+- [x] Configurar toast
 - [ ] Garantir que todas as telas estão em mobile-first
 - [ ] Planejar lógica de cenas
 - [ ] Implementar banco de dados
