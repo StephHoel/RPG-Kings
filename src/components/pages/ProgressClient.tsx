@@ -18,7 +18,7 @@ export default function ProgressClient() {
     <div className="mx-auto max-w-2xl p-4">
       <h1 className="text-lg font-semibold mb-3">Progresso</h1>
       <ul className="space-y-2">
-        {!milestones?.length && "Sem progressos registrados"}
+        {!milestones?.length && 'Sem progressos registrados'}
 
         {milestones?.map(m => (
           <li key={m.id} className="border rounded p-3">

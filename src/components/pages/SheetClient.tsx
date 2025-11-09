@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { getInventory, getSheet } from '@/hooks'
 import { ROUTES } from '@/config'
@@ -21,7 +21,7 @@ export default function SheetClient() {
       <pre className="rounded border p-3 bg-gray-500 overflow-auto text-sm">{JSON.stringify(sheet ?? 'Sem sheet', null, 2)}</pre>
       <h2 className="font-medium">Inventário</h2>
       <ul className="space-y-2">
-        {!items?.length && "Sem itens"}
+        {!items?.length && 'Sem itens'}
 
         {items?.map(i => (
           <li key={i.id} className="border rounded p-3">

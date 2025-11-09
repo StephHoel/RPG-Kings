@@ -54,7 +54,7 @@ export function useSeedAll() {
       }
 
       // log the operation once
-      await log('info', `Seed executada (debug)`)
+      await log('info', 'Seed executada (debug)')
 
       return anySeeded
     }

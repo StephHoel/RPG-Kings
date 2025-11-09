@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from 'zod'
 import { WeekdaysEnum } from '@/data'
 
 export const s = {

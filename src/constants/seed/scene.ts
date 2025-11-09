@@ -16,7 +16,7 @@ export const sceneSeed: Scene[] = [
     timeslots: [TimeslotEnum.enum.morning],
     tags: [SceneTagEnum.enum.study],
     content: 'Uma explicação introdutória sobre a Academia e seus objetivos.',
-    preRequire: { reputation: [{ "stock": 0 }] },
+    preRequire: { reputation: [{ 'stock': 0 }] },
   },
   {
     id: 'scene_treino_basico',

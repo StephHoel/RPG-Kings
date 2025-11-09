@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { getSave, getScene, useDeleteSave } from '@/hooks'
 import { ChoiceList, SceneCard } from '@/components'
