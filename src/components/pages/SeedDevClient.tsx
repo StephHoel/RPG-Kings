@@ -4,10 +4,13 @@ import { Button, H1, Panel } from '@/components'
 import { useSeedAll } from '@/hooks'
 
 export default function SeedDevClient() {
+  const seedMutation = useSeedAll()
   const [isSeed, setIsSeed] = useState(false)
 
   const seed = async () => {
-    setIsSeed(await useSeedAll().mutateAsync())
+    await seedMutation.mutateAsync()
+    
+    setIsSeed(true)
   }
 
   return (

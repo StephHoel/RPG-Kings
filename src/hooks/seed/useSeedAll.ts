@@ -1,7 +1,9 @@
+'use client'
 import { characterSeed, itemSeed, milestoneSeed, questSeed, reputationSeed, ruleSeed, sceneSeed, tagSeed, timeslotSeed } from '@/constants'
 import { db } from '@/data'
 import { log, safeBulkAdd } from '@/libs'
 import { useMutation } from '@tanstack/react-query'
+import { toast } from 'sonner'
 
 export function useSeedAll() {
   const candidateSeeds: Record<string, any[]> = {
@@ -28,7 +30,7 @@ export function useSeedAll() {
         const count = typeof table.count === 'function' ? await table.count() : (await table.toArray()).length
 
         if (count > 0) {
-          console.info(`${tableName} já tem dados — pulando`)
+          toast.info(`${tableName} já tem dados — pulando`)
           continue
         }
 
@@ -43,11 +45,12 @@ export function useSeedAll() {
             continue
           }
 
-          console.info(`Semeado ${tableName} (${entries.length} itens)`)
+          toast.success(`Semeado ${tableName} (${entries.length} itens)`)
           anySeeded = true
         } catch (err) {
+          toast.error(`Falha ao semear ${tableName}`)
           console.error(`Falha ao semear ${tableName}:`, err)
-          
+
           // rethrow to let the mutation mark as error
           throw err
         }
@@ -55,6 +58,7 @@ export function useSeedAll() {
 
       // log the operation once
       await log('info', 'Seed executada (debug)')
+      toast.success('Seed executada (debug)')
 
       return anySeeded
     }

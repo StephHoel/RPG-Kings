@@ -22,7 +22,7 @@ export default function HomeClient() {
       </p>
 
       <div className="flex flex-col md:flex-row px-4 gap-6 md:gap-2 md:justify-between">
-        <Activity mode={activeSaveId === null ? 'visible' : 'hidden'}>
+        <Activity mode={activeSaveId !== null ? 'visible' : 'hidden'}>
           <Button
             onClick={goToGame}
             aria-busy={activeSaveId ? 'true' : 'false'}
