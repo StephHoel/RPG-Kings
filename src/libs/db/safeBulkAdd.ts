@@ -10,8 +10,9 @@ export async function safeBulkAdd<T>(
 
     try {
       await table.bulkAdd(chunk)
-    } catch (err: any) {
-      console.error(err)
+    } catch (_err: unknown) {
+      // manter log para debug em desenvolvimento
+      console.error(_err)
     }
   }
 }
