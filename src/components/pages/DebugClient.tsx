@@ -46,7 +46,7 @@ export default function DebugClient() {
 
     await navigator.clipboard.writeText(ndjson)
 
-    toast('Log copiado (NDJSON).')
+    toast.success('Log copiado (NDJSON).')
   }
 
   async function onClear() {

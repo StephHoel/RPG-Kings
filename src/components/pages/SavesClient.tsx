@@ -1,25 +1,30 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { getAllSaves } from '@/hooks'
+import { Button, H1, Panel } from '@/components'
+import { ROUTES } from '@/config'
 
 export default function SavesClient() {
   const router = useRouter()
   const saves = getAllSaves()
 
   return (
-    <div className="mx-auto max-w-xl p-4 space-y-3">
-      <h1 className="text-lg font-semibold">Saves</h1>
-      <button className="border rounded-lg px-4 py-2" onClick={() => router.push('/saves/new')}>Novo save</button>
+    <Panel>
+      <H1>Saves</H1>
+
+      <Button onClick={() => router.push(ROUTES.SAVE_NEW)}>
+        Novo save
+      </Button>
+
       <ul className="divide-y">
         {saves && saves?.map((s) => (
           <li key={s.id} className="py-2 flex items-center justify-between">
-            <span>{s.name}</span>
-            <div className="flex gap-2">
-              <button className="border rounded px-3 py-1" onClick={() => router.push(`/game/${s.id}`)}>Ativar</button>
-            </div>
+            <Button className='max-w-1/2 mx-auto' onClick={() => router.push(ROUTES.GAME(s.id))}>
+              Ativar Save: {s.name}
+            </Button>
           </li>
         ))}
       </ul>
-    </div>
+    </Panel>
   )
 }
