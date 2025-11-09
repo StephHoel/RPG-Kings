@@ -1,8 +1,9 @@
 'use client'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { getSave, getScene, useDeleteSave } from '@/hooks'
+import { getSave, getScene } from '@/hooks'
 import { ChoiceList, SceneCard } from '@/components'
 import { ROUTES } from '@/config'
+import { toast } from 'sonner'
 
 export default function GameClient() {
   const router = useRouter()
@@ -18,9 +19,7 @@ export default function GameClient() {
   console.log('save ', save)
 
   if (save === null) {
-    // toast(save) // mensagem de erro
-
-    useDeleteSave()
+    toast('Save vazio, crie um novo save')
 
     back()
   }
