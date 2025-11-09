@@ -12,11 +12,9 @@ export function useActiveSave() {
     staleTime: 1000 * 60 * 60,
 
     queryFn: async (): Promise<Save | null> => {
-      const active = await db.saves.where('isActive').equals(1).first()
+      const active = await db.saves.filter(s => s?.isActive === true).first()
 
-      console.log('active save', active)
-
-      return (active as Save) ?? null
+      return active ?? null
     },
   })
 

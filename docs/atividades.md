@@ -14,7 +14,7 @@ O que precisa ser feito:
 - [x] Adequação do template da tela: Progress
 - [x] Adequação do template da tela: Sheet
 - [x] Entender porque seed não funciona no gh pages
-- [ ] Adequação do template da tela: Game
+- [x] Adequação do template da tela: Game
 - [ ] Adicionar menu (no header) em telas grandes
 - [ ] Configurar toast
 - [ ] Garantir que todas as telas estão em mobile-first

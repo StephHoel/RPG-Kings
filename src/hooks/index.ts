@@ -4,7 +4,7 @@ export * from './queries/queryClientUtils'
 
 // Save
 export * from './save/getAllSaves'
-export * from './save/getSaveBySaveId'
+export * from './save/useGetSave'
 export * from './save/useActiveSave'
 export * from './save/useCreateSave'
 
@@ -15,7 +15,7 @@ export * from './inventory/getInventoriesBySaveId'
 export * from './milestone/getMilestonesBySaveId'
 
 // Scene
-export * from './scene/getSceneBySave'
+export * from './scene/useGetScene'
 
 // Sheet
 export * from './sheet/getSheetBySaveId'
