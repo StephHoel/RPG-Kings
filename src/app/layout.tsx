@@ -10,7 +10,12 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        {/* Use NEXT_PUBLIC_BASE_PATH so favicon resolves on GH Pages when app is served under a repo subpath */}
+        <link
+          rel="icon"
+          href={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/favicon.svg`}
+          type="image/svg+xml"
+        />
       </head>
 
       <body className="flex min-h-dvh max-w-full flex-col text-foreground">

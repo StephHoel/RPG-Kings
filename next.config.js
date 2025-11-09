@@ -27,6 +27,10 @@ const nextConfig = {
       },
     },
   },
+  // Expose base path at build time to client/server code
+  env: {
+    NEXT_PUBLIC_BASE_PATH: isProd ? `/${repo}` : '',
+  },
 }
 
 export default nextConfig
