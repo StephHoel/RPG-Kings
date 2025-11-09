@@ -69,3 +69,4 @@ $RECYCLE.BIN/
 
 .next/
 /package-lock.json
+/out
