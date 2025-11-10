@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[12805,["/RPG-Kings/_next/static/chunks/d6e6fa49d30d1e30.js","/RPG-Kings/_next/static/chunks/42e57c8bdbc6591b.js","/RPG-Kings/_next/static/chunks/d34f6a7c9b0c2bc4.js","/RPG-Kings/_next/static/chunks/057eae68d4ec72f1.js","/RPG-Kings/_next/static/chunks/6a67cf1c171eab19.js"],"default"]
+3:I[97367,["/RPG-Kings/_next/static/chunks/ff1a16fafef87110.js","/RPG-Kings/_next/static/chunks/247eb132b7f7b574.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"buildId":"UFA7CaoLv3MU0kalxMH05","rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/RPG-Kings/_next/static/chunks/057eae68d4ec72f1.js","async":true}],["$","script","script-1",{"src":"/RPG-Kings/_next/static/chunks/6a67cf1c171eab19.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null

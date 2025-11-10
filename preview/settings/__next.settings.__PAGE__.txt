@@ -1,0 +1,5 @@
+1:"$Sreact.fragment"
+2:I[97367,["/RPG-Kings/_next/static/chunks/ff1a16fafef87110.js","/RPG-Kings/_next/static/chunks/247eb132b7f7b574.js"],"OutletBoundary"]
+3:"$Sreact.suspense"
+0:{"buildId":"UFA7CaoLv3MU0kalxMH05","rsc":["$","$1","c",{"children":[["$","div",null,{"className":"flex w-full flex-col gap-6 px-2 sm:px-4 ","children":[["$","h1",null,{"className":"drop-shadow mb-2 font-extrabold text-accent text-4xl md:text-5xl text-center","children":"Configurações"}],["$","ul",null,{"className":"mt-2 text-sm space-y-2","children":[["$","li",null,{"children":"Tema: sistema"}],["$","li",null,{"children":"Fonte: 100%"}],["$","li",null,{"children":"Contraste alto: desligado"}]]}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
+4:null

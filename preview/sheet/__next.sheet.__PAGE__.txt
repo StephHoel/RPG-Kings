@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:"$Sreact.suspense"
+3:I[88035,["/RPG-Kings/_next/static/chunks/d6e6fa49d30d1e30.js","/RPG-Kings/_next/static/chunks/42e57c8bdbc6591b.js","/RPG-Kings/_next/static/chunks/d34f6a7c9b0c2bc4.js","/RPG-Kings/_next/static/chunks/46eeaf089d58c029.js"],"default"]
+4:I[97367,["/RPG-Kings/_next/static/chunks/ff1a16fafef87110.js","/RPG-Kings/_next/static/chunks/247eb132b7f7b574.js"],"OutletBoundary"]
+0:{"buildId":"UFA7CaoLv3MU0kalxMH05","rsc":["$","$1","c",{"children":[["$","$2",null,{"fallback":["$","div",null,{"children":"Carregando..."}],"children":["$","$L3",null,{}]}],[["$","script","script-0",{"src":"/RPG-Kings/_next/static/chunks/46eeaf089d58c029.js","async":true}]],["$","$L4",null,{"children":["$","$2",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null
