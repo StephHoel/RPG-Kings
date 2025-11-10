@@ -1,7 +1,7 @@
 'use client'
 import { characterSeed, itemSeed, milestoneSeed, questSeed, reputationSeed, ruleSeed, sceneSeed, tagSeed, timeslotSeed } from '@/constants'
 import { db } from '@/data'
-import { log, safeBulkAdd } from '@/libs'
+import { log, safeBulkAdd } from '@/lib'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 

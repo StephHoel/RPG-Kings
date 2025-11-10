@@ -19,7 +19,7 @@ export default function SavesClient() {
       <ul className="divide-y">
         {saves && saves?.map((s) => (
           <li key={s.id} className="py-2 flex items-center justify-between">
-            <Button className='max-w-1/2 mx-auto' onClick={() => router.push(ROUTES.GAME(s.id))}>
+            <Button className='w-full sm:w-auto mx-auto' onClick={() => router.push(ROUTES.GAME(s.id))}>
               Ativar Save: {s.name}
             </Button>
           </li>

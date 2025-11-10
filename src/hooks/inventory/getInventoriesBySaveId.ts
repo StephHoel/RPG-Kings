@@ -2,7 +2,7 @@ import { db } from '@/data'
 import { InventoryItem } from '@/interfaces'
 import { useQuery } from '@tanstack/react-query'
 
-export function getInventory(saveId: string): InventoryItem[] | null {
+export function useGetInventory(saveId: string): InventoryItem[] | null {
   const { data: items } = useQuery({
     queryKey: ['inventory', saveId],
 

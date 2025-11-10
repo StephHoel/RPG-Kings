@@ -1,6 +1,6 @@
 'use client'
 import { MENUS } from '@/config'
-import { isSameRoute } from '@/libs'
+import { isSameRoute } from '@/lib'
 import { useActiveSaveContext } from '@/providers/useActiveSaveContext'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -15,8 +15,10 @@ export function Menu() {
         MENUS.map((menu) => {
           const active = isSameRoute(pathname, menu.route(activeSaveId))
 
-          if (process.env.NEXT_PUBLIC_BASE_PATH && menu.type == 'dev')
+          if (process.env.NEXT_PUBLIC_BASE_PATH && menu.type === 'dev')
+          {
             return null
+          }
 
           return (
             <Link

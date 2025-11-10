@@ -20,15 +20,14 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <ReactQueryProvider>
           <Header />
 
-          <main className='mx-auto flex h-fit w-full grow items-center justify-center p-6 px-4 py-6 md:w-3/4 lg:max-w-3/4 2xl:max-w-2/4'>
-            <div className='min-w-[80dvw] min-h-[65dvh] p-8 flex gap-4'>
-              <Background className='hidden md:block'>
+          <main className="mx-auto w-full grow p-4 sm:px-6 md:px-8">
+            <div className="w-full min-h-[65dvh] flex flex-col md:flex-row gap-4 p-4 md:p-8 items-stretch">
+              {/* Sidebar hidden on mobile, shown on md+ */}
+              <Background className="hidden md:block md:w-64">
                 <Sidebar />
               </Background>
 
-              <Background className='w-full justify-center'>
-                {children}
-              </Background>
+              <Background className="w-full">{children}</Background>
             </div>
           </main>
 

@@ -2,7 +2,7 @@ import { db } from '@/data'
 import { Sheet } from '@/interfaces'
 import { useQuery } from '@tanstack/react-query'
 
-export function getSheet(saveId: string): Sheet | null {
+export function useGetSheet(saveId: string): Sheet | null {
   const { data: sheet } = useQuery({
     queryKey: ['sheet', saveId],
 

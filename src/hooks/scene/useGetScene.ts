@@ -1,7 +1,7 @@
 import { SaveId, Scene } from '@/interfaces'
 import { useQuery } from '@tanstack/react-query'
 import { db } from '@/data'
-import { matchesRule } from '@/libs/others/matchesRule'
+import { matchesRule } from '@/lib/others/matchesRule'
 
 export function useGetScene(saveId: SaveId) {
   // const queryKey = useQueryKeys.saveId(saveId)

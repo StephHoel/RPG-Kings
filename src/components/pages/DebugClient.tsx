@@ -2,7 +2,7 @@
 import { Button, GenericTable, H1, Input, Panel } from '@/components'
 import { db, LogTypeEnum } from '@/data'
 import { LogCategoryLabels, LogRow } from '@/interfaces'
-import { exportLogsNDJSON, clearLogs, formatDate, formatPayload, LogTypeLabels } from '@/libs'
+import { exportLogsNDJSON, clearLogs, formatDate, formatPayload, LogTypeLabels } from '@/lib'
 import { useState, useEffect, useMemo, Activity } from 'react'
 import { toast } from 'sonner'
 
@@ -51,7 +51,9 @@ export default function DebugClient() {
 
   async function onClear() {
     if (!confirm('Apagar todos os logs locais?'))
+    {
       return
+    }
 
     await clearLogs()
 
@@ -101,27 +103,32 @@ export default function DebugClient() {
       </div>
 
       <div className={`flex gap-2 flex-wrap  ${isFilteredEmpty ? 'hidden' : 'visible'}`}>
-        <div className='flex space-x-2 w-full items-center justify-between'>
-          <select
-            aria-label="Filtrar por tipo de log"
-            className="border border-highlight px-3 py-2 rounded"
-            value={type}
-            onChange={e => setType(e.target.value as any)}
-          >
-            {types.map(t => (
-              <option key={t} value={t} className="bg-primary hover:bg-secondary">
-                {LogTypeLabels[t]}
-              </option>
-            ))}
-          </select>
+        <div className='w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 md:justify-center'>
+          <div className='flex items-center gap-2'>
+            <span className="text-sm min-w-fit">Total: {filtered.length}</span>
 
-          <Input
-            placeholder="Filtrar texto..."
-            value={q}
-            onChange={e => setQ(e.target.value)}
-          />
+            <select
+              aria-label="Filtrar por tipo de log"
+              className="border border-highlight px-3 py-2 rounded w-full"
+              value={type}
+              onChange={e => setType(e.target.value as any)}
+            >
+              {types.map(t => (
+                <option key={t} value={t} className="bg-primary hover:bg-secondary">
+                  {LogTypeLabels[t]}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          <span className="text-sm min-w-fit">Total: {filtered.length}</span>
+          <div className='md:w-full sm:w-auto'>
+            <Input
+              placeholder="Filtrar texto..."
+              value={q}
+              onChange={e => setQ(e.target.value)}
+              className='w-full'
+            />
+          </div>
         </div>
 
         <div className="flex space-x-2 w-full">

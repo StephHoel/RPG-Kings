@@ -18,7 +18,7 @@ O que precisa ser feito:
 - [x] Adicionar menu em telas grandes
 - [x] Adequar páginas para ocupar full size
 - [x] Configurar toast
-- [ ] Garantir que todas as telas estão em mobile-first
+- [x] Garantir que todas as telas estão em mobile-first
 - [ ] Planejar lógica de cenas
 - [ ] Implementar banco de dados
 - [ ] Criar seeds

@@ -1,6 +1,6 @@
 'use client'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { getMilestones } from '@/hooks'
+import { useGetMilestones } from '@/hooks'
 import { ROUTES } from '@/config'
 import { H1, Panel } from '@/components'
 
@@ -13,7 +13,7 @@ export default function ProgressClient() {
 
   if (saveId === null) back()
 
-  const milestones = getMilestones(saveId!)
+  const milestones = useGetMilestones(saveId!)
 
   return (
     <Panel>

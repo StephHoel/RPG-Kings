@@ -2,7 +2,7 @@ import { db } from '@/data'
 import { Milestone } from '@/interfaces'
 import { useQuery } from '@tanstack/react-query'
 
-export function getMilestones(saveId: string): Milestone[] | null {
+export function useGetMilestones(saveId: string): Milestone[] | null {
   const { data: milestones } = useQuery({
     queryKey: ['milestones', saveId],
 

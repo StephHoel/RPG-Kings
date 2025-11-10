@@ -4,7 +4,7 @@ import { s } from './_schemas'
 
 /**
  * InventoryItemSchema defines the structure of an inventory item.
- * 
+ *
  * - `durationWeeks`: If `0`, the item has unlimited duration.
  *   Otherwise, it represents the number of weeks the item will last.
  * - `expiresAtWeek`: If `null`, the item is still valid and has not expired.

@@ -1,8 +1,6 @@
-import tsPlugin from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
 import eslintPluginNext from 'eslint-config-next'
-
-export default [
+const config = [
   {
     files: ['**/*.{ts,tsx,js,jsx}'],
     ignores: ['node_modules', 'old'],
@@ -15,9 +13,7 @@ export default [
         project: ['./tsconfig.json'],
       },
     },
-    plugins: {
-      '@typescript-eslint': tsPlugin,
-    },
+    // Note: do not re-declare plugins here to avoid conflicts with extended configs
     rules: {
       // === Estilo geral ===
       semi: ['error', 'never'],
@@ -42,8 +38,12 @@ export default [
       eqeqeq: ['error', 'always'],
       curly: ['error', 'multi-line'],
       'no-multiple-empty-lines': ['error', { max: 1 }],
+      'no-children-props': 'off',
+      'space-before-function-paren': 'off',
     },
   },
 
-  eslintPluginNext,
+  ...eslintPluginNext,
 ]
+
+export default config

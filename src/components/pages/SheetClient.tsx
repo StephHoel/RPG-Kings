@@ -1,6 +1,6 @@
 'use client'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { getInventory, getSheet } from '@/hooks'
+import { useGetInventory, useGetSheet } from '@/hooks'
 import { ROUTES } from '@/config'
 import { H1, Panel } from '@/components'
 
@@ -13,8 +13,8 @@ export default function SheetClient() {
 
   if (saveId === null) back()
 
-  const sheet = getSheet(saveId!)
-  const items = getInventory(saveId!)
+  const sheet = useGetSheet(saveId!)
+  const items = useGetInventory(saveId!)
 
   return (
     <Panel>

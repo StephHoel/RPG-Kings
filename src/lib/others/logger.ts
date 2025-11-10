@@ -19,13 +19,13 @@ export async function log(
   } catch (err) {
     try {
       const last = await db.logs.orderBy('id').reverse().first().catch(() => null)
-      
+
       const lastIdNum = last && typeof last.id === 'number' ? last.id : 0
-      
+
       await db.logs.add({ ...parsed, id: lastIdNum + 1 })
     } catch (err2) {
       console.error('Falha ao gravar log:', err, err2)
-      
+
       throw err2
     }
   }

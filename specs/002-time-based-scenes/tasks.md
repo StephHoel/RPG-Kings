@@ -12,23 +12,23 @@ Tech stack: TypeScript, Next.js (App Router), TailwindCSS, Dixie (armazenamento 
 - [x] T001 Configurar tipagens base e schemas Zod para Scene e Save em `src/data/schemas/SceneSchema.ts` e `src/data/schemas/SaveSchema.ts`
 - [x] T002 Definir enums e utilitários compartilhados em `src/data/enums/*` (`Weekdays`, `TimeslotId`, `SceneTag`) — arquivos já presentes
 - [x] T003 Adicionar utilitário `_schemas.ts` com helper `s` (tipos reutilizáveis) em `src/data/schemas/_schemas.ts`
-- [ ] T004 [P] Criar `src/interfaces/scenes.ts` com as interfaces TypeScript exportadas (Scene, Choice, PlayerState)
-- [ ] T005 Configurar `src/lib/storage.ts` — wrapper para Dixie + função `migrateSave(raw)` com versionamento do schema
+- [x] T004 [P] Criar `src/interfaces/scenes.ts` com as interfaces TypeScript exportadas (Scene, Choice, PlayerState)
+- [x] T005 Configurar `src/lib/storage.ts` — wrapper para Dixie + função `migrateSave(raw)` com versionamento do schema
 
 ## Phase 2 — Fundacionais (pré-requisitos para todas as US)
 
 - [x] T006 Criar `src/components/SceneCard.tsx` (UI de preview de cena) — já existe em `src/components/SceneCard.tsx`
-- [ ] T007 Implementar `src/lib/time.ts` com relógio do jogo (advanceHour, setHour, subscribe)
-- [ ] T008 Criar `src/components/scenes/SceneRenderer.tsx` para renderizar `content` em `{ kind: 'md'|'json', body: ... }`
-- [ ] T009 Criar `src/components/scenes/ChoiceButton.tsx` para decisões reutilizáveis
+- [x] T007 Implementar `src/lib/time.ts` com relógio do jogo (advanceHour, setHour, subscribe)
+- [x] T008 Criar `src/components/scenes/SceneRenderer.tsx` para renderizar `content` em `{ kind: 'md'|'json', body: ... }`
+- [x] T009 Criar `src/components/scenes/ChoiceButton.tsx` para decisões reutilizáveis
 
 ## Phase 3 — User Stories (ordenadas por prioridade)
 
 ### US1 — Agendamento e Disparo de Cenas (Priority: P1)
 
-- [ ] T010 [US1] Implementar carga de cenas por save em `src/hooks/getSceneBySave.ts` (consulta ao storage/dixie)
-- [ ] T011 [US1] Implementar verificação de gatilho por tempo em `src/lib/time.ts` → função `getScenesToTrigger(save: PlayerState, scenes: Scene[]) : Scene[]`
-- [ ] T012 [US1] Integrar disparo de cenas no fluxo de jogo: `src/app/game/[saveId]/page.tsx` (ou equivalente) para mostrar `SceneRenderer` quando cena for acionada
+- [x] T010 [US1] Implementar carga de cenas por save em `src/hooks/getSceneBySave.ts` (consulta ao storage/dixie)
+- [x] T011 [US1] Implementar verificação de gatilho por tempo em `src/lib/time.ts` → função `getScenesToTrigger(save: PlayerState, scenes: Scene[]) : Scene[]`
+- [x] T012 [US1] Integrar disparo de cenas no fluxo de jogo: `src/app/game/[saveId]/page.tsx` (ou equivalente) para mostrar `SceneRenderer` quando cena for acionada
 - [ ] T013 [DISCONTINUED] [US1] Persistir estado após escolha (aplicar `Outcome`) via `src/lib/storage.ts::savePlayerState`
 - [ ] T014 [US1] Criar aceitação manual em quickstart: passos para adicionar cena via console e avançar relógio (documentado em `specs/002-time-based-scenes/quickstart.md`) — já existe documentação
 
@@ -46,7 +46,8 @@ Tech stack: TypeScript, Next.js (App Router), TailwindCSS, Dixie (armazenamento 
 
 ## Final Phase — Polish & Cross-cutting
 
-- [ ] T021 Ajustar `storage.migrateSave` para mapear campos snake_case → camelCase e aumentar `schemaVersion` quando necessário (`src/lib/storage.ts`)
+- [x] T021 Ajustar `storage.migrateSave` para mapear campos snake_case → camelCase e aumentar `schemaVersion` quando necessário (`src/lib/storage.ts`)
+
 - [ ] T022 Adicionar documentação de API interna em `src/interfaces/scenes.ts` e `specs/002-time-based-scenes/data-model.md` (com exemplos JSON)
 - [ ] T023 [P] Revisão geral de acessibilidade e contraste para os componentes de cena (documentar resultados em `specs/002-time-based-scenes/checklists/requirements.md`)
 
