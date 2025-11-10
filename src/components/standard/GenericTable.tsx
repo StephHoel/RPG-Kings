@@ -5,7 +5,7 @@ export function GenericTable<T>({ header: headers, rows, rowKey }: GenericTableP
   const keyFn = rowKey ?? ((r: any) => r.id ?? JSON.stringify(r))
 
   return (
-    <table className="min-w-full rounded border border-highlight bg-secundary text-sm">
+    <table className="min-w-full rounded border border-highlight bg-secondary text-sm">
       <thead className="bg-primary">
         <tr>
           {headers.map(h => (

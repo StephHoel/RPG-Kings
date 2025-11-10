@@ -37,21 +37,21 @@ export const sceneSeed: Scene[] = [
     id: 'scene_manha_aula',
     title: 'Aula de Alquimia',
     content: 'Você entra no laboratório e o cheiro de ervas toma o ar.',
-    tags: ['class'],
-    timeslots: ['morning']
+    tags: [SceneTagEnum.enum.class],
+    timeslots: [TimeslotEnum.enum.morning]
   },
   {
     id: 'scene_tarde_treino',
     title: 'Treino no Pátio',
     content: 'O sol das duas da tarde castiga enquanto você pratica.',
-    tags: ['training'],
-    timeslots: ['afternoon']
+    tags: [SceneTagEnum.enum.training],
+    timeslots: [TimeslotEnum.enum.afternoon]
   },
   {
     id: 'scene_noite_social',
     title: 'Clube de Estratégia',
     content: 'Um grupo se reúne para jogos táticos no salão.',
-    tags: ['social'],
-    timeslots: ['night']
+    tags: [SceneTagEnum.enum.social],
+    timeslots: [TimeslotEnum.enum.night]
   },
 ]

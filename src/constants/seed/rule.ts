@@ -5,7 +5,6 @@ export const ruleSeed = [
     weekdays: [
       'Monday',
       'Tuesday',
-      'Tuesday',
       'Wednesday',
       'Thursday',
       'Friday'

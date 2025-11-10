@@ -109,7 +109,7 @@ export default function DebugClient() {
             onChange={e => setType(e.target.value as any)}
           >
             {types.map(t => (
-              <option key={t} value={t} className="bg-primary hover:bg-secundary">
+              <option key={t} value={t} className="bg-primary hover:bg-secondary">
                 {LogTypeLabels[t]}
               </option>
             ))}
