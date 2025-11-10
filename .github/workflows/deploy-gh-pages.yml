@@ -1,9 +1,9 @@
 name: Deploy Next.js site to GitHub Pages
 
 on:
-  push:
-    branches:
-      - develop
+  # push:
+  #   branches:
+      # - develop
   pull_request:
     branches:
       - main

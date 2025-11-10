@@ -23,5 +23,8 @@
     ],
     "[typescript]": {
         "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-    }
+    },
+    "conventionalCommits.scopes": [
+        "workflow"
+    ]
 }
