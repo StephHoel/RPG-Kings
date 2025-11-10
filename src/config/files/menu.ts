@@ -6,15 +6,15 @@ export const MENUS = [
     label: 'Home'
   },
   {
-    route: (_id: string | null): string => _id ? ROUTES.GAME(_id) : ROUTES.SAVES,
+    route: (_id: string | null): string => _id ? ROUTES.GAME(_id) : '',
     label: 'Jogo'
   },
   {
-    route: (_id: string | null): string => _id ? ROUTES.SHEET(_id) : ROUTES.SAVES,
+    route: (_id: string | null): string => _id ? ROUTES.SHEET(_id) : '',
     label: 'Ficha'
   },
   {
-    route: (_id: string | null): string => _id ? ROUTES.PROGRESS(_id) : ROUTES.SAVES,
+    route: (_id: string | null): string => _id ? ROUTES.PROGRESS(_id) : '',
     label: 'Progresso'
   },
   {

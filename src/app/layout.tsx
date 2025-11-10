@@ -16,12 +16,12 @@ export default function RootLayout({ children }: PropsWithChildren) {
         />
       </head>
 
-      <body className="flex flex-col max-w-full min-h-dvh text-foreground">
+      <body className="grid grid-rows-[auto_1fr_auto] max-w-full min-h-dvh text-foreground">
         <ReactQueryProvider>
           <Header />
 
           <main className="mx-auto p-4 sm:px-6 md:px-8 w-full grow">
-            <div className="flex md:flex-row flex-col items-stretch gap-4 p-4 md:p-8 w-full min-h-[65dvh]">
+            <div className="flex md:flex-row flex-col items-stretch gap-4 p-4 md:p-8 w-full">
               {/* Sidebar hidden on mobile, shown on md+ */}
               <Background className="hidden md:block md:w-64">
                 <Sidebar />

@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { db } from '@/data'
-import { refreshSaves, useQueryKeys } from '@/hooks'
+import { useQueryKeys } from '@/hooks'
 import { Save } from '@/interfaces'
 
 // Hook que cria o save e atualiza o cache do React Query
@@ -53,8 +53,8 @@ export function useCreateSave() {
     },
 
     onSettled: async () => {
-      // Centraliza refresh/invalidation
-      refreshSaves(queryClient)
+      queryClient.refetchQueries({ queryKey: useQueryKeys.saveActive() })
+      queryClient.refetchQueries({ queryKey: useQueryKeys.saves() })
     },
   })
 }

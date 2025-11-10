@@ -1,6 +1,4 @@
-# Atividades
-
-O que precisa ser feito:
+# Lista de Atividades
 
 - [x] Definir templates e cores
 - [x] Adequação do template da tela: Home
@@ -20,12 +18,10 @@ O que precisa ser feito:
 - [x] Configurar toast
 - [x] Garantir que todas as telas estão em mobile-first
 - [x] Atualizar tokens de cor para padrão da King's
-- [ ] Remover menus da visibilidade se não estiver logado
-- [ ] Melhorar marcação de qual página está no rodapé (talvez geral)
+- [x] Remover menus da visibilidade se não estiver logado
+- [x] Adicionar botão na página de saves para excluir o save (texto: Excluir save)
+- [x] Alterar UI da listagem de saves na página de saves (li com borda padrão e p-4, nome do save, botão com texto "Jogar", botão com texto "Excluir")
+- [x] Alterar UI do menu do rodapé para o efeito "ativo" não ser arredondado
 - [ ] Planejar lógica de cenas
 - [ ] Implementar banco de dados
 - [ ] Criar seeds
-<!-- - [ ]  -->
-<!-- - [ ]  -->
-<!-- - [ ]  -->
-<!-- - [ ]  -->

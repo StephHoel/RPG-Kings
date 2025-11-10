@@ -10,3 +10,17 @@ export function isSameRoute(pathname: string, route: string) {
 
   return path === routeClear
 }
+
+export function isValidRoute(type: string | undefined = '', route: string): boolean {
+  if (route === '')
+  {
+    return false
+  }
+
+  if ((process.env.NEXT_PUBLIC_BASE_PATH && type === 'dev'))
+  {
+    return false
+  }
+
+  return true
+}
