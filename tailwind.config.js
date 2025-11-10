@@ -1,5 +1,13 @@
-/** @type { import('tailwindcss').Config } */
-export const purge = ['./src/**/*.{ js,jsx,ts,tsx}', './public/index.html']
-export const theme = {
-  extend: {},
+/** @type {import('tailwindcss').Config} */
+
+export default {
+  darkMode: 'class', // usar .dark no <html> ou <body>
+  content: [
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
 }

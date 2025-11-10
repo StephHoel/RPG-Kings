@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--color-gray-900); /* oklch(21% 0.034 264.665) */
+  --color-foreground: var(--color-gray-300); /* oklch(87.2% 0.01 258.338) */
+  --color-highlight: var(--color-violet-600); /* oklch(54.1% 0.281 293.009) */
+  --color-primary: var(--color-violet-700); /* oklch(49.1% 0.27 292.581) */
+  --color-secondary: var(--color-violet-500); /* oklch(60.6% 0.25 292.717) */
+  --color-muted: var(--color-gray-600); /* oklch(44.6% 0.03 256.802) */
+  --color-danger: var(--color-red-600); /* oklch(57.7% 0.245 27.325) */
+  --color-success: var(--color-green-600); /* oklch(62.7% 0.194 149.214) */
+}

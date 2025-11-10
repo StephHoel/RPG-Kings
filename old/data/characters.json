@@ -1,0 +1,23 @@
+[
+  {
+    "id": "guid-1",
+    "nome": "Aluno Teste",
+    "raca": "Humano",
+    "atributos": {
+      "energia": 100,
+      "fome": 0,
+      "humor": 50,
+      "carisma": 1,
+      "destreza": 1,
+      "forca": 1,
+      "inteligencia": 1,
+      "resistencia": 1,
+      "sabedoria": 1
+    },
+    "poderes": [],
+    "inventario": ["Notebook"],
+    "xp": 0,
+    "nivel": 1,
+    "afinidade": {}
+  }
+]

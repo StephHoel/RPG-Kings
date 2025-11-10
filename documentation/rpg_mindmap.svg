@@ -1,0 +1,85 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <style>
+    .node { fill: #ffffff; stroke: #222; stroke-width: 2; rx: 14; ry: 14; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+    .title { font: 700 24px "Inter", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; fill: #111; }
+    .label { font: 600 18px "Inter", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; fill: #111; }
+    .small { font: 14px "Inter", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; fill: #222; }
+    .line { stroke: #444; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#444"/>
+    </marker>
+  </defs>
+
+  <!-- Central Node -->
+  <rect class="node" x="650" y="430" width="300" height="140"/>
+  <text class="title" x="800" y="485" text-anchor="middle">RPG: Escola Sobrenatural</text>
+  <text class="small" x="800" y="515" text-anchor="middle">Suíça · Single Player · Web</text>
+
+  <!-- Branch helper function replicated via manual placement -->
+
+  <!-- Mundo -->
+  <path class="line" d="M 650 500 C 560 500, 520 500, 460 500"/>
+  <rect class="node" x="240" y="420" width="200" height="160"/>
+  <text class="label" x="340" y="455" text-anchor="middle">Mundo</text>
+  <text class="small" x="250" y="480">• Campus na Suíça</text>
+  <text class="small" x="250" y="500">• Internato</text>
+  <text class="small" x="250" y="520">• Áreas: Salas, Biblioteca, Arena,</text>
+  <text class="small" x="250" y="540">  Pátio, Dormitórios, Secretas</text>
+  <text class="small" x="250" y="560">• Outras escolas (lore)</text>
+
+  <!-- Rotina -->
+  <path class="line" d="M 800 430 C 800 350, 800 330, 800 300"/>
+  <rect class="node" x="690" y="170" width="220" height="120"/>
+  <text class="label" x="800" y="200" text-anchor="middle">Rotina</text>
+  <text class="small" x="700" y="225">• 07h Café · 08–12 Aulas</text>
+  <text class="small" x="700" y="245">• 12h Almoço · 13–17 Livres</text>
+  <text class="small" x="700" y="265">• 18h Jantar · 19–21 Opcionais · 22h Dormir</text>
+
+  <!-- Atributos -->
+  <path class="line" d="M 950 540 C 1070 560, 1140 600, 1230 640"/>
+  <rect class="node" x="1230" y="600" width="280" height="160"/>
+  <text class="label" x="1370" y="630" text-anchor="middle">Atributos</text>
+  <text class="small" x="1240" y="655">Primários: Energia, Fome, Humor</text>
+  <text class="small" x="1240" y="675">Secundários: Magia, Conhecimento,</text>
+  <text class="small" x="1240" y="695">Força, Agilidade, Carisma</text>
+  <text class="small" x="1240" y="715">Restaura: dormir/comer · Drenos por ação</text>
+
+  <!-- Disciplinas -->
+  <path class="line" d="M 950 470 C 1090 440, 1160 410, 1270 380"/>
+  <rect class="node" x="1270" y="310" width="300" height="160"/>
+  <text class="label" x="1420" y="340" text-anchor="middle">Disciplinas</text>
+  <text class="small" x="1280" y="365">• História Arcana → Conhecimento</text>
+  <text class="small" x="1280" y="385">• Alquimia → Conhecimento + Magia</text>
+  <text class="small" x="1280" y="405">• Controle de Poderes → Magia</text>
+  <text class="small" x="1280" y="425">• Combate Sobrenatural → Força + Agilidade</text>
+  <text class="small" x="1280" y="445">• Estratégia → Conhecimento</text>
+
+  <!-- Eventos -->
+  <path class="line" d="M 760 570 C 760 720, 760 760, 760 820"/>
+  <rect class="node" x="570" y="820" width="380" height="150"/>
+  <text class="label" x="760" y="850" text-anchor="middle">Eventos Dinâmicos</text>
+  <text class="small" x="580" y="875">• Social, Conflito, Descoberta, Missão, Negativo</text>
+  <text class="small" x="580" y="895">• Chance por hora (↑Explorar, ↓Estudar)</text>
+  <text class="small" x="580" y="915">• Testes: Carisma/Força/Magia/etc.</text>
+
+  <!-- Progressão -->
+  <path class="line" d="M 650 460 C 540 420, 500 360, 470 300"/>
+  <rect class="node" x="170" y="220" width="280" height="140"/>
+  <text class="label" x="310" y="250" text-anchor="middle">Progressão</text>
+  <text class="small" x="180" y="275">• Níveis, poderes, áreas secretas</text>
+  <text class="small" x="180" y="295">• Afinidade com NPCs → eventos únicos</text>
+  <text class="small" x="180" y="315">• Ciclos semanais → provas/missões</text>
+
+  <!-- Fluxo Diário -->
+  <path class="line" d="M 700 430 C 610 390, 540 350, 480 320"/>
+  <rect class="node" x="60" y="60" width="380" height="140"/>
+  <text class="label" x="250" y="90" text-anchor="middle">Fluxo Diário</text>
+  <text class="small" x="70" y="115">Início → Café → Aulas(+XP) → Almoço → Livres(4 ações)</text>
+  <text class="small" x="70" y="135">→ Jantar → Opcionais → Dormir(restaura) → Novo dia</text>
+
+  <!-- Legenda -->
+  <text class="small" x="20" y="980">Mapa mental — versão 1.0</text>
+</svg>
