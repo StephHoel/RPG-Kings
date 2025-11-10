@@ -5,7 +5,7 @@ import { Background, FooterNav, Header, Sidebar, ToasterResponsive } from '@/com
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="pt-br" className="h-dvh bg-background bg-gradient-to-br from-neutral-900 via-violet-950 to-neutral-800 bg-fixed bg-no-repeat">
+    <html lang="pt-br" className="bg-background bg-gradient-to-br from-background via-primary to-highlight bg-no-repeat bg-fixed h-dvh">
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,12 +16,12 @@ export default function RootLayout({ children }: PropsWithChildren) {
         />
       </head>
 
-      <body className="flex min-h-dvh max-w-full flex-col text-foreground">
+      <body className="flex flex-col max-w-full min-h-dvh text-foreground">
         <ReactQueryProvider>
           <Header />
 
-          <main className="mx-auto w-full grow p-4 sm:px-6 md:px-8">
-            <div className="w-full min-h-[65dvh] flex flex-col md:flex-row gap-4 p-4 md:p-8 items-stretch">
+          <main className="mx-auto p-4 sm:px-6 md:px-8 w-full grow">
+            <div className="flex md:flex-row flex-col items-stretch gap-4 p-4 md:p-8 w-full min-h-[65dvh]">
               {/* Sidebar hidden on mobile, shown on md+ */}
               <Background className="hidden md:block md:w-64">
                 <Sidebar />

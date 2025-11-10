@@ -19,6 +19,9 @@ O que precisa ser feito:
 - [x] Adequar páginas para ocupar full size
 - [x] Configurar toast
 - [x] Garantir que todas as telas estão em mobile-first
+- [x] Atualizar tokens de cor para padrão da King's
+- [ ] Remover menus da visibilidade se não estiver logado
+- [ ] Melhorar marcação de qual página está no rodapé (talvez geral)
 - [ ] Planejar lógica de cenas
 - [ ] Implementar banco de dados
 - [ ] Criar seeds
