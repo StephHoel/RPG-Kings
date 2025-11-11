@@ -1,4 +1,14 @@
-# Lista de Atividades
+# Lista de Atividades Planejadas
+
+## v0.1.1
+
+- [ ] Planejar lógica de cenas
+- [ ] Implementar banco de dados
+- [ ] Criar seeds
+- [ ] Implementar o PWA (next-pwa)
+- [ ] Ações de inventário (comprar/usar) com cálculo de `expiresAtWeek`.
+
+## v0.1.0 — 2025-11-10
 
 - [x] Definir templates e cores
 - [x] Adequação do template da tela: Home
@@ -22,6 +32,3 @@
 - [x] Adicionar botão na página de saves para excluir o save (texto: Excluir save)
 - [x] Alterar UI da listagem de saves na página de saves (li com borda padrão e p-4, nome do save, botão com texto "Jogar", botão com texto "Excluir")
 - [x] Alterar UI do menu do rodapé para o efeito "ativo" não ser arredondado
-- [ ] Planejar lógica de cenas
-- [ ] Implementar banco de dados
-- [ ] Criar seeds

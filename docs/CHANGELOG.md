@@ -7,18 +7,16 @@ Critério de versionamento aplicado [melhorar]:
 
 Base de links: <https://github.com/StephHoel/RPG-Kings>
 
-## [Unreleased]
+---
 
-- (Nenhuma mudança não publicada no momento.)
-
-## 2025-11-10 — v0.1.0
+## v0.1.0 — 2025-11-10
 
 - Atualização do layout global e da navegação, melhor compatibilidade mobile/desktop e ajuste de organização das áreas principais da aplicação. (commit: [718829e](https://github.com/StephHoel/RPG-Kings/commit/718829e))
 - Ajustes visuais e de tokens de cor; melhorias de acessibilidade e pequenos ajustes de configuração do TypeScript para maior consistência (commit: [68c4cf9](https://github.com/StephHoel/RPG-Kings/commit/68c4cf9)).
 
 > Justificativa da versão: várias features (UX/layout e tokens) que representam alteração funcional/visual relevante → MINOR (0.1.0).
 
-## 2025-11-09 — v0.0.6
+## v0.0.6 — 2025-11-09
 
 - Atualizações e refatorações em diversos componentes e hooks para melhorar responsividade e estabilidade (commit: [892f8c2](https://github.com/StephHoel/RPG-Kings/commit/892f8c2)).
 - Correção e padronização da comparação de rotas (remoção de barras e query string) para evitar falsos positivos na detecção de rota ativa (commit: [49ba90c](https://github.com/StephHoel/RPG-Kings/commit/49ba90c)).
@@ -34,7 +32,7 @@ Base de links: <https://github.com/StephHoel/RPG-Kings>
 
 > Justificativa da versão: vários recursos novos e reorganizações de hooks/componentes → MINOR em conjunto com 2025-11-10 (ainda assim listados como v0.0.6 por agrupamento temporal).
 
-## 2025-11-08 — v0.0.5
+## v0.0.5 — 2025-11-08
 
 - Atualização da lista de atividades e ajuste de regras do ESLint (commit: [2c27bb3](https://github.com/StephHoel/RPG-Kings/commit/2c27bb3)).
 - Atualização do .gitignore e correção de import path em `next-env.d.ts` (commit: [8aea250](https://github.com/StephHoel/RPG-Kings/commit/8aea250)).
@@ -48,12 +46,12 @@ Base de links: <https://github.com/StephHoel/RPG-Kings>
 - Adequações e limpeza de código: mover utils, refatorar classes, remover arquivos inúteis e migrar tipos → interfaces (commits: [70fb8a6](https://github.com/StephHoel/RPG-Kings/commit/70fb8a6), [ede0cc6](https://github.com/StephHoel/RPG-Kings/commit/ede0cc6), [feeb66f](https://github.com/StephHoel/RPG-Kings/commit/feeb66f)).
 - Atualizações específicas de telas: new saves, home e ajuste geral de layout (commits: [ab93ea8](https://github.com/StephHoel/RPG-Kings/commit/ab93ea8), [d5e9292](https://github.com/StephHoel/RPG-Kings/commit/d5e9292), [3b49420](https://github.com/StephHoel/RPG-Kings/commit/3b49420)).
 
-## 2025-11-06 — v0.0.4
+## v0.0.4 — 2025-11-06
 
 - Atualização de workflows de CI/CD e ajustes no script de exportação (commits: [683af71](https://github.com/StephHoel/RPG-Kings/commit/683af71), [43f4fdc](https://github.com/StephHoel/RPG-Kings/commit/43f4fdc)).
 - Conversão de páginas dinâmicas para estáticas quando apropriado (commit: [2e09683](https://github.com/StephHoel/RPG-Kings/commit/2e09683)).
 
-## 2025-11-05 — v0.0.3
+## v0.0.3 — 2025-11-05
 
 - Correção de import de rotas e atualização da lógica de exclusão de saves (commit: [3990e9a](https://github.com/StephHoel/RPG-Kings/commit/3990e9a)).
 - Atualizações relacionadas ao processo de deploy (commit: [328bba3](https://github.com/StephHoel/RPG-Kings/commit/328bba3)).
