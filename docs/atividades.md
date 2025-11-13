@@ -1,12 +1,17 @@
 # Lista de Atividades Planejadas
 
-## v0.1.1
+## v0.1.2 —
 
-- [ ] Planejar lógica de cenas
-- [ ] Implementar banco de dados
-- [ ] Criar seeds
+- [ ] Criar enums de Itens
+- [ ] Criar seed de cenas reais básicas (cenário feliz único de 1 dia)
 - [ ] Implementar o PWA (next-pwa)
 - [ ] Ações de inventário (comprar/usar) com cálculo de `expiresAtWeek`.
+
+## v0.1.1 — 2025-11-12
+
+- [x] Planejar lógica de cenas
+- [x] Implementar schema de cenas
+- [x] Adaptar seed de cenas
 
 ## v0.1.0 — 2025-11-10
 
