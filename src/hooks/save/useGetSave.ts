@@ -1,4 +1,4 @@
-import { db } from '@/data'
+import { db } from '@/db'
 import { Save, SaveId } from '@/interfaces'
 import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '@/hooks'

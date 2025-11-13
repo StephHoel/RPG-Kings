@@ -1,4 +1,4 @@
-import { db } from '@/data'
+import { db } from '@/db'
 import { Milestone } from '@/interfaces'
 import { useQuery } from '@tanstack/react-query'
 

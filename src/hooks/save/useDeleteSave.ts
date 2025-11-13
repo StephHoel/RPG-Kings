@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { db } from '@/data'
+import { db } from '@/db'
 import { SaveId } from '@/interfaces'
 import { useQueryKeys } from '@/hooks'
 

@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { db } from '@/data'
+import { db } from '@/db'
 import { useQueryKeys } from '@/hooks'
 import { Save } from '@/interfaces'
 

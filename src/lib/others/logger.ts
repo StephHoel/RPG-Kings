@@ -1,4 +1,5 @@
-import { LogRowSchema, db } from '@/data'
+import { LogRowSchema } from '@/data'
+import { db } from '@/db'
 import { LogRow } from '@/interfaces'
 
 export async function log(

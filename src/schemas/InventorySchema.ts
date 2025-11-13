@@ -10,7 +10,7 @@ import { s } from './_schemas'
  * - `expiresAtWeek`: If `null`, the item is still valid and has not expired.
  *   Otherwise, it represents the week the item expires.
  */
-export const InventoryItemSchema = z.object({
+export const InventorySchema = z.object({
   id: s.sequencialId,
   saveId: s.saveId,
 

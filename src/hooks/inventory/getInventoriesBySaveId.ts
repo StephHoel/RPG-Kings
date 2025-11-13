@@ -1,4 +1,4 @@
-import { db } from '@/data'
+import { db } from '@/db'
 import { InventoryItem } from '@/interfaces'
 import { useQuery } from '@tanstack/react-query'
 

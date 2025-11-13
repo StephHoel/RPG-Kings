@@ -1,6 +1,7 @@
 'use client'
 import { Button, GenericTable, H1, Input, Panel } from '@/components'
-import { db, LogTypeEnum } from '@/data'
+import { LogTypeEnum } from '@/data'
+import { db } from '@/db'
 import { LogCategoryLabels, LogRow } from '@/interfaces'
 import { exportLogsNDJSON, clearLogs, formatDate, formatPayload, LogTypeLabels } from '@/lib'
 import { useState, useEffect, useMemo, Activity } from 'react'

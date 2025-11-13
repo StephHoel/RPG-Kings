@@ -1,7 +1,6 @@
 import { SaveId, Scene } from '@/interfaces'
 import { useQuery } from '@tanstack/react-query'
-import { db } from '@/data'
-import { matchesRule } from '@/lib/others/matchesRule'
+import { db } from '@/db'
 
 export function useGetScene(saveId: SaveId) {
   // const queryKey = useQueryKeys.saveId(saveId)
@@ -19,19 +18,11 @@ export function useGetScene(saveId: SaveId) {
       const save = await db.saves.get(saveId)
       if (!save) return null
 
-      const candidates = await db.timeslots.filter(r => matchesRule(save, r)).toArray()
-      if (candidates.length === 0) return null
+      const scenes = await db.scenes.toArray()
 
-      const pool = candidates[0].scenes
-      if (!Array.isArray(pool) || pool.length === 0) return null
+      console.log('scene', scenes)
 
-      const chosenId = pool[Math.floor(Math.random() * pool.length)]
-
-      const scene = await db.scenes.get(chosenId)
-
-      console.log('scene', scene)
-
-      return scene ?? null
+      return scenes[0] ?? null
     },
   })
 

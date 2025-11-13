@@ -1,11 +1,10 @@
 import { z } from 'zod'
-import { InventoryItemSchema, LogRowSchema, LogTypeEnum, MilestoneSchema, SaveSchema, SceneSchema, SettingsSchema, SheetSchema, TimeslotRuleSchema } from '@/data'
+import { InventoryItemSchema, LogRowSchema, LogTypeEnum, MilestoneSchema, SaveSchema, SceneSchema, SettingsSchema, SheetSchema } from '@/data'
 
 // schemas
 export type Save = z.infer<typeof SaveSchema>
 export type Sheet = z.infer<typeof SheetSchema>
 export type Scene = z.infer<typeof SceneSchema>
-export type TimeslotRule = z.infer<typeof TimeslotRuleSchema>
 export type Milestone = z.infer<typeof MilestoneSchema>
 export type InventoryItem = z.infer<typeof InventoryItemSchema>
 export type Settings = z.infer<typeof SettingsSchema>
