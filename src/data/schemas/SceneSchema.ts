@@ -1,7 +1,6 @@
 import z from 'zod'
-import { TimeslotEnum } from '../enums/TimeslotId'
-import { SceneTagEnum } from '../enums/SceneTag'
 import { s } from './_schemas'
+import { WeekdaysEnum } from '@/data'
 
 export const SceneSchema = z.object({
   id: s.sceneId,
@@ -10,21 +9,27 @@ export const SceneSchema = z.object({
   //** markdown/BBCode simples */
   content: z.string(),
 
-  timeslots: z.array(TimeslotEnum),
-  tags: z.array(SceneTagEnum),
-
+  options: z.array(z.string()),
+  cost: z.object({
+    energy: z.number().nullable(),
+    coin: z.number().nullable(),
+  }).nullable(),
+  hours: z.array(z.number()).nullable().default([]), // if empty array, available in all hours
+  weekdays: z.array(WeekdaysEnum).nullable().default([]), // if empty array, available in all weekdays
+  
   //** o que é necessário para a cena acontecer
   // * pensando em usar para restringir algumas cenas a ter xp acima de n ou ter item y no inventário
-  // * se null, sem pré-requisitos
   // */
   preRequire: z.object({
+    energy: z.object({
+      min: z.int().nullable(),
+      max: z.int().nullable(),
+    }),
+
+    //** precisa ter os itens válidos no inventário na quantidade certa */
+    items: z.array(z.record(z.string(), z.int().min(1))).nullable().default([]),
+    
     //** personagem e reputação mínima */
-    reputation: z.array(z.record(z.string(), z.number().int())).optional(),
-
-    //** precisa ter os itens válidos no inventário */
-    items: z.array(z.string()).optional(),
-
-    // dias possiveis
-    weekdays: s.weekdays,
-  }).nullable().default(null).optional(),
+    reputation: z.array(z.record(z.string(), z.int())).nullable().default([]),
+  }),
 })

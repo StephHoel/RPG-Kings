@@ -5,9 +5,7 @@ export * from './db'
 export * from './enums/ItemsTag'
 export * from './enums/LogType'
 export * from './enums/MilestoneType'
-export * from './enums/SceneTag'
 export * from './enums/ThemeColor'
-export * from './enums/TimeslotId'
 export * from './enums/Weekdays'
 
 // Schemas
