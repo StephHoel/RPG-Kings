@@ -1,3 +1,5 @@
+# DOCs Kings
+
 ## ✅ **Passo 1 – Defina os Pilares do Jogo**
 
 * **Tema:** Escola de sobrenaturais.
@@ -64,7 +66,7 @@ Sugestão moderna:
 
 Organize assim:
 
-```
+```plain
 /game
   /data
     characters.json      # Personagens e atributos

@@ -1,13 +1,14 @@
 # 0) navegação geral
 
-* **/ (landing)** → **/auth** (se não houver sessão) → **/profiles** (selecionar perfil) → **/saves** (selecionar/ criar personagem) → **/game**
-* overlays/modais: **/game?modal=map**, **…=inventory**, **…=progress**, **…=sleep**, **…=settings**
+* Novo: **/ (landing)** → **/saves/new** (criar perfil) → **/game**
+* Continuar: **/ (landing)** → **/game**
+* demais telas: **/saves**, **/inventory**, **/progress**, **/milestone**, **/settings**
 
 ---
 
 ## 1) landing / splash
 
-objetivo: escolher “entrar” ou “continuar último”.
+objetivo: escolher “entrar” ou “continuar”.
 
 ```plain
 ┌──────────────────────────────────────────────┐
@@ -24,14 +25,14 @@ objetivo: escolher “entrar” ou “continuar último”.
 
 estados:
 
-* se existir “último save” → habilitar botão “continuar”.
-* senão → desabilitar e realçar “Entrar / Criar perfis”.
+* se existir “save ativo” → aparecer botão “Continuar” e botão “Novo Save”.
+* senão → aparecer botão “Novo Save”.
 
 ---
 
-## 2) auth (login local)
+## 2) [desabilitado] auth
 
-mesmo offline, usa **PIN/senha local** por **perfil de jogador** (não por personagem).
+usa **PIN/senha** por **perfil de jogador** (não por personagem).
 
 ```plain
 ┌───────────────────────────────────────┐
@@ -53,7 +54,7 @@ empty/edge cases:
 
 ---
 
-## 3) criar/gerenciar **perfis** (contas locais)
+## 3) [diferente] criar/gerenciar **saves**
 
 um navegador pode ter vários perfis (ex.: “Steph”, “Convidado”).
 
@@ -86,10 +87,10 @@ cada perfil tem **N personagens** (slots ilimitados ou limite prático, ex. 12).
 │                                                            │
 │ Escolha seu personagem                                     │
 │                                                            │
-│ ┌────────────┐  ┌────────────┐  ┌────────────┐             │
-│ │ Ailén (Lv3)│  │ Lyara (Lv1)│  │ + Novo     │             │
-│ │ S1 D3 14:00│  │ S1 D1 09:00│  │ Personagem │             │
-│ └────────────┘  └────────────┘  └────────────┘             │
+│ ┌─────────────┐  ┌─────────────┐  ┌────────────┐           │
+│ │ Ailén (Lv3) │  │ Lyara (Lv1) │  │ + Novo     │           │
+│ │ S1 D3 14:00 │  │ S1 D1 09:00 │  │ Personagem │           │
+│ └─────────────┘  └─────────────┘  └────────────┘           │
 │                                                            │
 │ [Duplicar] [Renomear] [Exportar] [Apagar]                  │
 └────────────────────────────────────────────────────────────┘
@@ -97,11 +98,11 @@ cada perfil tem **N personagens** (slots ilimitados ou limite prático, ex. 12).
 
 empty:
 
-* sem saves → abre wizard de criação.
+* sem saves → redireciona para tela de criação.
 
 ---
 
-## 5) wizard de **novo personagem**
+## 5) novo save
 
 mínimo viável: nome + origem sobrenatural + dificuldade. (customizações visuais podem ficar pro pós-MVP)
 
@@ -112,7 +113,7 @@ mínimo viável: nome + origem sobrenatural + dificuldade. (customizações visu
 │ Nome: [___________]          │
 │                              │
 │ Origem: ( ) Vampiro ( ) Lobo │
-│         ( ) Fada   ( ) Mago  │
+│         ( ) Fada    ( ) Mago │
 │                              │
 │ [Cancelar]        [Começar]  │
 └──────────────────────────────┘
@@ -131,9 +132,9 @@ Dia 3 — Semana 1 — 14:00 — Quarta     Reputação: 12 • Moedas: 45
 Aulas: 08–12 | Próximo bloco livre: 15h
 ```
 
-**main**
+#### **main**
 
-```
+```plain
 ┌─────────────── esquerda (25%) ────────────────┬──────────── direita (75%) ──────────────┐
 │ ATRIBUTOS                                     │ [CARD: cena atual]                      │
 │ Energia 62/100  Fome 40/100  Humor 55/100     │ "O vento frio varre o pátio..."         │
@@ -148,9 +149,9 @@ Aulas: 08–12 | Próximo bloco livre: 15h
 └───────────────────────────────────────────────┴─────────────────────────────────────────┘
 ```
 
-**footer**
+#### **footer**
 
-```
+```plain
 Dicas: “Explorar tem mais chance de eventos à tarde.”   [Salvar] [Configurações]
 ```
 
@@ -165,7 +166,7 @@ estados:
 
 ### 7.1 mapa (áreas)
 
-```
+```plain
 ┌────────── MAPA ───────────┐
 │ Pátio • Biblioteca • Arena│
 │ Dormitórios • Refeitório  │
@@ -178,7 +179,7 @@ ação **Ir** consome 1 “slot” de hora livre (opcional no MVP).
 
 ### 7.2 inventário
 
-```
+```plain
 ┌──────── INVENTÁRIO ───────┐
 │ Consumíveis (Pão, Suco)   │
 │ Itens-chave (Kit Básico)  │
@@ -190,7 +191,7 @@ usar → aplica efeito (ex.: +Energia, -Fome).
 
 ### 7.3 progresso / marcos
 
-```
+```plain
 ┌────── PROGRESSO ─────────────────────────────────────────┐
 │ [Acadêmico] [Poder] ..                                   │
 │ ◻ Prova de Alquimia N1 │ reqs: Alq≥60, Energia≥50, Kit  │
@@ -201,7 +202,7 @@ usar → aplica efeito (ex.: +Energia, -Fome).
 
 ### 7.4 calendário / agenda
 
-```
+```plain
 ┌──────── CALENDÁRIO ────────┐
 │ Seg a Sáb: Aulas 08–12     │
 │ Domingo: livre/eventos     │
@@ -213,7 +214,7 @@ usar → aplica efeito (ex.: +Energia, -Fome).
 
 ### 7.5 dormir (confirmação)
 
-```
+```plain
 ┌────── DORMIR? ────────┐
 │ Encerrar dia agora?   │
 │ +60 EN, -30 Fome, +10 │
@@ -226,7 +227,7 @@ usar → aplica efeito (ex.: +Energia, -Fome).
 
 ## 8) tela “**ficha**” (detalhe do personagem)
 
-```
+```plain
 ┌────────── FICHA ──────────┐
 │ Atributos (barras)        │
 │ Disciplinas (Nível/XP)    │
@@ -243,7 +244,7 @@ usar → aplica efeito (ex.: +Energia, -Fome).
 
 permite **trocar personagem** sem sair do perfil.
 
-```
+```plain
 ┌────────── SALVOS ──────────┐
 │ Lista de personagens       │
 │                            │
@@ -263,7 +264,7 @@ mínimo para MVP:
 
 * volume ON/OFF, textos grandes/pequenos, **backup/exportar saves**, **importar**.
 
-```
+```plain
 ┌──────── CONFIGURAÇÕES ───────────────┐
 │ Texto: [ Pequeno | Médio | Grande ]  │
 │                                      │
@@ -325,24 +326,24 @@ Character {
 
 1. **primeira vez**
 
-```
-Landing → Criar Perfil → Wizard Personagem → Game (D1 07:00)
-```
+    ```plain
+    Landing → Criar Perfil → Wizard Personagem → Game (D1 07:00)
+    ```
 
 2. **jogar o dia**
 
-```
-Game: escolher ações (4x) → eventos → “Dormir” → restaurar → Dia+1
-```
+    ```plain
+    Game: escolher ações (4x) → eventos → “Dormir” → restaurar → Dia+1
+    ```
 
 3. **trocar de personagem**
 
-```
-Game → Menu → Saves → Selecionar outro → Game (carregado)
-```
+    ```plain
+    Game → Menu → Saves → Selecionar outro → Game (carregado)
+    ```
 
 4. **exportar/backup**
 
-```
-Config → Exportar Perfil → baixa .json (tudo do perfil)
-```
+    ```plain
+    Config → Exportar Perfil → baixa .json (tudo do perfil)
+    ```plain

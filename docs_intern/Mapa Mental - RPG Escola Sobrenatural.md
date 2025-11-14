@@ -41,12 +41,11 @@
 ### **3. Atributos**
 
 * **Primários (decrescem e regeneram)**:
-
   * Energia
   * Fome
   * Humor
-* **Secundários (crescem com treino e aulas)**:
 
+* **Secundários (crescem com treino e aulas)**:
   * Magia
   * Conhecimento
   * Força
@@ -80,19 +79,18 @@
 ### **6. Eventos Aleatórios**
 
 * Tipo Social:
-
   * NPC convida para conversar → teste de Carisma
+
 * Tipo Conflito:
-
   * Aluno provoca → teste de Força ou Carisma
+
 * Tipo Descoberta:
-
   * Item raro encontrado no pátio
+
 * Tipo Missão:
-
   * Professor pede ajuda → bônus XP
-* Tipo Negativo:
 
+* Tipo Negativo:
   * Perda de energia inesperada (ex: acidente, clima)
 
 **Chance de evento = % baseada na hora e na atividade**
@@ -103,12 +101,11 @@
 ### **7. Progressão**
 
 * **Objetivos curtos**:
-
   * Subir de nível em disciplinas
   * Fazer amizades (desbloqueia eventos)
   * Completar desafios semanais
-* **Objetivos longos**:
 
+* **Objetivos longos**:
   * Tornar-se líder de casa
   * Descobrir segredos da escola
   * História principal (mistério)
