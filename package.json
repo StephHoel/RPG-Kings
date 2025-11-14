@@ -1,11 +1,14 @@
 {
   "name": "kings-academy",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.3",
   "type": "module",
   "homepage": "https://stephhoel.github.io/RPG-Kings/",
   "scripts": {
     "dev": "next dev",
+    "generate-version": "node scripts/generate-version.cjs",
+    "prebuild": "node scripts/generate-version.cjs",
+    "bump-and-push": "node scripts/bump-and-push.cjs",
     "build": "next build",
     "start": "next start",
     "export": "next export",
