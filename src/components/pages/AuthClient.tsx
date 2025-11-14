@@ -1,6 +1,6 @@
 import { H1, Panel } from '@/components'
 
-export default function AuthClient() {
+export function AuthClient() {
   return (
     <Panel>
       <H1>Login offline</H1>

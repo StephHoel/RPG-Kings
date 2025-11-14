@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Activity } from 'react'
 import { useActiveSaveContext } from '@/providers/useActiveSaveContext'
 
-export default function HomeClient() {
+export function HomeClient() {
   const router = useRouter()
   const { activeSaveId } = useActiveSaveContext()
 

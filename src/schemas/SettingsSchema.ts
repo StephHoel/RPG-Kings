@@ -1,5 +1,5 @@
 import z from 'zod'
-import { ThemeColorEnum } from '../enums/ThemeColor'
+import { ThemeColorEnum } from '@/enums'
 import { s } from './_schemas'
 
 // TODO verificar se isso vai ser necessário

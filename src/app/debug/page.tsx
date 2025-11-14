@@ -1,4 +1,4 @@
-import DebugClient from '@/components/pages/DebugClient'
+import { DebugClient } from '@/components'
 import { metadatas } from '@/config'
 
 export const metadata = metadatas.debug

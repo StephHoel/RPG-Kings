@@ -1,12 +1,14 @@
+import { LogTypeEnum } from '@/enums'
+import { SaveSchema, SheetSchema, SceneSchema, MilestoneSchema, InventorySchema, ItemSchema, SettingsSchema, LogRowSchema } from '@/schemas'
 import { z } from 'zod'
-import { InventoryItemSchema, LogRowSchema, LogTypeEnum, MilestoneSchema, SaveSchema, SceneSchema, SettingsSchema, SheetSchema } from '@/data'
 
 // schemas
 export type Save = z.infer<typeof SaveSchema>
 export type Sheet = z.infer<typeof SheetSchema>
 export type Scene = z.infer<typeof SceneSchema>
 export type Milestone = z.infer<typeof MilestoneSchema>
-export type InventoryItem = z.infer<typeof InventoryItemSchema>
+export type Inventory = z.infer<typeof InventorySchema>
+export type Item = z.infer<typeof ItemSchema>
 export type Settings = z.infer<typeof SettingsSchema>
 export type LogRow = z.infer<typeof LogRowSchema>
 

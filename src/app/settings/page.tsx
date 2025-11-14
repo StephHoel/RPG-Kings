@@ -1,4 +1,4 @@
-import SettingClient from '@/components/pages/SettingClient'
+import { SettingClient } from '@/components'
 import { metadatas } from '@/config'
 
 export const metadata = metadatas.config

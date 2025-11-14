@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
-import ProgressClient from '@/components/pages/ProgressClient'
 import { metadatas } from '@/config'
+import { ProgressClient } from '@/components'
 
 export const metadata = metadatas.progress
 

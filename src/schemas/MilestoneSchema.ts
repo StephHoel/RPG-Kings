@@ -1,5 +1,5 @@
 import z from 'zod'
-import { MilestoneTypeEnum } from '../enums/MilestoneType'
+import { MilestoneTypeEnum } from '@/enums'
 import { s } from './_schemas'
 
 export const MilestoneSchema = z.object({

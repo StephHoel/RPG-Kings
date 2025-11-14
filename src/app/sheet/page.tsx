@@ -1,6 +1,6 @@
-import SheetClient from '@/components/pages/SheetClient'
 import { Suspense } from 'react'
 import { metadatas } from '@/config'
+import { SheetClient } from '@/components'
 
 export const metadata = metadatas.sheet
 

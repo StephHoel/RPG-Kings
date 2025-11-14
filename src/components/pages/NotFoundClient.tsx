@@ -3,7 +3,7 @@ import { Button, H1, Panel } from '@/components'
 import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/config'
 
-export default function NotFoundClient() {
+export function NotFoundClient() {
   const router = useRouter()
 
   return (

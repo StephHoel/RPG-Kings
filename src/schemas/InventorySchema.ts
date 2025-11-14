@@ -1,9 +1,8 @@
 import { z } from 'zod'
-import { ItemsTagEnum } from '../enums/ItemsTag'
 import { s } from './_schemas'
 
 /**
- * InventoryItemSchema defines the structure of an inventory item.
+ * InventorySchema defines the structure of an inventory.
  *
  * - `durationWeeks`: If `0`, the item has unlimited duration.
  *   Otherwise, it represents the number of weeks the item will last.
@@ -13,18 +12,12 @@ import { s } from './_schemas'
 export const InventorySchema = z.object({
   id: s.sequencialId,
   saveId: s.saveId,
-
-  // TODO talvez trocar para itemId quando eu fizer a tabela domínio de itens
-  itemName: z.string(),
-
-  // TODO talvez tirar quantidade e salvar individualmente cada item (mesmo q duplicado)
-  quantity: z.number().int().min(1),
-
+  
+  name: z.string(),
   acquiredWeek: z.number().int().min(1),
   durationWeeks: z.number().int().min(0),
-  expiresAtWeek: z.number().int().nonnegative().optional().nullable().default(null),
-
-  tags: z.array(ItemsTagEnum).optional(),
+  expiresAtWeek: z.number().int().nonnegative().nullable().default(null),
+  usedAtWeek: z.number().int().nullable().default(null),
 
   updatedAt: s.updatedAt,
   createdAt: s.createdAt,

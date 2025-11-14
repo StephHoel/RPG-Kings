@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Button, H1, Panel } from '@/components'
 import { useSeedAll } from '@/hooks'
 
-export default function SeedDevClient() {
+export function SeedDevClient() {
   const seedMutation = useSeedAll()
   const [isSeed, setIsSeed] = useState(false)
 

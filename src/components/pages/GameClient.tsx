@@ -6,7 +6,7 @@ import { useGetScene } from '@/hooks'
 import { ChoiceList, H1, Panel, SceneCard } from '@/components'
 import { useEffect } from 'react'
 
-export default function GameClient() {
+export function GameClient() {
   const router = useRouter()
   const search = useSearchParams()
   const saveId = search?.get('saveId') ?? null

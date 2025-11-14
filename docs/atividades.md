@@ -1,11 +1,14 @@
 # Lista de Atividades Planejadas
 
-## v0.1.2 —
+## v0.1.3 — 2025
 
-- [ ] Criar enums de Itens
 - [ ] Criar seed de cenas reais básicas (cenário feliz único de 1 dia)
 - [ ] Implementar o PWA (next-pwa)
 - [ ] Ações de inventário (comprar/usar) com cálculo de `expiresAtWeek`.
+
+## v0.1.2 — 2025-11-13
+
+- [x] Criar seed de Itens (Inventory)
 
 ## v0.1.1 — 2025-11-12
 

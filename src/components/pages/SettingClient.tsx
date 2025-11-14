@@ -1,6 +1,6 @@
 import { H1, Panel } from '@/components'
 
-export default function SettingClient() {
+export function SettingClient() {
   return (
     <Panel>
       <H1>Configurações</H1>

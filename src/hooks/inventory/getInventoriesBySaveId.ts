@@ -1,8 +1,8 @@
 import { db } from '@/db'
-import { InventoryItem } from '@/interfaces'
+import { Inventory } from '@/interfaces'
 import { useQuery } from '@tanstack/react-query'
 
-export function useGetInventory(saveId: string): InventoryItem[] | null {
+export function useGetInventory(saveId: string): Inventory[] | null {
   const { data: items } = useQuery({
     queryKey: ['inventory', saveId],
 
@@ -11,5 +11,5 @@ export function useGetInventory(saveId: string): InventoryItem[] | null {
     enabled: !!saveId,
   })
 
-  return items && items.length > 0 ? items : null
+  return items ?? null
 }

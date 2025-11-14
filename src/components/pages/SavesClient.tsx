@@ -6,7 +6,7 @@ import { ROUTES } from '@/config'
 import { SaveId } from '@/interfaces'
 import { toast } from 'sonner'
 
-export default function SavesClient() {
+export function SavesClient() {
   const router = useRouter()
   const deleteMutation = useDeleteSave()
   let saves = useGetAllSaves()

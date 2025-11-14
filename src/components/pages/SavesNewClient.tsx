@@ -6,7 +6,7 @@ import { ROUTES } from '@/config'
 import { useRouter } from 'next/navigation'
 import { CreateSaveFormValues } from '@/interfaces'
 
-export default function SavesNewClient() {
+export function SavesNewClient() {
   const router = useRouter()
   const createSave = useCreateSave()
 

@@ -4,7 +4,7 @@ import { useGetInventory, useGetSheet } from '@/hooks'
 import { ROUTES } from '@/config'
 import { H1, Panel } from '@/components'
 
-export default function SheetClient() {
+export function SheetClient() {
   const router = useRouter()
   const search = useSearchParams()
   const saveId = search?.get('saveId')
@@ -29,7 +29,7 @@ export default function SheetClient() {
 
         {items?.map(i => (
           <li key={i.id} className="border rounded p-3">
-            <div className="font-medium">{i.itemName} ×{i.quantity}</div>
+            <div className="font-medium">{i.name}</div>
 
             <div className="text-sm opacity-70">Comprado semana {i.acquiredWeek} · Duração {i.durationWeeks === 0 ? 'ilimitada' : `${i.durationWeeks} semanas`} · Expira {i.expiresAtWeek ?? '—'}</div>
           </li>

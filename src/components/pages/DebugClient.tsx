@@ -1,13 +1,13 @@
 'use client'
 import { Button, GenericTable, H1, Input, Panel } from '@/components'
-import { LogTypeEnum } from '@/data'
+import { LogTypeEnum } from '@/enums'
 import { db } from '@/db'
 import { LogCategoryLabels, LogRow } from '@/interfaces'
 import { exportLogsNDJSON, clearLogs, formatDate, formatPayload, LogTypeLabels } from '@/lib'
 import { useState, useEffect, useMemo, Activity } from 'react'
 import { toast } from 'sonner'
 
-export default function DebugClient() {
+export function DebugClient() {
   const [logs, setLogs] = useState<LogRow[]>([])
   const [type, setType] = useState<LogCategoryLabels>('all')
   const [q, setQ] = useState('')

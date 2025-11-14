@@ -4,7 +4,7 @@ import { useGetMilestones } from '@/hooks'
 import { ROUTES } from '@/config'
 import { H1, Panel } from '@/components'
 
-export default function ProgressClient() {
+export function ProgressClient() {
   const router = useRouter()
   const search = useSearchParams()
   const saveId = search?.get('saveId')

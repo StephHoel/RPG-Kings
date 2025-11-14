@@ -1,4 +1,4 @@
-import SavesNewClient from '@/components/pages/SavesNewClient'
+import { SavesNewClient } from '@/components'
 import { metadatas } from '@/config'
 
 export const metadata = metadatas.saves_new

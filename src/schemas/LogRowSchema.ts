@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { LogTypeEnum } from '../enums/LogType'
+import { LogTypeEnum } from '@/enums'
 import { s } from './_schemas'
 
 export const LogRowSchema = z.object({

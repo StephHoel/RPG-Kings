@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
-import GameClient from '@/components/pages/GameClient'
 import { metadatas } from '@/config'
+import { GameClient } from '@/components'
 
 export const metadata = metadatas.game
 
