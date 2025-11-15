@@ -22,9 +22,6 @@ export function ToasterResponsive() {
       mq.addListener(handler)
     }
 
-    // set initial
-    setPosition(mq.matches ? 'top-right' : 'top-center')
-
     return () => {
       try {
         mq.removeEventListener('change', handler)

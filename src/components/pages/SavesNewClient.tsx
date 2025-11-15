@@ -29,11 +29,12 @@ export function SavesNewClient() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
         <Input
-          children="Nome do Personagem"
           placeholder="Insira o nome aqui"
           {...register('name', { required: 'Nome é obrigatório' })}
           aria-invalid={errors.name ? 'true' : 'false'}
-        />
+        >
+          Nome do Personagem
+        </Input>
 
         <AlertError mode={errors.name ? 'visible' : 'hidden'}>
           {errors.name?.message ?? 'Erro no nome'}

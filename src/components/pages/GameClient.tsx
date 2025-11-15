@@ -20,13 +20,15 @@ export function GameClient() {
     }
   }, [saveId, router])
 
-  if (!saveId) return null
-
-  const { scene } = useGetScene(saveId)
+  const { scene } = useGetScene(saveId ?? '')
 
   useEffect(() => {
+    if (!saveId) return
+
     toast('Scene carregada')
-  }, [scene])
+  }, [scene, saveId])
+
+  if (!saveId) return null
 
   return (
     <Panel>
