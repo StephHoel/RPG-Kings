@@ -1,6 +1,6 @@
 import { ItemsTagEnum } from '@/enums'
 import z from 'zod'
-import { s } from './_schemas'
+import { s } from '@/utils'
 
 export const ItemSchema = z.object({
   id: s.sequencialId,

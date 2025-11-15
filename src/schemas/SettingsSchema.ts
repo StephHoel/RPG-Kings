@@ -1,6 +1,6 @@
 import z from 'zod'
 import { ThemeColorEnum } from '@/enums'
-import { s } from './_schemas'
+import { s } from '@/utils'
 
 // TODO verificar se isso vai ser necessário
 export const SettingsSchema = z.object({

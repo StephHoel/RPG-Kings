@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { LogTypeEnum } from '@/enums'
-import { s } from './_schemas'
+import { s } from '@/utils'
 
 export const LogRowSchema = z.object({
   id: s.sequencialId.optional(),

@@ -1,5 +1,5 @@
 import z from 'zod'
-import { s } from './_schemas'
+import { s } from '@/utils'
 
 export const SheetSchema = z.object({
   id: s.saveId,

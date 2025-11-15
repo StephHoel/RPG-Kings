@@ -1,6 +1,6 @@
 import z from 'zod'
 import { MilestoneTypeEnum } from '@/enums'
-import { s } from './_schemas'
+import { s } from '@/utils'
 
 export const MilestoneSchema = z.object({
   id: s.sequencialId,

@@ -1,5 +1,5 @@
 import z from 'zod'
-import { s } from './_schemas'
+import { s } from '@/utils'
 import { WeekdaysEnum } from '@/enums'
 
 export const SceneSchema = z.object({

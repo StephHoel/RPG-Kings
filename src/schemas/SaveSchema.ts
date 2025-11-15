@@ -1,6 +1,6 @@
 import { WeekdaysEnum } from '@/enums'
 import { z } from 'zod'
-import { s } from './_schemas'
+import { s } from '@/utils'
 
 export const SaveSchema = z.object({
   id: s.saveId,
