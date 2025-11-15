@@ -29,7 +29,7 @@ export function GenericTable<T>({ header: headers, rows, rowKey }: GenericTableP
         <tbody className="md:table-row-group">
           {rows.map((row) => (
             <tr key={String(keyFn(row))} className="border-t md:table-row block">
-              {headers.map((h, i) => (
+              {headers.map((h) => (
                 <td key={h.key} className="p-2 not-first:border-l block md:table-cell">
                   {/* Mobile: show only the first header label above the row's first cell */}
                   <div className="md:hidden text-xs font-medium text-muted mb-1">{h.label}</div>

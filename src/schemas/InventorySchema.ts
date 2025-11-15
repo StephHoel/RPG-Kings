@@ -12,7 +12,7 @@ import { s } from '@/utils'
 export const InventorySchema = z.object({
   id: s.sequencialId,
   saveId: s.saveId,
-  
+
   name: z.string(),
   acquiredWeek: z.number().int().min(1),
   durationWeeks: z.number().int().min(0),

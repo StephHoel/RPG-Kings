@@ -47,7 +47,7 @@ export function useCreateSave() {
         updatedAt: new Date(),
       })
 
-      log(LogTypeEnum.enum.info, "Novo Save Criado", {saveId})
+      log(LogTypeEnum.enum.info, 'Novo Save Criado', {saveId})
 
       return saveId
     },

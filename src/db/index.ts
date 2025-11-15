@@ -15,7 +15,7 @@ class RPGDatabase extends Dexie {
 
   constructor() {
     super('rpg_db')
-    
+
     this.version(1).stores({
       saves: 'id, isActive, currentWeek, currentDay, currentHour',
       sheets: 'id, saveId',
@@ -26,7 +26,7 @@ class RPGDatabase extends Dexie {
       settings: 'id',
       logs: '++id, createdAt, type',
     })
-    
+
     this.on('populate', async () => {
       await safeBulkAdd(db.items, itemSeed)
     })

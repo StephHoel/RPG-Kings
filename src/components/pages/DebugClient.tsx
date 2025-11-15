@@ -12,7 +12,6 @@ export function DebugClient() {
   const [type, setType] = useState<LogCategoryLabels>('all')
   const [q, setQ] = useState('')
   const [sortAsc, setSortAsc] = useState<boolean>(false)
-  const [isFilteredEmpty, setIsFilteredEmpty] = useState<boolean>(true)
 
   useEffect(() => {
     db.logs
@@ -36,8 +35,6 @@ export function DebugClient() {
       const tb = new Date(b.createdAt as any).getTime()
       return sortAsc ? ta - tb : tb - ta
     })
-
-    setIsFilteredEmpty(out.length === 0)
 
     return out
   }, [logs, type, q, sortAsc])
@@ -103,7 +100,7 @@ export function DebugClient() {
         <p className="text-xs ">Local-only (Dexie). Nenhum dado é enviado para servidor.</p>
       </div>
 
-      <div className={`flex gap-2 flex-wrap  ${isFilteredEmpty ? 'hidden' : 'visible'}`}>
+      <div className={`flex gap-2 flex-wrap  ${filtered.length === 0 ? 'hidden' : 'visible'}`}>
         <div className='w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 md:justify-center'>
           <div className='flex items-center gap-2'>
             <span className="text-sm min-w-fit">Total: {filtered.length}</span>
@@ -144,7 +141,7 @@ export function DebugClient() {
       </div>
 
       <div className=" ">
-        <Activity mode={isFilteredEmpty ? 'hidden' : 'visible'}>
+        <Activity mode={filtered.length === 0 ? 'hidden' : 'visible'}>
           <GenericTable
             header={header}
             rows={filtered}
@@ -152,7 +149,7 @@ export function DebugClient() {
           />
         </Activity>
 
-        <p className={isFilteredEmpty ? 'visible' : 'hidden'}>
+        <p className={filtered.length === 0 ? 'visible' : 'hidden'}>
           Não há logs disponíveis.
         </p>
       </div>
