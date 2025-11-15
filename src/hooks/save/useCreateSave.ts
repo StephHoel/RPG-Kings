@@ -3,6 +3,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { db } from '@/db'
 import { useQueryKeys } from '@/hooks'
 import { Save } from '@/interfaces'
+import { log } from '@/lib'
+import { LogTypeEnum } from '@/enums'
 
 // Hook que cria o save e atualiza o cache do React Query
 export function useCreateSave() {
@@ -13,14 +15,41 @@ export function useCreateSave() {
       // desativar saves ativos anteriores
       await db.saves.toCollection().modify({ isActive: false })
 
-      return await db.saves.add({
-        id: nanoid(10),
-        name: name || 'Novo personagem',
+      var saveId = nanoid(10)
+
+      await db.saves.add({
+        id: saveId,
+        name: name,
         isActive: true,
         currentWeek: 1,
         currentDay: 'Monday',
         currentHour: 8,
       })
+
+      await db.sheets.add({
+        saveId,
+        stats: { // TODO pegar de um helper por causa da raça
+          strength: 0,
+          agility: 0,
+          intelligence: 0,
+          charisma: 0,
+          stamina: 0,
+          hungry: 0,
+          mood: 0,
+          magic: 0,
+          health: 0,
+          mana: 0,
+        },
+        developSkills: [], // TODO pegar de um helper por causa da raça
+        fixedSkills: [], // TODO pegar de um helper por causa da raça
+        coins: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+
+      log(LogTypeEnum.enum.info, "Novo Save Criado", {saveId})
+
+      return saveId
     },
 
     // Otimista: atualiza cache local antes da confirmação (onMutate)

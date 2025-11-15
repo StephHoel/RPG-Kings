@@ -15,4 +15,6 @@ export const s = {
   hours: z.array(z.number().int().min(0).max(23)).nullable().default(null).optional(),
 
   weeks: z.array(z.number().int().min(1)).nullable().default(null).optional(),
+
+  stats: z.number().int().default(0).optional(),
 }

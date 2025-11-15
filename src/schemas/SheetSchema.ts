@@ -1,26 +1,39 @@
 import z from 'zod'
 import { s } from '@/utils'
+import { DevelopSkillsEnum, FixedSkillsEnum } from '@/enums'
 
 export const SheetSchema = z.object({
-  id: s.saveId,
+  saveId: s.saveId,
 
-  // TODO talvez atributos seja uma lista específica. ex.: for, agi, int...
-  // TODO talvez fazer um enum para esses atributos
-  attrs: z.record(z.string(), z.number()),
+  stats: z.object({
+    strength: s.stats,
+    agility: s.stats,
+    intelligence: s.stats,
+    charisma: s.stats,
+    stamina: s.stats,
+    hungry: s.stats,
+    mood: s.stats,
+    magic: s.stats,
+    health: s.stats,
+    mana: s.stats,
+  }).optional(),
 
-  // TODO fazer uma lista perícias, mas aqui vai ser incluída apenas as que o personagem tiver com base na raça
-  // TODO [PENSAR] talvez fazer um enum para essas perícias? Mas como fazer se cada raça tem perícias específicas? Qual melhor caminho: enum ou tabela domínio com informações adicionais?
-  skills: z.record(z.string(), z.number()),
+  developSkills: z.array(
+    z.record(DevelopSkillsEnum, z.object({
+      lv: s.stats,
+      xp: s.stats,
+    })),
+  ),
 
+  fixedSkills: z.array(FixedSkillsEnum),
+
+  // TODO talvez mudar de string para enum/nome
   // aqui será armazenado a reputação com personagens NPC
-  reputation: z.record(z.string(), z.number()).optional(),
+  reputation: z.array(z.record(z.string(), z.number())).default([]).optional(),
 
   // dinheiro do jogo
   coins: z.number().int().nonnegative(),
 
-  // TODO ainda não sei o que fazer com essas tags
-  tags: z.array(z.string()),
-
-  updatedAt: s.updatedAt,
   createdAt: s.createdAt,
+  updatedAt: s.updatedAt,
 })
