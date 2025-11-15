@@ -22,7 +22,7 @@ export function Menu({ className = '' }: { className?: string }) {
               <Link
                 key={menu.label}
                 href={route}
-                className={`md:rounded-xl px-3 py-2 text-sm transition block hover:bg-white/5 ${active ? 'bg-white/10 ring-1 ring-white/15' : ''}`}
+                className={`md:rounded-xl px-3 py-2 md:my-1 text-sm transition block hover:bg-white/5 ${active ? 'bg-white/10 ring-1 ring-white/15' : ''}`}
               >
                 {menu.label}
               </Link>

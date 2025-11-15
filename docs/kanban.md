@@ -1,9 +1,11 @@
 # Kanban
 
-## v0.1.4 — 2025
+## v0.1.5 — 2025
 
-- [ ] FIX: espaçamento entre itens no menu lateral
-- [ ] FIX: limitar width máximo em telas grandes
+## v0.1.4 — 2025-11-15
+
+- [x] FIX: espaçamento entre itens no menu lateral
+- [x] FIX: limitar width máximo em telas grandes
 - [ ] Montar `config.json` com custos e restaurações
 - [ ] Criar `disciplinas.json` e XP base de cada aula
 - [ ] Criar seed de cenas reais básicas (cenário feliz único de 1 dia)
