@@ -1,5 +1,5 @@
 import Dexie, { Table } from 'dexie'
-import { Save, Sheet, Scene, Milestone, Inventory, Settings, LogRow, Item } from '@/interfaces'
+import { Save, Sheet, Scene, Milestone, Inventory, Setting, Log, Item, Discipline } from '@/interfaces'
 import { safeBulkAdd } from '@/lib'
 import { itemSeed } from '@/constants'
 
@@ -10,8 +10,9 @@ class RPGDatabase extends Dexie {
   milestones!: Table<Milestone, string>
   inventory!: Table<Inventory, string>
   items!: Table<Item, string>
-  settings!: Table<Settings, string>
-  logs!: Table<LogRow, number>
+  settings!: Table<Setting, string>
+  logs!: Table<Log, number>
+  disciplines!: Table<Discipline, number>
 
   constructor() {
     super('rpg_db')
@@ -25,6 +26,7 @@ class RPGDatabase extends Dexie {
       items: 'id',
       settings: 'id',
       logs: '++id, createdAt, type',
+      disciplines: '++id, saveId',
     })
 
     this.on('populate', async () => {

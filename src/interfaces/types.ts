@@ -1,5 +1,5 @@
 import { LogTypeEnum } from '@/enums'
-import { SaveSchema, SheetSchema, SceneSchema, MilestoneSchema, InventorySchema, ItemSchema, SettingsSchema, LogRowSchema } from '@/schemas'
+import { SaveSchema, SheetSchema, SceneSchema, MilestoneSchema, InventorySchema, ItemSchema, SettingsSchema as SettingSchema, LogSchema, DisciplineSchema } from '@/schemas'
 import { z } from 'zod'
 
 // schemas
@@ -9,8 +9,9 @@ export type Scene = z.infer<typeof SceneSchema>
 export type Milestone = z.infer<typeof MilestoneSchema>
 export type Inventory = z.infer<typeof InventorySchema>
 export type Item = z.infer<typeof ItemSchema>
-export type Settings = z.infer<typeof SettingsSchema>
-export type LogRow = z.infer<typeof LogRowSchema>
+export type Setting = z.infer<typeof SettingSchema>
+export type Log = z.infer<typeof LogSchema>
+export type Discipline = z.infer<typeof DisciplineSchema>
 
 // enums
 export type LogType = z.infer<typeof LogTypeEnum>

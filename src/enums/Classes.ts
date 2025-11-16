@@ -1,8 +1,8 @@
 import z from 'zod'
 
-export const MandatoryClasses = z.enum([
-  'Educação Física',
+export const MandatoryClassesEnum = z.enum([
   'Idiomas', // TODO colocar cada idioma
+  'Educação Física',
   'Negócios',
   'Matemática',
   'Sociologia',
@@ -12,14 +12,14 @@ export const MandatoryClasses = z.enum([
   'Química',
 ])
 
-export const OptionalClasses = z.enum([
+export const OptionalClassesEnum = z.enum([
   'Esportes de Quadra',  // TODO colocar cada esporte
   'Esportes de Grama', // TODO colocar cada esporte
   'Esportes Aquáticos', // TODO colocar cada esporte
+  'Instrumentos Musicais', // TODO colocar cada instrumento
   'Danças', // TODO colocar cada dança
   'Lutas', // TODO colocar cada luta
   'Artes Cênicas',
-  'Instrumentos Musicais',
   'Patinação Artística no Gelo',
   'Hóquei no Gelo',
   'Atletismo',

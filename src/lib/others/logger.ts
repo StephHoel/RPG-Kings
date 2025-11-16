@@ -1,9 +1,9 @@
 import { db } from '@/db'
-import { LogRow } from '@/interfaces'
-import { LogRowSchema } from '@/schemas'
+import { Log } from '@/interfaces'
+import { LogSchema } from '@/schemas'
 
 export async function log(
-  type: LogRow['type'],
+  type: Log['type'],
   message?: string,
   payload?: any
 ) {
@@ -13,7 +13,7 @@ export async function log(
     payload,
   }
 
-  const parsed = LogRowSchema.parse(entry)
+  const parsed = LogSchema.parse(entry)
 
   try {
     await db.logs.add(parsed)

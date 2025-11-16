@@ -1,6 +1,6 @@
-import { LogRow } from '@/interfaces'
+import { Log } from '@/interfaces'
 
-export const logSeed: LogRow[] = [
+export const logSeed: Log[] = [
   {
     type: 'info',
     message: 'Seed inicial de logs',

@@ -6,8 +6,9 @@
 
 - [x] FIX: espaçamento entre itens no menu lateral
 - [x] FIX: limitar width máximo em telas grandes
+- [x] Criar useMutation para adicionar o XP de cada aula
+- [ ] Refinar hooks
 - [ ] Montar `config.json` com custos e restaurações
-- [ ] Criar `disciplinas.json` e XP base de cada aula
 - [ ] Criar seed de cenas reais básicas (cenário feliz único de 1 dia)
 - [ ] Montar 1 semana jogável (Seg–Sáb)
 - [ ] Ações de inventário (comprar/usar) com cálculo de `expiresAtWeek`.

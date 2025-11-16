@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { LogTypeEnum } from '@/enums'
 import { s } from '@/utils'
 
-export const LogRowSchema = z.object({
+export const LogSchema = z.object({
   id: s.sequencialId.optional(),
   saveId: s.saveId.optional(),
   sceneId: s.sceneId.optional(),

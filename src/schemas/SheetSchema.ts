@@ -5,6 +5,8 @@ import { DevelopSkillsEnum, FixedSkillsEnum } from '@/enums'
 export const SheetSchema = z.object({
   saveId: s.saveId,
 
+  // race: RaceEnum,
+
   stats: z.object({
     strength: s.stats,
     agility: s.stats,
@@ -18,12 +20,7 @@ export const SheetSchema = z.object({
     mana: s.stats,
   }).optional(),
 
-  developSkills: z.array(
-    z.record(DevelopSkillsEnum, z.object({
-      lv: s.stats,
-      xp: s.stats,
-    })),
-  ),
+  developSkills: z.array(z.record(DevelopSkillsEnum, s.stats)),
 
   fixedSkills: z.array(FixedSkillsEnum),
 

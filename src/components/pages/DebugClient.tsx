@@ -2,13 +2,13 @@
 import { Button, GenericTable, H1, Input, Panel } from '@/components'
 import { LogTypeEnum } from '@/enums'
 import { db } from '@/db'
-import { LogCategoryLabels, LogRow } from '@/interfaces'
+import { LogCategoryLabels, Log } from '@/interfaces'
 import { exportLogsNDJSON, clearLogs, formatDate, formatPayload, LogTypeLabels } from '@/lib'
 import { useState, useEffect, useMemo, Activity } from 'react'
 import { toast } from 'sonner'
 
 export function DebugClient() {
-  const [logs, setLogs] = useState<LogRow[]>([])
+  const [logs, setLogs] = useState<Log[]>([])
   const [type, setType] = useState<LogCategoryLabels>('all')
   const [q, setQ] = useState('')
   const [sortAsc, setSortAsc] = useState<boolean>(false)
@@ -69,22 +69,22 @@ export function DebugClient() {
       key: 'createdAt',
       label: createdAtLabel,
       onHeaderClick: () => setSortAsc(s => !s),
-      render: (r: LogRow) => formatDate(r.createdAt)
+      render: (r: Log) => formatDate(r.createdAt)
     },
     {
       key: 'type',
       label: 'Type',
-      render: (r: LogRow) => r.type
+      render: (r: Log) => r.type
     },
     {
       key: 'message',
       label: 'Message',
-      render: (r: LogRow) => r.message ?? '—'
+      render: (r: Log) => r.message ?? '—'
     },
     {
       key: 'payload',
       label: 'Payload',
-      render: (r: LogRow) => (
+      render: (r: Log) => (
         <pre className="whitespace-pre-wrap">
           {formatPayload(r.payload)}
         </pre>
@@ -97,17 +97,17 @@ export function DebugClient() {
       <div>
         <H1>/debug – Logs locais</H1>
 
-        <p className="text-xs ">Local-only (Dexie). Nenhum dado é enviado para servidor.</p>
+        <p className="text-xs">Local-only (Dexie). Nenhum dado é enviado para servidor.</p>
       </div>
 
       <div className={`flex gap-2 flex-wrap  ${filtered.length === 0 ? 'hidden' : 'visible'}`}>
-        <div className='w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 md:justify-center'>
+        <div className='flex sm:flex-row flex-col sm:justify-between md:justify-center sm:items-center gap-2 w-full'>
           <div className='flex items-center gap-2'>
-            <span className="text-sm min-w-fit">Total: {filtered.length}</span>
+            <span className="min-w-fit text-sm">Total: {filtered.length}</span>
 
             <select
               aria-label="Filtrar por tipo de log"
-              className="border border-highlight px-3 py-2 rounded w-full"
+              className="px-3 py-2 border border-highlight rounded w-full"
               value={type}
               onChange={e => setType(e.target.value as any)}
             >
@@ -119,7 +119,7 @@ export function DebugClient() {
             </select>
           </div>
 
-          <div className='md:w-full sm:w-auto'>
+          <div className='sm:w-auto md:w-full'>
             <Input
               placeholder="Filtrar texto..."
               value={q}
@@ -130,7 +130,7 @@ export function DebugClient() {
         </div>
 
         <div className="flex space-x-2 w-full">
-          <Button onClick={onCopy} className=' min-w-fit'>
+          <Button onClick={onCopy} className='min-w-fit'>
             Copiar (NDJSON)
           </Button>
 
