@@ -35,6 +35,7 @@
 ## v0.1.5 — 2025-11-16
 
 - [x] Refinar hooks
+- [x] Criar um enum das raças
 
 ## v0.1.4 — 2025-11-15
 
