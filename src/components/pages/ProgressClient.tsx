@@ -20,17 +20,19 @@ export function ProgressClient() {
       <H1>Progresso</H1>
 
       <ul className="space-y-2">
-        {!milestones?.length && 'Sem progressos registrados'}
+        {!milestones || milestones.length === 0 ? (
+          'Sem progressos registrados'
+        ) : (
+          milestones.map((m) => (
+            <li key={m.id} className="p-3 border rounded">
+              <div className="font-medium">{m.description}</div>
 
-        {milestones?.map(m => (
-          <li key={m.id} className="border rounded p-3">
-            <div className="font-medium">{m.description}</div>
-
-            <div className={`text-sm opacity-70 ${m.achievedAtWeek ? 'visible' : 'hidden'}`}>
-              Concluído na semana {m.achievedAtWeek}
-            </div>
-          </li>
-        ))}
+              <div className={`text-sm opacity-70 ${m.achievedAtWeek ? 'visible' : 'hidden'}`}>
+                Concluído na semana {m.achievedAtWeek}
+              </div>
+            </li>
+          ))
+        )}
       </ul>
     </Panel>
   )

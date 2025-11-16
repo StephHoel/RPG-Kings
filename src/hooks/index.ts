@@ -9,16 +9,16 @@ export * from './save/useGetAllSaves'
 export * from './save/useGetSave'
 
 // Inventory
-export * from './inventory/getInventoriesBySaveId'
+export * from './inventory/useGetInventory'
 
 // Milestone
-export * from './milestone/getMilestonesBySaveId'
+export * from './milestone/useGetMilestones'
 
 // Scene
 export * from './scene/useGetScene'
 
 // Sheet
-export * from './sheet/getSheetBySaveId'
+export * from './sheet/useGetSheet'
 
 // Seed
 export * from './seed/useSeedAll'

@@ -20,7 +20,7 @@ export function GameClient() {
     }
   }, [saveId, router])
 
-  const { scene } = useGetScene(saveId ?? '')
+  const scene = useGetScene(saveId ?? '')
 
   useEffect(() => {
     if (!saveId) return

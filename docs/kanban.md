@@ -32,6 +32,16 @@
 - [ ] Missões com múltiplos objetivos e falhas possíveis
 - [ ] Login e sincronização de progresso online
 
+## v0.1.5 — 2025-11-16
+
+- [x] Refinar hooks
+
+## v0.1.4 — 2025-11-15
+
+- [x] FIX: espaçamento entre itens no menu lateral
+- [x] FIX: limitar width máximo em telas grandes
+- [x] Criar useMutation para adicionar o XP de cada aula
+
 ## v0.1.3 — 2025-11-14
 
 - [x] Definir `PlayerState` e tipos de dados (`atributos`, `disciplinas`)

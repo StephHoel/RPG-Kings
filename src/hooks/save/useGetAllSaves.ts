@@ -1,16 +1,28 @@
 import { db } from '@/db'
 import { Save } from '@/interfaces'
+import { log } from '@/lib'
+import { LogTypeEnum } from '@/enums'
 import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
 
-export function useGetAllSaves(): Save[] | null {
+export function useGetAllSaves(): Save[] {
   const { data: saves } = useQuery({
     queryKey: useQueryKeys.saves(),
+    staleTime: 60_000 * 60,
 
     queryFn: async () => {
-      return await db.saves.toArray()
+      try {
+        const saves = await db.saves.toArray()
+
+        await log(LogTypeEnum.enum.info, '[useGetAllSaves] Saves obtidos', { count: saves.length })
+
+        return saves
+      } catch (err: any) {
+        await log(LogTypeEnum.enum.error, '[useGetAllSaves] Erro ao obter saves', { error: String(err) })
+        throw err
+      }
     }
   })
 
-  return saves && saves.length > 0 ? saves : null
+  return saves ?? []
 }

@@ -12,9 +12,7 @@ export function useAddXP(saveId: string, discipline: string, xpToAdd?: number | 
     mutationFn: async () => {
       try {
         const existing = await db.disciplines
-          .where('saveId')
-          .equals(saveId)
-          .and(d => d.discipline === discipline)
+          .where({ saveId: saveId, discipline: discipline })
           .first()
 
         const amountToAdd = xpToAdd ?? 25
@@ -30,50 +28,37 @@ export function useAddXP(saveId: string, discipline: string, xpToAdd?: number | 
             updatedAt: now,
           } as Discipline)
 
-          await log(LogTypeEnum.enum.info, 'XP adicionado', { saveId, discipline, xpAdded: amountToAdd, totalXp: amountToAdd })
+          await log(LogTypeEnum.enum.info, '[useAddXP] Disciplina criada e XP adicionado', { saveId, discipline, xpAdded: amountToAdd, totalXp: amountToAdd })
 
           return true
         }
 
         const newXp = (existing.xp ?? 0) + amountToAdd
 
-        await db.disciplines.update(existing.id as any, { xp: newXp, updatedAt: new Date() })
+        const idToUpdate = existing.id as number | undefined
+        if (typeof idToUpdate === 'number') {
+          await db.disciplines.update(idToUpdate, { xp: newXp, updatedAt: new Date() })
+        } else {
+          // fallback: replace record
+          await db.disciplines.add({ ...existing, xp: newXp, updatedAt: new Date() } as Discipline)
+        }
 
-        await log(LogTypeEnum.enum.info, `XP adicionado: ${amountToAdd} (total ${newXp})`, { saveId, discipline, xpAdded: amountToAdd, totalXp: newXp })
+        await log(LogTypeEnum.enum.info, '[useAddXP] XP adicionado', { saveId, discipline, xpAdded: amountToAdd, totalXp: newXp })
 
         return true
       } catch (err: any) {
-        await log(LogTypeEnum.enum.error, 'Erro ao adicionar XP', { saveId, discipline, error: String(err) })
+        await log(LogTypeEnum.enum.error, '[useAddXP] Erro ao adicionar XP', { saveId, discipline, error: String(err) })
 
         return false
       }
     },
 
-    onSuccess: async (data) => {
-      try {
-        if (data === false) {
-          await log(LogTypeEnum.enum.error, 'useAddXP: operação falhou', { saveId, discipline })
-        } else {
-          try {
-            const current = await db.disciplines
-              .where('saveId')
-              .equals(saveId)
-              .and(d => d.discipline === discipline)
-              .first()
-
-            await log(LogTypeEnum.enum.info, 'useAddXP: operação bem-sucedida', { saveId, discipline, totalXp: current?.xp ?? null })
-          } catch (fetchErr) {
-            await log(LogTypeEnum.enum.info, 'useAddXP: sucesso (não foi possível buscar registro atualizado)', { saveId, discipline, fetchError: String(fetchErr) })
-          }
-        }
-
-        queryClient.invalidateQueries({ queryKey: useQueryKeys.discipline(saveId, discipline) })
-      } catch (e) {
-        await log(LogTypeEnum.enum.error, 'useAddXP: erro no onSuccess', { saveId, discipline, error: String(e) })
-      }
+    onSuccess:  () => {
+      queryClient.refetchQueries({ queryKey: useQueryKeys.discipline(saveId, discipline) })
     },
+
     onError: async (err) => {
-        await log(LogTypeEnum.enum.error, 'useAddXP: erro inesperado na mutação', { saveId, discipline, error: String(err) })
+      await log(LogTypeEnum.enum.error, '[useAddXP] Erro inesperado na mutação', { saveId, discipline, error: String(err) })
     },
   })
 }

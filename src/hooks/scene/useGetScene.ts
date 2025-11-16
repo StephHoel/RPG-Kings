@@ -1,30 +1,33 @@
-import { SaveId, Scene } from '@/interfaces'
-import { useQuery } from '@tanstack/react-query'
 import { db } from '@/db'
+import { SaveId, Scene } from '@/interfaces'
+import { LogTypeEnum } from '@/enums'
+import { log } from '@/lib'
+import { useQuery } from '@tanstack/react-query'
+import { useQueryKeys } from '../queries/queryKeys'
 
-export function useGetScene(saveId: SaveId) {
-  // const queryKey = useQueryKeys.saveId(saveId)
-
-  const { data: scene, isLoading } = useQuery({
-    queryKey: [],
+export function useGetScene(saveId: SaveId): Scene | null {
+  const { data: scene } = useQuery({
+    queryKey: useQueryKeys.scene(saveId),
     enabled: !!saveId,
-    staleTime: 5 * 60 * 1000, // 5 min
-    gcTime: 30 * 60 * 1000,   // 30 min (ajuste conforme seu app)
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 30 * 60 * 1000, // 30 minutes
 
-    // Normaliza: sempre retorna null se não houver save
-    select: (d) => d ?? null,
+    queryFn: async () => {
+      try {
+        const save = await db.saves.get(saveId)
+        if (!save) return null
 
-    queryFn: async (): Promise<Scene | null> => {
-      const save = await db.saves.get(saveId)
-      if (!save) return null
+        const scenes = await db.scenes.toArray()
 
-      const scenes = await db.scenes.toArray()
+        await log(LogTypeEnum.enum.info, '[useGetScene] Cena obtida', { scene: scenes[0] })
 
-      console.log('scene', scenes)
-
-      return scenes[0] ?? null
+        return scenes[0]
+      } catch (err: any) {
+        await log(LogTypeEnum.enum.error, '[useGetScene] Erro ao obter cena', { saveId, error: String(err) })
+        throw err
+      }
     },
   })
 
-  return { scene: scene ?? null, isLoading }
+  return scene ?? null
 }

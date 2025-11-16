@@ -1,6 +1,7 @@
 'use client'
 import { characterSeed, itemSeed, milestoneSeed, questSeed, reputationSeed, ruleSeed, sceneSeed, tagSeed } from '@/constants'
 import { db } from '@/db'
+import { LogTypeEnum } from '@/enums'
 import { log, safeBulkAdd } from '@/lib'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
@@ -50,13 +51,11 @@ export function useSeedAll() {
           toast.error(`Falha ao semear ${tableName}`)
           console.error(`Falha ao semear ${tableName}:`, err)
 
-          // rethrow to let the mutation mark as error
           throw err
         }
       }
 
-      // log the operation once
-      await log('info', 'Seed executada (debug)')
+      await log(LogTypeEnum.enum.info, 'Seed executada (debug)')
       toast.success('Seed executada (debug)')
 
       return anySeeded
