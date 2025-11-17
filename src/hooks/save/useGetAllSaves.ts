@@ -14,11 +14,11 @@ export function useGetAllSaves(): Save[] {
       try {
         const saves = await db.saves.toArray()
 
-        await log(LogTypeEnum.enum.info, '[useGetAllSaves] Saves obtidos', { count: saves.length })
+        await log(LogTypeEnum.enum.INFO, '[useGetAllSaves] Saves obtidos', { count: saves.length })
 
         return saves
       } catch (err: any) {
-        await log(LogTypeEnum.enum.error, '[useGetAllSaves] Erro ao obter saves', { error: String(err) })
+        await log(LogTypeEnum.enum.ERROR, '[useGetAllSaves] Erro ao obter saves', { error: String(err) })
         throw err
       }
     }

@@ -13,10 +13,10 @@ export function useDeleteSave() {
       try {
         await db.saves.delete(saveId)
 
-        await log(LogTypeEnum.enum.info, '[useDeleteSave] Save deletado', { saveId })
+        await log(LogTypeEnum.enum.INFO, '[useDeleteSave] Save deletado', { saveId })
       }
       catch (err: any) {
-        await log(LogTypeEnum.enum.error, '[useDeleteSave] Erro ao deletar save', { saveId, error: String(err) })
+        await log(LogTypeEnum.enum.ERROR, '[useDeleteSave] Erro ao deletar save', { saveId, error: String(err) })
       }
     },
 
@@ -25,7 +25,7 @@ export function useDeleteSave() {
     },
 
     onError: async (err) => {
-      await log(LogTypeEnum.enum.error, '[useAddXP] Erro inesperado na mutação', { error: String(err) })
+      await log(LogTypeEnum.enum.ERROR, '[useAddXP] Erro inesperado na mutação', { error: String(err) })
     },
   })
 }

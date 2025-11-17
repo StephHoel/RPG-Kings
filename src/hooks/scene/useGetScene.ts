@@ -19,11 +19,11 @@ export function useGetScene(saveId: SaveId): Scene | null {
 
         const scenes = await db.scenes.toArray()
 
-        await log(LogTypeEnum.enum.info, '[useGetScene] Cena obtida', { scene: scenes[0] })
+        await log(LogTypeEnum.enum.INFO, '[useGetScene] Cena obtida', { scene: scenes[0] })
 
         return scenes[0]
       } catch (err: any) {
-        await log(LogTypeEnum.enum.error, '[useGetScene] Erro ao obter cena', { saveId, error: String(err) })
+        await log(LogTypeEnum.enum.ERROR, '[useGetScene] Erro ao obter cena', { saveId, error: String(err) })
         throw err
       }
     },

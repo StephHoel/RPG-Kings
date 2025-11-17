@@ -16,11 +16,11 @@ export function useGetSheet(saveId: string): Sheet | null {
       try {
         const s = await db.sheets.get(saveId)
 
-        await log(LogTypeEnum.enum.info, '[useGetSheet] Ficha obtida', { saveId, present: !!s })
+        await log(LogTypeEnum.enum.INFO, '[useGetSheet] Ficha obtida', { saveId, present: !!s })
 
         return s ?? null
       } catch (err: any) {
-        await log(LogTypeEnum.enum.error, '[useGetSheet] Erro ao obter ficha', { saveId, error: String(err) })
+        await log(LogTypeEnum.enum.ERROR, '[useGetSheet] Erro ao obter ficha', { saveId, error: String(err) })
         throw err
       }
     },

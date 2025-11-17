@@ -15,7 +15,7 @@ export function useCreateSave() {
         .toCollection()
         .modify({ isActive: false })
 
-      await log(LogTypeEnum.enum.info, '[useCreateSave] Jogos anteriores inativados')
+      await log(LogTypeEnum.enum.INFO, '[useCreateSave] Jogos anteriores inativados')
 
       var saveId = nanoid(10)
 
@@ -28,7 +28,7 @@ export function useCreateSave() {
         currentHour: 8,
       })
 
-      await log(LogTypeEnum.enum.info, '[useCreateSave] Save criado', { saveId, name })
+      await log(LogTypeEnum.enum.INFO, '[useCreateSave] Save criado', { saveId, name })
 
       await db.sheets.add({
         saveId,
@@ -51,7 +51,7 @@ export function useCreateSave() {
         updatedAt: new Date(),
       })
 
-      await log(LogTypeEnum.enum.info, '[useCreateSave] Ficha de personagem criada', { saveId })
+      await log(LogTypeEnum.enum.INFO, '[useCreateSave] Ficha de personagem criada', { saveId })
 
       return saveId
     },
@@ -62,7 +62,7 @@ export function useCreateSave() {
     },
 
     onError: async (err) => {
-      await log(LogTypeEnum.enum.error, '[useCreateSave] Erro inesperado na mutação', { error: String(err) })
+      await log(LogTypeEnum.enum.ERROR, '[useCreateSave] Erro inesperado na mutação', { error: String(err) })
     },
   })
 }

@@ -1,13 +1,17 @@
 # Kanban
 
-## v0.1.5 — 2025
+## v0.1.5 — 2025-11-16
 
-## v0.1.4 — 2025-11-15
-
-- [x] FIX: espaçamento entre itens no menu lateral
-- [x] FIX: limitar width máximo em telas grandes
-- [x] Criar useMutation para adicionar o XP de cada aula
-- [ ] Refinar hooks
+- [x] Refinar hooks
+- [x] Criar um enum das raças
+- [x] Refinar demais enums
+- [ ] Criar um FAQ das raças
+- [ ] Criar um FAQ das habilidades
+- [ ] Criar um FAQ dos poderes
+- [ ] Pensar em um lugar para colocar o FAQ ou o link para o FAQ
+- [ ] Criar um helper para pegar stats por raça (procurar TODO)
+- [ ] Criar um helper para pegar developSkills por raça (procurar TODO)
+- [ ] Criar um helper para pegar fixedSkills por raça (procurar TODO)
 - [ ] Montar `config.json` com custos e restaurações
 - [ ] Criar seed de cenas reais básicas (cenário feliz único de 1 dia)
 - [ ] Montar 1 semana jogável (Seg–Sáb)
@@ -31,11 +35,6 @@
 - [ ] Mapa de navegação com salas clicáveis (arena, pátio, biblioteca, dormitórios)
 - [ ] Missões com múltiplos objetivos e falhas possíveis
 - [ ] Login e sincronização de progresso online
-
-## v0.1.5 — 2025-11-16
-
-- [x] Refinar hooks
-- [x] Criar um enum das raças
 
 ## v0.1.4 — 2025-11-15
 

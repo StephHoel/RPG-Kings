@@ -15,18 +15,18 @@ export function useGetSave(saveId: SaveId) {
     queryFn: async () => {
       try {
         if (!saveId) {
-          await log(LogTypeEnum.enum.info, '[useGetSave] SaveId nulo')
+          await log(LogTypeEnum.enum.INFO, '[useGetSave] SaveId nulo')
           return null
         }
 
         const save = await db.saves.get(saveId)
 
-        await log(LogTypeEnum.enum.info, '[useGetSave] Jogo obtido', { save })
+        await log(LogTypeEnum.enum.INFO, '[useGetSave] Jogo obtido', { save })
 
         return save ?? null
       }
       catch (err: any) {
-        await log(LogTypeEnum.enum.error, '[useGetSave] Erro ao obter jogo', { saveId, error: String(err) })
+        await log(LogTypeEnum.enum.ERROR, '[useGetSave] Erro ao obter jogo', { saveId, error: String(err) })
         throw err
       }
     },

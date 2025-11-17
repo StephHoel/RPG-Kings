@@ -55,7 +55,7 @@ export function useSeedAll() {
         }
       }
 
-      await log(LogTypeEnum.enum.info, 'Seed executada (debug)')
+      await log(LogTypeEnum.enum.INFO, 'Seed executada (debug)')
       toast.success('Seed executada (debug)')
 
       return anySeeded
