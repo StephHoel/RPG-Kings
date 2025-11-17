@@ -1,11 +1,11 @@
 import z from 'zod'
 import { s } from '@/utils'
-import { DevelopSkillsEnum, FixedSkillsEnum } from '@/enums'
+import { DevelopSkillsEnum, FixedSkillsEnum, RacesEnum } from '@/enums'
 
 export const SheetSchema = z.object({
   saveId: s.saveId,
 
-  // race: RaceEnum,
+  race: RacesEnum,
 
   stats: z.object({
     strength: s.stats,

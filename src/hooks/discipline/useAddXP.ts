@@ -5,7 +5,7 @@ import { log } from '@/lib'
 import { LogTypeEnum } from '@/enums'
 import { Discipline } from '@/interfaces'
 
-export function useAddXP(saveId: string, discipline: string, xpToAdd?: number | null) {
+export function useAddXP(saveId: string, discipline: string, xpToAdd: number) {
   const queryClient = useQueryClient()
 
   return useMutation<boolean, never, void>({
@@ -15,7 +15,7 @@ export function useAddXP(saveId: string, discipline: string, xpToAdd?: number | 
           .where({ saveId: saveId, discipline: discipline })
           .first()
 
-        const amountToAdd = xpToAdd ?? 25
+        const amountToAdd = xpToAdd
 
         if (!existing) {
           const now = new Date()

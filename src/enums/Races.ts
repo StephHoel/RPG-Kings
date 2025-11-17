@@ -3,8 +3,6 @@ import z from 'zod'
 export const RacesEnum = z.enum({
   ARCANO: 'ARCANO',
   BANSHEE: 'BANSHEE',
-  HIBRIDO: 'HÍBRIDO',
-  HUMANO: 'HUMANO',
   KANIMA: 'KANIMA',
   KITSUNE: 'KITSUNE',
   LOBISOMEM: 'LOBISOMEM',

@@ -1,17 +1,12 @@
 # Kanban
 
-## v0.1.5 — 2025-11-16
+## v0.1.6 — 2025
 
-- [x] Refinar hooks
-- [x] Criar um enum das raças
-- [x] Refinar demais enums
-- [ ] Criar um FAQ das raças
-- [ ] Criar um FAQ das habilidades
-- [ ] Criar um FAQ dos poderes
-- [ ] Pensar em um lugar para colocar o FAQ ou o link para o FAQ
-- [ ] Criar um helper para pegar stats por raça (procurar TODO)
-- [ ] Criar um helper para pegar developSkills por raça (procurar TODO)
-- [ ] Criar um helper para pegar fixedSkills por raça (procurar TODO)
+- [ ] Criar um helper para pegar stats por raça (procurar TODO para alterar depois)
+- [ ] Criar um helper para retornar o nível baseado no XP total
+- [ ] Criar um helper para pegar developSkills por raça (procurar TODO para alterar depois)
+- [ ] Criar um helper para pegar fixedSkills por raça (procurar TODO para alterar depois)
+- [ ] Criar um helper para selecionar randomicamente o animal caso a raça escolhida seja Transmorfo (procurar TODO para alterar depois)
 - [ ] Montar `config.json` com custos e restaurações
 - [ ] Criar seed de cenas reais básicas (cenário feliz único de 1 dia)
 - [ ] Montar 1 semana jogável (Seg–Sáb)
@@ -26,6 +21,10 @@
 - [ ] Montar card principal de cena e escolhas (interface final)
 - [ ] Testar fluxos: estudar, treinar, socializar, explorar, descansar
 - [ ] Implementar o PWA (next-pwa)
+- [ ] Criar um FAQ das raças
+- [ ] Criar um FAQ das habilidades
+- [ ] Criar um FAQ dos poderes
+- [ ] Pensar em um lugar para colocar o FAQ ou o link para o FAQ
 - [ ] Criar primeira missão: **Prova de Alquimia N1**
 - [ ] Escrever primeiros **eventos aleatórios** no `events.json`
 - [ ] Criar `npcs.json` (5 NPCs com afinidades e traços únicos)
@@ -35,6 +34,12 @@
 - [ ] Mapa de navegação com salas clicáveis (arena, pátio, biblioteca, dormitórios)
 - [ ] Missões com múltiplos objetivos e falhas possíveis
 - [ ] Login e sincronização de progresso online
+
+## v0.1.5 — 2025-11-16
+
+- [x] Refinar hooks
+- [x] Criar um enum das raças
+- [x] Refinar demais enums
 
 ## v0.1.4 — 2025-11-15
 
