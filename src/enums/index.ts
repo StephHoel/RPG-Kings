@@ -1,3 +1,4 @@
+export * from './Animals'
 export * from './Classes'
 export * from './ItemsTag'
 export * from './LogType'
