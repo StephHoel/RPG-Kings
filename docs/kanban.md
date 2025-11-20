@@ -2,6 +2,8 @@
 
 ## v0.1.7 — 2025
 
+- [x] Consertar tipos
+- [x] Criar testes e2e das rotas
 - [ ] Montar `config.json` com custos e restaurações
 - [ ] Criar seed de cenas reais básicas (cenário feliz único de 1 dia)
 - [ ] Montar 1 semana jogável (Seg–Sáb)

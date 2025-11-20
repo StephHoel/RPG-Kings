@@ -1,4 +1,5 @@
-const BASE = '/RPG-Kings'
+// Expose BASE for templates or runtime use
+export const BASE = '/RPG-Kings'
 
 export const ROUTES = {
   ROOT: '/',
@@ -13,7 +14,4 @@ export const ROUTES = {
 
   DEV_SEED: '/dev/seed',
   DEBUG: '/debug',
-
-  // Expose BASE for templates or runtime use
-  BASE,
 } as const

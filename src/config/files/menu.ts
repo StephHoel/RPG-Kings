@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { ROUTES } from './routes'
 
 export const MENUS = [

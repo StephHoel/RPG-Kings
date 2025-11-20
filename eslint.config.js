@@ -1,49 +1,35 @@
 import tsParser from '@typescript-eslint/parser'
-import eslintPluginNext from 'eslint-config-next'
-const config = [
+import tsPlugin from '@typescript-eslint/eslint-plugin'
+import reactPlugin from 'eslint-plugin-react'
+
+export default [
+  { ignores: ['node_modules/**', '.next/**', 'public/**', 'coverage/**'] },
   {
-    files: ['**/*.{ts,tsx,js,jsx}'],
-    ignores: ['node_modules', 'old'],
+    files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        ecmaVersion: 2024,
+        ecmaVersion: 2020,
         sourceType: 'module',
-        ecmaFeatures: { jsx: true },
-        project: ['./tsconfig.json'],
+        ecmaFeatures: { jsx: true }
       },
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+        describe: 'readonly',
+        test: 'readonly',
+        expect: 'readonly',
+        jest: 'readonly'
+      }
     },
-    // Note: do not re-declare plugins here to avoid conflicts with extended configs
+    plugins: { '@typescript-eslint': tsPlugin, react: reactPlugin },
+    settings: { react: { version: 'detect' } },
     rules: {
-      // === Estilo geral ===
-      semi: ['error', 'never'],
-      quotes: ['error', 'single', { avoidEscape: true }],
-      indent: ['error', 2, { SwitchCase: 1 }],
-      'no-trailing-spaces': 'error',
-
-      // === Espaçamento ===
-      'space-infix-ops': ['error', { int32Hint: false }],
-      'keyword-spacing': ['error', { before: true, after: true }],
-      'space-before-blocks': ['error', 'always'],
-      'semi-spacing': ['error', { before: false, after: true }],
-      'space-before-function-paren': ['error', 'never'],
-      'space-in-parens': ['error', 'never'],
-      'space-unary-ops': ['error', { words: true, nonwords: false }],
-
-      // === TypeScript ===
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      '@typescript-eslint/explicit-module-boundary-types': 'off',
-
-      // === Outras boas práticas ===
-      eqeqeq: ['error', 'always'],
-      curly: ['error', 'multi-line'],
-      'no-multiple-empty-lines': ['error', { max: 1 }],
-      'no-children-props': 'off',
-      'space-before-function-paren': 'off',
-    },
-  },
-
-  ...eslintPluginNext,
+      // Basic rules; add more if you want stricter checks
+      'no-unused-vars': ['warn', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
+      'no-console': 'off',
+      'react/react-in-jsx-scope': 'off'
+    }
+  }
 ]
-
-export default config

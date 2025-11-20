@@ -84,3 +84,4 @@ coverage/
 
 # Tailwind generated CSS (if any)
 public/styles/*.css
+/next-env.d.ts
