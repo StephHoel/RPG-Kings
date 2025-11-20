@@ -3,7 +3,6 @@ export * from './format/FormatDate'
 
 export * from './others/compareRoutes'
 export * from './others/logger'
-export * from './others/LogTypeLabels'
 
 export * from './db/safeBulkAdd'
 
@@ -13,4 +12,5 @@ export * from './helper/baseStats'
 export * from './helper/class'
 export * from './helper/dice'
 export * from './helper/level'
+export * from './helper/skills'
 export * from './helper/stats'

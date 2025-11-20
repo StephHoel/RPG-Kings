@@ -3,7 +3,7 @@ import { Button, GenericTable, H1, Input, Panel } from '@/components'
 import { LogTypeEnum } from '@/enums'
 import { db } from '@/db'
 import { LogCategoryLabels, Log } from '@/interfaces'
-import { exportLogsNDJSON, clearLogs, formatDate, formatPayload, LogTypeLabels } from '@/lib'
+import { exportLogsNDJSON, clearLogs, formatDate, formatPayload } from '@/lib'
 import { useState, useEffect, useMemo, Activity } from 'react'
 import { toast } from 'sonner'
 
@@ -113,7 +113,7 @@ export function DebugClient() {
             >
               {types.map(t => (
                 <option key={t} value={t} className="bg-primary hover:bg-secondary">
-                  {LogTypeLabels[t]}
+                  {t}
                 </option>
               ))}
             </select>

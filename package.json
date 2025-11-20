@@ -1,7 +1,7 @@
 {
   "name": "kings-academy",
   "private": true,
-  "version": "0.1.6",
+  "version": "0.1.7",
   "type": "module",
   "homepage": "https://stephhoel.github.io/RPG-Kings/",
   "scripts": {
@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "export": "next export",
-    "lint": "npx eslint \"src/**/*.{ts,tsx}\" --fix ",
+    "lint": "npx eslint 'src/**/*.{ts,tsx}'",
+    "lint:fix": "npx eslint 'src/**/*.{ts,tsx}' --fix",
     "check": "npx tsc"
   },
   "dependencies": {

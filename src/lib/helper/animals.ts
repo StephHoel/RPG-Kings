@@ -1,6 +1,6 @@
-import { Animals, Stats } from '@/interfaces'
+import { Animals, Kitsune, Races, Stats } from '@/interfaces'
 import { base } from './baseStats'
-import { AnimalsEnum } from '@/enums'
+import { AnimalsEnum, KitsuneEnum, RacesEnum } from '@/enums'
 
 /** `stats` base por animal/transformo */
 const STATS_BY_ANIMAL: Record<Animals, Stats> = {
@@ -91,10 +91,8 @@ const STATS_BY_ANIMAL: Record<Animals, Stats> = {
 }
 
 /** Retorna o `stats` pelo animal informado */
-export function getAnimalStats(animal: Animals): Stats | null {
-  const found = STATS_BY_ANIMAL[animal]
-
-  return found ? found : null
+export function getAnimalStats(animal: Animals | Kitsune): Stats | null {
+  return STATS_BY_ANIMAL[animal as Animals] ?? null
 }
 
 /** Retorna o `stats` para um animal aleatório */
@@ -115,4 +113,16 @@ export function randomAnimal(): Animals {
   const animal = keys[animalIndex]
 
   return animal
+}
+
+export function getAnimal(race: Races): Animals | Kitsune | null {
+  if (race === RacesEnum.enum.TRANSMORFO) {
+    return randomAnimal()
+  }
+
+  if (race === RacesEnum.enum.KITSUNE) {
+    return KitsuneEnum.enum.Kitsune
+  }
+
+  return null
 }

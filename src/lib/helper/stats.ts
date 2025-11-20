@@ -1,6 +1,7 @@
-import { Animals, Races, Stats } from '@/interfaces'
+import { Animals, Kitsune, Races, Stats } from '@/interfaces'
 import { base } from './baseStats'
 import { RacesEnum } from '@/enums'
+import { getAnimalStats } from './animals'
 
 const RACE_STATS: Record<Races, Stats> = {
   ARCANO: base({
@@ -55,12 +56,14 @@ const RACE_STATS: Record<Races, Stats> = {
   })
 }
 
-export function statsByRace(race: Races, animal?: Animals): Stats | undefined {
-  if (race === RacesEnum.enum.TRANSMORFO && animal === undefined) {
-    // TODO retornar erro
+export function statsByRace(race: Races, animal: Animals | Kitsune | null = null): Stats | null {
+  if (race === RacesEnum.enum.TRANSMORFO) {
+    if (animal === null) {
+      return null
+    }
+
+    return getAnimalStats(animal)
   }
-  if (race === RacesEnum.enum.TRANSMORFO && animal !== undefined) {
-    // TODO retornar stats do animal
-  }
+
   return RACE_STATS[race]
 }

@@ -1,12 +1,12 @@
 import z from 'zod'
 import { s } from '@/utils'
-import { AnimalsEnum, DevelopSkillsEnum, FixedSkillsEnum, RacesEnum } from '@/enums'
+import { AnimalsEnum, DevelopSkillsEnum, FixedSkillsEnum, KitsuneEnum, RacesEnum } from '@/enums'
 
 export const SheetSchema = z.object({
   saveId: s.saveId,
 
   race: RacesEnum,
-  animal: AnimalsEnum.nullable(),
+  animal: z.union([AnimalsEnum, KitsuneEnum]).nullable(),
 
   stats: z.object({
     strength: s.stats,

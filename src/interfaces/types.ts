@@ -1,4 +1,4 @@
-import { AnimalsEnum, LogTypeEnum, RacesEnum } from '@/enums'
+import { AnimalsEnum, DevelopSkillsEnum, FixedSkillsEnum, KitsuneEnum, LogTypeEnum, RacesEnum } from '@/enums'
 import { SaveSchema, SheetSchema, SceneSchema, MilestoneSchema, InventorySchema, ItemSchema, SettingsSchema as SettingSchema, LogSchema, DisciplineSchema } from '@/schemas'
 import { z } from 'zod'
 
@@ -17,7 +17,11 @@ export type Discipline = z.infer<typeof DisciplineSchema>
 export type LogType = z.infer<typeof LogTypeEnum>
 export type Races = z.infer<typeof RacesEnum>
 export type Animals = z.infer<typeof AnimalsEnum>
+export type Kitsune = z.infer<typeof KitsuneEnum>
 export type LogCategoryLabels = LogType | 'all'
+export type DevelopSkill = z.infer<typeof DevelopSkillsEnum>
+export type FixedSkill = z.infer<typeof FixedSkillsEnum>
+export type Skills = DevelopSkill | FixedSkill
 
 // Atalhos úteis
 export type SaveId = Save['id']

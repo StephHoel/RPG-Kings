@@ -1,23 +1,22 @@
 import { nanoid } from 'nanoid'
 import { db } from '@/db'
-import { log } from '@/lib'
+import { base, getAnimal, getDevelopSkills, getFixedSkills, log, statsByRace } from '@/lib'
 import { LogTypeEnum } from '@/enums'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
+import { CreateSaveFormValues } from '@/interfaces'
 
 export function useCreateSave() {
   const queryClient = useQueryClient()
 
-  return useMutation<string, Error, string>({
-    mutationFn: async (name: string): Promise<string> => {
+  return useMutation<string, Error, CreateSaveFormValues>({
+    mutationFn: async ({ name, race }: CreateSaveFormValues): Promise<string> => {
       // desativar saves ativos anteriores
-      await db.saves
-        .toCollection()
-        .modify({ isActive: false })
+      await db.saves.toCollection().modify({ isActive: false })
 
       await log(LogTypeEnum.enum.INFO, '[useCreateSave] Jogos anteriores inativados')
 
-      var saveId = nanoid(10)
+      const saveId = nanoid(10)
 
       await db.saves.add({
         id: saveId,
@@ -30,22 +29,17 @@ export function useCreateSave() {
 
       await log(LogTypeEnum.enum.INFO, '[useCreateSave] Save criado', { saveId, name })
 
+      const animal = getAnimal(race)
+
+      const stats = statsByRace(race, animal)
+
       await db.sheets.add({
         saveId,
-        stats: { // TODO pegar de um helper por causa da raça
-          strength: 0,
-          agility: 0,
-          intelligence: 0,
-          charisma: 0,
-          stamina: 0,
-          hungry: 0,
-          mood: 0,
-          magic: 0,
-          health: 0,
-          mana: 0,
-        },
-        developSkills: [], // TODO pegar de um helper por causa da raça
-        fixedSkills: [], // TODO pegar de um helper por causa da raça
+        race: race,
+        animal: animal ?? null,
+        stats: stats ?? base(),
+        developSkills: getDevelopSkills(race),
+        fixedSkills: getFixedSkills(race),
         coins: 0,
         createdAt: new Date(),
         updatedAt: new Date(),

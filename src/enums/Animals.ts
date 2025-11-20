@@ -14,3 +14,7 @@ export const AnimalsEnum = z.enum({
   Dog: 'Cachorro',
   Cat: 'Gato',
 })
+
+export const KitsuneEnum = z.enum({
+  Kitsune: 'Raposa de 9 Caudas',
+})

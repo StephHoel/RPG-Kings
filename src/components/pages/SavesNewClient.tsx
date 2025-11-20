@@ -11,12 +11,12 @@ export function SavesNewClient() {
   const createSave = useCreateSave()
 
   const { register, handleSubmit, formState } = useForm<CreateSaveFormValues>({
-    defaultValues: { name: '' },
+    defaultValues: { name: '', race: undefined },
   })
   const { errors, isSubmitting } = formState
 
   const onSubmit = async (data: CreateSaveFormValues) => {
-    createSave.mutate(data.name, {
+    createSave.mutate(data, {
       onSuccess(id) {
         router.push(ROUTES.GAME(id))
       }
@@ -34,6 +34,14 @@ export function SavesNewClient() {
           aria-invalid={errors.name ? 'true' : 'false'}
         >
           Nome do Personagem
+        </Input>
+
+        <Input
+          placeholder="Insira a raça aqui"
+          {...register('race', { required: 'Raça é obrigatório' })}
+          aria-invalid={errors.name ? 'true' : 'false'}
+        >
+          Raça
         </Input>
 
         <AlertError mode={errors.name ? 'visible' : 'hidden'}>
