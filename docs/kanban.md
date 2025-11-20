@@ -1,12 +1,7 @@
 # Kanban
 
-## v0.1.6 — 2025
+## v0.1.7 — 2025
 
-- [ ] Criar um helper para pegar stats por raça (procurar TODO para alterar depois)
-- [ ] Criar um helper para retornar o nível baseado no XP total
-- [ ] Criar um helper para pegar developSkills por raça (procurar TODO para alterar depois)
-- [ ] Criar um helper para pegar fixedSkills por raça (procurar TODO para alterar depois)
-- [ ] Criar um helper para selecionar randomicamente o animal caso a raça escolhida seja Transmorfo (procurar TODO para alterar depois)
 - [ ] Montar `config.json` com custos e restaurações
 - [ ] Criar seed de cenas reais básicas (cenário feliz único de 1 dia)
 - [ ] Montar 1 semana jogável (Seg–Sáb)
@@ -34,6 +29,14 @@
 - [ ] Mapa de navegação com salas clicáveis (arena, pátio, biblioteca, dormitórios)
 - [ ] Missões com múltiplos objetivos e falhas possíveis
 - [ ] Login e sincronização de progresso online
+
+## v0.1.6 — 2025-11-18
+
+- [x] Criar um helper para pegar stats por raça (procurar TODO para alterar depois)
+- [x] Criar um helper para retornar o nível baseado no XP total
+- [x] Criar um helper para pegar developSkills por raça (procurar TODO para alterar depois)
+- [x] Criar um helper para pegar fixedSkills por raça (procurar TODO para alterar depois)
+- [x] Criar um helper para selecionar randomicamente o animal caso a raça escolhida seja Transmorfo (procurar TODO para alterar depois)
 
 ## v0.1.5 — 2025-11-16
 
