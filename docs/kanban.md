@@ -151,15 +151,15 @@ Checklist (prioridade alta):
 
 ---
 
-## v0.1.8 — 2025
+## v0.1.8 — 2025-11-21
 
-- [ ] Adicionar lint e teste e2e na pipeline
+- [x] Adicionar lint e teste e2e na pipeline
   - [x] Definir linter (ESLint + regras) e formatador (Prettier)
   - [x] Configurar script `npm run lint`
   - [x] Configurar script `npm run format`
   - [x] Escolher e2e (Playwright ou Cypress) e adicionar dependência
   - [x] Escrever primeiro teste e2e (rota /saves flow)
-  - [ ] Adicionar job na CI (lint + e2e)
+  - [x] Adicionar job na CI (lint + e2e)
 - [x] Criar sistema de XP e cálculo de nível (`lvlFromXp`)
   - [x] Definir curva de XP/nível e regras de overflow
   - [x] Implementar `lvlFromXp(xp)` pure function
