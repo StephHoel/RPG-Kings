@@ -89,7 +89,7 @@ class RPGDatabase extends Dexie {
     // Feche o DB quando uma outra aba requerer atualização de versão
     this.on('versionchange', () => {
       // Fecha o banco; a app pode avisar o usuário para recarregar
-      try { this.close() } catch (_) {}
+      try { this.close() } catch (err) { console.error(err) }
       // opcional: notificar usuário ou recarregar
       if (typeof window !== 'undefined' && window.location) {
         // window.location.reload()
