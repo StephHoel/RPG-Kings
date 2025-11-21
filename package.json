@@ -6,13 +6,14 @@
   "homepage": "https://stephhoel.github.io/RPG-Kings/",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "prebuild": "rm -rf .next/ out/ && echo ✅ Limpeza concluída.",
+    "build": "next build && echo ✅ Build concluído com sucesso.",
     "start": "npx serve@latest out",
-    "test:e2e": "start-test :3000 'jest --runInBand'",
-    "test:e2e:ci": "npm run build && start-test :3000 'jest --runInBand'",
-    "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx && echo ✅ Ran lint successfully!",
-    "lint:fix": "eslint ./src --ext .js,.jsx,.ts,.tsx --fix",
-    "check": "npx tsc"
+    "test:e2e": "start-test :3000 'jest --runInBand' && echo ✅ Testes E2E concluídos com sucesso.",
+    "test:e2e:ci": "npm run build && start-test :3000 'jest --runInBand' && echo ✅ CI: build e E2E concluídos com sucesso.",
+    "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx && echo ✅ Lint: executado com sucesso.",
+    "lint:fix": "eslint ./src --ext .js,.jsx,.ts,.tsx --fix && echo ✅ Lint: correções aplicadas (se houver).",
+    "check": "npx tsc && echo ✅ TypeScript: verificação concluída com sucesso."
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.5",
