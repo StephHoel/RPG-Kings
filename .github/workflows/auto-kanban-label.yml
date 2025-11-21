@@ -1,0 +1,37 @@
+name: Auto Kanban (Label)
+
+on:
+  issues:
+    types: [labeled, unlabeled]
+
+jobs:
+  label-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Choose token
+        id: token
+        run: |
+          if [ -n "${{ secrets.PROJECT_TOKEN }}" ]; then echo "TOKEN=${{ secrets.PROJECT_TOKEN }}" >> $GITHUB_OUTPUT; else echo "TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT; fi
+      - name: Map label to status
+        env:
+          REPO: ${{ github.repository }}
+          ISSUE_NUM: ${{ github.event.issue.number }}
+          LABEL: ${{ github.event.label.name }}
+          TOKEN: ${{ steps.token.outputs.TOKEN }}
+        run: |
+          echo "Issue $ISSUE_NUM label changed: $LABEL"
+          case "$LABEL" in
+            status/backlog)
+              TARGET=status/backlog ;;
+            status/ready)
+              TARGET=status/ready ;;
+            status/in-progress)
+              TARGET=status/in-progress ;;
+            status/review)
+              TARGET=status/review ;;
+            status/done)
+              TARGET=status/done ;;
+            *)
+              echo "Label not mapped to status; skipping"; exit 0 ;;
+          esac
+          gh issue edit $ISSUE_NUM --add-label $TARGET --repo $REPO --cache 2>/dev/null || gh api repos/$REPO/issues/$ISSUE_NUM -X PATCH -F labels='["'"$TARGET"'"]' -H "Authorization: token $TOKEN"
