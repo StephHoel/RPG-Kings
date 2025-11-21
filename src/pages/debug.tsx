@@ -6,8 +6,9 @@ import { LogCategoryLabels, Log } from '@/interfaces'
 import { exportLogsNDJSON, clearLogs, formatDate, formatPayload } from '@/lib'
 import { useState, useEffect, useMemo, Activity } from 'react'
 import { toast } from 'sonner'
+import Head from 'next/head'
 
-export function DebugClient() {
+export default function Debug() {
   const [logs, setLogs] = useState<Log[]>([])
   const [type, setType] = useState<LogCategoryLabels>('all')
   const [q, setQ] = useState('')
@@ -92,7 +93,11 @@ export function DebugClient() {
     },
   ]
 
-  return (
+  return (<>
+    <Head>
+      <title>Debug</title>
+    </Head>
+
     <Panel>
       <div>
         <H1>/debug – Logs locais</H1>
@@ -154,5 +159,5 @@ export function DebugClient() {
         </p>
       </div>
     </Panel>
-  )
+  </>)
 }

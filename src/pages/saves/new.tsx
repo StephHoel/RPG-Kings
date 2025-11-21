@@ -3,10 +3,11 @@ import { useCreateSave } from '@/hooks'
 import { AlertError, Button, H1, Input, Loader, Panel } from '@/components'
 import { useForm } from 'react-hook-form'
 import { ROUTES } from '@/config'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { CreateSaveFormValues } from '@/interfaces'
+import Head from 'next/head'
 
-export function SavesNewClient() {
+export default function SaveNew() {
   const router = useRouter()
   const createSave = useCreateSave()
 
@@ -23,7 +24,11 @@ export function SavesNewClient() {
     })
   }
 
-  return (
+  return (<>
+    <Head>
+      <title>Novo Jogo</title>
+    </Head>
+
     <Panel>
       <H1>Criar save</H1>
 
@@ -60,5 +65,5 @@ export function SavesNewClient() {
         </Button>
       </form>
     </Panel>
-  )
+  </>)
 }

@@ -1,12 +1,13 @@
 'use client'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { useDeleteSave, useGetAllSaves } from '@/hooks'
 import { Button, H1, Panel } from '@/components'
 import { ROUTES } from '@/config'
 import { SaveId } from '@/interfaces'
 import { toast } from 'sonner'
+import Head from 'next/head'
 
-export function SavesClient() {
+export default function Saves() {
   const router = useRouter()
   const deleteMutation = useDeleteSave()
   let saves = useGetAllSaves()
@@ -22,7 +23,11 @@ export function SavesClient() {
 
   const toGame = (saveId: SaveId) => router.push(ROUTES.GAME(saveId))
 
-  return (
+  return (<>
+    <Head>
+      <title>Saves</title>
+    </Head>
+    
     <Panel>
       <H1>Saves</H1>
 
@@ -48,5 +53,5 @@ export function SavesClient() {
         ))}
       </ul>
     </Panel>
-  )
+  </>)
 }

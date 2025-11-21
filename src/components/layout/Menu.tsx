@@ -3,10 +3,11 @@ import { MENUS } from '@/config'
 import { isValidRoute, isSameRoute } from '@/lib'
 import { useActiveSaveContext } from '@/providers/useActiveSaveContext'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useRouter } from 'next/router'
 
 export function Menu({ className = '' }: { className?: string }) {
-  const pathname = usePathname()
+  const router = useRouter()
+  const pathname = router.asPath
   const { activeSaveId } = useActiveSaveContext()
 
   return (

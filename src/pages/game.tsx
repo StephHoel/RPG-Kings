@@ -1,19 +1,23 @@
 'use client'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { toast } from 'sonner'
 import { ROUTES } from '@/config'
 import { useGetScene } from '@/hooks'
 import { ChoiceList, H1, Panel, SceneCard } from '@/components'
 import { useEffect } from 'react'
+import { Suspense } from 'react'
+import Head from 'next/head'
 
-export function GameClient() {
+export default function Game() {
   const router = useRouter()
-  const search = useSearchParams()
-  const saveId = search?.get('saveId') ?? null
+  const query = router.query
+  const saveId = Array.isArray(query.saveId) ? query.saveId[0] : (query.saveId ?? null)
 
   // If saveId is missing, show an error toast and redirect.
   // Do the redirect inside useEffect so the component always returns a valid React node.
   useEffect(() => {
+    if (!router.isReady) return
+
     if (!saveId) {
       toast.error('Erro ao carregar saveId')
       router.replace(ROUTES.ROOT)
@@ -31,14 +35,22 @@ export function GameClient() {
   if (!saveId) return null
 
   return (
-    <Panel>
-      <SceneCard>
-        <H1>{scene?.title ?? 'Sem título'}</H1>
+    <>
+    <Head>
+      <title>Jogo</title>
+    </Head>
+      
+    <Suspense fallback={<div>Carregando...</div>}>
+      <Panel>
+        <SceneCard>
+          <H1>{scene?.title ?? 'Sem título'}</H1>
 
-        <p>{scene?.content ?? 'Nenhuma cena disponível neste horário.'}</p>
-      </SceneCard>
+          <p>{scene?.content ?? 'Nenhuma cena disponível neste horário.'}</p>
+        </SceneCard>
 
-      <ChoiceList />
-    </Panel>
+        <ChoiceList />
+      </Panel>
+    </Suspense>
+    </>
   )
 }

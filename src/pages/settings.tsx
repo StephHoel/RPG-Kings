@@ -1,7 +1,12 @@
+import Head from 'next/head'
 import { H1, Panel } from '@/components'
 
-export function SettingClient() {
-  return (
+export default function Settings() {
+  return (<>
+    <Head>
+      <title>Configurações</title>
+    </Head>
+    
     <Panel>
       <H1>Configurações</H1>
 
@@ -11,5 +16,5 @@ export function SettingClient() {
         <li>Contraste alto: desligado</li>
       </ul>
     </Panel>
-  )
+  </>)
 }

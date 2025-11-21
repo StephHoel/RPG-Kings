@@ -1,7 +1,13 @@
+import Head from 'next/head'
 import { H1, Panel } from '@/components'
 
-export function AuthClient() {
+export default function Auth() {
   return (
+    <>
+    <Head>
+      <title>Auth</title>
+    </Head>
+      
     <Panel>
       <H1>Login offline</H1>
 
@@ -9,5 +15,6 @@ export function AuthClient() {
         (placeholder para futuro login online)
       </p>
     </Panel>
+    </>
   )
 }

@@ -2,8 +2,9 @@
 import { useState } from 'react'
 import { Button, H1, Panel } from '@/components'
 import { useSeedAll } from '@/hooks'
+import Head from 'next/head'
 
-export function SeedDevClient() {
+export default function SeedDevPage() {
   const seedMutation = useSeedAll()
   const [isSeed, setIsSeed] = useState(false)
 
@@ -13,7 +14,11 @@ export function SeedDevClient() {
     setIsSeed(true)
   }
 
-  return (
+  return (<>
+    <Head>
+      <title>Seed</title>
+    </Head>
+    
     <Panel>
       <H1>/dev/seed – Semeando Amor</H1>
 
@@ -30,5 +35,5 @@ export function SeedDevClient() {
         }
       </Button>
     </Panel>
-  )
+  </>)
 }
