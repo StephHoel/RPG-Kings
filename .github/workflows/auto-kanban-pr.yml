@@ -3,6 +3,8 @@ name: Auto Kanban (PR)
 on:
   pull_request:
     types: [opened, reopened, closed]
+  push:
+    branches: ['**']
 
 jobs:
   pr-kanban:
@@ -12,10 +14,17 @@ jobs:
         id: token
         run: |
           if [ -n "${{ secrets.PROJECT_TOKEN }}" ]; then echo "TOKEN=${{ secrets.PROJECT_TOKEN }}" >> $GITHUB_OUTPUT; else echo "TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT; fi
+      - name: Export GH token for gh CLI
+        run: echo "GH_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
       - name: Determine issue number from branch
         id: issue
         run: |
-          BRANCH=${{ github.head_ref }}
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BRANCH=${{ github.head_ref }}
+          else
+            # for push events, use the ref (refs/heads/feat/10-...)
+            BRANCH=$(echo "${{ github.ref }}" | sed -E 's#refs/heads/##')
+          fi
           # expect patterns like feat/10-desc or fix/12-desc
           ISS=$(echo "$BRANCH" | sed -E 's#^.*/([0-9]+).*#\1#')
           echo "ISSUE=$ISS" >> $GITHUB_OUTPUT
