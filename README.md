@@ -18,15 +18,15 @@ Aplicação Web RPG escolar para sobrenaturais, construída com React, React Rou
 
 1. Instale dependências:
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 2. Rodar em modo desenvolvimento (Next):
 
-    ```bash
-    npm run dev
-    ```
+   ```bash
+   npm run dev
+   ```
 
 3. Acesse: [http://localhost:3000/](http://localhost:3000/)
 

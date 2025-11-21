@@ -11,7 +11,7 @@ export default [
       parserOptions: {
         ecmaVersion: 2020,
         sourceType: 'module',
-        ecmaFeatures: { jsx: true }
+        ecmaFeatures: { jsx: true },
       },
       globals: {
         window: 'readonly',
@@ -20,8 +20,8 @@ export default [
         describe: 'readonly',
         test: 'readonly',
         expect: 'readonly',
-        jest: 'readonly'
-      }
+        jest: 'readonly',
+      },
     },
     plugins: { '@typescript-eslint': tsPlugin, react: reactPlugin },
     settings: { react: { version: 'detect' } },
@@ -29,7 +29,7 @@ export default [
       // Basic rules; add more if you want stricter checks
       'no-unused-vars': ['warn', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
       'no-console': 'off',
-      'react/react-in-jsx-scope': 'off'
-    }
-  }
+      'react/react-in-jsx-scope': 'off',
+    },
+  },
 ]

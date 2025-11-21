@@ -10,7 +10,7 @@ const nextConfig = {
   // Caminhos para Project Pages (user.github.io/<repo>)
   basePath: isProd ? `/${repo}` : '',
   assetPrefix: isProd ? `/${repo}` : '',
-  
+
   // Evita redirects no GH Pages
   trailingSlash: true,
 
