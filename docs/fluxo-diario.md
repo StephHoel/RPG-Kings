@@ -6,12 +6,12 @@ ET = Energia Total
 ## Início 8AM
 
 -> Dispara cena inicial de acordar
--> Adiciona 75%*ET à EA
+-> Adiciona 75%\*ET à EA
 
 Opções:
 
-- Se arrumar e tomar café da manhã (+1h +20%*ET)
-- Dormir +1h (+1h +5%*ET)
+- Se arrumar e tomar café da manhã (+1h +20%\*ET)
+- Dormir +1h (+1h +5%\*ET)
 
 ## 9AM / 10AM / 11AM
 

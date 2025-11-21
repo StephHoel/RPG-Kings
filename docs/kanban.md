@@ -156,7 +156,7 @@ Checklist (prioridade alta):
 - [ ] Adicionar lint e teste e2e na pipeline
   - [x] Definir linter (ESLint + regras) e formatador (Prettier)
   - [x] Configurar script `npm run lint`
-  - [ ] Configurar script `npm run format`
+  - [x] Configurar script `npm run format`
   - [x] Escolher e2e (Playwright ou Cypress) e adicionar dependência
   - [x] Escrever primeiro teste e2e (rota /saves flow)
   - [ ] Adicionar job na CI (lint + e2e)

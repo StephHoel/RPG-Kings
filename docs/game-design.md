@@ -13,6 +13,7 @@ RPG Kings é um jogo narrativo baseado em escolhas com elementos de RPG e gerenc
 - Objetivo principal: Criar uma experiência narrativa densa e rejogável em que escolhas moldam a história e o desenvolvimento do personagem.
 - Público-alvo: Jogadores de 16+ que apreciam RPGs narrativos, fãs de visual novels e jogos de escolha, educadores que usam jogos em contextos pedagógicos.
 - Pilares de design:
+
   - Narrativa centrada em personagens e consequências.
   - Mecânicas simples com profundidade emergente.
   - Iteração rápida e modularidade para adicionar cenas e eventos.
@@ -26,7 +27,7 @@ RPG Kings é um jogo narrativo baseado em escolhas com elementos de RPG e gerenc
 
 ## Mecânicas de Jogo
 
-1) Atributos e Estatísticas
+1. Atributos e Estatísticas
 
 - Atributos principais (exemplos): Força, Percepção, Carisma, Conhecimento, Fortuna.
 - Valores: Escala 0–100 ou níveis discretos; usados para condições e checks nas escolhas.
@@ -34,6 +35,7 @@ RPG Kings é um jogo narrativo baseado em escolhas com elementos de RPG e gerenc
 ## Sistema de Escolhas
 
 - Cada escolha pode:
+
   - Alterar atributos
   - Definir flags (verdadeiro/falso)
   - Desbloquear cenas e milestones
@@ -61,6 +63,7 @@ RPG Kings é um jogo narrativo baseado em escolhas com elementos de RPG e gerenc
 
 - Layout responsivo em `src/app` — priorizar legibilidade em telas pequenas.
 - Componentes principais:
+
   - Painel de cena: texto e escolhas.
   - Barra de status: atributos essenciais e indicadores (tempo, recursos, milestone progress).
   - Histórico/Journal: registros de decisões e textos importantes.
@@ -99,13 +102,16 @@ RPG Kings é um jogo narrativo baseado em escolhas com elementos de RPG e gerenc
 ## Roadmap e Milestones
 
 - M1 (Protótipo Alpha) — 4 semanas
+
   - Implementar motor de cenas básico
   - 10 cenas jogáveis, sistema de saves
 
 - M2 (Conteúdo e UI) — 6 semanas
+
   - UI refinada, 50+ cenas, 5 NPCs com arcos
 
 - M3 (Beta) — 8 semanas
+
   - Internacionalização, testes de usabilidade, backend de saves (opcional)
 
 - M4 (Lançamento) — 6 semanas
@@ -120,6 +126,7 @@ RPG Kings é um jogo narrativo baseado em escolhas com elementos de RPG e gerenc
 ## Riscos e Mitigações
 
 - Risco: Conteúdo narrativo consome tempo.
+
   - Mitigação: Desenvolver ferramentas de edição e pipeline de importação para agilizar iteração.
 
 - Risco: Complexidade de eventos baseados em tempo.
