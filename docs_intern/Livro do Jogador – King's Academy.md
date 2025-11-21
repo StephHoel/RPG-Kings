@@ -50,15 +50,15 @@
 
 ### 2.2. Estrutura do Dia
 
-| Hora         | Atividade                                 |
-| ------------ | ----------------------------------------- |
-| 07:00        | Café da manhã (restaura energia)          |
-| 08:00-12:00  | Aulas obrigatórias (XP em disciplinas)    |
-| 12:00        | Almoço (restaura energia)                 |
-| 13:00-17:00  | Horários livres (ações do jogador)        |
-| 18:00        | Jantar                                    |
-| 19:00-21:00  | Atividades opcionais (treinos, eventos)   |
-| 22:00        | Dormir (obrigatório)                      |
+| Hora        | Atividade                               |
+| ----------- | --------------------------------------- |
+| 07:00       | Café da manhã (restaura energia)        |
+| 08:00-12:00 | Aulas obrigatórias (XP em disciplinas)  |
+| 12:00       | Almoço (restaura energia)               |
+| 13:00-17:00 | Horários livres (ações do jogador)      |
+| 18:00       | Jantar                                  |
+| 19:00-21:00 | Atividades opcionais (treinos, eventos) |
+| 22:00       | Dormir (obrigatório)                    |
 
 - Cada hora livre = 1 ação: estudar, treinar, socializar, explorar, descansar.
 

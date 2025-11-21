@@ -6,16 +6,16 @@
 
 ## 1) Princípios de design
 
-* **Mobile‑first**: telas otimizadas para 360–428 px; enhancements progressivos ≥ `md` (768 px) e ≥ `lg` (1024 px).
-* **Acessibilidade**: foco visível, navegação por teclado, contraste AA, preferências salvas.
-* **Performático**: App‑shell + cache, code‑split por rota, imagens responsivas.
-* **Offline‑friendly**: dados críticos em IndexedDB (Dexie); SW para cache de assets.
+- **Mobile‑first**: telas otimizadas para 360–428 px; enhancements progressivos ≥ `md` (768 px) e ≥ `lg` (1024 px).
+- **Acessibilidade**: foco visível, navegação por teclado, contraste AA, preferências salvas.
+- **Performático**: App‑shell + cache, code‑split por rota, imagens responsivas.
+- **Offline‑friendly**: dados críticos em IndexedDB (Dexie); SW para cache de assets.
 
 ---
 
 ## 2) Navegação & rotas
 
-```
+```plain
 /
 /auth
 /saves
@@ -29,30 +29,29 @@
 
 ### Regras/guards
 
-* Guard global: se **não** houver nenhum save → redirect para `/saves` (exceto `/` e `/auth`).
-* Validação de `:saveId` (existe em Dexie?) antes de render das rotas com parâmetro.
+- Guard global: se **não** houver nenhum save → redirect para `/saves` (exceto `/` e `/auth`).
+- Validação de `:saveId` (existe em Dexie?) antes de render das rotas com parâmetro.
 
 ---
 
 ## 3) Layouts (mobile‑first)
 
-* **RootLayout**: header (marca/voltar), footer (nav principal), toasts, theme provider.
-* **AppLayout**:
-
-  * **Mobile (base)**: fluxo vertical — `StatusPanel` (compacto) → `SceneCard` → `ChoiceList` sticky ao final.
-  * **≥ md**: grid `md:grid-cols-[minmax(220px,280px)_1fr]` → esquerda `StatusSidebar`, direita `SceneArea`.
-  * **≥ lg**: espaçamentos maiores e `StatusSidebar` com cards extras (buffs, inventário rápido).
+- **RootLayout**: header (marca/voltar), footer (nav principal), toasts, theme provider.
+- **AppLayout**:
+  - **Mobile (base)**: fluxo vertical — `StatusPanel` (compacto) → `SceneCard` → `ChoiceList` sticky ao final.
+  - **≥ md**: grid `md:grid-cols-[minmax(220px,280px)_1fr]` → esquerda `StatusSidebar`, direita `SceneArea`.
+  - **≥ lg**: espaçamentos maiores e `StatusSidebar` com cards extras (buffs, inventário rápido).
 
 ### Componentização chave
 
-* **Header**: título fixo **“King’s Academy”**, botão voltar e menu overflow.
-* **FooterNav**: (mobile) ícones para *Jogo*, *Ficha*, *Progresso*, *Saves*, *Config*.
-* **StatusSidebar/Panel**: HP/MP, atributos, condições, reputações, moedas.
-* **SceneCard**: bloco de narrativa com scroll suave; controla tipografia e ritmo.
-* **ChoiceList**: lista de escolhas com estados: possível, bloqueada (tooltip), consumida.
-* **SaveList**: grid/cards de saves com ações: ativar, duplicar, renomear, apagar.
-* **SheetTabs**: tabs para atributos/perícias/inventário/flags.
-* **ProgressMap**: visualização de milestones (alcançáveis variados) e % de exploração semanal.
+- **Header**: título fixo **“King’s Academy”**, botão voltar e menu overflow.
+- **FooterNav**: (mobile) ícones para _Jogo_, _Ficha_, _Progresso_, _Saves_, _Config_.
+- **StatusSidebar/Panel**: HP/MP, atributos, condições, reputações, moedas.
+- **SceneCard**: bloco de narrativa com scroll suave; controla tipografia e ritmo.
+- **ChoiceList**: lista de escolhas com estados: possível, bloqueada (tooltip), consumida.
+- **SaveList**: grid/cards de saves com ações: ativar, duplicar, renomear, apagar.
+- **SheetTabs**: tabs para atributos/perícias/inventário/flags.
+- **ProgressMap**: visualização de milestones (alcançáveis variados) e % de exploração semanal.
 
 ---
 
@@ -146,18 +145,18 @@ interface Settings {
 
 ## 5) Query keys (TanStack Query)
 
-* `['saves']`
-* `['save', saveId]`
-* `['sheet', saveId]`
-* `['inventory', saveId]`
-* `['milestones', saveId]`
-* `['timeslots']` // regras globais do calendário (ou por jogo)
-* `['settings']`
+- `['saves']`
+- `['save', saveId]`
+- `['sheet', saveId]`
+- `['inventory', saveId]`
+- `['milestones', saveId]`
+- `['timeslots']` // regras globais do calendário (ou por jogo)
+- `['settings']`
 
 ### Estratégias
 
-* **Prefetch** opcional de próximos horários (ex.: próxima hora ou próximo bloco do dia) para UX fluida.
-* **Invalidate** em: avanço de relógio (dia/hora/semana), compra/uso de item, progresso de milestone, troca de save ativo.
+- **Prefetch** opcional de próximos horários (ex.: próxima hora ou próximo bloco do dia) para UX fluida.
+- **Invalidate** em: avanço de relógio (dia/hora/semana), compra/uso de item, progresso de milestone, troca de save ativo.
 
 ---
 
@@ -165,18 +164,18 @@ interface Settings {
 
 **Banco**: `rpg_db@1`
 
-* `saves`: `id (pk)`, `name`, `createdAt`, `updatedAt`, `isActive`, `currentWeek`, `currentDay`, `currentHour`
-* `sheets`: `id (pk)`, `saveId (idx)`, `payload`
-* `scenes`: `id (pk)`, `payload` // catálogo estático/dinâmico
-* `timeslots`: `id (pk)`, `payload` // regras de dia/horário → pool de cenas
-* `milestones`: `id (pk)`, `saveId (idx)`, `type (idx)`, `key (idx)`, `current`, `target`, `achievedAtWeek`
-* `inventory`: `id (pk)`, `saveId (idx)`, `name`, `quantity`, `acquiredWeek`, `durationWeeks`, `expiresAtWeek`, `tags`
-* `settings`: `id (pk='singleton')`, `payload`
+- `saves`: `id (pk)`, `name`, `createdAt`, `updatedAt`, `isActive`, `currentWeek`, `currentDay`, `currentHour`
+- `sheets`: `id (pk)`, `saveId (idx)`, `payload`
+- `scenes`: `id (pk)`, `payload` // catálogo estático/dinâmico
+- `timeslots`: `id (pk)`, `payload` // regras de dia/horário → pool de cenas
+- `milestones`: `id (pk)`, `saveId (idx)`, `type (idx)`, `key (idx)`, `current`, `target`, `achievedAtWeek`
+- `inventory`: `id (pk)`, `saveId (idx)`, `name`, `quantity`, `acquiredWeek`, `durationWeeks`, `expiresAtWeek`, `tags`
+- `settings`: `id (pk='singleton')`, `payload`
 
 > **Notas**
 >
-> * `expiresAtWeek` = `durationWeeks === 0 ? null : acquiredWeek + durationWeeks - 1`.
-> * Criar *view helpers* para `isExpired(item, currentWeek)` e `remainingWeeks(item, currentWeek)`.
+> - `expiresAtWeek` = `durationWeeks === 0 ? null : acquiredWeek + durationWeeks - 1`.
+> - Criar _view helpers_ para `isExpired(item, currentWeek)` e `remainingWeeks(item, currentWeek)`.
 
 ---
 
@@ -194,60 +193,60 @@ interface Settings {
 
 ## 8) Mobile‑first: comportamento responsivo
 
-* **Tipografia**: base `text-base` no mobile; escala +8–12% ≥ `md`.
-* **Espaçamentos**: `p-3` mobile; `p-6` ≥ `md`.
-* **SceneCard**: `prose max-w-none` (ou util classes próprias) com `leading-relaxed`.
-* **ChoiceList** (mobile): barra fixa bottom com `safe-area-inset-bottom`, botões altos `min-h-12`.
-* **StatusPanel** (mobile): card colapsável no topo; ≥ `md` vira `StatusSidebar`.
-* **Header**: sempre "King’s Academy" (sem título dinâmico).
+- **Tipografia**: base `text-base` no mobile; escala +8–12% ≥ `md`.
+- **Espaçamentos**: `p-3` mobile; `p-6` ≥ `md`.
+- **SceneCard**: `prose max-w-none` (ou util classes próprias) com `leading-relaxed`.
+- **ChoiceList** (mobile): barra fixa bottom com `safe-area-inset-bottom`, botões altos `min-h-12`.
+- **StatusPanel** (mobile): card colapsável no topo; ≥ `md` vira `StatusSidebar`.
+- **Header**: sempre "King’s Academy" (sem título dinâmico).
 
 ---
 
 ## 9) Estados de UX necessários
 
-* **Loading**: skeletons para SceneCard, Status, ChoiceList.
-* **Empty**: sem saves → ilustração + CTA.
-* **Erro**: toasts + página leve com retry; logs dev via MSW quando aplicável.
-* **Bloqueio**: escolhas desabilitadas com motivo (tooltip / label secundária).
+- **Loading**: skeletons para SceneCard, Status, ChoiceList.
+- **Empty**: sem saves → ilustração + CTA.
+- **Erro**: toasts + página leve com retry; logs dev via MSW quando aplicável.
+- **Bloqueio**: escolhas desabilitadas com motivo (tooltip / label secundária).
 
 ---
 
 ## 10) PWA & Service Worker (estratégia)
 
-* **App‑shell**: cache estático de `index.html`, chunks, fontes e ícones.
-* **Estratégias**:
-  * Assets estáticos: *cache‑first*.
-  * Dados de catálogo (scenes/timeslots): *stale‑while‑revalidate*.
-  * Fallback offline: rota `/offline`.
-* **Atualização**: SW com `autoUpdate`; banner “Nova versão disponível” → `skipWaiting()`.
-* **Instalação**: `beforeinstallprompt` → CTA discreto em `/settings`.
+- **App‑shell**: cache estático de `index.html`, chunks, fontes e ícones.
+- **Estratégias**:
+  - Assets estáticos: _cache‑first_.
+  - Dados de catálogo (scenes/timeslots): _stale‑while‑revalidate_.
+  - Fallback offline: rota `/offline`.
+- **Atualização**: SW com `autoUpdate`; banner “Nova versão disponível” → `skipWaiting()`.
+- **Instalação**: `beforeinstallprompt` → CTA discreto em `/settings`.
 
 ---
 
 ## 11) Testes (DX)
 
-* **MSW**: handlers para `/timeslots`, `/scenes`, `/saves`, `/inventory` e `/auth`.
-* **Vitest + Testing Library**: testes de rotas/guards e mutações (inventário, avanço de relógio, milestones).
+- **MSW**: handlers para `/timeslots`, `/scenes`, `/saves`, `/inventory` e `/auth`.
+- **Vitest + Testing Library**: testes de rotas/guards e mutações (inventário, avanço de relógio, milestones).
 
 ---
 
 ## 12) Acessibilidade (checklist)
 
-* Foco cíclico entre Header → Scene → Choices → Footer.
-* `aria-live="polite"` para mudanças de cena.
-* Tamanho mínimo de alvos: 44×44px (botões de escolha e navegação).
-* Preferências salvas: contraste alto, tamanho de fonte, redução de animação.
+- Foco cíclico entre Header → Scene → Choices → Footer.
+- `aria-live="polite"` para mudanças de cena.
+- Tamanho mínimo de alvos: 44×44px (botões de escolha e navegação).
+- Preferências salvas: contraste alto, tamanho de fonte, redução de animação.
 
 ---
 
 ## 13) Tokens de UI (Tailwind)
 
-* **Cores**: `--bg`, `--fg`, `--muted`, `--accent`, `--danger`.
-* **Ritmo**: `--radius: 1rem; --shadow: 0 10px 25px rgba(0,0,0,.25)`.
-* **Transições**: `duration-150` (mobile), `duration-200` (≥ md), `ease-out`.
+- **Cores**: `--bg`, `--fg`, `--muted`, `--accent`, `--danger`.
+- **Ritmo**: `--radius: 1rem; --shadow: 0 10px 25px rgba(0,0,0,.25)`.
+- **Transições**: `duration-150` (mobile), `duration-200` (≥ md), `ease-out`.
 
 ---
 
 ## 14) Roadmap MVP → +1
 
-* MVP: rotas, saves locais, **timetable** (dia/hora), escolha de cena por pool, sheet básica, **inventory completo**, milestones variados, setting.
+- MVP: rotas, saves locais, **timetable** (dia/hora), escolha de cena por pool, sheet básica, **inventory completo**, milestones variados, setting.

@@ -3,27 +3,33 @@
 ## v.3.0 - 2026 (Longo Prazo: Refinamentos e Ideias)
 
 - [ ] Implementar FAQ
+
   - [ ] Pensar onde e como colocar o FAQ (modal ou página a parte?)
   - [ ] Implementar a opção escolhida
 
 - [ ] FAQ das raças
+
   - [ ] Esboçar conteúdo básico para cada raça (3–5 tópicos)
   - [ ] Colocar em `docs/` e criar rota/CTA no app
 
 - [ ] FAQ das habilidades
+
   - [ ] Listar habilidades atuais e rápida descrição
   - [ ] Integrar busca simples no FAQ
 
 - [ ] FAQ dos poderes
+
   - [ ] Documentar efeitos, pré-requisitos e custos
   - [ ] Vincular exemplos de uso no jogo
 
 - [ ] Implementar o PWA (next-pwa)
+
   - [ ] Adicionar `next-pwa` e configurar `manifest.json`
   - [ ] Registrar service worker e garantir cache mínimo útil
   - [ ] Testar comportamento offline básico e atualização de cache
 
 - [ ] [IDEIA]Mapa de navegação com salas clicáveis (arena, pátio, biblioteca, dormitórios)
+
   - [ ] Fazer mockup do mapa com áreas clicáveis
   - [ ] Implementar componente SVG/Canvas com hotspots
   - [ ] Integrar navegação para cenas por hotspot
@@ -42,39 +48,47 @@ Objetivo: Implementar sistemas principais e conteúdo para uma experiência mais
 Checklist (prioridade média):
 
 - [ ] Montar 1 semana jogável (Seg–Sáb)
+
   - [ ] Criar calendário de 6 dias com cenas por dia
   - [ ] Garantir transições entre dias (salvar/continuar)
   - [ ] Testar playthrough de uma semana completa
 
 - [ ] Implementar HUD (atributos e disciplinas)
+
   - [ ] Esboçar layout do HUD (mobile e desktop)
   - [ ] Implementar componentes visuais e conectá-los ao state
   - [ ] Otimizar para atualização parcial (memo/observables)
 
 - [ ] Montar card principal de cena e escolhas (interface final)
+
   - [ ] Fazer mockup do card com estados (normal, com escolhas, sem escolhas)
   - [ ] Implementar componente acessível (keyboard, focus)
 
 - [ ] Criar primeira missão: **Prova de Alquimia N1**
+
   - [ ] Definir objetivo, passos e critérios de sucesso/falha
   - [ ] Criar cenas e recompensas relacionadas
   - [ ] Testar a missão em um save de exemplo
 
 - [ ] Escrever primeiros **eventos aleatórios** no `events.json`
+
   - [ ] Escrever 10 eventos simples com triggers e efeitos
   - [ ] Validar integração com `rolarEvento()` e balanceamento
 
 - [ ] Criar `npcs.json` (5 NPCs com afinidades e traços únicos)
+
   - [ ] Definir schema de NPC (nome, traços, afinidade, rotina)
   - [ ] Criar 5 entradas com personalidade distinta
   - [ ] Integrar NPCs em eventos e diálogos básicos
 
 - [ ] Diálogos com árvore de respostas e sistema de afinidade
+
   - [ ] Definir formato de árvore de diálogo (nodes, opções, efeitos)
   - [ ] Implementar parser que aplica mudanças de afinidade
   - [ ] Criar um diálogo de exemplo e testar interações
 
 - [ ] Sistema de reputação global e eventos por popularidade
+
   - [ ] Definir métricas de reputação e inflação/decay
   - [ ] Ligar eventos e NPCs para impactar reputação
   - [ ] Expor reputação no HUD e em eventos relevantes
@@ -93,33 +107,39 @@ Objetivo: Concluir itens de infraestrutura e pequenas features que desbloqueiam 
 Checklist (prioridade alta):
 
 - [ ] Resolver TODOs críticos
+
   - [ ] Fazer varredura no repositório por `TODO` / `FIXME`
   - [ ] Agrupar e priorizar TODOs em issues
   - [ ] Implementar/atribuir os 3 TODOs de maior impacto
 
 - [ ] Conteúdo mínimo para testes de fluxo
+
   - [ ] Definir o schema de cena (title, content, choices, efeitos)
   - [ ] Escrever 1 dia completo (cenário feliz)
   - [ ] Transformar em seed e adicionar no update ao criar o DB, se vazio
   - [ ] Testar a cena no fluxo do jogo
 
 - [ ] Implementar `aplicarAcao()` na engine
+
   - [ ] Definir contrato da função (ação, actor, target, context)
   - [ ] Implementar aplicação de modificadores (atributos, XP, itens)
   - [ ] Garantir persistência do estado após aplicação
 
 - [ ] Implementar função `rolarEvento()` com chance configurável
+
   - [ ] Definir pool de eventos e peso/probabilidade configurável
   - [ ] Implementar função que retorna evento ou `null`
   - [ ] Integrar com `avancarHora()` para potencial disparo de eventos
   - [ ] Adicionar testes probabilísticos básicos (semente fixa)
 
 - [ ] Implementar função `dormir()` com restauração parcial
+
   - [ ] Definir efeitos de dormir (restauração por atributo, custo de tempo)
   - [ ] Implementar animação/estado de descanso na UI
   - [ ] Garantir interação correta com `avancarHora()` e limites
 
 - [ ] Implementar `buyItem`/`useItem` e persistência de `expiresAtWeek`
+
   - [ ] Definir payloads de compra/uso e schema de item (durationWeeks)
   - [ ] Implementar `buyItem(saveId, itemId)` e `useItem(saveId, itemId)` na engine
   - [ ] Calcular e persistir `expiresAtWeek` ao comprar
@@ -189,7 +209,7 @@ Checklist (prioridade alta):
 - [x] Criar estrutura inicial do projeto (Next.js + Tailwind)
 - [x] Criar `Layout` (header, main, footer fixos)
 - [x] Criar sistema de salvamento no `localStorage`
-- [X] Criar tela inicial (`Home.tsx`) com opções: *Novo Jogo*, *Carregar Jogo*
+- [x] Criar tela inicial (`Home.tsx`) com opções: _Novo Jogo_, _Carregar Jogo_
 - [x] Versão mobile com interface adaptada
 
 ## v0.1.1 — 2025-11-12

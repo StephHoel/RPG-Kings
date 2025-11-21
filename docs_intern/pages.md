@@ -1,8 +1,8 @@
 # 0) navegação geral
 
-* Novo: **/ (landing)** → **/saves/new** (criar perfil) → **/game**
-* Continuar: **/ (landing)** → **/game**
-* demais telas: **/saves**, **/inventory**, **/progress**, **/milestone**, **/settings**
+- Novo: **/ (landing)** → **/saves/new** (criar perfil) → **/game**
+- Continuar: **/ (landing)** → **/game**
+- demais telas: **/saves**, **/inventory**, **/progress**, **/milestone**, **/settings**
 
 ---
 
@@ -25,8 +25,8 @@ objetivo: escolher “entrar” ou “continuar”.
 
 estados:
 
-* se existir “save ativo” → aparecer botão “Continuar” e botão “Novo Save”.
-* senão → aparecer botão “Novo Save”.
+- se existir “save ativo” → aparecer botão “Continuar” e botão “Novo Save”.
+- senão → aparecer botão “Novo Save”.
 
 ---
 
@@ -49,8 +49,8 @@ usa **PIN/senha** por **perfil de jogador** (não por personagem).
 
 empty/edge cases:
 
-* nenhum perfil → redireciona para “criar perfil”.
-* “esqueci pin” → pedir pergunta secreta/ dica local ou reset que apaga saves do perfil (com confirmação forte).
+- nenhum perfil → redireciona para “criar perfil”.
+- “esqueci pin” → pedir pergunta secreta/ dica local ou reset que apaga saves do perfil (com confirmação forte).
 
 ---
 
@@ -72,8 +72,8 @@ um navegador pode ter vários perfis (ex.: “Steph”, “Convidado”).
 
 ações:
 
-* **exportar**: gera arquivo `.json` criptografado leve dos saves do perfil.
-* **apagar**: “digite ‘APAGAR’ para confirmar”.
+- **exportar**: gera arquivo `.json` criptografado leve dos saves do perfil.
+- **apagar**: “digite ‘APAGAR’ para confirmar”.
 
 ---
 
@@ -98,7 +98,7 @@ cada perfil tem **N personagens** (slots ilimitados ou limite prático, ex. 12).
 
 empty:
 
-* sem saves → redireciona para tela de criação.
+- sem saves → redireciona para tela de criação.
 
 ---
 
@@ -157,8 +157,8 @@ Dicas: “Explorar tem mais chance de eventos à tarde.”   [Salvar] [Configura
 
 estados:
 
-* quando **acabar ações livres do dia** → mostrar CTA “Dormir”.
-* caso **Energia ≤ 0** → bloquear ações pesadas; sugerir descansar/refeição.
+- quando **acabar ações livres do dia** → mostrar CTA “Dormir”.
+- caso **Energia ≤ 0** → bloquear ações pesadas; sugerir descansar/refeição.
 
 ---
 
@@ -262,7 +262,7 @@ permite **trocar personagem** sem sair do perfil.
 
 mínimo para MVP:
 
-* volume ON/OFF, textos grandes/pequenos, **backup/exportar saves**, **importar**.
+- volume ON/OFF, textos grandes/pequenos, **backup/exportar saves**, **importar**.
 
 ```plain
 ┌──────── CONFIGURAÇÕES ───────────────┐
@@ -280,10 +280,10 @@ mínimo para MVP:
 
 ## 11) estados de erro e vazios
 
-* **sem perfis** → criar perfil.
-* **sem saves no perfil** → wizard novo personagem.
-* **save corrompido** → opção restaurar backup/descartar.
-* **falta de energia** → bloqueia certas escolhas (UI mostra tooltip).
+- **sem perfis** → criar perfil.
+- **sem saves no perfil** → wizard novo personagem.
+- **save corrompido** → opção restaurar backup/descartar.
+- **falta de energia** → bloqueia certas escolhas (UI mostra tooltip).
 
 ---
 
@@ -326,24 +326,25 @@ Character {
 
 1. **primeira vez**
 
-    ```plain
-    Landing → Criar Perfil → Wizard Personagem → Game (D1 07:00)
-    ```
+   ```plain
+   Landing → Criar Perfil → Wizard Personagem → Game (D1 07:00)
+   ```
 
 2. **jogar o dia**
 
-    ```plain
-    Game: escolher ações (4x) → eventos → “Dormir” → restaurar → Dia+1
-    ```
+   ```plain
+   Game: escolher ações (4x) → eventos → “Dormir” → restaurar → Dia+1
+   ```
 
 3. **trocar de personagem**
 
-    ```plain
-    Game → Menu → Saves → Selecionar outro → Game (carregado)
-    ```
+   ```plain
+   Game → Menu → Saves → Selecionar outro → Game (carregado)
+   ```
 
 4. **exportar/backup**
 
-    ```plain
-    Config → Exportar Perfil → baixa .json (tudo do perfil)
-    ```plain
+   ````plain
+   Config → Exportar Perfil → baixa .json (tudo do perfil)
+   ```plain
+   ````

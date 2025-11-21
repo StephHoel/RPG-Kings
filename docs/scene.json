@@ -2,31 +2,24 @@
   "id": "id da cena",
   "title": "titulo da cena",
   "content": "texto descritivo da cena",
-  "options": [
-    "id da cena 1",
-    "id da cena 2"
-  ],
+  "options": ["id da cena 1", "id da cena 2"],
   "cost": {
     "energy": 0,
     "coin": 0
   },
-  "hours": [
-    8
-  ],
-  "weekdays": [
-
-  ],
+  "hours": [8],
+  "weekdays": [],
   "preRequire": [
     {
       "energy": {
         "min": 0,
         "max": 100
       },
-      "items": [
-        "id do item"
-      ],
-      "reputation":[
-        {"id do personagem": 43}
+      "items": ["id do item"],
+      "reputation": [
+        {
+          "id do personagem": 43
+        }
       ]
     }
   ]

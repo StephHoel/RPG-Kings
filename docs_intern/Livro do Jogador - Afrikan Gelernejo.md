@@ -1137,7 +1137,7 @@ Para receber o valor, é necessário realizar uma cena com começo, meio e fim, 
 
 || CENA PARA ESTÁGIO ||
 
-E lançar um dado no ⁠rolagem-de-dados: /roll notation:1d100*HORAS title:Estágio (NOME_DO_PERSONAGEM)
+E lançar um dado no ⁠rolagem-de-dados: /roll notation:1d100\*HORAS title:Estágio (NOME_DO_PERSONAGEM)
 
 Cada função tem seus próprios atributos, escolha o cargo que melhor convir para o seu personagem e se inscreva na ⁠sala-do-diretor.
 
@@ -1149,7 +1149,7 @@ Função: Auxiliar os professores durante as aulas das disciplinas obrigatórias
 
 OBS: O aluno precisa fazer sua aula normalmente e ajudar os colegas quando preciso. Apenas 1 aula/hora por semana (OFF) deverá ser ocupada com esta função; disciplina em que praticará a função: à escolha.
 
-Lançamento de Dados: /roll notation:1d100*1 title:Estágio (NOME_DO_PERSONAGEM)
+Lançamento de Dados: /roll notation:1d100\*1 title:Estágio (NOME_DO_PERSONAGEM)
 
 Atributos Desenvolvidos: Carisma, Inteligência, Sabedoria e a disciplina em que auxiliará o professor. 1 vaga para cada disciplina.
 
@@ -1183,7 +1183,7 @@ OBS: 1 hora de trabalho por dia, de Segunda à Sexta.
 
 OBS²: Pode ser realizado no horário de estudo ou no horário livre.
 
-Lançamento de Dados: /roll notation:1d100*5 title:Estágio (NOME_DO_PERSONAGEM)
+Lançamento de Dados: /roll notation:1d100\*5 title:Estágio (NOME_DO_PERSONAGEM)
 
 Requisitos: Carisma Nível 1, Inteligência Nível 2, Idade Real 16 anos.
 
@@ -1206,7 +1206,7 @@ Para receber o valor, é necessário realizar uma cena com começo, meio e fim, 
 
 || CENA PARA EMPREGO SEM VÍNCULO ||
 
-E lançar um dado no ⁠rolagem-de-dados: /roll notation:1d100*HORAS title:Emprego Sem Vínculo (NOME_DO_PERSONAGEM)
+E lançar um dado no ⁠rolagem-de-dados: /roll notation:1d100\*HORAS title:Emprego Sem Vínculo (NOME_DO_PERSONAGEM)
 
 Requisitos:
 
@@ -1242,7 +1242,7 @@ Os atributos desenvolvidos são Força e Resistência.
 
 • Segurança Pessoal: pode ser realizado em qualquer lugar onde seu protegido esteja e pode durar até 7 horas;
 
-• Segurança de Boate: você ficará de pé proibindo ou permitindo que as pessoas entrem no local, também separando brigas na entrada e eventualmente dentro do local. Seu serviço dura 8 horas e pode ganhar um bônus de até 200.000 MGA por dia trabalhado. Para saber se ganhou ou não o bônus, basta lançar no ⁠rolagem-de-dados: /roll notation:1d100*2000 title:Bônus Segurança de Boate (NOME_DO_PERSONAGEM)
+• Segurança de Boate: você ficará de pé proibindo ou permitindo que as pessoas entrem no local, também separando brigas na entrada e eventualmente dentro do local. Seu serviço dura 8 horas e pode ganhar um bônus de até 200.000 MGA por dia trabalhado. Para saber se ganhou ou não o bônus, basta lançar no ⁠rolagem-de-dados: /roll notation:1d100\*2000 title:Bônus Segurança de Boate (NOME_DO_PERSONAGEM)
 
 #### Cargo: Bartender
 
@@ -1264,7 +1264,7 @@ Os atributos desenvolvidos são Destreza e Carisma.
 
 Os empregos são uma forma de ganhar dinheiro fixo e se desenvolver a longo prazo. E os ganhos são a cada 15 dias (off).
 
-Cada trabalho tem seus requisitos e recompensas, porém todos farão uso do lançamento de dados no ⁠rolagem-de-dados para os atributos: /roll notation:5d10*HORAS title:Emprego (NOME_DO_PERSONAGEM)
+Cada trabalho tem seus requisitos e recompensas, porém todos farão uso do lançamento de dados no ⁠rolagem-de-dados para os atributos: /roll notation:5d10\*HORAS title:Emprego (NOME_DO_PERSONAGEM)
 
 O primeiro que pedir o cargo, fica com ele, mas se sumir por mais de 1 mês (sem criar qualquer cena, seja de trabalho ou não) perde o cargo e o próximo pode conseguir.
 
@@ -1373,7 +1373,7 @@ Como um ambiente moderno e uma escola que preza a comunicação do aluno para co
 
 Cada usuário terá um tópico com os nomes de seus personagens onde poderão compartilhar fotos, vídeos e textos como se estivessem em suas próprias redes sociais.
 
-Para pedir a criação do tópico ou a adição de personagem, basta pedir em ⁠🙋pedidos  com o @ do seu personagem (o mesmo vale para mudança de @).
+Para pedir a criação do tópico ou a adição de personagem, basta pedir em ⁠🙋pedidos com o @ do seu personagem (o mesmo vale para mudança de @).
 
 Mas porque preciso informar o @?
 O @ vai ser adicionar na descrição do tópico para facilitar o coleguinha de te marcar (e te ajudar a lembrar também).

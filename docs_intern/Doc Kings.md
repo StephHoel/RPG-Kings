@@ -2,9 +2,9 @@
 
 ## ✅ **1. Contexto do Mundo**
 
-* **Local:** Escola de Sobrenaturais na Suíça (internato, arquitetura antiga, moderna por dentro).
-* **Público:** Sobrenaturais da Europa (vampiros, lobisomens, magos, fadas, etc.).
-* **Outras escolas:** Existem no mundo (apenas lore por enquanto, pode virar expansão).
+- **Local:** Escola de Sobrenaturais na Suíça (internato, arquitetura antiga, moderna por dentro).
+- **Público:** Sobrenaturais da Europa (vampiros, lobisomens, magos, fadas, etc.).
+- **Outras escolas:** Existem no mundo (apenas lore por enquanto, pode virar expansão).
 
 ---
 
@@ -24,11 +24,11 @@ O jogo será dividido em **dias**, e cada dia tem **horários fixos + horários 
 
 **Cada hora livre = 1 “ação”** escolhida pelo jogador:
 
-* **Estudar:** aumenta XP em matéria (ex: magia, alquimia).
-* **Treinar:** aumenta atributo físico.
-* **Socializar:** aumenta carisma, amizades, possíveis eventos.
-* **Explorar:** chance de encontrar eventos aleatórios ou itens.
-* **Descansar:** restaura energia (se baixo).
+- **Estudar:** aumenta XP em matéria (ex: magia, alquimia).
+- **Treinar:** aumenta atributo físico.
+- **Socializar:** aumenta carisma, amizades, possíveis eventos.
+- **Explorar:** chance de encontrar eventos aleatórios ou itens.
+- **Descansar:** restaura energia (se baixo).
 
 ---
 
@@ -38,17 +38,17 @@ Dois tipos:
 
 ### **Primários (afetam decisões)**
 
-* **Energia:** decai com ações, recupera dormindo/comendo.
-* **Fome:** aumenta com o tempo, precisa comer.
-* **Humor:** afeta interações sociais.
+- **Energia:** decai com ações, recupera dormindo/comendo.
+- **Fome:** aumenta com o tempo, precisa comer.
+- **Humor:** afeta interações sociais.
 
 ### **Secundários (para desafios e aulas)**
 
-* **Magia** (ex: feitiços, combate).
-* **Conhecimento** (disciplinas).
-* **Força** (combate físico).
-* **Carisma** (relacionamentos, eventos sociais).
-* **Agilidade** (movimento, esquiva).
+- **Magia** (ex: feitiços, combate).
+- **Conhecimento** (disciplinas).
+- **Força** (combate físico).
+- **Carisma** (relacionamentos, eventos sociais).
+- **Agilidade** (movimento, esquiva).
 
 ---
 
@@ -56,11 +56,11 @@ Dois tipos:
 
 Cada aula dá XP em algo:
 
-* **História Arcana** → Conhecimento
-* **Alquimia** → Conhecimento + Magia
-* **Combate Sobrenatural** → Força + Agilidade
-* **Controle de Poderes** → Magia
-* **Estratégia** → Conhecimento
+- **História Arcana** → Conhecimento
+- **Alquimia** → Conhecimento + Magia
+- **Combate Sobrenatural** → Força + Agilidade
+- **Controle de Poderes** → Magia
+- **Estratégia** → Conhecimento
 
 ---
 
@@ -68,28 +68,27 @@ Cada aula dá XP em algo:
 
 A cada hora do dia (inclusive em horários livres), há **chance de evento aleatório**, que pode ser:
 
-* **Social:** amigo chama para conversar, fofoca na escola.
-* **Conflito leve:** aluno provoca → teste de Carisma ou Força.
-* **Descoberta:** encontra item raro no pátio.
-* **Missão secundária:** “Ajude o professor” (ganha reputação).
-* **Evento negativo:** energia cai mais rápido, atrasos.
+- **Social:** amigo chama para conversar, fofoca na escola.
+- **Conflito leve:** aluno provoca → teste de Carisma ou Força.
+- **Descoberta:** encontra item raro no pátio.
+- **Missão secundária:** “Ajude o professor” (ganha reputação).
+- **Evento negativo:** energia cai mais rápido, atrasos.
 
 **Probabilidade:**
 
-* Horários de aula = eventos ligados a professores/colegas.
-* Horários livres = exploração e interações sociais.
+- Horários de aula = eventos ligados a professores/colegas.
+- Horários livres = exploração e interações sociais.
 
 ---
 
 ## ✅ **6. Sistema de Dias e Progresso**
 
-* Cada **semana** = ciclo (segunda a sábado).
-* Domingo pode ser **livre total** ou ter eventos especiais.
-* **Progresso:** subir de nível → desbloqueia:
-
-  * Novos poderes.
-  * Salas secretas.
-  * Eventos da história principal.
+- Cada **semana** = ciclo (segunda a sábado).
+- Domingo pode ser **livre total** ou ter eventos especiais.
+- **Progresso:** subir de nível → desbloqueia:
+  - Novos poderes.
+  - Salas secretas.
+  - Eventos da história principal.
 
 ---
 
@@ -138,6 +137,6 @@ Exemplo para **hora livre**:
 
 ## ✅ **9. Como Deixar Dinâmico**
 
-* **Sistema de rolagem** para eventos aleatórios (ex: `Math.random()`).
-* **Cooldown**: algumas atividades só podem ser feitas X vezes por dia.
-* **Sistema de afinidade**: NPCs ficam mais próximos com socialização → desbloqueia eventos únicos.
+- **Sistema de rolagem** para eventos aleatórios (ex: `Math.random()`).
+- **Cooldown**: algumas atividades só podem ser feitas X vezes por dia.
+- **Sistema de afinidade**: NPCs ficam mais próximos com socialização → desbloqueia eventos únicos.
