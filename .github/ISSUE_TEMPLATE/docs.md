@@ -1,10 +1,10 @@
 ---
-name: Documentação
-about: Proposta ou mudança na documentação do projeto
-labels: type/docs, status/backlog
+name: Chore
+about: Tarefas de manutenção ou atualização da documentação
+labels: chore, status/backlog
 ---
 
-# Documentação: [TÍTULO CURTO]
+# Chore: [TÍTULO CURTO]
 
 ## Contexto
 
