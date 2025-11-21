@@ -1,11 +1,8 @@
 # Kanban
 
-## v0.1.7 — 2025
+## v0.1.8 — 2025
 
-- [x] Consertar tipos
-- [x] Criar testes e2e das rotas
-- [x] Refatorar páginas para estarem em src/pages
-- [x] Refatorar páginas para retornar title no componente HEAD do next
+- [ ] Resolver TODOs
 - [ ] Montar `config.json` com custos e restaurações
 - [ ] Criar seed de cenas reais básicas (cenário feliz único de 1 dia)
 - [ ] Montar 1 semana jogável (Seg–Sáb)
@@ -33,6 +30,13 @@
 - [ ] Mapa de navegação com salas clicáveis (arena, pátio, biblioteca, dormitórios)
 - [ ] Missões com múltiplos objetivos e falhas possíveis
 - [ ] Login e sincronização de progresso online
+
+## v0.1.7 — 2025-11-20
+
+- [x] Consertar tipos
+- [x] Criar testes e2e das rotas
+- [x] Refatorar páginas para estarem em src/pages
+- [x] Refatorar páginas para retornar title no componente HEAD do next
 
 ## v0.1.6 — 2025-11-18
 

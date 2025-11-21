@@ -13,6 +13,8 @@ export function useDeleteSave() {
       try {
         await db.saves.delete(saveId)
 
+        // TODO deletar sheet também
+
         await log(LogTypeEnum.enum.INFO, '[useDeleteSave] Save deletado', { saveId })
       }
       catch (err: any) {

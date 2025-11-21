@@ -30,16 +30,17 @@ export function useCreateSave() {
       await log(LogTypeEnum.enum.INFO, '[useCreateSave] Save criado', { saveId, name })
 
       const animal = getAnimal(race)
-
       const stats = statsByRace(race, animal)
+      const developSkills = getDevelopSkills(race)
+      const fixedSkills = getFixedSkills(race)
 
       await db.sheets.add({
         saveId,
-        race: race,
+        race,
         animal: animal ?? null,
         stats: stats ?? base(),
-        developSkills: getDevelopSkills(race),
-        fixedSkills: getFixedSkills(race),
+        developSkills,
+        fixedSkills,
         coins: 0,
         createdAt: new Date(),
         updatedAt: new Date(),

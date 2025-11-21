@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { ROUTES } from './routes'
+import { ROUTES, routeWithSaveId } from './routes';
 
 export const MENUS = [
   {
@@ -7,15 +7,15 @@ export const MENUS = [
     label: 'Home'
   },
   {
-    route: (_id: string | null): string => _id ? ROUTES.GAME(_id) : '',
+    route: (_id: string | null): string => _id ?  routeWithSaveId(ROUTES.GAME,_id) : '',
     label: 'Jogo'
   },
   {
-    route: (_id: string | null): string => _id ? ROUTES.SHEET(_id) : '',
+    route: (_id: string | null): string => _id ?  routeWithSaveId(ROUTES.SHEET,_id) : '',
     label: 'Ficha'
   },
   {
-    route: (_id: string | null): string => _id ? ROUTES.PROGRESS(_id) : '',
+    route: (_id: string | null): string => _id ?  routeWithSaveId(ROUTES.PROGRESS,_id) : '',
     label: 'Progresso'
   },
   {

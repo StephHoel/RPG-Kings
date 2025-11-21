@@ -23,7 +23,7 @@ export const SheetSchema = z.object({
     mana: s.stats,
   }).optional(),
 
-  developSkills: z.array(z.record(DevelopSkillsEnum, s.stats)),
+  developSkills: z.array(z.record(DevelopSkillsEnum, s.stats)).nullable().default([]).optional(),
 
   fixedSkills: z.array(FixedSkillsEnum),
 

@@ -5,12 +5,13 @@ import { ROUTES } from '@/config'
 import { useRouter } from 'next/router'
 import { Activity } from 'react'
 import { useActiveSaveContext } from '@/providers/useActiveSaveContext'
+import { routeWithSaveId } from '../config/files/routes';
 
 export default function Home() {
   const router = useRouter()
   const { activeSaveId } = useActiveSaveContext()
 
-  const goToGame = () => router.push(ROUTES.GAME(activeSaveId!))
+  const goToGame = () => router.push(routeWithSaveId(ROUTES.GAME,activeSaveId!))
 
   const goToSaveNew = () => router.push(ROUTES.SAVE_NEW)
 

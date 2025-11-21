@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router'
 import { useDeleteSave, useGetAllSaves } from '@/hooks'
 import { Button, H1, Panel } from '@/components'
-import { ROUTES } from '@/config'
+import { ROUTES, routeWithSaveId } from '@/config'
 import { SaveId } from '@/interfaces'
 import { toast } from 'sonner'
 import Head from 'next/head'
@@ -21,7 +21,7 @@ export default function Saves() {
 
   const toSaveNew = () => router.push(ROUTES.SAVE_NEW)
 
-  const toGame = (saveId: SaveId) => router.push(ROUTES.GAME(saveId))
+  const toGame = (saveId: SaveId) => router.push(routeWithSaveId(ROUTES.GAME,saveId))
 
   return (<>
     <Head>

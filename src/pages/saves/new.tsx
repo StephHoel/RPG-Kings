@@ -1,11 +1,13 @@
 'use client'
+import Head from 'next/head'
 import { useCreateSave } from '@/hooks'
 import { AlertError, Button, H1, Input, Loader, Panel } from '@/components'
 import { useForm } from 'react-hook-form'
-import { ROUTES } from '@/config'
+import { ROUTES, routeWithSaveId } from '@/config'
 import { useRouter } from 'next/router'
 import { CreateSaveFormValues } from '@/interfaces'
-import Head from 'next/head'
+import { toast } from 'sonner'
+import { RacesEnum } from '@/enums'
 
 export default function SaveNew() {
   const router = useRouter()
@@ -17,9 +19,15 @@ export default function SaveNew() {
   const { errors, isSubmitting } = formState
 
   const onSubmit = async (data: CreateSaveFormValues) => {
+    data.race = RacesEnum.enum.LOBISOMEM
+    
     createSave.mutate(data, {
+      onError(err) {
+        toast.error('Erro ao criar save')
+        console.error(err)
+      },
       onSuccess(id) {
-        router.push(ROUTES.GAME(id))
+        router.push(routeWithSaveId(ROUTES.GAME,id))
       }
     })
   }
