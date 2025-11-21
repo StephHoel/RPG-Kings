@@ -28,7 +28,12 @@ export function useAddXP(saveId: string, discipline: string, xpToAdd: number) {
             updatedAt: now,
           } as Discipline)
 
-          await log(LogTypeEnum.enum.INFO, '[useAddXP] Disciplina criada e XP adicionado', { saveId, discipline, xpAdded: amountToAdd, totalXp: amountToAdd })
+          await log(LogTypeEnum.enum.INFO, '[useAddXP] Disciplina criada e XP adicionado', {
+            saveId,
+            discipline,
+            xpAdded: amountToAdd,
+            totalXp: amountToAdd,
+          })
 
           return true
         }
@@ -43,22 +48,35 @@ export function useAddXP(saveId: string, discipline: string, xpToAdd: number) {
           await db.disciplines.add({ ...existing, xp: newXp, updatedAt: new Date() } as Discipline)
         }
 
-        await log(LogTypeEnum.enum.INFO, '[useAddXP] XP adicionado', { saveId, discipline, xpAdded: amountToAdd, totalXp: newXp })
+        await log(LogTypeEnum.enum.INFO, '[useAddXP] XP adicionado', {
+          saveId,
+          discipline,
+          xpAdded: amountToAdd,
+          totalXp: newXp,
+        })
 
         return true
       } catch (err: any) {
-        await log(LogTypeEnum.enum.ERROR, '[useAddXP] Erro ao adicionar XP', { saveId, discipline, error: String(err) })
+        await log(LogTypeEnum.enum.ERROR, '[useAddXP] Erro ao adicionar XP', {
+          saveId,
+          discipline,
+          error: String(err),
+        })
 
         return false
       }
     },
 
-    onSuccess:  () => {
+    onSuccess: () => {
       queryClient.refetchQueries({ queryKey: useQueryKeys.discipline(saveId, discipline) })
     },
 
     onError: async (err) => {
-      await log(LogTypeEnum.enum.ERROR, '[useAddXP] Erro inesperado na mutação', { saveId, discipline, error: String(err) })
+      await log(LogTypeEnum.enum.ERROR, '[useAddXP] Erro inesperado na mutação', {
+        saveId,
+        discipline,
+        error: String(err),
+      })
     },
   })
 }

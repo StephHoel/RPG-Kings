@@ -57,7 +57,9 @@ export function useCreateSave() {
     },
 
     onError: async (err) => {
-      await log(LogTypeEnum.enum.ERROR, '[useCreateSave] Erro inesperado na mutação', { error: String(err) })
+      await log(LogTypeEnum.enum.ERROR, '[useCreateSave] Erro inesperado na mutação', {
+        error: String(err),
+      })
     },
   })
 }

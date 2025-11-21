@@ -6,7 +6,6 @@ import { H1, Panel } from '@/components'
 import { Suspense } from 'react'
 import Head from 'next/head'
 
-
 export default function Sheet() {
   const router = useRouter()
   const query = router.query
@@ -19,33 +18,39 @@ export default function Sheet() {
   const sheet = useGetSheet(saveId!)
   const items = useGetInventory(saveId!)
 
-  return (<>
-    <Head>
-      <title>Ficha de Personagem</title>
-    </Head>
-    
-    <Suspense fallback={<div>Carregando...</div>}>
-      <Panel>
-        <H1>Ficha</H1>
+  return (
+    <>
+      <Head>
+        <title>Ficha de Personagem</title>
+      </Head>
 
-        <pre className="bg-gray-500 p-3 border rounded overflow-auto text-sm">{JSON.stringify(sheet ?? 'Sem sheet', null, 2)}</pre>
+      <Suspense fallback={<div>Carregando...</div>}>
+        <Panel>
+          <H1>Ficha</H1>
 
-        <h2 className="font-medium">Inventário</h2>
+          <pre className="bg-gray-500 p-3 border rounded overflow-auto text-sm">
+            {JSON.stringify(sheet ?? 'Sem sheet', null, 2)}
+          </pre>
 
-        <ul className="space-y-2">
-          {!items || items.length === 0 ? (
-            'Sem itens'
-          ) : (
-            items.map((i) => (
-              <li key={i.id} className="p-3 border rounded">
-                <div className="font-medium">{i.name}</div>
+          <h2 className="font-medium">Inventário</h2>
 
-                <div className="opacity-70 text-sm">Comprado semana {i.acquiredWeek} · Duração {i.durationWeeks === 0 ? 'ilimitada' : `${i.durationWeeks} semanas`} · Expira {i.expiresAtWeek ?? '—'}</div>
-              </li>
-            ))
-          )}
-        </ul>
-      </Panel>
-    </Suspense>
-  </>)
+          <ul className="space-y-2">
+            {!items || items.length === 0
+              ? 'Sem itens'
+              : items.map((i) => (
+                  <li key={i.id} className="p-3 border rounded">
+                    <div className="font-medium">{i.name}</div>
+
+                    <div className="opacity-70 text-sm">
+                      Comprado semana {i.acquiredWeek} · Duração{' '}
+                      {i.durationWeeks === 0 ? 'ilimitada' : `${i.durationWeeks} semanas`} · Expira{' '}
+                      {i.expiresAtWeek ?? '—'}
+                    </div>
+                  </li>
+                ))}
+          </ul>
+        </Panel>
+      </Suspense>
+    </>
+  )
 }

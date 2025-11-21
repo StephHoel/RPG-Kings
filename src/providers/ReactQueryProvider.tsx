@@ -6,15 +6,17 @@ import { ActiveSaveContext } from './activeSaveContext'
 
 export function ReactQueryProvider({ children }: PropsWithChildren) {
   const qcRef = useRef<QueryClient | null>(null)
-  const [client] = useState(() => new QueryClient({ defaultOptions: { queries: { staleTime: 15_000 } } }))
+  const [client] = useState(
+    () => new QueryClient({ defaultOptions: { queries: { staleTime: 15_000 } } })
+  )
 
-  useEffect(() => { qcRef.current = client }, [client])
+  useEffect(() => {
+    qcRef.current = client
+  }, [client])
 
   return (
     <QueryClientProvider client={client}>
-      <ActiveSaveProviderInner>
-        {children}
-      </ActiveSaveProviderInner>
+      <ActiveSaveProviderInner>{children}</ActiveSaveProviderInner>
     </QueryClientProvider>
   )
 }

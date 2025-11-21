@@ -11,7 +11,7 @@ import Head from 'next/head'
 export default function Game() {
   const router = useRouter()
   const query = router.query
-  const saveId = Array.isArray(query.saveId) ? query.saveId[0] : (query.saveId ?? null)
+  const saveId = Array.isArray(query.saveId) ? query.saveId[0] : query.saveId ?? null
 
   // If saveId is missing, show an error toast and redirect.
   // Do the redirect inside useEffect so the component always returns a valid React node.
@@ -36,21 +36,21 @@ export default function Game() {
 
   return (
     <>
-    <Head>
-      <title>Jogo</title>
-    </Head>
-      
-    <Suspense fallback={<div>Carregando...</div>}>
-      <Panel>
-        <SceneCard>
-          <H1>{scene?.title ?? 'Sem título'}</H1>
+      <Head>
+        <title>Jogo</title>
+      </Head>
 
-          <p>{scene?.content ?? 'Nenhuma cena disponível neste horário.'}</p>
-        </SceneCard>
+      <Suspense fallback={<div>Carregando...</div>}>
+        <Panel>
+          <SceneCard>
+            <H1>{scene?.title ?? 'Sem título'}</H1>
 
-        <ChoiceList />
-      </Panel>
-    </Suspense>
+            <p>{scene?.content ?? 'Nenhuma cena disponível neste horário.'}</p>
+          </SceneCard>
+
+          <ChoiceList />
+        </Panel>
+      </Suspense>
     </>
   )
 }

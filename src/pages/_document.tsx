@@ -3,7 +3,10 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 class MyDocument extends Document {
   render() {
     return (
-      <Html lang="pt-br" className="bg-background bg-gradient-to-br from-background via-primary to-highlight bg-no-repeat bg-fixed">
+      <Html
+        lang="pt-br"
+        className="bg-background bg-gradient-to-br from-background via-primary to-highlight bg-no-repeat bg-fixed"
+      >
         <Head>
           <meta charSet="UTF-8" />
           <link

@@ -1,7 +1,7 @@
 import { DevelopSkillsEnum, FixedSkillsEnum } from '@/enums'
 import { DevelopSkill, FixedSkill, Races, Skills } from '@/interfaces'
 
-const RACE_SKILLS: Record <Races, Skills[]> = {
+const RACE_SKILLS: Record<Races, Skills[]> = {
   ARCANO: [
     DevelopSkillsEnum.enum.SORCERY,
     FixedSkillsEnum.enum.LONGEVITY,
@@ -56,10 +56,14 @@ export function getSkills(race: Races): Skills[] {
   return RACE_SKILLS[race]
 }
 
-const DEVELOP_VALUES = new Set<DevelopSkill>(Object.values(DevelopSkillsEnum.enum) as DevelopSkill[])
+const DEVELOP_VALUES = new Set<DevelopSkill>(
+  Object.values(DevelopSkillsEnum.enum) as DevelopSkill[]
+)
 
 export function getDevelopSkills(race: Races): Record<DevelopSkill, number>[] {
-  const skills = getSkills(race).filter((s): s is DevelopSkill => DEVELOP_VALUES.has(s as DevelopSkill))
+  const skills = getSkills(race).filter((s): s is DevelopSkill =>
+    DEVELOP_VALUES.has(s as DevelopSkill)
+  )
 
   return skills.map((skillName) => ({ [skillName]: 0 })) as Record<DevelopSkill, number>[]
 }

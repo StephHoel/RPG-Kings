@@ -22,31 +22,33 @@ export default function Progress() {
 
   const milestones = useGetMilestones(saveId!)
 
-  return (<>
-    <Head>
-      <title>Progresso</title>
-    </Head>
-    
-    <Suspense fallback={<div>Carregando...</div>}>
-      <Panel>
-        <H1>Progresso</H1>
+  return (
+    <>
+      <Head>
+        <title>Progresso</title>
+      </Head>
 
-        <ul className="space-y-2">
-          {!milestones || milestones.length === 0 ? (
-            'Sem progressos registrados'
-          ) : (
-            milestones.map((m) => (
-              <li key={m.id} className="p-3 border rounded">
-                <div className="font-medium">{m.description}</div>
+      <Suspense fallback={<div>Carregando...</div>}>
+        <Panel>
+          <H1>Progresso</H1>
 
-                <div className={`text-sm opacity-70 ${m.achievedAtWeek ? 'visible' : 'hidden'}`}>
-                  Concluído na semana {m.achievedAtWeek}
-                </div>
-              </li>
-            ))
-          )}
-        </ul>
-      </Panel>
-    </Suspense>
-  </>)
+          <ul className="space-y-2">
+            {!milestones || milestones.length === 0
+              ? 'Sem progressos registrados'
+              : milestones.map((m) => (
+                  <li key={m.id} className="p-3 border rounded">
+                    <div className="font-medium">{m.description}</div>
+
+                    <div
+                      className={`text-sm opacity-70 ${m.achievedAtWeek ? 'visible' : 'hidden'}`}
+                    >
+                      Concluído na semana {m.achievedAtWeek}
+                    </div>
+                  </li>
+                ))}
+          </ul>
+        </Panel>
+      </Suspense>
+    </>
+  )
 }

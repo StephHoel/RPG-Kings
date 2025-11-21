@@ -24,9 +24,11 @@ export function useGetSave(saveId: SaveId) {
         await log(LogTypeEnum.enum.INFO, '[useGetSave] Jogo obtido', { save })
 
         return save ?? null
-      }
-      catch (err: any) {
-        await log(LogTypeEnum.enum.ERROR, '[useGetSave] Erro ao obter jogo', { saveId, error: String(err) })
+      } catch (err: any) {
+        await log(LogTypeEnum.enum.ERROR, '[useGetSave] Erro ao obter jogo', {
+          saveId,
+          error: String(err),
+        })
         throw err
       }
     },

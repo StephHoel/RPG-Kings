@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
 
 export function useGetSheet(saveId: string): Sheet | null {
-  const {data: sheet} = useQuery({
+  const { data: sheet } = useQuery({
     queryKey: useQueryKeys.sheet(saveId),
     enabled: !!saveId,
     staleTime: 60_000,
@@ -20,7 +20,10 @@ export function useGetSheet(saveId: string): Sheet | null {
 
         return s ?? null
       } catch (err: any) {
-        await log(LogTypeEnum.enum.ERROR, '[useGetSheet] Erro ao obter ficha', { saveId, error: String(err) })
+        await log(LogTypeEnum.enum.ERROR, '[useGetSheet] Erro ao obter ficha', {
+          saveId,
+          error: String(err),
+        })
         throw err
       }
     },

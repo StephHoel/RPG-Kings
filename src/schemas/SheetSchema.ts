@@ -8,20 +8,22 @@ export const SheetSchema = z.object({
   race: RacesEnum,
   animal: z.union([AnimalsEnum, KitsuneEnum]).nullable(),
 
-  stats: z.object({
-    strength: s.stats,
-    agility: s.stats,
-    intelligence: s.stats,
-    charisma: s.stats,
-    stamina: s.stats,
+  stats: z
+    .object({
+      strength: s.stats,
+      agility: s.stats,
+      intelligence: s.stats,
+      charisma: s.stats,
+      stamina: s.stats,
 
-    hungry: s.stats,
-    mood: s.stats,
-    health: s.stats,
+      hungry: s.stats,
+      mood: s.stats,
+      health: s.stats,
 
-    magic: s.stats,
-    mana: s.stats,
-  }).optional(),
+      magic: s.stats,
+      mana: s.stats,
+    })
+    .optional(),
 
   developSkills: z.array(z.record(DevelopSkillsEnum, s.stats)).nullable().default([]).optional(),
 

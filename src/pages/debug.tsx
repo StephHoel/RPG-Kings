@@ -16,17 +16,22 @@ export default function Debug() {
 
   useEffect(() => {
     db.logs
-      .orderBy('createdAt').toArray()
-      .then((rows) => { setLogs(rows) })
+      .orderBy('createdAt')
+      .toArray()
+      .then((rows) => {
+        setLogs(rows)
+      })
   }, [])
 
   const filtered = useMemo(() => {
     const out = logs
-      .filter(r => (type === 'all' || r.type === type))
-      .filter(r => {
+      .filter((r) => type === 'all' || r.type === type)
+      .filter((r) => {
         if (!q) return true
 
-        const hay = `${r.type} ${r.message ?? ''} ${JSON.stringify(r.payload ?? '')} ${JSON.stringify(r.createdAt ?? '')}`.toLowerCase()
+        const hay = `${r.type} ${r.message ?? ''} ${JSON.stringify(
+          r.payload ?? ''
+        )} ${JSON.stringify(r.createdAt ?? '')}`.toLowerCase()
 
         return hay.includes(q.toLowerCase())
       })
@@ -49,8 +54,7 @@ export default function Debug() {
   }
 
   async function onClear() {
-    if (!confirm('Apagar todos os logs locais?'))
-    {
+    if (!confirm('Apagar todos os logs locais?')) {
       return
     }
 
@@ -69,95 +73,85 @@ export default function Debug() {
     {
       key: 'createdAt',
       label: createdAtLabel,
-      onHeaderClick: () => setSortAsc(s => !s),
-      render: (r: Log) => formatDate(r.createdAt)
+      onHeaderClick: () => setSortAsc((s) => !s),
+      render: (r: Log) => formatDate(r.createdAt),
     },
     {
       key: 'type',
       label: 'Type',
-      render: (r: Log) => r.type
+      render: (r: Log) => r.type,
     },
     {
       key: 'message',
       label: 'Message',
-      render: (r: Log) => r.message ?? '—'
+      render: (r: Log) => r.message ?? '—',
     },
     {
       key: 'payload',
       label: 'Payload',
-      render: (r: Log) => (
-        <pre className="whitespace-pre-wrap">
-          {formatPayload(r.payload)}
-        </pre>
-      )
+      render: (r: Log) => <pre className="whitespace-pre-wrap">{formatPayload(r.payload)}</pre>,
     },
   ]
 
-  return (<>
-    <Head>
-      <title>Debug</title>
-    </Head>
+  return (
+    <>
+      <Head>
+        <title>Debug</title>
+      </Head>
 
-    <Panel>
-      <div>
-        <H1>/debug – Logs locais</H1>
+      <Panel>
+        <div>
+          <H1>/debug – Logs locais</H1>
 
-        <p className="text-xs">Local-only (Dexie). Nenhum dado é enviado para servidor.</p>
-      </div>
+          <p className="text-xs">Local-only (Dexie). Nenhum dado é enviado para servidor.</p>
+        </div>
 
-      <div className={`flex gap-2 flex-wrap  ${filtered.length === 0 ? 'hidden' : 'visible'}`}>
-        <div className='flex sm:flex-row flex-col sm:justify-between md:justify-center sm:items-center gap-2 w-full'>
-          <div className='flex items-center gap-2'>
-            <span className="min-w-fit text-sm">Total: {filtered.length}</span>
+        <div className={`flex gap-2 flex-wrap  ${filtered.length === 0 ? 'hidden' : 'visible'}`}>
+          <div className="flex sm:flex-row flex-col sm:justify-between md:justify-center sm:items-center gap-2 w-full">
+            <div className="flex items-center gap-2">
+              <span className="min-w-fit text-sm">Total: {filtered.length}</span>
 
-            <select
-              aria-label="Filtrar por tipo de log"
-              className="px-3 py-2 border border-highlight rounded w-full"
-              value={type}
-              onChange={e => setType(e.target.value as any)}
-            >
-              {types.map(t => (
-                <option key={t} value={t} className="bg-primary hover:bg-secondary">
-                  {t}
-                </option>
-              ))}
-            </select>
+              <select
+                aria-label="Filtrar por tipo de log"
+                className="px-3 py-2 border border-highlight rounded w-full"
+                value={type}
+                onChange={(e) => setType(e.target.value as any)}
+              >
+                {types.map((t) => (
+                  <option key={t} value={t} className="bg-primary hover:bg-secondary">
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="sm:w-auto md:w-full">
+              <Input
+                placeholder="Filtrar texto..."
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                className="w-full"
+              />
+            </div>
           </div>
 
-          <div className='sm:w-auto md:w-full'>
-            <Input
-              placeholder="Filtrar texto..."
-              value={q}
-              onChange={e => setQ(e.target.value)}
-              className='w-full'
-            />
+          <div className="flex space-x-2 w-full">
+            <Button onClick={onCopy} className="min-w-fit">
+              Copiar (NDJSON)
+            </Button>
+
+            <Button onClick={onClear}>Apagar Logs</Button>
           </div>
         </div>
 
-        <div className="flex space-x-2 w-full">
-          <Button onClick={onCopy} className='min-w-fit'>
-            Copiar (NDJSON)
-          </Button>
+        <div className=" ">
+          <Activity mode={filtered.length === 0 ? 'hidden' : 'visible'}>
+            <GenericTable header={header} rows={filtered} rowKey={(r) => r.id ?? Math.random()} />
+          </Activity>
 
-          <Button onClick={onClear}>
-            Apagar Logs
-          </Button>
+          <p className={filtered.length === 0 ? 'visible' : 'hidden'}>Não há logs disponíveis.</p>
         </div>
-      </div>
-
-      <div className=" ">
-        <Activity mode={filtered.length === 0 ? 'hidden' : 'visible'}>
-          <GenericTable
-            header={header}
-            rows={filtered}
-            rowKey={r => r.id ?? Math.random()}
-          />
-        </Activity>
-
-        <p className={filtered.length === 0 ? 'visible' : 'hidden'}>
-          Não há logs disponíveis.
-        </p>
-      </div>
-    </Panel>
-  </>)
+      </Panel>
+    </>
+  )
 }

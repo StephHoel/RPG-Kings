@@ -21,37 +21,44 @@ export default function Saves() {
 
   const toSaveNew = () => router.push(ROUTES.SAVE_NEW)
 
-  const toGame = (saveId: SaveId) => router.push(routeWithSaveId(ROUTES.GAME,saveId))
+  const toGame = (saveId: SaveId) => router.push(routeWithSaveId(ROUTES.GAME, saveId))
 
-  return (<>
-    <Head>
-      <title>Saves</title>
-    </Head>
-    
-    <Panel>
-      <H1>Saves</H1>
+  return (
+    <>
+      <Head>
+        <title>Saves</title>
+      </Head>
 
-      <Button onClick={toSaveNew}>
-        Novo save
-      </Button>
+      <Panel>
+        <H1>Saves</H1>
 
-      <ul className="space-y-2 divide-y">
-        {saves && saves?.map((s) => (
-          <li key={s.id} className="flex justify-between items-center p-2 border border-highlight rounded">
-            <p>{s.name}</p>
+        <Button onClick={toSaveNew}>Novo save</Button>
 
-            <div className="flex gap-2 w-1/2">
-              <Button className='mx-auto! p-2! md:p-4! w-full!' onClick={() => toGame(s.id)}>
-                Jogar
-              </Button>
+        <ul className="space-y-2 divide-y">
+          {saves &&
+            saves?.map((s) => (
+              <li
+                key={s.id}
+                className="flex justify-between items-center p-2 border border-highlight rounded"
+              >
+                <p>{s.name}</p>
 
-              <Button className='mx-auto! p-2! md:p-4! w-full!' onClick={() => toDeleteSave(s.id)}>
-                Excluir
-              </Button>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </Panel>
-  </>)
+                <div className="flex gap-2 w-1/2">
+                  <Button className="mx-auto! p-2! md:p-4! w-full!" onClick={() => toGame(s.id)}>
+                    Jogar
+                  </Button>
+
+                  <Button
+                    className="mx-auto! p-2! md:p-4! w-full!"
+                    onClick={() => toDeleteSave(s.id)}
+                  >
+                    Excluir
+                  </Button>
+                </div>
+              </li>
+            ))}
+        </ul>
+      </Panel>
+    </>
+  )
 }

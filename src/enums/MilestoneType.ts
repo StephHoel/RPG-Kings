@@ -6,5 +6,5 @@ export const MilestoneTypeEnum = z.enum([
   'collection',
   'event',
   'skill',
-  'social'
+  'social',
 ])

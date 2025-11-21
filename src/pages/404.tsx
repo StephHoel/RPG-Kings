@@ -7,15 +7,17 @@ import Head from 'next/head'
 export default function NotFound() {
   const router = useRouter()
 
-  return (<>
-    <Head>
-      <title>Página não encontrada — King's Academy</title>
-    </Head>
-      
-    <Panel className='gap-20'>
-      <H1> 404 - Página não encontrada </H1>
+  return (
+    <>
+      <Head>
+        <title>Página não encontrada — King's Academy</title>
+      </Head>
 
-      <Button onClick={() => router.push(ROUTES.ROOT)}>Voltar para Início</Button>
-    </Panel>
-  </>)
+      <Panel className="gap-20">
+        <H1> 404 - Página não encontrada </H1>
+
+        <Button onClick={() => router.push(ROUTES.ROOT)}>Voltar para Início</Button>
+      </Panel>
+    </>
+  )
 }

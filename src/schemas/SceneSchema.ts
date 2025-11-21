@@ -10,10 +10,12 @@ export const SceneSchema = z.object({
   content: z.string(),
 
   options: z.array(z.string()),
-  cost: z.object({
-    energy: z.number().nullable(),
-    coin: z.number().nullable(),
-  }).nullable(),
+  cost: z
+    .object({
+      energy: z.number().nullable(),
+      coin: z.number().nullable(),
+    })
+    .nullable(),
   hours: z.array(z.number()).nullable().default([]), // if empty array, available in all hours
   weekdays: z.array(WeekdaysEnum).nullable().default([]), // if empty array, available in all weekdays
 
@@ -27,7 +29,10 @@ export const SceneSchema = z.object({
     }),
 
     //** precisa ter os itens válidos no inventário na quantidade certa */
-    items: z.array(z.record(z.string(), z.int().min(1))).nullable().default([]),
+    items: z
+      .array(z.record(z.string(), z.int().min(1)))
+      .nullable()
+      .default([]),
 
     //** personagem e reputação mínima */
     reputation: z.array(z.record(z.string(), z.int())).nullable().default([]),

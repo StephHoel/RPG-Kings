@@ -23,7 +23,10 @@ export function useGetScene(saveId: SaveId): Scene | null {
 
         return scenes[0]
       } catch (err: any) {
-        await log(LogTypeEnum.enum.ERROR, '[useGetScene] Erro ao obter cena', { saveId, error: String(err) })
+        await log(LogTypeEnum.enum.ERROR, '[useGetScene] Erro ao obter cena', {
+          saveId,
+          error: String(err),
+        })
         throw err
       }
     },

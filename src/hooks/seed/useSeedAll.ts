@@ -1,5 +1,14 @@
 'use client'
-import { characterSeed, itemSeed, milestoneSeed, questSeed, reputationSeed, ruleSeed, sceneSeed, tagSeed } from '@/constants'
+import {
+  characterSeed,
+  itemSeed,
+  milestoneSeed,
+  questSeed,
+  reputationSeed,
+  ruleSeed,
+  sceneSeed,
+  tagSeed,
+} from '@/constants'
 import { db } from '@/db'
 import { LogTypeEnum } from '@/enums'
 import { log, safeBulkAdd } from '@/lib'
@@ -27,7 +36,8 @@ export function useSeedAll() {
 
         if (!table) continue
 
-        const count = typeof table.count === 'function' ? await table.count() : (await table.toArray()).length
+        const count =
+          typeof table.count === 'function' ? await table.count() : (await table.toArray()).length
 
         if (count > 0) {
           toast.info(`${tableName} já tem dados — pulando`)
@@ -59,6 +69,6 @@ export function useSeedAll() {
       toast.success('Seed executada (debug)')
 
       return anySeeded
-    }
+    },
   })
 }

@@ -13,7 +13,7 @@ export const sceneSeed: Scene[] = [
       energy: { min: 0, max: 0 },
       items: null,
       reputation: null,
-    }
+    },
   },
   {
     id: 'scene_primeira_aula',
@@ -43,8 +43,13 @@ export const sceneSeed: Scene[] = [
     cost: null,
     hours: null,
     weekdays: null,
-    preRequire: { items: [{'item_notebook': 1}], energy: { min: null, max: null }, reputation: null },
-  }, {
+    preRequire: {
+      items: [{ item_notebook: 1 }],
+      energy: { min: null, max: null },
+      reputation: null,
+    },
+  },
+  {
     id: 'scene_manha_aula',
     title: 'Aula de Alquimia',
     content: 'Você entra no laboratório e o cheiro de ervas toma o ar.',
@@ -52,7 +57,7 @@ export const sceneSeed: Scene[] = [
     cost: null,
     hours: null,
     weekdays: null,
-    preRequire: { energy: { min: null, max: null }, items: null, reputation: null }
+    preRequire: { energy: { min: null, max: null }, items: null, reputation: null },
   },
   {
     id: 'scene_tarde_treino',
@@ -62,7 +67,7 @@ export const sceneSeed: Scene[] = [
     cost: null,
     hours: null,
     weekdays: null,
-    preRequire: { energy: { min: null, max: null }, items: null, reputation: null }
+    preRequire: { energy: { min: null, max: null }, items: null, reputation: null },
   },
   {
     id: 'scene_noite_social',
@@ -72,6 +77,6 @@ export const sceneSeed: Scene[] = [
     cost: null,
     hours: null,
     weekdays: null,
-    preRequire: { energy: { min: null, max: null }, items: null, reputation: null }
+    preRequire: { energy: { min: null, max: null }, items: null, reputation: null },
   },
 ]

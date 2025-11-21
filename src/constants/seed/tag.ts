@@ -1,14 +1,14 @@
 export const tagSeed = [
   {
     id: 'tag_class',
-    name: 'class'
+    name: 'class',
   },
   {
     id: 'tag_training',
-    name: 'training'
+    name: 'training',
   },
   {
     id: 'tag_social',
-    name: 'social'
+    name: 'social',
   },
 ]

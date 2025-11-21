@@ -7,13 +7,13 @@ export const itemSeed: Item[] = [
     name: 'Poção Pequena',
     description: 'Restaura uma pequena quantidade de HP',
     durationWeeks: 0,
-    tags: [ItemsTagEnum.enum.HEALING, ItemsTagEnum.enum.CONSUMABLE]
+    tags: [ItemsTagEnum.enum.HEALING, ItemsTagEnum.enum.CONSUMABLE],
   },
   {
     id: 2,
     name: 'Pedra Mística',
     description: 'Material raro para alquimia',
     durationWeeks: 0,
-    tags: []
+    tags: [],
   },
 ]

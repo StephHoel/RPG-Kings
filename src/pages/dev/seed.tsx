@@ -14,26 +14,19 @@ export default function SeedDevPage() {
     setIsSeed(true)
   }
 
-  return (<>
-    <Head>
-      <title>Seed</title>
-    </Head>
-    
-    <Panel>
-      <H1>/dev/seed – Semeando Amor</H1>
+  return (
+    <>
+      <Head>
+        <title>Seed</title>
+      </Head>
 
-      <Button
-        onClick={seed}
-        disabled={isSeed}
-      >
-        {isSeed ?
-          <p className='text-success'>
-            ✅ Semeado com amor!
-          </p>
-          :
-          <p>Semear tudo!</p>
-        }
-      </Button>
-    </Panel>
-  </>)
+      <Panel>
+        <H1>/dev/seed – Semeando Amor</H1>
+
+        <Button onClick={seed} disabled={isSeed}>
+          {isSeed ? <p className="text-success">✅ Semeado com amor!</p> : <p>Semear tudo!</p>}
+        </Button>
+      </Panel>
+    </>
+  )
 }

@@ -2,11 +2,7 @@ import { db } from '@/db'
 import { Log } from '@/interfaces'
 import { LogSchema } from '@/schemas'
 
-export async function log(
-  type: Log['type'],
-  message?: string,
-  payload?: any
-) {
+export async function log(type: Log['type'], message?: string, payload?: any) {
   const entry = {
     type,
     message,
@@ -19,7 +15,11 @@ export async function log(
     await db.logs.add(parsed)
   } catch (err) {
     try {
-      const last = await db.logs.orderBy('id').reverse().first().catch(() => null)
+      const last = await db.logs
+        .orderBy('id')
+        .reverse()
+        .first()
+        .catch(() => null)
 
       const lastIdNum = last && typeof last.id === 'number' ? last.id : 0
 
@@ -35,7 +35,7 @@ export async function log(
 export async function exportLogsNDJSON(): Promise<string> {
   const all = await db.logs.orderBy('createdAt').toArray()
 
-  return all.map(x => JSON.stringify(x)).join('\n')
+  return all.map((x) => JSON.stringify(x)).join('\n')
 }
 
 export async function clearLogs() {

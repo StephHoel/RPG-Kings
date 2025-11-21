@@ -9,84 +9,84 @@ const STATS_BY_ANIMAL: Record<Animals, Stats> = {
     charisma: 1,
     intelligence: 2,
     stamina: 3,
-    strength: 2
+    strength: 2,
   }),
   Urso: base({
     agility: 1,
     charisma: 1,
     intelligence: 2,
     stamina: 3,
-    strength: 3
+    strength: 3,
   }),
   Leão: base({
     agility: 2,
     charisma: 2,
     intelligence: 2,
     stamina: 2,
-    strength: 3
+    strength: 3,
   }),
   Tigre: base({
     agility: 3,
     charisma: 1,
     intelligence: 2,
     stamina: 2,
-    strength: 3
+    strength: 3,
   }),
   Águia: base({
     agility: 3,
     charisma: 2,
     intelligence: 2,
     stamina: 2,
-    strength: 1
+    strength: 1,
   }),
   Falcão: base({
     agility: 3,
     charisma: 1,
     intelligence: 2,
     stamina: 2,
-    strength: 1
+    strength: 1,
   }),
   Coruja: base({
     agility: 2,
     charisma: 2,
     intelligence: 2,
     stamina: 2,
-    strength: 1
+    strength: 1,
   }),
   Cobra: base({
     agility: 2,
     charisma: 1,
     intelligence: 1,
     stamina: 3,
-    strength: 1
+    strength: 1,
   }),
   Cavalo: base({
     agility: 2,
     charisma: 2,
     intelligence: 1,
     stamina: 3,
-    strength: 3
+    strength: 3,
   }),
   Raposa: base({
     agility: 3,
     charisma: 2,
     intelligence: 3,
     stamina: 2,
-    strength: 1
+    strength: 1,
   }),
   Cachorro: base({
     agility: 2,
     charisma: 3,
     intelligence: 2,
     stamina: 3,
-    strength: 1
+    strength: 1,
   }),
   Gato: base({
     agility: 3,
     charisma: 2,
     intelligence: 2,
     stamina: 2,
-    strength: 1
+    strength: 1,
   }),
 }
 

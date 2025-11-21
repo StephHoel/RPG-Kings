@@ -18,10 +18,12 @@ export function useGetAllSaves(): Save[] {
 
         return saves
       } catch (err: any) {
-        await log(LogTypeEnum.enum.ERROR, '[useGetAllSaves] Erro ao obter saves', { error: String(err) })
+        await log(LogTypeEnum.enum.ERROR, '[useGetAllSaves] Erro ao obter saves', {
+          error: String(err),
+        })
         throw err
       }
-    }
+    },
   })
 
   return saves ?? []

@@ -13,7 +13,7 @@ export const MandatoryClassesEnum = z.enum({
 })
 
 export const OptionalClassesEnum = z.enum({
-  ESPORTES_DE_QUADRA: 'Esportes de Quadra',  // TODO colocar cada esporte
+  ESPORTES_DE_QUADRA: 'Esportes de Quadra', // TODO colocar cada esporte
   ESPORTES_DE_GRAMA: 'Esportes de Grama', // TODO colocar cada esporte
   ESPORTES_AQUATICOS: 'Esportes Aquáticos', // TODO colocar cada esporte
   INSTRUMENTOS_MUSICAIS: 'Instrumentos Musicais', // TODO colocar cada instrumento

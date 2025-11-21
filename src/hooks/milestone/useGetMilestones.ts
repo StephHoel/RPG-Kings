@@ -16,11 +16,17 @@ export function useGetMilestones(saveId: string): Milestone[] {
       try {
         const rows = await db.milestones.where({ saveId: saveId }).toArray()
 
-        await log(LogTypeEnum.enum.INFO, '[useGetMilestones] Milestones obtido', { saveId, count: rows.length })
+        await log(LogTypeEnum.enum.INFO, '[useGetMilestones] Milestones obtido', {
+          saveId,
+          count: rows.length,
+        })
 
         return rows
       } catch (err: any) {
-        await log(LogTypeEnum.enum.ERROR, '[useGetMilestones] Erro ao obter milestones', { saveId, error: String(err) })
+        await log(LogTypeEnum.enum.ERROR, '[useGetMilestones] Erro ao obter milestones', {
+          saveId,
+          error: String(err),
+        })
         throw err
       }
     },

@@ -8,5 +8,5 @@ export const LogTypeEnum = z.enum({
   TOAST: 'Toast',
   NETWORK: 'Network',
   ERROR: 'Error',
-  INFO: 'Info'
+  INFO: 'Info',
 })
