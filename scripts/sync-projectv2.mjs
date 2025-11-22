@@ -20,7 +20,11 @@ async function graphql(query, variables) {
     },
     body: JSON.stringify({ query, variables }),
   })
-  return res.json()
+  const json = await res.json()
+  if (json.errors) {
+    console.error('GraphQL errors:', JSON.stringify(json.errors, null, 2))
+  }
+  return json
 }
 
 async function rest(path) {
@@ -66,11 +70,19 @@ async function getProjectData(owner, repo, projectNumber, projectIdEnv) {
   if (projectIdEnv) {
     const q = `query($projectId:ID!){ node(id:$projectId){ ... on ProjectV2{ id title fields(first:50){ nodes{ __typename ... on ProjectV2SingleSelectField{ id name options(first:200){ nodes{ id name } } } ... on ProjectV2FieldCommon{ id name } } } items(first:200){ nodes{ id content{ __typename ... on Issue{ number } } } } } } }`
     const res = await graphql(q, { projectId: projectIdEnv })
+    if (!res || !res.data) {
+      console.error('GraphQL did not return data for projectId:', projectIdEnv, res)
+      return null
+    }
     return res.data.node
   }
 
   const q2 = `query($owner:String!, $repo:String!, $number:Int!){ repository(owner:$owner,name:$repo){ projectV2(number:$number){ id number title fields(first:50){ nodes{ __typename ... on ProjectV2SingleSelectField{ id name options(first:200){ nodes{ id name } } } ... on ProjectV2FieldCommon{ id name } } } items(first:200){ nodes{ id content{ __typename ... on Issue{ number } } } } } } }`
   const res = await graphql(q2, { owner, repo, number: parseInt(projectNumber, 10) })
+  if (!res || !res.data || !res.data.repository) {
+    console.error('GraphQL did not return repository/projectV2 for', owner, repo, projectNumber, res)
+    return null
+  }
   return res.data.repository.projectV2
 }
 
