@@ -24,7 +24,7 @@ jobs:
       - name: Sync issue label to project Status
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PROJECT_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const projectId = process.env.PROJECT_ID
             const statusFieldId = process.env.STATUS_FIELD_ID

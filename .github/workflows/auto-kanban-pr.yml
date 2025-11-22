@@ -3,6 +3,8 @@ name: Auto Kanban (PR)
 on:
   pull_request:
     types: [opened, reopened, closed]
+  push:
+    branches: ['**']
 
 jobs:
   pr-kanban:
@@ -41,17 +43,17 @@ jobs:
             gh issue edit $ISSUE_NUM --add-label status/in-progress --repo $REPO --cache 2>/dev/null || gh api repos/$REPO/issues/$ISSUE_NUM -X PATCH -f labels[]="status/in-progress" -H "Authorization: token $TOKEN"
             gh issue comment $ISSUE_NUM --body "Branch pushed: ${BRANCH} (commit: https://github.com/$REPO/commit/$GITHUB_SHA)" --repo $REPO || true
              # Try to sync ProjectV2 status (requires PROJECT_TOKEN or adequate GITHUB_TOKEN scope)
-             node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "In progress" || true
+            PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "In progress" || true
           else
             if [ "$PR_STATE" = "opened" ] || [ "$PR_STATE" = "reopened" ]; then
               # label issue as in-review
-              gh issue edit $ISSUE_NUM --add-label status/review --repo $REPO --cache 2>/dev/null || gh api repos/$REPO/issues/$ISSUE_NUM -X PATCH -F labels='["status/review"]' -H "Authorization: token $TOKEN"
+              gh issue edit $ISSUE_NUM --add-label status/review --repo $REPO || true
               gh issue comment $ISSUE_NUM --body "PR opened: $PR_URL" --repo $REPO || true
-                node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "In review" || true
+                PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "In review" || true
             elif [ "$PR_STATE" = "closed" ]; then
               if [ "${{ github.event.pull_request.merged }}" = "true" ]; then
-                gh issue edit $ISSUE_NUM --add-label status/done --repo $REPO --cache 2>/dev/null || gh api repos/$REPO/issues/$ISSUE_NUM -X PATCH -F labels='["status/done"]' -H "Authorization: token $TOKEN"
+                gh issue edit $ISSUE_NUM --add-label status/done --repo $REPO || true
               fi
-                 node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "Done" || true
+                PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "Done" || true
             fi
           fi
