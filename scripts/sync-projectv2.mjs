@@ -10,7 +10,7 @@ import process from 'process'
 
 const TOKEN = process.env.PROJECT_TOKEN || process.env.GITHUB_TOKEN
 if (!TOKEN) {
-  console.error('Missing PROJECT_TOKEN or GITHUB_TOKEN')
+  console.error('Token PROJECT_TOKEN ou GITHUB_TOKEN ausente')
   process.exit(1)
 }
 
@@ -26,7 +26,7 @@ function normalizeKey(s) {
 
 async function graphql(query, variables) {
   try {
-    console.log('GraphQL request', { variables: variables || {} })
+    console.log('Solicitação GraphQL', { variáveis: variables || {} })
     const res = await fetch(GH_GRAPHQL, {
       method: 'POST',
       headers: {
@@ -38,14 +38,14 @@ async function graphql(query, variables) {
     })
     if (!res.ok) {
       const txt = await res.text()
-      console.error('GraphQL HTTP error', res.status, txt)
+      console.error('Erro HTTP GraphQL', res.status, txt)
       throw new Error(`GraphQL HTTP error ${res.status}`)
     }
     const json = await res.json()
-    if (json.errors) console.error('GraphQL errors:', JSON.stringify(json.errors, null, 2))
+    if (json.errors) console.error('Erros GraphQL:', JSON.stringify(json.errors, null, 2))
     return json
   } catch (err) {
-    console.error('GraphQL fetch failed:', err && err.message ? err.message : err)
+    console.error('Falha na busca GraphQL:', err && err.message ? err.message : err)
     throw err
   }
 }
@@ -75,7 +75,7 @@ async function postComment(owner, repo, issueNumber, body) {
     })
     return res.json()
   } catch (err) {
-    console.error('Failed to post comment:', err)
+    console.error('Falha ao postar comentário:', err)
     return null
   }
 }
@@ -87,7 +87,7 @@ async function getIssueLabels(owner, repo, issueNumber) {
     const labels = issue.labels || []
     return labels.map((l) => (typeof l === 'string' ? l : l.name)).filter(Boolean)
   } catch (err) {
-    console.error('Failed to fetch issue labels:', err && err.message ? err.message : err)
+    console.error('Falha ao buscar rótulos da issue:', err && err.message ? err.message : err)
     return []
   }
 }
@@ -101,7 +101,7 @@ async function withRetry(fn, attempts = 3, baseMs = 300) {
       lastErr = err
       const wait = baseMs * Math.pow(2, i)
       console.error(
-        `Attempt ${i + 1} failed, retrying after ${wait}ms:`,
+        `Tentativa ${i + 1} falhou, tentando novamente em ${wait}ms:`,
         err && err.message ? err.message : err
       )
       await new Promise((r) => setTimeout(r, wait))
@@ -128,25 +128,20 @@ async function findIssueNodeId(owner, repo, issueNumber) {
 
 async function findProjectItemForIssue(owner, repo, issueNumber, projectId) {
   console.log(
-    'Looking for existing project item for',
-    owner,
-    repo,
-    issueNumber,
-    'projectId',
-    projectId
+    `Procurando item de projeto existente para ${owner}/${repo}#${issueNumber}, projectId: ${projectId}`
   )
   const q = `query($owner:String!,$repo:String!,$number:Int!){ repository(owner:$owner,name:$repo){ issue(number:$number){ projectItems(first:99){ nodes{ id project{ id } } } } } }`
   const res = await graphql(q, { owner, repo, number: parseInt(issueNumber, 10) })
   if (!res || !res.data || !res.data.repository || !res.data.repository.issue) return null
   const nodes =
     (res.data.repository.issue.projectItems && res.data.repository.issue.projectItems.nodes) || []
-  console.log('Found projectItems nodes count:', (nodes && nodes.length) || 0)
+  console.log('Número de nós projectItems encontrados:', (nodes && nodes.length) || 0)
   const matched = nodes.find((n) => n.project && n.project.id === projectId)
   return matched && matched.id ? matched.id : null
 }
 
 async function getProjectV2(owner, repo, number) {
-  console.log('Fetching ProjectV2', { owner, repo, number })
+  console.log('Buscando ProjectV2', { owner, repo, number })
   const projectQ = `query($owner:String!,$repo:String!,$number:Int!,$fieldsCursor:String,$itemsCursor:String){ repository(owner:$owner,name:$repo){ projectV2(number:$number){ id title fields(first:99, after:$fieldsCursor){ pageInfo{ hasNextPage endCursor } nodes{ __typename ... on ProjectV2FieldCommon{ id name } ... on ProjectV2SingleSelectField{ id name options(first:99){ nodes{ id name } pageInfo{ hasNextPage endCursor } } } } } items(first:99, after:$itemsCursor){ pageInfo{ hasNextPage endCursor } nodes{ id content{ __typename ... on Issue{ number } } } } } } }`
 
   const project = await graphql(projectQ, { owner, repo, number: parseInt(number, 10) })
@@ -157,7 +152,7 @@ async function getProjectV2(owner, repo, number) {
   if (p.fields && p.fields.pageInfo && p.fields.pageInfo.hasNextPage) {
     let allFieldNodes = Array.from(p.fields.nodes || [])
     let cursor = p.fields.pageInfo.endCursor
-    console.log('Paginating fields, initial count:', allFieldNodes.length)
+    console.log('Paginando campos, contagem inicial:', allFieldNodes.length)
     while (cursor) {
       const res = await graphql(projectQ, {
         owner,
@@ -169,7 +164,7 @@ async function getProjectV2(owner, repo, number) {
       const proj = repoObj && repoObj.projectV2
       if (!proj || !proj.fields) break
       allFieldNodes = allFieldNodes.concat(proj.fields.nodes || [])
-      console.log('Paginated fields, new total:', allFieldNodes.length)
+      console.log('Campos paginados, novo total:', allFieldNodes.length)
       if (proj.fields.pageInfo && proj.fields.pageInfo.hasNextPage)
         cursor = proj.fields.pageInfo.endCursor
       else cursor = null
@@ -181,7 +176,7 @@ async function getProjectV2(owner, repo, number) {
   if (p.items && p.items.pageInfo && p.items.pageInfo.hasNextPage) {
     let allItems = Array.from(p.items.nodes || [])
     let cursor = p.items.pageInfo.endCursor
-    console.log('Paginating items, initial count:', allItems.length)
+    console.log('Paginando itens, contagem inicial:', allItems.length)
     while (cursor) {
       const res = await graphql(projectQ, {
         owner,
@@ -193,7 +188,7 @@ async function getProjectV2(owner, repo, number) {
       const proj = repoObj && repoObj.projectV2
       if (!proj || !proj.items) break
       allItems = allItems.concat(proj.items.nodes || [])
-      console.log('Paginated items, new total:', allItems.length)
+      console.log('Itens paginados, novo total:', allItems.length)
       if (proj.items.pageInfo && proj.items.pageInfo.hasNextPage)
         cursor = proj.items.pageInfo.endCursor
       else cursor = null
@@ -206,9 +201,12 @@ async function getProjectV2(owner, repo, number) {
 
 async function addItemByContent(projectId, contentId) {
   const mutation = `mutation($projectId:ID!,$contentId:ID!){ addProjectV2ItemByContent(input:{projectId:$projectId,contentId:$contentId}){ item{ id } } }`
-  console.log('Creating project item by content', { projectId, contentId })
+  console.log('Criando item de projeto por conteúdo', { projectId, contentId })
   const res = await withRetry(async () => await graphql(mutation, { projectId, contentId }))
-  console.log('Create item response:', res && typeof res === 'object' ? JSON.stringify(res) : res)
+  console.log(
+    'Resposta da criação do item:',
+    res && typeof res === 'object' ? JSON.stringify(res) : res
+  )
   return res
 }
 
@@ -224,7 +222,7 @@ async function updateItemStatus(itemId, fieldId, optionId, projectId = null) {
   // projectId will be set by caller if available (we'll attempt to fill it below when possible)
 
   try {
-    console.log('Attempting GraphQL updateProjectV2ItemFieldValue', {
+    console.log('Tentando atualização GraphQL updateProjectV2ItemFieldValue', {
       itemId,
       fieldId,
       optionId,
@@ -232,7 +230,7 @@ async function updateItemStatus(itemId, fieldId, optionId, projectId = null) {
     })
     const res = await withRetry(async () => await graphql(mutation, { input }))
     console.log(
-      'GraphQL update response:',
+      'Resposta da atualização GraphQL:',
       res && typeof res === 'object' ? JSON.stringify(res) : res
     )
     if (
@@ -244,7 +242,7 @@ async function updateItemStatus(itemId, fieldId, optionId, projectId = null) {
       return res
   } catch (err) {
     console.error(
-      'GraphQL updateProjectV2ItemFieldValue failed:',
+      'Falha na atualização GraphQL updateProjectV2ItemFieldValue:',
       err && err.message ? err.message : err
     )
   }
@@ -269,11 +267,11 @@ async function updateItemStatus(itemId, fieldId, optionId, projectId = null) {
       })
       if (!res.ok) {
         const txt = await res.text()
-        console.error('REST update failed', res.status, txt)
+        console.error('Falha na atualização REST', res.status, txt)
         throw new Error(`REST update failed: ${res.status} ${txt}`)
       }
       const jr = await res.json()
-      console.log('REST update response:', jr)
+      console.log('Resposta da atualização REST:', jr)
       return jr
     })
     return restRes
@@ -287,7 +285,7 @@ async function updateItemStatus(itemId, fieldId, optionId, projectId = null) {
 
 function usage() {
   console.log(
-    'Usage: node scripts/sync-projectv2.mjs --owner OWNER --repo REPO --project-number 1 --issue 10 --status "In progress"'
+    'Uso: node scripts/sync-projectv2.mjs --owner OWNER --repo REPO --project-number 1 --issue 10 --status "In progress"'
   )
 }
 
@@ -316,7 +314,9 @@ async function main() {
 
   const issueNodeId = await findIssueNodeId(owner, repo, issueNumber)
   if (!issueNodeId) {
-    console.error('Unable to resolve issue node id for', owner, repo, issueNumber)
+    console.error(
+      `Não foi possível resolver o ID do nó da issue para ${owner}/${repo}#${issueNumber}`
+    )
     process.exit(3)
   }
 
@@ -351,13 +351,15 @@ async function main() {
           created.data.addProjectV2ItemByContent.item.id
       } catch (err) {
         console.error(
-          'Could not create project item via GraphQL mutation:',
+          'Não foi possível criar item de projeto via mutação GraphQL:',
           err && err.message ? err.message : err
         )
       }
     }
     if (!itemId) {
-      console.error('Could not obtain or create project item id for this issue. Aborting.')
+      console.error(
+        'Não foi possível obter ou criar ID do item de projeto para esta issue. Abortando.'
+      )
       if (process.env.COMMENT_ON_RESULT === 'true') {
         const labels = await getIssueLabels(owner, repo, issueNumber)
         const prev = labels.find((l) => l && l.startsWith('status/')) || null
@@ -371,10 +373,10 @@ async function main() {
       }
       process.exit(7)
     }
-    console.log('Updating item', itemId, 'field', STATUS_FIELD_ID, 'to option', optionId)
+    console.log(`Atualizando item ${itemId}, campo ${STATUS_FIELD_ID} para opção ${optionId}`)
     try {
       const r = await updateItemStatus(itemId, STATUS_FIELD_ID, optionId, PROJECT_ID)
-      console.log('Update result:', JSON.stringify(r, null, 2))
+      console.log('Resultado da atualização:', JSON.stringify(r, null, 2))
       if (process.env.COMMENT_ON_RESULT === 'true') {
         const labels = await getIssueLabels(owner, repo, issueNumber)
         const prev = labels.find((l) => l && l.startsWith('status/')) || null
@@ -388,7 +390,7 @@ async function main() {
       }
     } catch (err) {
       console.error(
-        'Failed updating item status (env path):',
+        'Falha ao atualizar status do item (caminho env):',
         err && err.message ? err.message : err
       )
       if (process.env.COMMENT_ON_RESULT === 'true') {
@@ -399,7 +401,7 @@ async function main() {
           owner,
           repo,
           issueNumber,
-          `Não foi possível atualizar o rótulo ${prevText}para **${labelName}** ❌\nErro: ${
+          `Não foi possível atualizar o rótulo ${prevText} para **${labelName}** ❌\nErro: ${
             err && err.message ? err.message : String(err)
           }\nTente novamente ou verifique as permissões do token.`
         )
@@ -411,7 +413,7 @@ async function main() {
 
   const project = await getProjectV2(owner, repo, projectNumber)
   if (!project) {
-    console.error('Project not found')
+    console.error('Projeto não encontrado')
     process.exit(4)
   }
 
@@ -422,7 +424,7 @@ async function main() {
       f.name.toLowerCase().includes('status')
   )
   if (!statusField) {
-    console.error('Status field not found')
+    console.error('Campo de status não encontrado')
     process.exit(5)
   }
 
@@ -434,9 +436,9 @@ async function main() {
     if (opt) optionId = opt.id
   }
   if (!optionId) {
-    console.error('Option not found for status:', targetStatus)
+    console.error('Opção não encontrada para status:', targetStatus)
     console.error(
-      'Available:',
+      'Disponíveis:',
       statusField.options &&
         statusField.options.nodes &&
         statusField.options.nodes.map((o) => o.name)
@@ -464,13 +466,13 @@ async function main() {
   }
   const itemId = item && item.id
   if (!itemId) {
-    console.error('Unable to determine project item id')
+    console.error('Não foi possível determinar o ID do item de projeto')
     process.exit(8)
   }
 
-  console.log('Updating item', itemId, 'field', statusField.id, 'to option', optionId)
+  console.log(`Atualizando item ${itemId}, campo ${statusField.id} para opção ${optionId}`)
   const r = await updateItemStatus(itemId, statusField.id, optionId, project.id)
-  console.log('Update result:', JSON.stringify(r, null, 2))
+  console.log('Resultado da atualização:', JSON.stringify(r, null, 2))
   if (process.env.COMMENT_ON_RESULT === 'true') {
     const labels = await getIssueLabels(owner, repo, issueNumber)
     const prev = labels.find((l) => l && l.startsWith('status/')) || null
@@ -485,6 +487,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error('Fatal error', err)
+  console.error('Erro fatal', err)
   process.exit(99)
 })
