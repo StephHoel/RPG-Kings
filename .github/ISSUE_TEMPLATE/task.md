@@ -30,8 +30,6 @@ Descreva a tarefa e por que ela é necessária.
 
 ## Referências
 
-- Links para docs / designs / issues relacionadas
-- Branch:
-
-Feature: `#(feature-issue-number) || N/A`
-Epic: `#(epic-issue-number) || N/A`
+Parent Feature: `#(feature-issue-number) || N/A`
+Related Epic: `#(epic-issue-number) || N/A`
+Branch:

@@ -34,7 +34,6 @@ Adicione contexto adicional, referências ou prints.
 
 ## Referências
 
-- Links para docs / designs / issues relacionadas
-
-Feature: `#(feature-issue-number) || N/A`
-Epic: `#(epic-issue-number) || N/A`
+Parent Feature: `#(feature-issue-number) || N/A`
+Related Epic: `#(epic-issue-number) || N/A`
+Others related: `N/A`

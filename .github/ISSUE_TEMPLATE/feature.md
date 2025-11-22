@@ -29,4 +29,4 @@ Adicione detalhes técnicos, endpoints, migrations ou mudanças de schema.
 
 ## Referências
 
-Epic: `#(epic-issue-number) || N/A`
+Related Epic: `#(epic-issue-number) || N/A`
