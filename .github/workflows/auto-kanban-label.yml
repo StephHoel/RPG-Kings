@@ -89,14 +89,7 @@ jobs:
           OPTION_DONE: 98236657
         run: |
           echo "Issue #$ISSUE_NUM: rótulo acionado: $LABEL"
-          # não mude nada se a issue já tiver o rótulo alvo
-          CURRENT_LABELS=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null || echo '')
-          for L in $CURRENT_LABELS; do
-            if [ "$L" = "$LABEL" ]; then
-                echo "Rótulo alvo $LABEL já presente; nada a fazer."; exit 0
-            fi
-          done
-          echo "Rótulos atuais não contêm $LABEL; procedendo para mapear e aplicar o status."
+          # Não verificar se o rótulo já existe — sempre sincronizar o status do Project
           case "$LABEL" in
             status/backlog)
               TARGET=status/backlog ;;
