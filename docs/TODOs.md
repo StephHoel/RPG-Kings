@@ -23,19 +23,6 @@ Sugestões para resolver:
 
 ---
 
-## talvez mudar de string para enum/nome
-
-Arquivo: `src/schemas/SheetSchema.ts` (linha aproximada: 32)
-
-Sugestões para resolver:
-
-- **Avaliar necessidade:** identificar como `reputation` é acessado/consultado (buscas por chave de NPC).
-- **Modelagem:** se as keys são entidades conhecidas, criar um `NPCEnum` ou usar IDs (ex.: `Record<NPCId, number>`). Caso as chaves sejam arbitrárias, manter string.
-- **Migração/compatibilidade:** se mudar o tipo, criar rotina de migração para dados existentes (converter string keys para enum/ids).
-- **Testes:** adicionar testes que confirmem serialização/deserialização e validação com `zod`.
-
----
-
 ## deletar sheet também
 
 Arquivo: `src/hooks/save/useDeleteSave.ts` (linha aproximada: 16)

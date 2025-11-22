@@ -29,10 +29,6 @@ export const SheetSchema = z.object({
 
   fixedSkills: z.array(FixedSkillsEnum),
 
-  // TODO talvez mudar de string para enum/nome
-  // aqui será armazenado a reputação com personagens NPC
-  reputation: z.array(z.record(z.string(), z.number())).default([]).optional(),
-
   // dinheiro do jogo
   coins: z.number().int().nonnegative(),
 
