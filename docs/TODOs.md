@@ -9,8 +9,9 @@ Segue a lista dos TODOs encontrados no código. Cada seção usa o texto exato q
 
 ---
 
-## verificar se isso vai ser necessário
+## pensar se vamos usar configurações, hoje não é necessário e não vejo motivo para usar
 
+Nota: Despriorizado
 Arquivo: `src/schemas/SettingsSchema.ts` (linha aproximada: 5)
 
 Sugestões para resolver:
