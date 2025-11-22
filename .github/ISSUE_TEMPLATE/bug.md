@@ -43,3 +43,10 @@ Cole logs, stack traces ou anexe prints. Se o bug for reproduzível com um save 
 ## Prioridade / Estimativa
 
 `priority/p0` / `size/s`
+
+## Referências
+
+- Links para docs / designs / issues relacionadas
+
+Feature: `#(feature-issue-number) || N/A`
+Epic: `#(epic-issue-number) || N/A`

@@ -31,3 +31,10 @@ Adicione contexto adicional, referências ou prints.
 ## Prioridade / Estimativa
 
 `priority/p3` / `size/s`
+
+## Referências
+
+- Links para docs / designs / issues relacionadas
+
+Feature: `#(feature-issue-number) || N/A`
+Epic: `#(epic-issue-number) || N/A`
