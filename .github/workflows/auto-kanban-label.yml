@@ -19,6 +19,19 @@ jobs:
           LABEL: ${{ github.event.label.name }}
           TOKEN: ${{ steps.token.outputs.TOKEN }}
         run: |
+          echo "GH_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
+          echo "GITHUB_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
+          # ensure gh uses the same token so any label operations originate from the same principal
+          gh auth status || true
+          
+        
+      - name: Map label to status (apply)
+        env:
+          REPO: ${{ github.repository }}
+          ISSUE_NUM: ${{ github.event.issue.number }}
+          LABEL: ${{ github.event.label.name }}
+          TOKEN: ${{ steps.token.outputs.TOKEN }}
+        run: |
           echo "Issue $ISSUE_NUM label changed: $LABEL"
           case "$LABEL" in
             status/backlog)
