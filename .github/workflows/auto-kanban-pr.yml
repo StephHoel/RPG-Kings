@@ -37,13 +37,19 @@ jobs:
           ISSUE_NUM: ${{ steps.issue.outputs.ISSUE }}
         run: |
           if [ -z "$ISSUE_NUM" ] || [ "$ISSUE_NUM" = "feat" ]; then echo "No issue number found in branch; skipping"; exit 0; fi
-          echo "Handling PR action=$PR_STATE for issue #$ISSUE_NUM"
-          if [ "$PR_STATE" = "opened" ] || [ "$PR_STATE" = "reopened" ]; then
-            # label issue as in-review
-            gh issue edit $ISSUE_NUM --add-label status/review --repo $REPO --cache 2>/dev/null || gh api repos/$REPO/issues/$ISSUE_NUM -X PATCH -F labels='["status/review"]' -H "Authorization: token $TOKEN"
-            gh issue comment $ISSUE_NUM --body "PR opened: $PR_URL" --repo $REPO || true
-          elif [ "$PR_STATE" = "closed" ]; then
-            if [ "${{ github.event.pull_request.merged }}" = "true" ]; then
-              gh issue edit $ISSUE_NUM --add-label status/done --repo $REPO --cache 2>/dev/null || gh api repos/$REPO/issues/$ISSUE_NUM -X PATCH -F labels='["status/done"]' -H "Authorization: token $TOKEN"
+          echo "Handling event=$GITHUB_EVENT_NAME pr_action=$PR_STATE for issue #$ISSUE_NUM"
+          if [ "$GITHUB_EVENT_NAME" = "push" ]; then
+            # For push events mark the issue as in-progress
+            gh issue edit $ISSUE_NUM --add-label status/in-progress --repo $REPO --cache 2>/dev/null || gh api repos/$REPO/issues/$ISSUE_NUM -X PATCH -F labels='["status/in-progress"]' -H "Authorization: token $TOKEN"
+            gh issue comment $ISSUE_NUM --body "Branch pushed: ${BRANCH} (commit: https://github.com/$REPO/commit/$GITHUB_SHA)" --repo $REPO || true
+          else
+            if [ "$PR_STATE" = "opened" ] || [ "$PR_STATE" = "reopened" ]; then
+              # label issue as in-review
+              gh issue edit $ISSUE_NUM --add-label status/review --repo $REPO --cache 2>/dev/null || gh api repos/$REPO/issues/$ISSUE_NUM -X PATCH -F labels='["status/review"]' -H "Authorization: token $TOKEN"
+              gh issue comment $ISSUE_NUM --body "PR opened: $PR_URL" --repo $REPO || true
+            elif [ "$PR_STATE" = "closed" ]; then
+              if [ "${{ github.event.pull_request.merged }}" = "true" ]; then
+                gh issue edit $ISSUE_NUM --add-label status/done --repo $REPO --cache 2>/dev/null || gh api repos/$REPO/issues/$ISSUE_NUM -X PATCH -F labels='["status/done"]' -H "Authorization: token $TOKEN"
+              fi
             fi
           fi
