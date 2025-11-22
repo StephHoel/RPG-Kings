@@ -114,25 +114,30 @@ jobs:
             *)
               echo "Rótulo não mapeado para status; pulando"; exit 0 ;;
           esac
-          # Garantir que exista apenas um rótulo status/*: remover os existentes e adicionar o TARGET
-          if [ "$SKIP_LABEL_EDIT" != 'true' ]; then
-            EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null)
-            if [ -n "$EXISTING_LABELS_JSON" ]; then
-              # remove any label starting with status/
-              for L in $EXISTING_LABELS_JSON; do
-                case "$L" in
-                  status/*)
-                    echo "(remover rótulo $L)" ;;
-                  *) ;;
-                esac
-              done
-            fi
-            # add the new status label (comandos de edição de label foram removidos)
-            echo "(adicionar rótulo $TARGET)"
-            # marcador removido: não adicionar comentário automático de sincronização aqui
-          else
-            echo "Pulando alteração de labels porque o rótulo alvo já estava presente."
+          # Garantir que exista apenas um rótulo status/*: remover apenas os status/* diferentes da label alterada
+          EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null || echo '')
+          HAS_LABEL=false
+          if [ -n "$EXISTING_LABELS_JSON" ]; then
+            for L in $EXISTING_LABELS_JSON; do
+              case "$L" in
+                status/*)
+                  if [ "$L" != "$LABEL" ]; then
+                    echo "Removendo rótulo de status não correspondente: $L"
+                    gh issue edit $ISSUE_NUM --remove-label "$L" --repo $REPO || true
+                  else
+                    HAS_LABEL=true
+                  fi ;;
+                *) ;;
+              esac
+            done
           fi
+          # # se a label alterada não estiver presente, adicioná-la
+          # if [ "$HAS_LABEL" != 'true' ]; then
+          #   echo "Adicionando rótulo alvo: $LABEL"
+          #   gh issue edit $ISSUE_NUM --add-label "$LABEL" --repo $REPO || true
+          # else
+          #   echo "Rótulo alvo $LABEL já presente; não será adicionado."
+          # fi
           # Try to sync ProjectV2 status (best-effort)
           # If we have an OPTION_* env that matches the target, pass its value (the option id).
           case "${TARGET#status/}" in
