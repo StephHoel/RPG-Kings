@@ -29,6 +29,8 @@ jobs:
         env:
           TOKEN: ${{ steps.token.outputs.TOKEN }}
           EVENT_SENDER: ${{ github.event.sender.login }}
+          REPO: ${{ github.repository }}
+          ISSUE_NUM: ${{ github.event.issue.number }}
         run: |
           echo "${{ steps.token.outputs.TOKEN }}" | gh auth login --with-token
           # obter o login do proprietário do token (necessita gh autenticado)
@@ -37,9 +39,24 @@ jobs:
           echo "Autor do evento: $EVENT_SENDER"
           # exportar o login do bot para comparação no passo de aplicação
           echo "bot=$GH_USER" >> $GITHUB_OUTPUT
+          # detectar se existe um comentário marcador recente deixado pelo bot após uma sincronização
+          IS_BOT_ACTION=false
           if [ "$GH_USER" = "$EVENT_SENDER" ]; then
-            echo "O dono do token é o mesmo que o autor do evento; esta execução foi iniciada pelo bot."
+            echo "O dono do token é o mesmo que o autor do evento; checando por marcador de ação do bot..."
+            # buscar comentários do issue feitos pelo bot contendo 'auto-kanban: sync-id=' e pegar o mais recente
+            LAST_MARKER=$(gh api repos/${REPO}/issues/${ISSUE_NUM}/comments --jq '.[] | select(.user.login=="'"$GH_USER"'" and (.body|test("auto-kanban: sync-id="))) | .created_at' 2>/dev/null | head -n1 || echo '')
+            if [ -n "$LAST_MARKER" ]; then
+              # converter para epoch e comparar com tempo atual (janela de 180 segundos)
+              LAST_EPOCH=$(date -d "$LAST_MARKER" +%s)
+              NOW_EPOCH=$(date -u +%s)
+              DIFF=$(( NOW_EPOCH - LAST_EPOCH ))
+              echo "Último marcador do bot: $LAST_MARKER (há $DIFF segundos)"
+              if [ "$DIFF" -le 180 ]; then
+                IS_BOT_ACTION=true
+              fi
+            fi
           fi
+          echo "is_bot_action=$IS_BOT_ACTION" >> $GITHUB_OUTPUT
 
       - name: Map label to status
         env:
@@ -56,7 +73,7 @@ jobs:
           
         
       - name: Map label to status (apply)
-        if: ${{ github.event.sender.login != steps.check.outputs.bot }}
+        if: ${{ github.event.sender.login != steps.check.outputs.bot || steps.check.outputs.is_bot_action != 'true' }}
         env:
           REPO: ${{ github.repository }}
           ISSUE_NUM: ${{ github.event.issue.number }}
@@ -108,6 +125,8 @@ jobs:
           fi
           # add the new status label
           gh issue edit $ISSUE_NUM --add-label $TARGET --repo $REPO
+          # adicionar comentário marcador para indicar que esta sincronização foi realizada pela automação
+          gh issue comment $ISSUE_NUM --repo $REPO --body "auto-kanban: sync-id=${GITHUB_RUN_ID} (aplicado pelo bot)"
           # Try to sync ProjectV2 status (best-effort)
           # If we have an OPTION_* env that matches the target, pass its value (the option id).
           case "${TARGET#status/}" in
