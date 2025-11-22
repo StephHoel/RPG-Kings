@@ -1,0 +1,53 @@
+name: Auto Kanban (Label)
+
+on:
+  issues:
+    types: [labeled, unlabeled]
+
+jobs:
+  label-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Choose token
+        id: token
+        run: |
+          if [ -n "${{ secrets.PROJECT_TOKEN }}" ]; then echo "TOKEN=${{ secrets.PROJECT_TOKEN }}" >> $GITHUB_OUTPUT; else echo "TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT; fi
+      - name: Map label to status
+        env:
+          REPO: ${{ github.repository }}
+          ISSUE_NUM: ${{ github.event.issue.number }}
+          LABEL: ${{ github.event.label.name }}
+          TOKEN: ${{ steps.token.outputs.TOKEN }}
+        run: |
+          echo "GH_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
+          echo "GITHUB_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
+          # ensure gh uses the same token so any label operations originate from the same principal
+          gh auth status || true
+          
+        
+      - name: Map label to status (apply)
+        env:
+          REPO: ${{ github.repository }}
+          ISSUE_NUM: ${{ github.event.issue.number }}
+          LABEL: ${{ github.event.label.name }}
+          TOKEN: ${{ steps.token.outputs.TOKEN }}
+        run: |
+          echo "Issue $ISSUE_NUM label changed: $LABEL"
+          case "$LABEL" in
+            status/backlog)
+              TARGET=status/backlog ;;
+            status/ready)
+              TARGET=status/ready ;;
+            status/in-progress)
+              TARGET=status/in-progress ;;
+            status/review)
+              TARGET=status/review ;;
+            status/done)
+              TARGET=status/done ;;
+            *)
+              echo "Label not mapped to status; skipping"; exit 0 ;;
+          esac
+          # preserve existing labels (including type/*) and add the status label
+          gh issue edit $ISSUE_NUM --add-label $TARGET --repo $REPO || true
+          # Try to sync ProjectV2 status (best-effort)
+          PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "${TARGET#status/}" || true
