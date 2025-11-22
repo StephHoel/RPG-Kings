@@ -31,8 +31,8 @@ jobs:
             const mapping = {
               'status/backlog': process.env.OPTION_BACKLOG,
               'status/ready': process.env.OPTION_READY,
-              'status/in progress': process.env.OPTION_IN_PROGRESS,
-              'status/in review': process.env.OPTION_IN_REVIEW,
+              'status/in-progress': process.env.OPTION_IN_PROGRESS,
+              'status/in-review': process.env.OPTION_IN_REVIEW,
               'status/done': process.env.OPTION_DONE,
             }
 
@@ -70,4 +70,4 @@ jobs:
               }
             `, { projectId, itemId, fieldId: statusFieldId, optionId: found })
 
-            core.info(`Set project item ${itemId} status to ${found}`)
+            core.info(`Set project item ${itemId} status to option ${found}`)
