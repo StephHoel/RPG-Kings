@@ -73,7 +73,7 @@ class RPGDatabase extends Dexie {
             // Se não houver saveId, tente usar o antigo id como fallback; caso contrário gere um id.
             saveId = sheet.id
 
-            // TODO adicionar uma forma de criar sheet se não existir e implementar ao tentar recuperar o sheet tbm
+            // TODO criar sheet se não existir e implementar ao tentar recuperar o sheet tbm
           }
 
           if (!bySaveId.has(saveId)) {
