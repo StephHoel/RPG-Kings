@@ -35,3 +35,5 @@ jobs:
               echo "Label not mapped to status; skipping"; exit 0 ;;
           esac
           gh issue edit $ISSUE_NUM --add-label $TARGET --repo $REPO --cache 2>/dev/null || gh api repos/$REPO/issues/$ISSUE_NUM -X PATCH -F labels='["'"$TARGET"'"]' -H "Authorization: token $TOKEN"
+          # Try to sync ProjectV2 status (best-effort)
+          node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "${TARGET#status/}" || true
