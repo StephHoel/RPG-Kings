@@ -34,7 +34,7 @@ jobs:
         run: |
           # If branch doesn't follow expected pattern (no issue number), do nothing
           if [ -z "$ISSUE_NUM" ] || [ "$ISSUE_NUM" = "feat" ]; then
-            echo "No issue number found in branch '$BRANCH'; skipping";
+            echo "No issue number found in branch '$BRANCH'; skipping"; || true
           fi
           echo "Processing issue #$ISSUE_NUM for branch $BRANCH"
           # get current labels
