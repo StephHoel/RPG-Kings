@@ -3,8 +3,8 @@ name: Auto Kanban (PR)
 on:
   pull_request:
     types: [opened, reopened, closed]
-  push:
-    branches: ['**']
+  # push:
+  #   branches: ['**']
 
 jobs:
   pr-kanban:
