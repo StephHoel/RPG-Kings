@@ -24,6 +24,23 @@ jobs:
       - name: Login gh CLI
         run: echo "${{ steps.token.outputs.TOKEN }}" | gh auth login --with-token
 
+      - name: Prevent event loop (check token owner)
+        id: check
+        env:
+          TOKEN: ${{ steps.token.outputs.TOKEN }}
+          EVENT_SENDER: ${{ github.event.sender.login }}
+        run: |
+          echo "${{ steps.token.outputs.TOKEN }}" | gh auth login --with-token
+          # obter o login do proprietário do token (necessita gh autenticado)
+          GH_USER=$(gh api user --jq .login 2>/dev/null || echo '')
+          echo "Proprietário do token: $GH_USER"
+          echo "Autor do evento: $EVENT_SENDER"
+          # exportar o login do bot para comparação no passo de aplicação
+          echo "bot=$GH_USER" >> $GITHUB_OUTPUT
+          if [ "$GH_USER" = "$EVENT_SENDER" ]; then
+            echo "O dono do token é o mesmo que o autor do evento; esta execução foi iniciada pelo bot."
+          fi
+
       - name: Map label to status
         env:
           REPO: ${{ github.repository }}
@@ -34,11 +51,12 @@ jobs:
         run: |
           echo "GH_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
           echo "GITHUB_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
-          # ensure gh uses the same token so any label operations originate from the same principal
+          # garantir que o gh use o mesmo token para que operações de label saiam do mesmo principal
           gh auth status
           
         
       - name: Map label to status (apply)
+        if: ${{ github.event.sender.login != steps.check.outputs.bot }}
         env:
           REPO: ${{ github.repository }}
           ISSUE_NUM: ${{ github.event.issue.number }}
@@ -53,7 +71,15 @@ jobs:
           OPTION_IN_REVIEW: df73e18b
           OPTION_DONE: 98236657
         run: |
-          echo "Issue $ISSUE_NUM label changed: $LABEL"
+          echo "Issue #$ISSUE_NUM: rótulo acionado: $LABEL"
+          # não mude nada se a issue já tiver o rótulo alvo
+          CURRENT_LABELS=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null || echo '')
+          for L in $CURRENT_LABELS; do
+            if [ "$L" = "$LABEL" ]; then
+                echo "Rótulo alvo $LABEL já presente; nada a fazer."; exit 0
+            fi
+          done
+          echo "Rótulos atuais não contêm $LABEL; procedendo para mapear e aplicar o status."
           case "$LABEL" in
             status/backlog)
               TARGET=status/backlog ;;
@@ -66,9 +92,9 @@ jobs:
             status/done)
               TARGET=status/done ;;
             *)
-              echo "Label not mapped to status; skipping"; exit 0 ;;
+              echo "Rótulo não mapeado para status; pulando"; exit 0 ;;
           esac
-          # Ensure only one status/* label exists: remove existing status/* labels and add the TARGET
+          # Garantir que exista apenas um rótulo status/*: remover os existentes e adicionar o TARGET
           EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null)
           if [ -n "$EXISTING_LABELS_JSON" ]; then
             # remove any label starting with status/
@@ -91,6 +117,6 @@ jobs:
             in-review) STATUS_OPTION="$OPTION_IN_REVIEW" ;; 
             review) STATUS_OPTION="$OPTION_IN_REVIEW" ;; 
             done) STATUS_OPTION="$OPTION_DONE" ;; 
-            *) echo "Label nao esperada" && exit 0 ;; 
+            *) echo "Rótulo não esperado" && exit 0 ;; 
           esac
           PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "$STATUS_OPTION"

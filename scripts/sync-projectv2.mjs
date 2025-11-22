@@ -80,6 +80,18 @@ async function postComment(owner, repo, issueNumber, body) {
   }
 }
 
+async function getIssueLabels(owner, repo, issueNumber) {
+  try {
+    const issue = await rest(`/repos/${owner}/${repo}/issues/${issueNumber}`)
+    if (!issue) return []
+    const labels = issue.labels || []
+    return labels.map((l) => (typeof l === 'string' ? l : l.name)).filter(Boolean)
+  } catch (err) {
+    console.error('Failed to fetch issue labels:', err && err.message ? err.message : err)
+    return []
+  }
+}
+
 async function withRetry(fn, attempts = 3, baseMs = 300) {
   let lastErr
   for (let i = 0; i < attempts; i++) {
@@ -291,9 +303,12 @@ async function main() {
 
   const owner = opts.owner
   const repo = opts.repo
+  const labelArg = opts.label || process.env.LABEL || ''
   const projectNumber = opts['project-number'] || process.env.PROJECT_NUMBER || '1'
   const issueNumber = opts.issue || process.env.ISSUE_NUMBER
   const targetStatus = opts.status || process.env.TARGET_STATUS
+  // labelName is the human label name passed by the workflow (preferred for comments)
+  const labelName = labelArg || targetStatus
   if (!owner || !repo || !issueNumber || !targetStatus) {
     usage()
     process.exit(2)
@@ -343,13 +358,17 @@ async function main() {
     }
     if (!itemId) {
       console.error('Could not obtain or create project item id for this issue. Aborting.')
-      if (process.env.COMMENT_ON_RESULT === 'true')
+      if (process.env.COMMENT_ON_RESULT === 'true') {
+        const labels = await getIssueLabels(owner, repo, issueNumber)
+        const prev = labels.find((l) => l && l.startsWith('status/')) || null
+        const prevText = prev ? `de **${prev}** ` : 'sem rótulo de status '
         await postComment(
           owner,
           repo,
           issueNumber,
-          `Failed to find or create project item for status update to **${targetStatus}**.`
+          `Não foi possível localizar ou criar o item no quadro para atualizar o rótulo ${prevText}para **${labelName}**. Se precisar, verifique as permissões do token ou tente novamente.`
         )
+      }
       process.exit(7)
     }
     console.log('Updating item', itemId, 'field', STATUS_FIELD_ID, 'to option', optionId)
@@ -357,12 +376,15 @@ async function main() {
       const r = await updateItemStatus(itemId, STATUS_FIELD_ID, optionId, PROJECT_ID)
       console.log('Update result:', JSON.stringify(r, null, 2))
       if (process.env.COMMENT_ON_RESULT === 'true') {
-        await postComment(
-          owner,
-          repo,
-          issueNumber,
-          `Project board updated to **${targetStatus}** (item ${itemId}).`
-        )
+        const labels = await getIssueLabels(owner, repo, issueNumber)
+        const prev = labels.find((l) => l && l.startsWith('status/')) || null
+        let msg
+        if (prev && prev !== labelName)
+          msg = `Rótulo atualizado: **${prev}** ➜ **${labelName}** ✅\nItem do projeto: ${itemId}.`
+        else if (prev && prev === labelName)
+          msg = `Rótulo **${labelName}** mantido (já estava definido). ✅\nItem do projeto: ${itemId}.`
+        else msg = `Rótulo atualizado para **${labelName}** ✅\nItem do projeto: ${itemId}.`
+        await postComment(owner, repo, issueNumber, msg)
       }
     } catch (err) {
       console.error(
@@ -370,13 +392,16 @@ async function main() {
         err && err.message ? err.message : err
       )
       if (process.env.COMMENT_ON_RESULT === 'true') {
+        const labels = await getIssueLabels(owner, repo, issueNumber)
+        const prev = labels.find((l) => l && l.startsWith('status/')) || null
+        const prevText = prev ? `de **${prev}** ` : ''
         await postComment(
           owner,
           repo,
           issueNumber,
-          `Failed to update Project board to **${targetStatus}**: ${
+          `Não foi possível atualizar o rótulo ${prevText}para **${labelName}** ❌\nErro: ${
             err && err.message ? err.message : String(err)
-          }`
+          }\nTente novamente ou verifique as permissões do token.`
         )
       }
       process.exit(10)
@@ -447,12 +472,15 @@ async function main() {
   const r = await updateItemStatus(itemId, statusField.id, optionId, project.id)
   console.log('Update result:', JSON.stringify(r, null, 2))
   if (process.env.COMMENT_ON_RESULT === 'true') {
-    await postComment(
-      owner,
-      repo,
-      issueNumber,
-      `Project board updated to **${targetStatus}** (item ${itemId}).`
-    )
+    const labels = await getIssueLabels(owner, repo, issueNumber)
+    const prev = labels.find((l) => l && l.startsWith('status/')) || null
+    let msg
+    if (prev && prev !== labelName)
+      msg = `Rótulo atualizado: **${prev}** ➜ **${labelName}** ✅\nItem do projeto: ${itemId}.`
+    else if (prev && prev === labelName)
+      msg = `Rótulo **${labelName}** mantido (já estava definido). ✅\nItem do projeto: ${itemId}.`
+    else msg = `Rótulo atualizado para **${labelName}** ✅\nItem do projeto: ${itemId}.`
+    await postComment(owner, repo, issueNumber, msg)
   }
 }
 
