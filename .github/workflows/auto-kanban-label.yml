@@ -62,7 +62,19 @@ jobs:
             *)
               echo "Label not mapped to status; skipping"; exit 0 ;;
           esac
-          # preserve existing labels (including type/*) and add the status label
+          # Ensure only one status/* label exists: remove existing status/* labels and add the TARGET
+          EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null || true)
+          if [ -n "$EXISTING_LABELS_JSON" ]; then
+            # remove any label starting with status/
+            for L in $EXISTING_LABELS_JSON; do
+              case "$L" in
+                status/*)
+                  gh issue edit $ISSUE_NUM --remove-label "$L" --repo $REPO || true ;;
+                *) ;;
+              esac
+            done
+          fi
+          # add the new status label
           gh issue edit $ISSUE_NUM --add-label $TARGET --repo $REPO || true
           # Try to sync ProjectV2 status (best-effort)
           # If we have an OPTION_* env that matches the target, pass its value (the option id).
