@@ -25,18 +25,29 @@ function normalizeKey(s) {
 }
 
 async function graphql(query, variables) {
-  const res = await fetch(GH_GRAPHQL, {
-    method: 'POST',
-    headers: {
-      Authorization: `bearer ${TOKEN}`,
-      'Content-Type': 'application/json',
-      'User-Agent': 'sync-projectv2-script',
-    },
-    body: JSON.stringify({ query, variables }),
-  })
-  const json = await res.json()
-  if (json.errors) console.error('GraphQL errors:', JSON.stringify(json.errors, null, 2))
-  return json
+  try {
+    console.log('GraphQL request', { variables: variables || {} })
+    const res = await fetch(GH_GRAPHQL, {
+      method: 'POST',
+      headers: {
+        Authorization: `bearer ${TOKEN}`,
+        'Content-Type': 'application/json',
+        'User-Agent': 'sync-projectv2-script',
+      },
+      body: JSON.stringify({ query, variables }),
+    })
+    if (!res.ok) {
+      const txt = await res.text()
+      console.error('GraphQL HTTP error', res.status, txt)
+      throw new Error(`GraphQL HTTP error ${res.status}`)
+    }
+    const json = await res.json()
+    if (json.errors) console.error('GraphQL errors:', JSON.stringify(json.errors, null, 2))
+    return json
+  } catch (err) {
+    console.error('GraphQL fetch failed:', err && err.message ? err.message : err)
+    throw err
+  }
 }
 
 async function rest(path, opts = {}) {
@@ -104,17 +115,27 @@ async function findIssueNodeId(owner, repo, issueNumber) {
 }
 
 async function findProjectItemForIssue(owner, repo, issueNumber, projectId) {
-  const q = `query($owner:String!,$repo:String!,$number:Int!){ repository(owner:$owner,name:$repo){ issue(number:$number){ projectItems(first:50){ nodes{ id project{ id } } } } } }`
+  console.log(
+    'Looking for existing project item for',
+    owner,
+    repo,
+    issueNumber,
+    'projectId',
+    projectId
+  )
+  const q = `query($owner:String!,$repo:String!,$number:Int!){ repository(owner:$owner,name:$repo){ issue(number:$number){ projectItems(first:99){ nodes{ id project{ id } } } } } }`
   const res = await graphql(q, { owner, repo, number: parseInt(issueNumber, 10) })
   if (!res || !res.data || !res.data.repository || !res.data.repository.issue) return null
   const nodes =
     (res.data.repository.issue.projectItems && res.data.repository.issue.projectItems.nodes) || []
+  console.log('Found projectItems nodes count:', (nodes && nodes.length) || 0)
   const matched = nodes.find((n) => n.project && n.project.id === projectId)
   return matched && matched.id ? matched.id : null
 }
 
 async function getProjectV2(owner, repo, number) {
-  const projectQ = `query($owner:String!,$repo:String!,$number:Int!,$fieldsCursor:String,$itemsCursor:String){ repository(owner:$owner,name:$repo){ projectV2(number:$number){ id title fields(first:100, after:$fieldsCursor){ pageInfo{ hasNextPage endCursor } nodes{ __typename ... on ProjectV2FieldCommon{ id name } ... on ProjectV2SingleSelectField{ id name options(first:100){ nodes{ id name } pageInfo{ hasNextPage endCursor } } } } } items(first:100, after:$itemsCursor){ pageInfo{ hasNextPage endCursor } nodes{ id content{ __typename ... on Issue{ number } } } } } } }`
+  console.log('Fetching ProjectV2', { owner, repo, number })
+  const projectQ = `query($owner:String!,$repo:String!,$number:Int!,$fieldsCursor:String,$itemsCursor:String){ repository(owner:$owner,name:$repo){ projectV2(number:$number){ id title fields(first:99, after:$fieldsCursor){ pageInfo{ hasNextPage endCursor } nodes{ __typename ... on ProjectV2FieldCommon{ id name } ... on ProjectV2SingleSelectField{ id name options(first:99){ nodes{ id name } pageInfo{ hasNextPage endCursor } } } } } items(first:99, after:$itemsCursor){ pageInfo{ hasNextPage endCursor } nodes{ id content{ __typename ... on Issue{ number } } } } } } }`
 
   const project = await graphql(projectQ, { owner, repo, number: parseInt(number, 10) })
   if (!project || !project.data || !project.data.repository) return null
@@ -124,6 +145,7 @@ async function getProjectV2(owner, repo, number) {
   if (p.fields && p.fields.pageInfo && p.fields.pageInfo.hasNextPage) {
     let allFieldNodes = Array.from(p.fields.nodes || [])
     let cursor = p.fields.pageInfo.endCursor
+    console.log('Paginating fields, initial count:', allFieldNodes.length)
     while (cursor) {
       const res = await graphql(projectQ, {
         owner,
@@ -135,6 +157,7 @@ async function getProjectV2(owner, repo, number) {
       const proj = repoObj && repoObj.projectV2
       if (!proj || !proj.fields) break
       allFieldNodes = allFieldNodes.concat(proj.fields.nodes || [])
+      console.log('Paginated fields, new total:', allFieldNodes.length)
       if (proj.fields.pageInfo && proj.fields.pageInfo.hasNextPage)
         cursor = proj.fields.pageInfo.endCursor
       else cursor = null
@@ -146,6 +169,7 @@ async function getProjectV2(owner, repo, number) {
   if (p.items && p.items.pageInfo && p.items.pageInfo.hasNextPage) {
     let allItems = Array.from(p.items.nodes || [])
     let cursor = p.items.pageInfo.endCursor
+    console.log('Paginating items, initial count:', allItems.length)
     while (cursor) {
       const res = await graphql(projectQ, {
         owner,
@@ -157,6 +181,7 @@ async function getProjectV2(owner, repo, number) {
       const proj = repoObj && repoObj.projectV2
       if (!proj || !proj.items) break
       allItems = allItems.concat(proj.items.nodes || [])
+      console.log('Paginated items, new total:', allItems.length)
       if (proj.items.pageInfo && proj.items.pageInfo.hasNextPage)
         cursor = proj.items.pageInfo.endCursor
       else cursor = null
@@ -169,7 +194,10 @@ async function getProjectV2(owner, repo, number) {
 
 async function addItemByContent(projectId, contentId) {
   const mutation = `mutation($projectId:ID!,$contentId:ID!){ addProjectV2ItemByContent(input:{projectId:$projectId,contentId:$contentId}){ item{ id } } }`
-  return await withRetry(async () => await graphql(mutation, { projectId, contentId }))
+  console.log('Creating project item by content', { projectId, contentId })
+  const res = await withRetry(async () => await graphql(mutation, { projectId, contentId }))
+  console.log('Create item response:', res && typeof res === 'object' ? JSON.stringify(res) : res)
+  return res
 }
 
 async function updateItemStatus(itemId, fieldId, optionId, projectId = null) {
@@ -184,7 +212,17 @@ async function updateItemStatus(itemId, fieldId, optionId, projectId = null) {
   // projectId will be set by caller if available (we'll attempt to fill it below when possible)
 
   try {
+    console.log('Attempting GraphQL updateProjectV2ItemFieldValue', {
+      itemId,
+      fieldId,
+      optionId,
+      projectId,
+    })
     const res = await withRetry(async () => await graphql(mutation, { input }))
+    console.log(
+      'GraphQL update response:',
+      res && typeof res === 'object' ? JSON.stringify(res) : res
+    )
     if (
       res &&
       res.data &&
@@ -219,9 +257,12 @@ async function updateItemStatus(itemId, fieldId, optionId, projectId = null) {
       })
       if (!res.ok) {
         const txt = await res.text()
+        console.error('REST update failed', res.status, txt)
         throw new Error(`REST update failed: ${res.status} ${txt}`)
       }
-      return res.json()
+      const jr = await res.json()
+      console.log('REST update response:', jr)
+      return jr
     })
     return restRes
   } catch (err) {

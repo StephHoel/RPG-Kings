@@ -35,7 +35,7 @@ jobs:
           echo "GH_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
           echo "GITHUB_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
           # ensure gh uses the same token so any label operations originate from the same principal
-          gh auth status || true
+          gh auth status
           
         
       - name: Map label to status (apply)
@@ -69,13 +69,13 @@ jobs:
               echo "Label not mapped to status; skipping"; exit 0 ;;
           esac
           # Ensure only one status/* label exists: remove existing status/* labels and add the TARGET
-          EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null || true)
+          EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null)
           if [ -n "$EXISTING_LABELS_JSON" ]; then
             # remove any label starting with status/
             for L in $EXISTING_LABELS_JSON; do
               case "$L" in
                 status/*)
-                  gh issue edit $ISSUE_NUM --remove-label "$L" --repo $REPO || true ;;
+                  gh issue edit $ISSUE_NUM --remove-label "$L" --repo $REPO ;;
                 *) ;;
               esac
             done
