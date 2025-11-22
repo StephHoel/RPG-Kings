@@ -89,7 +89,17 @@ jobs:
           OPTION_DONE: 98236657
         run: |
           echo "Issue #$ISSUE_NUM: rótulo acionado: $LABEL"
-          # Não verificar se o rótulo já existe — sempre sincronizar o status do Project
+          # Verifica se a issue já tem o rótulo alvo; se sim, não altera labels (evita re-aplicar),
+          # mas continua a sincronização do Project.
+          CURRENT_LABELS=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null || echo '')
+          SKIP_LABEL_EDIT=false
+          for L in $CURRENT_LABELS; do
+            if [ "$L" = "$LABEL" ]; then
+              echo "Rótulo alvo $LABEL já presente; não alterarei labels (apenas farei sync do Project)."
+              SKIP_LABEL_EDIT=true
+              break
+            fi
+          done
           case "$LABEL" in
             status/backlog)
               TARGET=status/backlog ;;
@@ -105,21 +115,24 @@ jobs:
               echo "Rótulo não mapeado para status; pulando"; exit 0 ;;
           esac
           # Garantir que exista apenas um rótulo status/*: remover os existentes e adicionar o TARGET
-          EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null)
-          if [ -n "$EXISTING_LABELS_JSON" ]; then
-            # remove any label starting with status/
-            for L in $EXISTING_LABELS_JSON; do
-              case "$L" in
-                status/*)
-                  gh issue edit $ISSUE_NUM --remove-label "$L" --repo $REPO ;;
-                *) ;;
-              esac
-            done
+          if [ "$SKIP_LABEL_EDIT" != 'true' ]; then
+            EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null)
+            if [ -n "$EXISTING_LABELS_JSON" ]; then
+              # remove any label starting with status/
+              for L in $EXISTING_LABELS_JSON; do
+                case "$L" in
+                  status/*)
+                    echo "(remover rótulo $L)" ;;
+                  *) ;;
+                esac
+              done
+            fi
+            # add the new status label (comandos de edição de label foram removidos)
+            echo "(adicionar rótulo $TARGET)"
+            # marcador removido: não adicionar comentário automático de sincronização aqui
+          else
+            echo "Pulando alteração de labels porque o rótulo alvo já estava presente."
           fi
-          # add the new status label
-          gh issue edit $ISSUE_NUM --add-label $TARGET --repo $REPO
-          # adicionar comentário marcador para indicar que esta sincronização foi realizada pela automação
-          gh issue comment $ISSUE_NUM --repo $REPO --body "auto-kanban: sync-id=${GITHUB_RUN_ID} (aplicado pelo bot)"
           # Try to sync ProjectV2 status (best-effort)
           # If we have an OPTION_* env that matches the target, pass its value (the option id).
           case "${TARGET#status/}" in
