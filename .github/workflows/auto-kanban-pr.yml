@@ -67,7 +67,7 @@ jobs:
                   esac
                 done
               fi
-              gh issue edit $ISSUE_NUM --add-label status/review --repo $REPO || true
+              gh issue edit $ISSUE_NUM --add-label status/in-review --repo $REPO || true
               gh issue comment $ISSUE_NUM --body "PR opened: $PR_URL" --repo $REPO || true
                 PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "In review" || true
             elif [ "$PR_STATE" = "closed" ]; then

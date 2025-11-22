@@ -1,7 +1,7 @@
 ---
 name: Feature
 about: Proposta de nova funcionalidade
-labels: feature, status/backlog
+labels: type/feature, status/backlog
 ---
 
 # Feature: [TÍTULO CURTO]

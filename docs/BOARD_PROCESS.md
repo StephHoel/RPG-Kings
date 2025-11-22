@@ -1,6 +1,6 @@
 # Processo do Quadro (Kanban)
 
-Objetivo: padronizar o uso do Kanban do projeto (`Backlog`, `Ready`, `In Progress`, `Review`, `Done`) e definir como os desenvolvedores devem nomear branches e abrir Pull Requests para que as automações funcionem corretamente.
+Objetivo: padronizar o uso do Kanban do projeto (`Backlog`, `Ready`, `In Progress`, `In Review`, `Done`) e definir como os desenvolvedores devem nomear branches e abrir Pull Requests para que as automações funcionem corretamente.
 
 ## Nomeação de branches
 
@@ -12,7 +12,7 @@ Objetivo: padronizar o uso do Kanban do projeto (`Backlog`, `Ready`, `In Progres
 - `Backlog`: ideias não priorizadas.
 - `Ready`: item priorizado e pronto para iniciar (descrição, critérios de aceite e subtarefas quando necessário).
 - `In Progress`: uma tarefa está sendo implementada (branch criada com o padrão acima).
-- `Review`: Pull Request aberto para a branch/issue.
+- `In Review`: Pull Request aberto para a branch/issue.
 - `Done`: PR mergeado e issue fechada.
 
 ## Regras para Epic / Feature / Task
@@ -25,7 +25,7 @@ Objetivo: padronizar o uso do Kanban do projeto (`Backlog`, `Ready`, `In Progres
 
 - O nome da branch deve incluir o número da issue como prefixo (ex.: `feat/10-...`). O workflow usa esse número para localizar a issue relacionada.
 - Ao empurrar a branch (push), o workflow pode marcar a issue relacionada como `status/in-progress`.
-- Ao abrir um Pull Request para essa branch, o workflow marcará a issue como `status/review` e adicionará um comentário com o link do PR.
+- Ao abrir um Pull Request para essa branch, o workflow marcará a issue como `status/in-review` e adicionará um comentário com o link do PR.
 - Ao fundir (merge) o PR, o workflow marcará a issue como `status/done` e tentará fechá-la automaticamente se o PR referenciar a issue.
 
 ## Mapeamento de labels → Status
@@ -35,7 +35,7 @@ Nome da label -> valor do campo Status no projeto
 - `status/backlog` → `Backlog`
 - `status/ready` → `Ready`
 - `status/in-progress` → `In progress`
-- `status/review` → `In review`
+- `status/in-review` → `In Review`
 - `status/done` → `Done`
 
 ## Secret necessário para automação completa

@@ -8,10 +8,10 @@ Este documento resume as labels, uso de milestones/releases, convenção de comm
 - `type/feature` — nova funcionalidade
 - `type/chore` — manutenção, documentação, etc.
 - `type/task` — tarefa menor
-- `status/triage` — aguarda triagem
+- `status/ready` — pronto para iniciar (após triagem)
 - `status/backlog` — backlog
-- `status/in progress` — em desenvolvimento
-- `status/review` — em revisão
+- `status/in-progress` — em desenvolvimento
+- `status/in-review` — em revisão
 - `status/done` — concluído
 - `priority/p0` `priority/p1` `priority/p2` `priority/p3` — prioridade
 - `area/db` `area/ui` `area/api` `area/docs` — áreas do código
@@ -39,11 +39,11 @@ Closes #42
 
 - Triagem rápido: rotacione triagem semanalmente ou ao início do sprint.
 - Marcar DoR (Definition of Ready): descrição, critérios de aceitação e estimativa.
-- Para começar uma issue, mova para `status/in progress` e crie uma branch `feat/<short-name>` ou `fix/<short-name>`.
+- Para começar uma issue, mova para `status/in-progress` e crie uma branch `feat/<short-name>` ou `fix/<short-name>`.
 
 ## Automação sugerida
 
-- Ao abrir PR referenciando issue, adicionar automação para mover issue para `status/review` quando PR estiver pronto para revisão.
+- Ao abrir PR referenciando issue, adicionar automação para mover issue para `status/in-review` quando PR estiver pronto para revisão.
 - Quando PR for mergeado, mover para `status/done`.
 - Auto-label por path (ex.: mudanças em `docs/` aplicam `area/docs`).
 

@@ -107,8 +107,8 @@ jobs:
               TARGET=status/ready ;;
             status/in-progress)
               TARGET=status/in-progress ;;
-            status/in-review | status/review)
-              TARGET=status/review ;;
+            status/in-review)
+              TARGET=status/in-review ;;
             status/done)
               TARGET=status/done ;;
             *)
@@ -145,7 +145,6 @@ jobs:
             ready) STATUS_OPTION="$OPTION_READY" ;; 
             in-progress) STATUS_OPTION="$OPTION_IN_PROGRESS" ;; 
             in-review) STATUS_OPTION="$OPTION_IN_REVIEW" ;; 
-            review) STATUS_OPTION="$OPTION_IN_REVIEW" ;; 
             done) STATUS_OPTION="$OPTION_DONE" ;; 
             *) echo "Rótulo não esperado" && exit 0 ;; 
           esac

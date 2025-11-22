@@ -1,7 +1,7 @@
 ---
 name: Chore
 about: Tarefas de manutenção ou atualização da documentação
-labels: chore, status/backlog
+labels: type/chore, status/backlog
 ---
 
 # Chore: [TÍTULO CURTO]
