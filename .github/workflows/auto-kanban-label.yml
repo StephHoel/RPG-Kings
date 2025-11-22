@@ -2,7 +2,7 @@ name: Auto Kanban (Label)
 
 on:
   issues:
-    types: [labeled, unlabeled]
+    types: [labeled]
 
 jobs:
   label-sync:
