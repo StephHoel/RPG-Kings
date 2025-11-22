@@ -277,7 +277,9 @@ async function main() {
   }
 
   const normalizedTarget = normalizeKey(targetStatus)
-  let optionId = normalizedEnvOptions[normalizedTarget] || null
+  // If the provided status looks like an option id (hex-like, short), accept it directly.
+  const looksLikeOptionId = /^[0-9a-fA-F]{6,}$/.test(targetStatus)
+  let optionId = looksLikeOptionId ? targetStatus : normalizedEnvOptions[normalizedTarget] || null
 
   if (PROJECT_ID && STATUS_FIELD_ID && optionId) {
     // Prefer to find existing project item for this issue to avoid calling unavailable create mutations
