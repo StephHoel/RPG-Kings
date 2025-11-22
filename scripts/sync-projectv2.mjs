@@ -20,7 +20,9 @@ async function graphql(query, variables) {
     },
     body: JSON.stringify({ query, variables }),
   })
-  return res.json()
+  const json = await res.json()
+  if (json.errors) console.error('GraphQL errors:', JSON.stringify(json.errors, null, 2))
+  return json
 }
 
 async function rest(path) {
@@ -31,46 +33,20 @@ async function rest(path) {
 }
 
 function usage() {
-  console.log(
-    'Usage: node scripts/sync-projectv2.mjs --owner OWNER --repo REPO --project-number 1 --issue 10 --status "In progress"'
-  )
+  console.log('Usage: node scripts/sync-projectv2.mjs --owner OWNER --repo REPO --project-number 1 --issue 10 --status "In progress"')
 }
 
 async function findIssueNodeId(owner, repo, issueNumber) {
-  // Try GraphQL first
-  const q = `query($owner:String!, $repo:String!, $number:Int!){ repository(owner:$owner,name:$repo){ issue(number:$number){ node_id id number } } }`
-  try {
-    const g = await graphql(q, { owner, repo, number: parseInt(issueNumber, 10) })
-    if (
-      g &&
-      g.data &&
-      g.data.repository &&
-      g.data.repository.issue &&
-      g.data.repository.issue.node_id
-    ) {
-      return g.data.repository.issue.node_id
-    }
-  } catch (e) {
-    // fallthrough to REST
-  }
-
-  // REST fallback
-  const p = `/repos/${owner}/${repo}/issues/${issueNumber}`
-  const r = await rest(p)
-  if (r && r.node_id) return r.node_id
-  return null
+  const q = `query($owner:String!,$repo:String!,$number:Int!){ repository(owner:$owner,name:$repo){ issue(number:$number){ id } } }`
+  const res = await graphql(q, { owner, repo, number: parseInt(issueNumber, 10) })
+  if (!res || !res.data || !res.data.repository || !res.data.repository.issue) return null
+  return res.data.repository.issue.id
 }
 
-async function getProjectData(owner, repo, projectNumber, projectIdEnv) {
-  // If projectId is provided via env, use it to fetch fields and items
-  if (projectIdEnv) {
-    const q = `query($projectId:ID!){ node(id:$projectId){ ... on ProjectV2{ id title fields(first:50){ nodes{ __typename ... on ProjectV2SingleSelectField{ id name options(first:200){ nodes{ id name } } } ... on ProjectV2FieldCommon{ id name } } } items(first:200){ nodes{ id content{ __typename ... on Issue{ number } } } } } } }`
-    const res = await graphql(q, { projectId: projectIdEnv })
-    return res.data.node
-  }
-
-  const q2 = `query($owner:String!, $repo:String!, $number:Int!){ repository(owner:$owner,name:$repo){ projectV2(number:$number){ id number title fields(first:50){ nodes{ __typename ... on ProjectV2SingleSelectField{ id name options(first:200){ nodes{ id name } } } ... on ProjectV2FieldCommon{ id name } } } items(first:200){ nodes{ id content{ __typename ... on Issue{ number } } } } } } }`
-  const res = await graphql(q2, { owner, repo, number: parseInt(projectNumber, 10) })
+async function getProjectV2(owner, repo, number) {
+  const q = `query($owner:String!,$repo:String!,$number:Int!){ repository(owner:$owner,name:$repo){ projectV2(number:$number){ id title fields(first:50){ nodes{ __typename ... on ProjectV2FieldCommon{ id name } ... on ProjectV2SingleSelectField{ id name options{ id name } } } } items(first:200){ nodes{ id content{ __typename ... on Issue{ number } } } } } } }`
+  const res = await graphql(q, { owner, repo, number: parseInt(number, 10) })
+  if (!res || !res.data || !res.data.repository) return null
   return res.data.repository.projectV2
 }
 
@@ -78,6 +54,12 @@ async function updateItemStatus(itemId, fieldId, optionId) {
   const mutation = `mutation($input:ProjectV2UpdateItemFieldValueInput!){ projectV2UpdateItemFieldValue(input:$input){ projectV2Item{ id } } }`
   const input = { itemId, fieldId, value: { singleSelectOptionId: optionId } }
   const res = await graphql(mutation, { input })
+  return res
+}
+
+async function addItemByContent(projectId, contentId) {
+  const mutation = `mutation($projectId:ID!,$contentId:ID!){ addProjectV2ItemByContent(input:{projectId:$projectId,contentId:$contentId}){ item{ id } } }`
+  const res = await graphql(mutation, { projectId, contentId })
   return res
 }
 
@@ -94,98 +76,64 @@ async function main() {
   const owner = opts.owner
   const repo = opts.repo
   const projectNumber = opts['project-number'] || process.env.PROJECT_NUMBER || '1'
-  const projectIdEnv = process.env.PROJECT_ID || ''
   const issueNumber = opts.issue || process.env.ISSUE_NUMBER
   const targetStatus = opts.status || process.env.TARGET_STATUS
-
   if (!owner || !repo || !issueNumber || !targetStatus) {
-    usage()
-    process.exit(2)
+    usage(); process.exit(2)
   }
 
   const issueNodeId = await findIssueNodeId(owner, repo, issueNumber)
-  if (!issueNodeId) {
-    console.error('Unable to resolve issue node id for', owner, repo, issueNumber)
-    process.exit(3)
-  }
+  if (!issueNodeId) { console.error('Unable to resolve issue node id for', owner, repo, issueNumber); process.exit(3) }
 
-  const project = await getProjectData(owner, repo, projectNumber, projectIdEnv)
-  if (!project) {
-    console.error('Project not found')
-    process.exit(4)
-  }
+  // Prefer explicit env IDs when provided
+  const PROJECT_ID = process.env.PROJECT_ID || ''
+  const STATUS_FIELD_ID = process.env.STATUS_FIELD_ID || process.env.STATUSFIELDID || ''
 
-  // Find status field
-  let statusField = null
-  for (const f of project.fields.nodes) {
-    if (
-      f.__typename === 'ProjectV2SingleSelectField' &&
-      f.name &&
-      f.name.toLowerCase().includes('status')
-    ) {
-      statusField = f
-      break
-    }
-  }
-  if (!statusField) {
-    console.error('Status field not found')
-    process.exit(5)
-  }
-
-  // Try to resolve option id via env mapping first
-  const normalized = (s) => s.replace(/\s+/g, '').toLowerCase()
+  // Try option id from env vars (OPTION_*)
+  const normalized = (s) => (s || '').replace(/\s+/g, '').toLowerCase()
   let optionId = null
-  // check env vars for option ids by normalized name
   for (const k of Object.keys(process.env)) {
     if (!k.startsWith('OPTION_')) continue
     const name = k.replace(/^OPTION_/, '')
-    if (normalized(name) === normalized(targetStatus)) {
-      optionId = process.env[k]
-      break
-    }
+    if (normalized(name) === normalized(targetStatus)) { optionId = process.env[k]; break }
   }
 
-  // fallback: search field options
+  if (PROJECT_ID && STATUS_FIELD_ID && optionId) {
+    const created = await addItemByContent(PROJECT_ID, issueNodeId)
+    const itemId = created && created.data && created.data.addProjectV2ItemByContent && created.data.addProjectV2ItemByContent.item && created.data.addProjectV2ItemByContent.item.id
+    if (!itemId) { console.error('Could not obtain project item id using PROJECT_ID and issue node id', created); process.exit(7) }
+    console.log('Updating item', itemId, 'field', STATUS_FIELD_ID, 'to option', optionId)
+    const r = await updateItemStatus(itemId, STATUS_FIELD_ID, optionId)
+    console.log('Update result:', JSON.stringify(r, null, 2))
+    return
+  }
+
+  // Fallback: query project schema
+  const project = await getProjectV2(owner, repo, projectNumber)
+  if (!project) { console.error('Project not found'); process.exit(4) }
+
+  // find status field
+  const statusField = (project.fields && project.fields.nodes || []).find(f => f.__typename === 'ProjectV2SingleSelectField' && f.name && f.name.toLowerCase().includes('status'))
+  if (!statusField) { console.error('Status field not found'); process.exit(5) }
+
   if (!optionId) {
-    const opt = statusField.options.nodes.find(
-      (o) =>
-        normalized(o.name) === normalized(targetStatus) ||
-        normalized(o.name) === normalized(targetStatus.replace(/-/g, ''))
-    )
+    const opt = (statusField.options && statusField.options.nodes) ? statusField.options.nodes.find(o => normalized(o.name) === normalized(targetStatus) || normalized(o.name) === normalized(targetStatus.replace(/-/g, ''))) : null
     if (opt) optionId = opt.id
   }
+  if (!optionId) { console.error('Option not found for status:', targetStatus); console.error('Available:', statusField.options && statusField.options.nodes && statusField.options.nodes.map(o => o.name)); process.exit(6) }
 
-  if (!optionId) {
-    console.error('Option not found for status:', targetStatus)
-    console.error(
-      'Available:',
-      statusField.options.nodes.map((o) => o.name)
-    )
-    process.exit(6)
-  }
-
-  // find existing project item for this issue
-  let item = project.items.nodes.find(
-    (it) => it.content && it.content.number === parseInt(issueNumber, 10)
-  )
-
-  // If item not present, create it
+  // find or create item
+  let item = (project.items && project.items.nodes) ? project.items.nodes.find(it => it.content && it.content.number === parseInt(issueNumber, 10)) : null
   if (!item) {
-    console.log('Project item not found; creating item for issue node id', issueNodeId)
-    const createMutation = `mutation($projectId:ID!, $contentId:ID!){ addProjectV2ItemByContent(input:{projectId:$projectId, contentId:$contentId}){ item{ id } } }`
-    const created = await graphql(createMutation, { projectId: project.id, contentId: issueNodeId })
-    item = { id: created.addProjectV2ItemByContent.item.id }
+    const created = await addItemByContent(project.id, issueNodeId)
+    item = { id: created && created.data && created.data.addProjectV2ItemByContent && created.data.addProjectV2ItemByContent.item && created.data.addProjectV2ItemByContent.item.id }
   }
+  const itemId = item && item.id
+  if (!itemId) { console.error('Unable to determine project item id'); process.exit(8) }
 
-  const itemId = item.id
-  const fieldId = statusField.id
-
-  console.log('Updating item', itemId, 'field', fieldId, 'to option', optionId)
-  const r = await updateItemStatus(itemId, fieldId, optionId)
+  console.log('Updating item', itemId, 'field', statusField.id, 'to option', optionId)
+  const r = await updateItemStatus(itemId, statusField.id, optionId)
   console.log('Update result:', JSON.stringify(r, null, 2))
 }
 
-main().catch((err) => {
-  console.error('Fatal error', err)
-  process.exit(99)
-})
+main().catch(err => { console.error('Fatal error', err); process.exit(99) })

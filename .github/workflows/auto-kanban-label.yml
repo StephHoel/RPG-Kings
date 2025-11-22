@@ -8,6 +8,12 @@ jobs:
   label-sync:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
       - name: Choose token
         id: token
         run: |
@@ -18,6 +24,7 @@ jobs:
           ISSUE_NUM: ${{ github.event.issue.number }}
           LABEL: ${{ github.event.label.name }}
           TOKEN: ${{ steps.token.outputs.TOKEN }}
+          COMMENT_ON_RESULT: 'true'
         run: |
           echo "GH_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
           echo "GITHUB_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
@@ -31,6 +38,14 @@ jobs:
           ISSUE_NUM: ${{ github.event.issue.number }}
           LABEL: ${{ github.event.label.name }}
           TOKEN: ${{ steps.token.outputs.TOKEN }}
+          COMMENT_ON_RESULT: 'true'
+          PROJECT_ID: PVT_kwHOAzdNtc4BIwXp
+          STATUS_FIELD_ID: PVTSSF_lAHOAzdNtc4BIwXpzg5H3q8
+          OPTION_BACKLOG: f75ad846
+          OPTION_READY: 61e4505c
+          OPTION_IN_PROGRESS: 47fc9ee4
+          OPTION_IN_REVIEW: df73e18b
+          OPTION_DONE: 98236657
         run: |
           echo "Issue $ISSUE_NUM label changed: $LABEL"
           case "$LABEL" in
@@ -50,4 +65,4 @@ jobs:
           # preserve existing labels (including type/*) and add the status label
           gh issue edit $ISSUE_NUM --add-label $TARGET --repo $REPO || true
           # Try to sync ProjectV2 status (best-effort)
-          PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "${TARGET#status/}" || true
+          PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "${TARGET#status/}"
