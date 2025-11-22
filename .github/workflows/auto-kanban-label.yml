@@ -65,4 +65,13 @@ jobs:
           # preserve existing labels (including type/*) and add the status label
           gh issue edit $ISSUE_NUM --add-label $TARGET --repo $REPO || true
           # Try to sync ProjectV2 status (best-effort)
-          PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "${TARGET#status/}"
+          # If we have an OPTION_* env that matches the target, pass its value (the option id).
+          case "${TARGET#status/}" in
+            backlog) STATUS_OPTION="$OPTION_BACKLOG" ;; 
+            ready) STATUS_OPTION="$OPTION_READY" ;; 
+            in-progress) STATUS_OPTION="$OPTION_IN_PROGRESS" ;; 
+            review) STATUS_OPTION="$OPTION_IN_REVIEW" ;; 
+            done) STATUS_OPTION="$OPTION_DONE" ;; 
+            *) STATUS_OPTION="${TARGET#status/}" ;; 
+          esac
+          PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "$STATUS_OPTION"
