@@ -7,7 +7,7 @@ export const milestoneSeed: Milestone[] = [
     saveId: '',
     type: 'daily',
     achievedAtWeek: 0,
-    createdAt: new Date()
+    createdAt: new Date(),
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ export const milestoneSeed: Milestone[] = [
     saveId: '',
     type: 'event',
     achievedAtWeek: 0,
-    createdAt: new Date()
+    createdAt: new Date(),
   },
   {
     id: 3,
@@ -23,6 +23,6 @@ export const milestoneSeed: Milestone[] = [
     saveId: '',
     type: 'skill',
     achievedAtWeek: 0,
-    createdAt: new Date()
+    createdAt: new Date(),
   },
 ]

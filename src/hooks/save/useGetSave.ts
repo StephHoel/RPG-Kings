@@ -1,29 +1,38 @@
-import { db } from '@/data'
+import { db } from '@/db'
 import { Save, SaveId } from '@/interfaces'
 import { useQuery } from '@tanstack/react-query'
-import { useQueryKeys } from '@/hooks'
+import { useQueryKeys } from '../queries/queryKeys'
+import { log } from '@/lib'
+import { LogTypeEnum } from '@/enums'
 
 export function useGetSave(saveId: SaveId) {
-  const queryKey = useQueryKeys.saveId(saveId)
-
-  const { data, isLoading } = useQuery<Save | null>({
-    queryKey,
+  const { data: save } = useQuery<Save | null>({
+    queryKey: useQueryKeys.saveId(saveId),
     enabled: !!saveId,
-    staleTime: 5 * 60 * 1000, // 5 min
-    gcTime: 30 * 60 * 1000,   // 30 min (ajuste conforme seu app)
-
-    // Normaliza: sempre retorna null se não houver save
-    select: (d) => d ?? null,
+    staleTime: 5 * 60_000, // 5 minutes
+    gcTime: 30 * 60_000, // 30 minutes
 
     queryFn: async () => {
-      // quando disabled, a queryFn nem roda
-      if (!saveId) return null
+      try {
+        if (!saveId) {
+          await log(LogTypeEnum.enum.INFO, '[useGetSave] SaveId nulo')
+          return null
+        }
 
-      const save = await db.saves.get(saveId)
+        const save = await db.saves.get(saveId)
 
-      return save ?? null
+        await log(LogTypeEnum.enum.INFO, '[useGetSave] Jogo obtido', { save })
+
+        return save ?? null
+      } catch (err: any) {
+        await log(LogTypeEnum.enum.ERROR, '[useGetSave] Erro ao obter jogo', {
+          saveId,
+          error: String(err),
+        })
+        throw err
+      }
     },
   })
 
-  return { save: data ?? null, isLoading }
+  return save ?? null
 }

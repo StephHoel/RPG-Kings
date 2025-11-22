@@ -1,0 +1,12 @@
+import z from 'zod'
+
+export const RacesEnum = z.enum({
+  ARCANO: 'ARCANO',
+  BANSHEE: 'BANSHEE',
+  KANIMA: 'KANIMA',
+  KITSUNE: 'KITSUNE',
+  LOBISOMEM: 'LOBISOMEM',
+  TRANSMORFO: 'TRANSMORFO',
+  VAMPIRO: 'VAMPIRO',
+  WICCANIANO: 'WICCANIANO',
+})

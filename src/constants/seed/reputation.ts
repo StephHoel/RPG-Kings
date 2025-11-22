@@ -2,6 +2,6 @@ export const reputationSeed = [
   {
     id: 'rep_vilarejo',
     faction: 'vilarejo',
-    value: 0
+    value: 0,
   },
 ]

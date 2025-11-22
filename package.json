@@ -1,16 +1,21 @@
 {
   "name": "kings-academy",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.8",
   "type": "module",
   "homepage": "https://stephhoel.github.io/RPG-Kings/",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "export": "next export",
-    "lint": "npx eslint \"src/**/*.{ts,tsx}\" --fix ",
-    "check": "npx tsc"
+    "prebuild": "rm -rf .next/ out/ && echo ✅ Limpeza concluída.",
+    "build": "next build && echo ✅ Build concluído com sucesso.",
+    "start": "npx serve@latest out",
+    "test:e2e": "start-test :3000 'jest --runInBand' && echo ✅ Testes E2E concluídos com sucesso.",
+    "test:e2e:ci": "npm run build && start-test :3000 'jest --runInBand' && echo ✅ CI: build e E2E concluídos com sucesso.",
+    "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx && echo ✅ Lint: executado com sucesso.",
+    "lint:fix": "eslint ./src --ext .js,.jsx,.ts,.tsx --fix && echo ✅ Lint: correções aplicadas (se houver).",
+    "tsc:check": "npx tsc && echo ✅ TypeScript: verificação concluída com sucesso.",
+    "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,json,md,css,scss,html}\" && echo ✅ Formatação aplicada.",
+    "format:check": "prettier --check \"./**/*.{js,jsx,ts,tsx,json,md,css,scss,html}\""
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.5",
@@ -26,6 +31,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.16",
     "@types/css-modules": "^1.0.5",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20.19.23",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
@@ -34,7 +40,12 @@
     "eslint": "^9.38.0",
     "eslint-config-next": "^16.0.0",
     "eslint-plugin-react": "^7.37.5",
+    "jest": "^30.2.0",
+    "serve": "^14.2.5",
+    "start-server-and-test": "^2.1.3",
     "tailwindcss": "^4.1.16",
-    "typescript": "^5.9.3"
+    "ts-jest": "^29.4.5",
+    "typescript": "^5.9.3",
+    "prettier": "^2.8.8"
   }
 }

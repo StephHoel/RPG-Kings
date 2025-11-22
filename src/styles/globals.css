@@ -1,12 +1,23 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --color-background: var(--color-gray-900); /* oklch(21% 0.034 264.665) */
-  --color-foreground: var(--color-gray-300); /* oklch(87.2% 0.01 258.338) */
-  --color-highlight: var(--color-violet-600); /* oklch(54.1% 0.281 293.009) */
-  --color-primary: var(--color-violet-700); /* oklch(49.1% 0.27 292.581) */
-  --color-secondary: var(--color-violet-500); /* oklch(60.6% 0.25 292.717) */
-  --color-muted: var(--color-gray-600); /* oklch(44.6% 0.03 256.802) */
-  --color-danger: var(--color-red-600); /* oklch(57.7% 0.245 27.325) */
-  --color-success: var(--color-green-600); /* oklch(62.7% 0.194 149.214) */
+  /* base */
+  --color-background: oklch(16% 0.03 40); /* preto carvão, base escura */
+  --color-surface: oklch(22% 0.03 40);
+  --color-border: oklch(28% 0.04 40);
+  --color-foreground: oklch(90% 0.02 100); /* branco suave */
+
+  /* tema */
+  --color-primary: oklch(55% 0.18 80); /* dourado mais escuro – botões principais */
+  --color-highlight: oklch(82% 0.17 96); /* dourado vivo (acentos e bordas) */
+  --color-accent: oklch(55% 0.25 25); /* vermelho nobre */
+  --color-secondary: oklch(30% 0.07 60); /* grafite levemente quente */
+  --color-muted: oklch(26% 0.03 40); /* preto acinzentado (para painéis) */
+
+  /* estados */
+  --color-danger: oklch(57% 0.24 27); /* vermelho padrão de erro */
+  --color-warning: oklch(70% 0.23 70);
+  --color-success: oklch(63% 0.2 150); /* verde-oliva refinado */
+  --color-info: oklch(65% 0.14 240);
+  --color-disabled: oklch(45% 0.02 40 / 0.6);
 }

@@ -2,10 +2,7 @@
 
 export default {
   darkMode: 'class', // usar .dark no <html> ou <body>
-  content: [
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-  ],
+  content: ['./src/pages/**/*.{ts,tsx}', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {},
   },

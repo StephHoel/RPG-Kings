@@ -1,60 +1,65 @@
 import { nanoid } from 'nanoid'
+import { db } from '@/db'
+import { base, getAnimal, getDevelopSkills, getFixedSkills, log, statsByRace } from '@/lib'
+import { LogTypeEnum } from '@/enums'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { db } from '@/data'
-import { refreshSaves, useQueryKeys } from '@/hooks'
-import { Save } from '@/interfaces'
+import { useQueryKeys } from '../queries/queryKeys'
+import { CreateSaveFormValues } from '@/interfaces'
 
-// Hook que cria o save e atualiza o cache do React Query
 export function useCreateSave() {
   const queryClient = useQueryClient()
 
-  return useMutation<string, Error, string>({
-    mutationFn: async (name: string): Promise<string> => {
+  return useMutation<string, Error, CreateSaveFormValues>({
+    mutationFn: async ({ name, race }: CreateSaveFormValues): Promise<string> => {
       // desativar saves ativos anteriores
       await db.saves.toCollection().modify({ isActive: false })
 
-      return await db.saves.add({
-        id: nanoid(10),
-        name: name || 'Novo personagem',
+      await log(LogTypeEnum.enum.INFO, '[useCreateSave] Jogos anteriores inativados')
+
+      const saveId = nanoid(10)
+
+      await db.saves.add({
+        id: saveId,
+        name: name,
         isActive: true,
         currentWeek: 1,
         currentDay: 'Monday',
         currentHour: 8,
       })
+
+      await log(LogTypeEnum.enum.INFO, '[useCreateSave] Save criado', { saveId, name })
+
+      const animal = getAnimal(race)
+      const stats = statsByRace(race, animal)
+      const developSkills = getDevelopSkills(race)
+      const fixedSkills = getFixedSkills(race)
+
+      await db.sheets.add({
+        saveId,
+        race,
+        animal: animal ?? null,
+        stats: stats ?? base(),
+        developSkills,
+        fixedSkills,
+        coins: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+
+      await log(LogTypeEnum.enum.INFO, '[useCreateSave] Ficha de personagem criada', { saveId })
+
+      return saveId
     },
 
-    // Otimista: atualiza cache local antes da confirmação (onMutate)
-    onMutate: async (name: string) => {
-      await queryClient.cancelQueries({ queryKey: useQueryKeys.saveActive() })
-
-      const previousActive = queryClient.getQueryData<Save | null>(useQueryKeys.saveActive())
-
-      // Cria um objeto temporário para mostrar enquanto a mutation acontece
-      const tempSave: Save = {
-        id: 'temp:' + nanoid(6),
-        name: name || 'Novo personagem',
-        isActive: true,
-        currentWeek: 1,
-        currentDay: 'Monday',
-        currentHour: 8,
-      }
-
-      // Atualiza cache para o novo active temporário
-      queryClient.setQueryData(useQueryKeys.saveActive(), tempSave)
-
-      return { previousActive }
+    onSuccess: async () => {
+      queryClient.refetchQueries({ queryKey: useQueryKeys.saveActive() })
+      queryClient.refetchQueries({ queryKey: useQueryKeys.saves() })
     },
 
-    onError: (err, name, context: any) => {
-      // rollback para o estado anterior se houve erro
-      if (context?.previousActive !== undefined) {
-        queryClient.setQueryData(useQueryKeys.saveActive(), context.previousActive)
-      }
-    },
-
-    onSettled: async () => {
-      // Centraliza refresh/invalidation
-      refreshSaves(queryClient)
+    onError: async (err) => {
+      await log(LogTypeEnum.enum.ERROR, '[useCreateSave] Erro inesperado na mutação', {
+        error: String(err),
+      })
     },
   })
 }

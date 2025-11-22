@@ -5,7 +5,7 @@ import { Toaster } from 'sonner'
 export function ToasterResponsive() {
   const [position, setPosition] = useState<'top-center' | 'top-right'>(() => {
     if (typeof window === 'undefined') return 'top-center'
-    
+
     return window.matchMedia('(min-width: 768px)').matches ? 'top-right' : 'top-center'
   })
 
@@ -21,9 +21,6 @@ export function ToasterResponsive() {
     } catch {
       mq.addListener(handler)
     }
-
-    // set initial
-    setPosition(mq.matches ? 'top-right' : 'top-center')
 
     return () => {
       try {
