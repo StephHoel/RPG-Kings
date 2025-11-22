@@ -10,14 +10,20 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+
       - name: Choose token
         id: token
         run: |
           if [ -n "${{ secrets.PROJECT_TOKEN }}" ]; then echo "TOKEN=${{ secrets.PROJECT_TOKEN }}" >> $GITHUB_OUTPUT; else echo "TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT; fi
+
+      - name: Login gh CLI
+        run: echo "${{ steps.token.outputs.TOKEN }}" | gh auth login --with-token
+
       - name: Map label to status
         env:
           REPO: ${{ github.repository }}
@@ -55,7 +61,7 @@ jobs:
               TARGET=status/ready ;;
             status/in-progress)
               TARGET=status/in-progress ;;
-            status/review)
+            status/in-review | status/review)
               TARGET=status/review ;;
             status/done)
               TARGET=status/done ;;
@@ -75,15 +81,16 @@ jobs:
             done
           fi
           # add the new status label
-          gh issue edit $ISSUE_NUM --add-label $TARGET --repo $REPO || true
+          gh issue edit $ISSUE_NUM --add-label $TARGET --repo $REPO
           # Try to sync ProjectV2 status (best-effort)
           # If we have an OPTION_* env that matches the target, pass its value (the option id).
           case "${TARGET#status/}" in
             backlog) STATUS_OPTION="$OPTION_BACKLOG" ;; 
             ready) STATUS_OPTION="$OPTION_READY" ;; 
             in-progress) STATUS_OPTION="$OPTION_IN_PROGRESS" ;; 
+            in-review) STATUS_OPTION="$OPTION_IN_REVIEW" ;; 
             review) STATUS_OPTION="$OPTION_IN_REVIEW" ;; 
             done) STATUS_OPTION="$OPTION_DONE" ;; 
-            *) STATUS_OPTION="${TARGET#status/}" ;; 
+            *) echo "Label nao esperada" && exit 0 ;; 
           esac
           PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "$STATUS_OPTION"
