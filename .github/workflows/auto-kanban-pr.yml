@@ -1,0 +1,90 @@
+name: Auto Kanban (PR)
+
+on:
+  pull_request:
+    types: [opened, reopened, closed]
+  # push:
+  #   branches: ['**']
+
+jobs:
+  pr-kanban:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set token
+        id: token
+        run: |
+          if [ -n "${{ secrets.PROJECT_TOKEN }}" ]; then echo "TOKEN=${{ secrets.PROJECT_TOKEN }}" >> $GITHUB_OUTPUT; else echo "TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT; fi
+      - name: Export GH token for gh CLI
+        run: echo "GH_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
+      - name: Determine issue number from branch
+        id: issue
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BRANCH=${{ github.head_ref }}
+          else
+            # for push events, use the ref (refs/heads/feat/10-...)
+            BRANCH=$(echo "${{ github.ref }}" | sed -E 's#refs/heads/##')
+          fi
+          # expect patterns like feat/10-desc or fix/12-desc
+          ISS=$(echo "$BRANCH" | sed -E 's#^.*/([0-9]+).*#\1#')
+          echo "ISSUE=$ISS" >> $GITHUB_OUTPUT
+      - name: Move issue on PR events
+        env:
+          TOKEN: ${{ steps.token.outputs.TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_STATE: ${{ github.event.action }}
+          ISSUE_NUM: ${{ steps.issue.outputs.ISSUE }}
+        run: |
+          if [ -z "$ISSUE_NUM" ] || [ "$ISSUE_NUM" = "feat" ]; then echo "No issue number found in branch; skipping"; exit 0; fi
+          echo "Handling event=$GITHUB_EVENT_NAME pr_action=$PR_STATE for issue #$ISSUE_NUM"
+          if [ "$GITHUB_EVENT_NAME" = "push" ]; then
+            # For push events mark the issue as in-progress (remove any other status/* first)
+            EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null || true)
+            if [ -n "$EXISTING_LABELS_JSON" ]; then
+              for L in $EXISTING_LABELS_JSON; do
+                case "$L" in
+                  status/*)
+                    gh issue edit $ISSUE_NUM --remove-label "$L" --repo $REPO || true ;;
+                  *) ;;
+                esac
+              done
+            fi
+            gh issue edit $ISSUE_NUM --add-label status/in-progress --repo $REPO --cache 2>/dev/null || gh api repos/$REPO/issues/$ISSUE_NUM -X PATCH -f labels[]="status/in-progress" -H "Authorization: token $TOKEN"
+            gh issue comment $ISSUE_NUM --body "Branch pushed: ${BRANCH} (commit: https://github.com/$REPO/commit/$GITHUB_SHA)" --repo $REPO || true
+             # Try to sync ProjectV2 status (requires PROJECT_TOKEN or adequate GITHUB_TOKEN scope)
+            PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "In progress" || true
+          else
+            if [ "$PR_STATE" = "opened" ] || [ "$PR_STATE" = "reopened" ]; then
+              # label issue as in-review (remove any other status/* first)
+              EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null || true)
+              if [ -n "$EXISTING_LABELS_JSON" ]; then
+                for L in $EXISTING_LABELS_JSON; do
+                  case "$L" in
+                    status/*)
+                      gh issue edit $ISSUE_NUM --remove-label "$L" --repo $REPO || true ;;
+                    *) ;;
+                  esac
+                done
+              fi
+              gh issue edit $ISSUE_NUM --add-label status/review --repo $REPO || true
+              gh issue comment $ISSUE_NUM --body "PR opened: $PR_URL" --repo $REPO || true
+                PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "In review" || true
+            elif [ "$PR_STATE" = "closed" ]; then
+              if [ "${{ github.event.pull_request.merged }}" = "true" ]; then
+                # ensure only one status/* label exists: remove existing status/* labels then add status/done
+                EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null || true)
+                if [ -n "$EXISTING_LABELS_JSON" ]; then
+                  for L in $EXISTING_LABELS_JSON; do
+                    case "$L" in
+                      status/*)
+                        gh issue edit $ISSUE_NUM --remove-label "$L" --repo $REPO || true ;;
+                      *) ;;
+                    esac
+                  done
+                fi
+                gh issue edit $ISSUE_NUM --add-label status/done --repo $REPO || true
+              fi
+                PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "Done" || true
+            fi
+          fi

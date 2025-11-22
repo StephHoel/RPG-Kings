@@ -2,7 +2,7 @@ name: Auto Kanban (Label)
 
 on:
   issues:
-    types: [labeled, unlabeled]
+    types: [labeled]
 
 jobs:
   label-sync:
@@ -10,25 +10,32 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+
       - name: Choose token
         id: token
         run: |
           if [ -n "${{ secrets.PROJECT_TOKEN }}" ]; then echo "TOKEN=${{ secrets.PROJECT_TOKEN }}" >> $GITHUB_OUTPUT; else echo "TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT; fi
+
+      - name: Login gh CLI
+        run: echo "${{ steps.token.outputs.TOKEN }}" | gh auth login --with-token
+
       - name: Map label to status
         env:
           REPO: ${{ github.repository }}
           ISSUE_NUM: ${{ github.event.issue.number }}
           LABEL: ${{ github.event.label.name }}
           TOKEN: ${{ steps.token.outputs.TOKEN }}
+          COMMENT_ON_RESULT: 'true'
         run: |
           echo "GH_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
           echo "GITHUB_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
           # ensure gh uses the same token so any label operations originate from the same principal
-          gh auth status || true
+          gh auth status
           
         
       - name: Map label to status (apply)
@@ -37,7 +44,9 @@ jobs:
           ISSUE_NUM: ${{ github.event.issue.number }}
           LABEL: ${{ github.event.label.name }}
           TOKEN: ${{ steps.token.outputs.TOKEN }}
+          COMMENT_ON_RESULT: 'true'
           PROJECT_ID: PVT_kwHOAzdNtc4BIwXp
+          STATUS_FIELD_ID: PVTSSF_lAHOAzdNtc4BIwXpzg5H3q8
           OPTION_BACKLOG: f75ad846
           OPTION_READY: 61e4505c
           OPTION_IN_PROGRESS: 47fc9ee4
@@ -52,14 +61,36 @@ jobs:
               TARGET=status/ready ;;
             status/in-progress)
               TARGET=status/in-progress ;;
-            status/review)
+            status/in-review | status/review)
               TARGET=status/review ;;
             status/done)
               TARGET=status/done ;;
             *)
               echo "Label not mapped to status; skipping"; exit 0 ;;
           esac
-          # preserve existing labels (including type/*) and add the status label
-          gh issue edit $ISSUE_NUM --add-label $TARGET --repo $REPO || true
+          # Ensure only one status/* label exists: remove existing status/* labels and add the TARGET
+          EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null)
+          if [ -n "$EXISTING_LABELS_JSON" ]; then
+            # remove any label starting with status/
+            for L in $EXISTING_LABELS_JSON; do
+              case "$L" in
+                status/*)
+                  gh issue edit $ISSUE_NUM --remove-label "$L" --repo $REPO ;;
+                *) ;;
+              esac
+            done
+          fi
+          # add the new status label
+          gh issue edit $ISSUE_NUM --add-label $TARGET --repo $REPO
           # Try to sync ProjectV2 status (best-effort)
-          PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "${TARGET#status/}" || true
+          # If we have an OPTION_* env that matches the target, pass its value (the option id).
+          case "${TARGET#status/}" in
+            backlog) STATUS_OPTION="$OPTION_BACKLOG" ;; 
+            ready) STATUS_OPTION="$OPTION_READY" ;; 
+            in-progress) STATUS_OPTION="$OPTION_IN_PROGRESS" ;; 
+            in-review) STATUS_OPTION="$OPTION_IN_REVIEW" ;; 
+            review) STATUS_OPTION="$OPTION_IN_REVIEW" ;; 
+            done) STATUS_OPTION="$OPTION_DONE" ;; 
+            *) echo "Label nao esperada" && exit 0 ;; 
+          esac
+          PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "$STATUS_OPTION"

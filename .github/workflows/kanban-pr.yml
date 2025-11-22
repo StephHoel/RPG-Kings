@@ -1,0 +1,69 @@
+name: Kanban - PR automation
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, reopened, closed]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+env:
+  PROJECT_ID: PVT_kwHOAzdNtc4BIwXp
+  STATUS_FIELD_ID: PVTSSF_lAHOAzdNtc4BIwXpzg5H3q8
+  OPTION_IN_PROGRESS: 47fc9ee4
+  OPTION_IN_REVIEW: df73e18b
+  OPTION_DONE: 98236657
+
+jobs:
+  update-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set project item and update Status
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const projectId = process.env.PROJECT_ID
+            const statusFieldId = process.env.STATUS_FIELD_ID
+            const inProgress = process.env.OPTION_IN_PROGRESS
+            const inReview = process.env.OPTION_IN_REVIEW
+            const done = process.env.OPTION_DONE
+
+            const pr = context.payload.pull_request
+            if (!pr) {
+              core.info('No pull_request payload; nothing to do.')
+              return
+            }
+
+            const contentId = pr.node_id
+
+            // Ensure item exists in project (will create if missing)
+            const addRes = await github.graphql(`
+              mutation($projectId: ID!, $contentId: ID!) {
+                addProjectV2ItemByContent(input: {projectId: $projectId, contentId: $contentId}) {
+                  item { id }
+                }
+              }
+            `, { projectId, contentId })
+
+            const itemId = addRes.addProjectV2ItemByContent.item.id
+
+            // Decide target option based on action
+            let targetOption = inProgress
+            if (context.payload.action === 'ready_for_review') targetOption = inReview
+            if (context.payload.action === 'closed' && context.payload.pull_request.merged) targetOption = done
+
+            // Update field value
+            await github.graphql(`
+              mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
+                updateProjectV2ItemFieldValue(input: {projectId: $projectId, itemId: $itemId, fieldId: $fieldId, value: {singleSelectOptionId: $optionId}}) {
+                  projectV2Item {
+                    id
+                  }
+                }
+              }
+            `, { projectId, itemId, fieldId: statusFieldId, optionId: targetOption })
+
+            core.info(`Updated project item ${itemId} status to option ${targetOption}`)
