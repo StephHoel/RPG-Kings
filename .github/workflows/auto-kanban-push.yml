@@ -85,7 +85,7 @@ jobs:
           done
           if [ "$HAS_BACKLOG" = "true" ]; then
             echo "[auto-kanban] Issue está em 'status/backlog' — adicionando 'status/in-progress' e comentando." 
-            if gh issue edit $ISSUE_NUM --add-label status/in-progress --repo $REPO --cache; then
+            if gh issue edit $ISSUE_NUM --add-label status/in-progress --repo $REPO ; then
               echo "[auto-kanban] Label 'status/in-progress' adicionada com sucesso."
             else
               echo "[auto-kanban] ERRO ao adicionar label 'status/in-progress'."; exit 1
