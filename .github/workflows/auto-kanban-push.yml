@@ -2,7 +2,8 @@ name: Auto Kanban (Push)
 
 on:
   push:
-    branches: ['feat/**', 'fix/**', 'chore/**', 'docs/**', 'refactor/**', 'test/**']
+    branches:
+      ["feat/**", "fix/**", "chore/**", "docs/**", "refactor/**", "test/**"]
 
 jobs:
   push-kanban:
@@ -19,11 +20,41 @@ jobs:
       - name: Determine branch and issue number
         id: issue
         run: |
+          set -euo pipefail
+          trap 'rc=$?; echo "[auto-kanban][ERRO] Falha no script (exit $rc). Comando: \"$BASH_COMMAND\". Linha: $LINENO"; exit $rc' ERR
           BRANCH=$(echo "${{ github.ref }}" | sed -E 's#refs/heads/##')
           # expect patterns like feat/10-desc or fix/12-desc
           ISS=$(echo "$BRANCH" | sed -E 's#^.*/([0-9]+).*#\1#')
           echo "BRANCH=$BRANCH" >> $GITHUB_OUTPUT
           echo "ISSUE=$ISS" >> $GITHUB_OUTPUT
+
+      - name: Debug - verificar gh e autenticação (logs PT-BR)
+        env:
+          REPO: ${{ github.repository }}
+          ISSUE_NUM: ${{ steps.issue.outputs.ISSUE }}
+          BRANCH: ${{ steps.issue.outputs.BRANCH }}
+        run: |
+          set -euo pipefail
+          trap 'rc=$?; echo "[auto-kanban][ERRO] Falha no script (exit $rc). Comando: \"$BASH_COMMAND\". Linha: $LINENO"; exit $rc' ERR
+          echo "[auto-kanban] Repositório: $REPO"
+          echo "[auto-kanban] Branch detectado: $BRANCH"
+          echo "[auto-kanban] Número da issue: $ISSUE_NUM"
+          echo "[auto-kanban] Verificando se o cliente 'gh' está disponível..."
+          gh --version || { echo "[auto-kanban] ERRO: 'gh' não encontrado"; exit 1; }
+          echo "[auto-kanban] Verificando autenticação do 'gh' (não mostra token completo)..."
+          if ! gh auth status >/dev/null 2>&1; then
+            echo "[auto-kanban][ATENÇÃO] 'gh' não está autenticado ou ocorreu erro em 'gh auth status'"
+          else
+            echo "[auto-kanban] 'gh' autenticado com sucesso"
+          fi
+          echo "[auto-kanban] Usuário autenticado (login): $(gh api user --jq '.login' 2>/dev/null || echo 'não disponível')"
+          echo "[auto-kanban] Exibindo labels da issue (para debug)..."
+          if ! gh issue view $ISSUE_NUM --repo $REPO --json labels; then
+            echo "[auto-kanban] ERRO: Não foi possível obter labels da issue $ISSUE_NUM"
+            exit 1
+          fi
+          echo "[auto-kanban] Verificando limite de requisições (rate limit)..."
+          gh api -H "Accept: application/vnd.github+json" /rate_limit || true
 
       - name: Update issue label if needed
         env:
@@ -32,25 +63,38 @@ jobs:
           BRANCH: ${{ steps.issue.outputs.BRANCH }}
           TOKEN: ${{ steps.token.outputs.TOKEN }}
         run: |
-          # If branch doesn't follow expected pattern (no issue number), do nothing
+          set -euo pipefail
+          trap 'rc=$?; echo "[auto-kanban][ERRO] Falha no script (exit $rc). Comando: \"$BASH_COMMAND\". Linha: $LINENO"; exit $rc' ERR
+          # Se não houver número de issue no nome do branch, encerra com sucesso com mensagem explicativa
           if [ -z "$ISSUE_NUM" ] || [ "$ISSUE_NUM" = "feat" ]; then
-            echo "No issue number found in branch '$BRANCH'; skipping"; exit 0;
+            echo "[auto-kanban] Nenhum número de issue encontrado no branch '$BRANCH'; pulando (sem alterações)."; exit 0;
           fi
-          echo "Processing issue #$ISSUE_NUM for branch $BRANCH"
-          # get current labels
-          EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null)
+          echo "[auto-kanban] Processando issue #$ISSUE_NUM (branch: $BRANCH)"
+          echo "[auto-kanban] Obtendo labels atuais da issue..."
+          EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>&1)
+          if [ $? -ne 0 ]; then
+            echo "[auto-kanban] ERRO ao obter labels:"
+            echo "$EXISTING_LABELS_JSON"
+            exit 1
+          fi
           HAS_BACKLOG=false
-          if [ -n "$EXISTING_LABELS_JSON" ]; then
-            for L in $EXISTING_LABELS_JSON; do
-              if [ "$L" = "status/backlog" ]; then
-                HAS_BACKLOG=true
-              fi
-            done
-          fi
+          for L in $EXISTING_LABELS_JSON; do
+            if [ "$L" = "status/backlog" ]; then
+              HAS_BACKLOG=true
+            fi
+          done
           if [ "$HAS_BACKLOG" = "true" ]; then
-            # add in-progress
-            gh issue edit $ISSUE_NUM --add-label status/in-progress --repo $REPO --cache 2>/dev/null
-            gh issue comment $ISSUE_NUM --body "Branch pushed: ${BRANCH} (commit: https://github.com/$REPO/commit/$GITHUB_SHA) — moved from backlog to in-progress" --repo $REPO
+            echo "[auto-kanban] Issue está em 'status/backlog' — adicionando 'status/in-progress' e comentando." 
+            if gh issue edit $ISSUE_NUM --add-label status/in-progress --repo $REPO --cache; then
+              echo "[auto-kanban] Label 'status/in-progress' adicionada com sucesso."
+            else
+              echo "[auto-kanban] ERRO ao adicionar label 'status/in-progress'."; exit 1
+            fi
+            if gh issue comment $ISSUE_NUM --body "Branch enviado: ${BRANCH} (commit: https://github.com/$REPO/commit/$GITHUB_SHA) — movido de backlog para in-progress" --repo $REPO; then
+              echo "[auto-kanban] Comentário adicionado na issue com sucesso."
+            else
+              echo "[auto-kanban] ERRO ao adicionar comentário na issue."; exit 1
+            fi
           else
-            echo "Issue #$ISSUE_NUM does not have status/backlog; no action taken."
+            echo "[auto-kanban] Issue #$ISSUE_NUM não está em 'status/backlog'; nenhuma ação necessária.";
           fi
