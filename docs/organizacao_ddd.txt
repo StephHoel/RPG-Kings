@@ -1,45 +1,38 @@
-
 src/
-  pages/
-  ui/                ← interface (componentes, hooks)
-    components/
-    hooks/
-    providers/
-    styles/
-  core/             ← utilidades que não dependem de nada (base) | (constants, types, utils isolados)
-    constants/
-    enums/
-    utils/
-    types/          ← substitui “interfaces”
-  domain/           ← regras do jogo (Game Logic) | (models, entidades, regras do jogo)
-    affinity/
-      AffinityModel.ts
-      AffinityRules.ts
-      index.ts
-    character/
-      Character.ts
-      Stats.ts
-      index.ts
-    quests/
-      Quest.ts
-      QuestRules.ts
-      index.ts
-  infra/            ← infra + persistência + Dexie
-    db/
-      GameDB.ts
-      migrations/
-    repositories/
-      NpcAffinityRepository.ts
-      CharacterRepository.ts
-      index.ts
-  services/         ← casos de uso (application layer) | (serviços, use cases)
-    affinity/
-      AffinityService.ts
-      index.ts
-    character/
-      CharacterService.ts
-      index.ts
-    index.ts
-  assets/           ← imagens, audios, fontes
-    images/
-  config/           ← config global
+ ├─ assets/
+ │   └─ images/
+ ├─ domain/
+ │   ├─ constants/ # type/enums estáticos
+ │   └─ models/
+ │       ├─ save.ts
+ │       └─ ...
+ ├─ infra/
+ │   ├─ dexie/
+ │   │   ├─ migrations/ # arquivos de migração
+ │   │   ├─ seed/ # arquivos de seed
+ │   │   ├─ versioning/ # versionamento do banco
+ │   │   └─ database.ts
+ │   ├─ repositories/
+ │   │   ├─ saves.repo.ts
+ │   │   └─ ...
+ │   └─ schemas/
+ │       ├─ shared/
+ │       │   └─ zod-types.ts # tipos Zod aqui
+ │       ├─ index.ts
+ │       ├─ saves.schema.ts
+ │       └─ ...
+ ├─ pages/
+ │   └─ (rotas do Next)
+ ├─ services/
+ │   └─ scenes/
+ │       ├─ index.ts
+ │       ├─ scene.service.ts
+ │       └─ ...
+ ├─ ui/
+ │   ├─ components/
+ │   ├─ hooks/
+ │   ├─ providers/
+ │   └─ styles/
+tests/
+ └─ e2e/
+     └─ routes.test.tsx
