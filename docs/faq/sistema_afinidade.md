@@ -4,21 +4,21 @@
 
 É uma medida simples de como um NPC se sente em relação ao jogador:
 
-* **–5:** odeia você / hostil
-* **0:** neutro / indiferente
-* **+5:** adora você / extremamente leal
+- **–5:** odeia você / hostil
+- **0:** neutro / indiferente
+- **+5:** adora você / extremamente leal
 
 ---
 
 ## **2) Por que usar –5 e não começar em 0?**
 
-Porque valores negativos permitem *hostilidade ativa* e consequências narrativas mais fortes.
+Porque valores negativos permitem _hostilidade ativa_ e consequências narrativas mais fortes.
 NPCs com –3 ou menos podem:
 
-* evitar o jogador,
-* cobrar mais caro,
-* chamar atenção de inimigos,
-* ou até sabotar.
+- evitar o jogador,
+- cobrar mais caro,
+- chamar atenção de inimigos,
+- ou até sabotar.
 
 ---
 
@@ -27,8 +27,8 @@ NPCs com –3 ou menos podem:
 Recomendado: **0 (neutro)**.
 NPCs especiais podem começar com:
 
-* **–1 ou –2** se forem naturalmente desconfiados
-* **+1** se o jogador pertence ao mesmo clube/espécie junto
+- **–1 ou –2** se forem naturalmente desconfiados
+- **+1** se o jogador pertence ao mesmo clube/espécie junto
 
 ---
 
@@ -47,17 +47,17 @@ Isso mantém o sistema controlado e legível.
 Em um RPG escolar, não.
 Recomenda-se limitar:
 
-* **máximo 3 mudanças por dia**
-* ou **cooldown** (ex.: só altera afinidade por aquele evento 1 vez)
+- **máximo 3 mudanças por dia**
+- ou **cooldown** (ex.: só altera afinidade por aquele evento 1 vez)
 
 ---
 
 ## **6) Afinidade influencia o quê?**
 
-* Diálogos
-* Ajuda em combate
-* Missões pessoais
-* Eventos secretos
-* Finalizações com personagens
+- Diálogos
+- Ajuda em combate
+- Missões pessoais
+- Eventos secretos
+- Finalizações com personagens
 
 É seu motor social principal.
