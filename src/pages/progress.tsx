@@ -1,8 +1,8 @@
 'use client'
 import { useRouter } from 'next/router'
-import { useGetMilestones } from '@/hooks'
-import { ROUTES } from '@/config'
-import { H1, Panel } from '@/components'
+import { useGetMilestones } from '@/ui/hooks'
+import { ROUTES } from '@/domain'
+import { H1, Panel } from '@/ui/components'
 import { Suspense } from 'react'
 import Head from 'next/head'
 

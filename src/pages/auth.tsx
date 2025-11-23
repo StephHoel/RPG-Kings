@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { H1, Panel } from '@/components'
+import { H1, Panel } from '@/ui/components'
 
 export default function Auth() {
   return (

@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { Button, H1, Panel } from '@/components'
-import { useSeedAll } from '@/hooks'
+import { Button, H1, Panel } from '@/ui/components'
+import { useSeedAll } from '@/ui/hooks'
 import Head from 'next/head'
 
 export default function SeedDevPage() {

@@ -1,13 +1,13 @@
 'use client'
 import Head from 'next/head'
-import { useCreateSave } from '@/hooks'
-import { AlertError, Button, H1, Input, Loader, Panel } from '@/components'
+import { useCreateSave } from '@/ui/hooks'
+import { AlertError, Button, H1, Input, Loader, Panel } from '@/ui/components'
 import { useForm } from 'react-hook-form'
-import { ROUTES, routeWithSaveId } from '@/config'
+import { ROUTES, routeWithSaveId } from '@/domain'
 import { useRouter } from 'next/router'
-import { CreateSaveFormValues } from '@/interfaces'
+import { CreateSaveFormValues } from '@/core/types'
 import { toast } from 'sonner'
-import { RacesEnum } from '@/enums'
+import { RacesEnum } from '@/core/enums'
 
 export default function SaveNew() {
   const router = useRouter()

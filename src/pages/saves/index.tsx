@@ -1,9 +1,9 @@
 'use client'
 import { useRouter } from 'next/router'
-import { useDeleteSave, useGetAllSaves } from '@/hooks'
-import { Button, H1, Panel } from '@/components'
-import { ROUTES, routeWithSaveId } from '@/config'
-import { SaveId } from '@/interfaces'
+import { useDeleteSave, useGetAllSaves } from '@/ui/hooks'
+import { Button, H1, Panel } from '@/ui/components'
+import { ROUTES, routeWithSaveId } from '@/domain'
+import { SaveId } from '@/core/types'
 import { toast } from 'sonner'
 import Head from 'next/head'
 

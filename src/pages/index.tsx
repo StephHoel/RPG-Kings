@@ -1,11 +1,11 @@
 'use client'
 import Head from 'next/head'
-import { Button, H1, Panel } from '@/components'
-import { ROUTES } from '@/config'
+import { Button, H1, Panel } from '@/ui/components'
+import { ROUTES } from '@/domain'
 import { useRouter } from 'next/router'
 import { Activity } from 'react'
-import { useActiveSaveContext } from '@/providers/useActiveSaveContext'
-import { routeWithSaveId } from '../config/files/routes'
+import { useActiveSaveContext } from '@/ui/providers/useActiveSaveContext'
+import { routeWithSaveId } from '../domain/files/routes'
 
 export default function Home() {
   const router = useRouter()
