@@ -1,9 +1,8 @@
-import { db } from '@/infra/db'
-import { Sheet } from '@/core/types'
+import { db } from '@/infra/dexie/database'
 import { log } from '@/services/lib'
-import { LogTypeEnum } from '@/core/enums'
 import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
+import { Sheet } from '@/infra/schemas'
 
 export function useGetSheet(saveId: string): Sheet | null {
   const { data: sheet } = useQuery({
@@ -16,11 +15,11 @@ export function useGetSheet(saveId: string): Sheet | null {
       try {
         const s = await db.sheets.get(saveId)
 
-        await log(LogTypeEnum.enum.INFO, '[useGetSheet] Ficha obtida', { saveId, present: !!s })
+        await log.info('[useGetSheet] Ficha obtida', { saveId, present: !!s })
 
         return s ?? null
       } catch (err: any) {
-        await log(LogTypeEnum.enum.ERROR, '[useGetSheet] Erro ao obter ficha', {
+        await log.error('[useGetSheet] Erro ao obter ficha', {
           saveId,
           error: String(err),
         })

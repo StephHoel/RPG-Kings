@@ -1,9 +1,8 @@
-import { db } from '@/infra/db'
-import { LogTypeEnum } from '@/core/enums'
+import { db } from '@/infra/dexie/database'
 import { log } from '@/services/lib'
-import { Inventory } from '@/core/types'
 import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
+import { Inventory } from '@/infra/schemas'
 
 export function useGetInventory(saveId: string): Inventory[] {
   const { data: items } = useQuery({
@@ -16,14 +15,14 @@ export function useGetInventory(saveId: string): Inventory[] {
       try {
         const inventories = await db.inventory.where({ saveId: saveId }).toArray()
 
-        await log(LogTypeEnum.enum.INFO, '[useGetInventory] Inventário obtido', {
+        await log.info('[useGetInventory] Inventário obtido', {
           saveId,
           itemsCount: inventories.length,
         })
 
         return inventories
       } catch (err: any) {
-        await log(LogTypeEnum.enum.ERROR, '[useGetInventory] Erro ao obter inventário', {
+        await log.error('[useGetInventory] Erro ao obter inventário', {
           saveId,
           error: String(err),
         })

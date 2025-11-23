@@ -1,11 +1,10 @@
-import { db } from '@/infra/db'
-import { Save, SaveId } from '@/core/types'
+import { db } from '@/infra/dexie/database'
 import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
 import { log } from '@/services/lib'
-import { LogTypeEnum } from '@/core/enums'
+import { Save } from '@/infra/schemas'
 
-export function useGetSave(saveId: SaveId) {
+export function useGetSave(saveId: string) {
   const { data: save } = useQuery<Save | null>({
     queryKey: useQueryKeys.saveId(saveId),
     enabled: !!saveId,
@@ -15,17 +14,17 @@ export function useGetSave(saveId: SaveId) {
     queryFn: async () => {
       try {
         if (!saveId) {
-          await log(LogTypeEnum.enum.INFO, '[useGetSave] SaveId nulo')
+          await log.info('[useGetSave] SaveId nulo')
           return null
         }
 
         const save = await db.saves.get(saveId)
 
-        await log(LogTypeEnum.enum.INFO, '[useGetSave] Jogo obtido', { save })
+        await log.info('[useGetSave] Jogo obtido', { save })
 
         return save ?? null
       } catch (err: any) {
-        await log(LogTypeEnum.enum.ERROR, '[useGetSave] Erro ao obter jogo', {
+        await log.error('[useGetSave] Erro ao obter jogo', {
           saveId,
           error: String(err),
         })

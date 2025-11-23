@@ -1,8 +1,18 @@
-import { db } from '@/infra/db'
-import { Log } from '@/core/types'
+import { LOG_TYPE, LogType } from '@/domain/constants'
+import { db } from '@/infra/dexie/database'
 import { LogSchema } from '@/infra/schemas'
 
-export async function log(type: Log['type'], message?: string, payload?: any) {
+export const log = {
+  async error(message: string, payload?: any) {
+    await toLog(LOG_TYPE.error, message, payload)
+  },
+
+  async info(message: string, payload?: any) {
+    await toLog(LOG_TYPE.info, message, payload)
+  },
+}
+
+async function toLog(type: LogType, message?: string, payload?: any) {
   const entry = {
     type,
     message,

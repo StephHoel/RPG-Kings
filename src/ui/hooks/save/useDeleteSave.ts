@@ -1,7 +1,6 @@
-import { db } from '@/infra/db'
-import { SaveId } from '@/core/types'
+import { db } from '@/infra/dexie/database'
+import { SaveId } from '@/types'
 import { log } from '@/services/lib'
-import { LogTypeEnum } from '@/core/enums'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
 
@@ -15,9 +14,9 @@ export function useDeleteSave() {
 
         // TODO deletar sheet também
 
-        await log(LogTypeEnum.enum.INFO, '[useDeleteSave] Save deletado', { saveId })
+        await log.info('[useDeleteSave] Save deletado', { saveId })
       } catch (err: any) {
-        await log(LogTypeEnum.enum.ERROR, '[useDeleteSave] Erro ao deletar save', {
+        await log.error('[useDeleteSave] Erro ao deletar save', {
           saveId,
           error: String(err),
         })
@@ -29,7 +28,7 @@ export function useDeleteSave() {
     },
 
     onError: async (err) => {
-      await log(LogTypeEnum.enum.ERROR, '[useAddXP] Erro inesperado na mutação', {
+      await log.error('[useAddXP] Erro inesperado na mutação', {
         error: String(err),
       })
     },

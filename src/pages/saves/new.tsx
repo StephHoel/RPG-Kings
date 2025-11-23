@@ -5,9 +5,9 @@ import { AlertError, Button, H1, Input, Loader, Panel } from '@/ui/components'
 import { useForm } from 'react-hook-form'
 import { ROUTES, routeWithSaveId } from '@/domain'
 import { useRouter } from 'next/router'
-import { CreateSaveFormValues } from '@/core/types'
+import { CreateSaveFormValues } from '@/types'
 import { toast } from 'sonner'
-import { RacesEnum } from '@/core/enums'
+import { RacesEnum } from '@/domain/constants/Races'
 
 export default function SaveNew() {
   const router = useRouter()

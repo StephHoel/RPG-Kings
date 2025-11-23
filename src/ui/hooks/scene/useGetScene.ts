@@ -1,11 +1,10 @@
-import { db } from '@/infra/db'
-import { SaveId, Scene } from '@/core/types'
-import { LogTypeEnum } from '@/core/enums'
+import { db } from '@/infra/dexie/database'
 import { log } from '@/services/lib'
 import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
+import { Scene } from '@/infra/schemas'
 
-export function useGetScene(saveId: SaveId): Scene | null {
+export function useGetScene(saveId: string): Scene | null {
   const { data: scene } = useQuery({
     queryKey: useQueryKeys.scene(saveId),
     enabled: !!saveId,
@@ -19,11 +18,11 @@ export function useGetScene(saveId: SaveId): Scene | null {
 
         const scenes = await db.scenes.toArray()
 
-        await log(LogTypeEnum.enum.INFO, '[useGetScene] Cena obtida', { scene: scenes[0] })
+        await log.info('[useGetScene] Cena obtida', { scene: scenes[0] })
 
         return scenes[0]
       } catch (err: any) {
-        await log(LogTypeEnum.enum.ERROR, '[useGetScene] Erro ao obter cena', {
+        await log.error('[useGetScene] Erro ao obter cena', {
           saveId,
           error: String(err),
         })

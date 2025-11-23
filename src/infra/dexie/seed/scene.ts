@@ -1,0 +1,60 @@
+import { Scene } from '@/infra/schemas'
+
+export const sceneSeed: Scene[] = [
+  {
+    id: 'scene_caminho_predio',
+    title: 'Caminho até o prédio principal',
+    content: 'Você cruza o pátio e encontra alguns colegas se arrumando para o primeiro dia.',
+    choices: [],
+    effects: {},
+    preRequire: {},
+  },
+  {
+    id: 'scene_primeira_aula',
+    title: 'Primeira aula do dia',
+    content: 'Uma explicação introdutória sobre a Academia e seus objetivos.',
+    choices: [],
+    effects: {},
+    preRequire: {},
+  },
+  {
+    id: 'scene_treino_basico',
+    title: 'Treino de habilidades',
+    content: 'Um exercício prático para despertar sua magia interior.',
+    choices: [],
+    effects: {},
+    preRequire: {},
+  },
+  {
+    id: 'scene_encontro_noturno',
+    title: 'Encontro no pátio ao anoitecer',
+    content: 'Conversas baixas, promessas de aventuras e segredos sussurrados.',
+    choices: [],
+    effects: {},
+    preRequire: {},
+  },
+  {
+    id: 'scene_manha_aula',
+    title: 'Aula de Alquimia',
+    content: 'Você entra no laboratório e o cheiro de ervas toma o ar.',
+    choices: [],
+    effects: {},
+    preRequire: {},
+  },
+  {
+    id: 'scene_tarde_treino',
+    title: 'Treino no Pátio',
+    content: 'O sol das duas da tarde castiga enquanto você pratica.',
+    choices: [],
+    effects: {},
+    preRequire: {},
+  },
+  {
+    id: 'scene_noite_social',
+    title: 'Clube de Estratégia',
+    content: 'Um grupo se reúne para jogos táticos no salão.',
+    choices: [],
+    effects: {},
+    preRequire: {},
+  },
+]

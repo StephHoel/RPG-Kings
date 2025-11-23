@@ -1,12 +1,13 @@
 'use client'
 import { Button, GenericTable, H1, Input, Panel } from '@/ui/components'
-import { LogTypeEnum } from '@/core/enums'
-import { db } from '@/infra/db'
-import { LogCategoryLabels, Log } from '@/core/types'
+import { db } from '@/infra/dexie/database'
+import { LogCategoryLabels } from '@/types'
 import { exportLogsNDJSON, clearLogs, formatDate, formatPayload } from '@/services/lib'
 import { useState, useEffect, useMemo, Activity } from 'react'
 import { toast } from 'sonner'
 import Head from 'next/head'
+import { Log } from '@/infra/schemas'
+import { LOG_ALL_TYPE } from '@/domain/constants'
 
 export default function Debug() {
   const [logs, setLogs] = useState<Log[]>([])
@@ -65,7 +66,7 @@ export default function Debug() {
     setLogs(rows)
   }
 
-  const types = ['all', ...LogTypeEnum.options.sort()] as const
+  const types = Object.values(LOG_ALL_TYPE).sort()
 
   const createdAtLabel = `CreatedAt ${sortAsc ? '↑' : '↓'}`
 

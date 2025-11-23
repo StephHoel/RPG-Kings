@@ -1,5 +1,4 @@
-import { db } from '@/infra/db'
-import { LogTypeEnum } from '@/core/enums'
+import { db } from '@/infra/dexie/database'
 import { log } from '@/services/lib'
 import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
@@ -17,11 +16,11 @@ export function useActiveSave() {
       try {
         const active = await db.saves.filter((s) => s.isActive === true).first()
 
-        await log(LogTypeEnum.enum.INFO, '[useActiveSave] Jogo ativo obtido', { active })
+        await log.info('[useActiveSave] Jogo ativo obtido', { active })
 
         return active ?? null
       } catch (err: any) {
-        await log(LogTypeEnum.enum.ERROR, '[useActiveSave] Erro ao obter jogo ativo', {
+        await log.error('[useActiveSave] Erro ao obter jogo ativo', {
           error: String(err),
         })
         throw err

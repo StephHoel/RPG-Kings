@@ -1,4 +1,4 @@
-import { SaveId } from '@/core/types'
+import { SaveId } from '@/types'
 
 export const useQueryKeys = {
   saveActive: () => ['saves', 'active'],

@@ -1,5 +1,5 @@
-import { DevelopSkillsEnum, FixedSkillsEnum } from '@/core/enums'
-import { DevelopSkill, FixedSkill, Races, Skills } from '@/core/types'
+import { DevelopSkill, FixedSkill, Races, Skills } from '@/types'
+import { DevelopSkillsEnum, FixedSkillsEnum } from '@/domain/constants/Skills'
 
 const RACE_SKILLS: Record<Races, Skills[]> = {
   ARCANO: [

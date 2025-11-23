@@ -1,9 +1,8 @@
-import { db } from '@/infra/db'
-import { Save } from '@/core/types'
+import { db } from '@/infra/dexie/database'
 import { log } from '@/services/lib'
-import { LogTypeEnum } from '@/core/enums'
 import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
+import { Save } from '@/infra/schemas'
 
 export function useGetAllSaves(): Save[] {
   const { data: saves } = useQuery({
@@ -14,11 +13,11 @@ export function useGetAllSaves(): Save[] {
       try {
         const saves = await db.saves.toArray()
 
-        await log(LogTypeEnum.enum.INFO, '[useGetAllSaves] Saves obtidos', { count: saves.length })
+        await log.info('[useGetAllSaves] Saves obtidos', { count: saves.length })
 
         return saves
       } catch (err: any) {
-        await log(LogTypeEnum.enum.ERROR, '[useGetAllSaves] Erro ao obter saves', {
+        await log.error('[useGetAllSaves] Erro ao obter saves', {
           error: String(err),
         })
         throw err

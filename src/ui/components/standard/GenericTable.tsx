@@ -1,5 +1,5 @@
 'use client'
-import { GenericTableProps } from '@/core/types'
+import { GenericTableProps } from '@/types'
 
 export function GenericTable<T>({ header: headers, rows, rowKey }: GenericTableProps<T>) {
   const keyFn = rowKey ?? ((r: any) => r.id ?? JSON.stringify(r))

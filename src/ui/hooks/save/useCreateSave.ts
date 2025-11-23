@@ -1,10 +1,9 @@
 import { nanoid } from 'nanoid'
-import { db } from '@/infra/db'
-import { base, getAnimal, getDevelopSkills, getFixedSkills, log, statsByRace } from '@/services/lib'
-import { LogTypeEnum } from '@/core/enums'
+import { db } from '@/infra/dexie/database'
+import { getDevelopSkills, getFixedSkills, log } from '@/services/lib'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
-import { CreateSaveFormValues } from '@/core/types'
+import { CreateSaveFormValues } from '@/types'
 
 export function useCreateSave() {
   const queryClient = useQueryClient()
@@ -14,39 +13,38 @@ export function useCreateSave() {
       // desativar saves ativos anteriores
       await db.saves.toCollection().modify({ isActive: false })
 
-      await log(LogTypeEnum.enum.INFO, '[useCreateSave] Jogos anteriores inativados')
+      await log.info('[useCreateSave] Jogos anteriores inativados')
 
       const saveId = nanoid(10)
 
       await db.saves.add({
         id: saveId,
-        name: name,
         isActive: true,
         currentWeek: 1,
-        currentDay: 'Monday',
+        currentDay: 1,
         currentHour: 8,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       })
 
-      await log(LogTypeEnum.enum.INFO, '[useCreateSave] Save criado', { saveId, name })
+      await log.info('[useCreateSave] Save criado', { saveId, name })
 
-      const animal = getAnimal(race)
-      const stats = statsByRace(race, animal)
+      // const animal = getAnimal(race)
+      // const stats = statsByRace(race, animal)
       const developSkills = getDevelopSkills(race)
       const fixedSkills = getFixedSkills(race)
 
       await db.sheets.add({
         saveId,
         race,
-        animal: animal ?? null,
-        stats: stats ?? base(),
-        developSkills,
-        fixedSkills,
+        // animal: animal ?? null,
         coins: 0,
+        name,
         createdAt: new Date(),
         updatedAt: new Date(),
       })
 
-      await log(LogTypeEnum.enum.INFO, '[useCreateSave] Ficha de personagem criada', { saveId })
+      await log.info('[useCreateSave] Ficha de personagem criada', { saveId })
 
       return saveId
     },
@@ -57,7 +55,7 @@ export function useCreateSave() {
     },
 
     onError: async (err) => {
-      await log(LogTypeEnum.enum.ERROR, '[useCreateSave] Erro inesperado na mutação', {
+      await log.error('[useCreateSave] Erro inesperado na mutação', {
         error: String(err),
       })
     },

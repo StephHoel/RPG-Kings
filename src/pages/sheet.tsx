@@ -39,7 +39,7 @@ export default function Sheet() {
               ? 'Sem itens'
               : items.map((i) => (
                   <li key={i.id} className="p-3 border rounded">
-                    <div className="font-medium">{i.name}</div>
+                    <div className="font-medium">{i.item}</div>
 
                     <div className="opacity-70 text-sm">
                       Comprado semana {i.acquiredWeek} · Duração{' '}

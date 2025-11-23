@@ -1,16 +1,12 @@
 'use client'
-import {
-  characterSeed,
-  itemSeed,
-  milestoneSeed,
-  questSeed,
-  reputationSeed,
-  ruleSeed,
-  sceneSeed,
-  tagSeed,
-} from '@/core/constants'
-import { db } from '@/infra/db'
-import { LogTypeEnum } from '@/core/enums'
+import { characterSeed } from '@/infra/dexie/seed/character'
+import { itemSeed } from '@/infra/dexie/seed/item'
+import { questSeed } from '@/infra/dexie/seed/quest'
+import { reputationSeed } from '@/infra/dexie/seed/reputation'
+import { ruleSeed } from '@/infra/dexie/seed/rule'
+import { sceneSeed } from '@/infra/dexie/seed/scene'
+import { tagSeed } from '@/infra/dexie/seed/tag'
+import { db } from '@/infra/dexie/database'
 import { log, safeBulkAdd } from '@/services/lib'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
@@ -19,7 +15,6 @@ export function useSeedAll() {
   const candidateSeeds: Record<string, any[]> = {
     characters: characterSeed,
     items: itemSeed,
-    milestones: milestoneSeed,
     quests: questSeed,
     reputations: reputationSeed,
     rules: ruleSeed,
@@ -65,7 +60,7 @@ export function useSeedAll() {
         }
       }
 
-      await log(LogTypeEnum.enum.INFO, 'Seed executada (debug)')
+      await log.info('Seed executada (debug)')
       toast.success('Seed executada (debug)')
 
       return anySeeded

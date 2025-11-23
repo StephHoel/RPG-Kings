@@ -11,9 +11,6 @@ export * from './save/useGetSave'
 // Inventory
 export * from './inventory/useGetInventory'
 
-// Milestone
-export * from './milestone/useGetMilestones'
-
 // Scene
 export * from './scene/useGetScene'
 

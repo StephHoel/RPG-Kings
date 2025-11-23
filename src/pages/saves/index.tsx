@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useDeleteSave, useGetAllSaves } from '@/ui/hooks'
 import { Button, H1, Panel } from '@/ui/components'
 import { ROUTES, routeWithSaveId } from '@/domain'
-import { SaveId } from '@/core/types'
+import { SaveId } from '@/types'
 import { toast } from 'sonner'
 import Head from 'next/head'
 
@@ -41,7 +41,7 @@ export default function Saves() {
                 key={s.id}
                 className="flex justify-between items-center p-2 border border-highlight rounded"
               >
-                <p>{s.name}</p>
+                {/* <p>{s.name}</p> */}
 
                 <div className="flex gap-2 w-1/2">
                   <Button className="mx-auto! p-2! md:p-4! w-full!" onClick={() => toGame(s.id)}>
