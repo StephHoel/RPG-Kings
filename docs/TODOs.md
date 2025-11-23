@@ -113,8 +113,9 @@ Sugestões para resolver:
 
 ---
 
-## adicionar uma forma de criar sheet se não existir e implementar ao tentar recuperar o sheet tbm
+## criar sheet se não existir e implementar ao tentar recuperar o sheet tbm
 
+Nota: depois do refactor talvez deixe de ser usado
 Arquivo: `src/db/index.ts` (linha aproximada: 76)
 
 Sugestões para resolver:
