@@ -13,7 +13,7 @@ export function useGetSheet(saveId: string): Sheet | null {
 
     queryFn: async () => {
       try {
-        const s = await db.sheets.get(saveId)
+        const s = await db.sheets.where({ saveId }).first()
 
         await log.info('[useGetSheet] Ficha obtida', { saveId, present: !!s })
 

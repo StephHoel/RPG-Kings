@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import { useDeleteSave, useGetAllSaves } from '@/ui/hooks'
 import { Button, H1, Panel } from '@/ui/components'
 import { ROUTES, routeWithSaveId } from '@/domain'
-import { SaveId } from '@/types'
 import { toast } from 'sonner'
 import Head from 'next/head'
 
@@ -12,7 +11,7 @@ export default function Saves() {
   const deleteMutation = useDeleteSave()
   let saves = useGetAllSaves()
 
-  const toDeleteSave = (saveId: SaveId) => {
+  const toDeleteSave = (saveId: string) => {
     deleteMutation
       .mutateAsync(saveId)
       .then(() => toast.success('Save apagado!'))
@@ -21,7 +20,7 @@ export default function Saves() {
 
   const toSaveNew = () => router.push(ROUTES.SAVE_NEW)
 
-  const toGame = (saveId: SaveId) => router.push(routeWithSaveId(ROUTES.GAME, saveId))
+  const toGame = (saveId: string) => router.push(routeWithSaveId(ROUTES.GAME, saveId))
 
   return (
     <>

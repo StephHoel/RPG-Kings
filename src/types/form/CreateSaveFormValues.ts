@@ -1,6 +1,6 @@
-import { Races } from '@/types'
+import { RaceEnum } from '@/domain/constants'
 
 export interface CreateSaveFormValues {
   name: string
-  race: Races
+  race: RaceEnum
 }

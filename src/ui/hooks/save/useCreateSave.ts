@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid'
 import { db } from '@/infra/dexie/database'
-import { getDevelopSkills, getFixedSkills, log } from '@/services/lib'
+import { log } from '@/services/lib'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
 import { CreateSaveFormValues } from '@/types'
@@ -31,8 +31,8 @@ export function useCreateSave() {
 
       // const animal = getAnimal(race)
       // const stats = statsByRace(race, animal)
-      const developSkills = getDevelopSkills(race)
-      const fixedSkills = getFixedSkills(race)
+      // const developSkills = getDevelopSkills(race)
+      // const fixedSkills = getFixedSkills(race)
 
       await db.sheets.add({
         saveId,

@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
 import { log } from '@/services/lib'
 import { Discipline } from '@/infra/schemas'
+import { DISCIPLINE_ENUM, DISCIPLINE_TYPE } from '@/domain/constants'
 
 export function useAddXP(saveId: string, discipline: string, xpToAdd: number) {
   const queryClient = useQueryClient()
@@ -17,13 +18,12 @@ export function useAddXP(saveId: string, discipline: string, xpToAdd: number) {
         const amountToAdd = xpToAdd
 
         if (!existing) {
-          const now = new Date()
+          // const now = new Date()
 
           // TODO mudar isso
           await db.disciplines.add({
-            id: 1,
-            name: '',
-            type: 'mandatory',
+            name: DISCIPLINE_ENUM.english,
+            type: DISCIPLINE_TYPE.mandatory,
             skills: [],
             stats: [],
           } as Discipline)

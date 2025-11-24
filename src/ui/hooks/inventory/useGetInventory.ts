@@ -13,7 +13,7 @@ export function useGetInventory(saveId: string): Inventory[] {
 
     queryFn: async () => {
       try {
-        const inventories = await db.inventory.where({ saveId: saveId }).toArray()
+        const inventories = await db.inventories.where({ saveId: saveId }).toArray()
 
         await log.info('[useGetInventory] Inventário obtido', {
           saveId,

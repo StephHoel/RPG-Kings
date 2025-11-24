@@ -1,6 +1,4 @@
-import { AnimalsEnum, KitsuneEnum } from '@/domain/constants/Animals'
-import { LogType } from '@/domain/constants/log.type'
-import { RacesEnum } from '@/domain/constants/Races'
+import { LogType } from '@/domain/constants/types/log.type'
 import { DevelopSkillsEnum, FixedSkillsEnum } from '@/domain/constants/Skills'
 import { Save, Scene } from '@/infra/schemas'
 import { z } from 'zod'
@@ -16,14 +14,14 @@ import { z } from 'zod'
 
 // enums
 // export type LogType = z.infer<typeof LogTypeEnum>
-export type Races = z.infer<typeof RacesEnum>
-export type Animals = z.infer<typeof AnimalsEnum>
-export type Kitsune = z.infer<typeof KitsuneEnum>
+// export type Races = z.infer<typeof RacesEnum>
+// export type Animals = z.infer<typeof AnimalsEnum>
+// export type Kitsune = z.infer<typeof KitsuneEnum>
 export type LogCategoryLabels = LogType | 'all'
 export type DevelopSkill = z.infer<typeof DevelopSkillsEnum>
 export type FixedSkill = z.infer<typeof FixedSkillsEnum>
 export type Skills = DevelopSkill | FixedSkill
 
 // Atalhos úteis
-export type SaveId = Save['id']
-export type SceneId = Scene['id']
+// export type SaveId = Save['id']
+// export type SceneId = Scene['id']

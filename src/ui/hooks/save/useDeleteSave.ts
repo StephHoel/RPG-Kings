@@ -1,5 +1,4 @@
 import { db } from '@/infra/dexie/database'
-import { SaveId } from '@/types'
 import { log } from '@/services/lib'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
@@ -7,8 +6,8 @@ import { useQueryKeys } from '../queries/queryKeys'
 export function useDeleteSave() {
   const queryClient = useQueryClient()
 
-  return useMutation<void, Error, SaveId>({
-    mutationFn: async (saveId: SaveId) => {
+  return useMutation<void, Error, string>({
+    mutationFn: async (saveId: string) => {
       try {
         await db.saves.delete(saveId)
 

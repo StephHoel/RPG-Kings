@@ -1,26 +1,11 @@
 'use client'
-import { characterSeed } from '@/infra/dexie/seed/character'
-import { itemSeed } from '@/infra/dexie/seed/item'
-import { questSeed } from '@/infra/dexie/seed/quest'
-import { reputationSeed } from '@/infra/dexie/seed/reputation'
-import { ruleSeed } from '@/infra/dexie/seed/rule'
-import { sceneSeed } from '@/infra/dexie/seed/scene'
-import { tagSeed } from '@/infra/dexie/seed/tag'
 import { db } from '@/infra/dexie/database'
 import { log, safeBulkAdd } from '@/services/lib'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 export function useSeedAll() {
-  const candidateSeeds: Record<string, any[]> = {
-    characters: characterSeed,
-    items: itemSeed,
-    quests: questSeed,
-    reputations: reputationSeed,
-    rules: ruleSeed,
-    scenes: sceneSeed,
-    tags: tagSeed,
-  }
+  const candidateSeeds: Record<string, any[]> = {}
 
   return useMutation<boolean>({
     mutationFn: async (): Promise<boolean> => {
