@@ -10,12 +10,11 @@ export const scenesSeed: Scene[] = [
       {
         title: 'Levantar imediatamente',
         cost: { stamina: 5, coin: 0, hour: true },
-        next: 'campus_01',
+        nextId: 'campus_01',
       },
       {
         title: 'Dormir mais um pouco',
         cost: { stamina: 0, coin: 0, hour: true },
-        next: null,
       },
     ],
     preRequire: {
@@ -37,7 +36,6 @@ export const scenesSeed: Scene[] = [
       {
         title: 'Ir ao refeitório',
         cost: { stamina: 10, coin: 2, hour: true },
-        next: null,
       },
     ],
     preRequire: {

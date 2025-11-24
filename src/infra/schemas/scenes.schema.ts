@@ -46,7 +46,7 @@ const SceneChoiceSchema = z.object({
     coin: z.number(),
     hour: z.boolean(),
   }),
-  next: z.string().nullable(),
+  nextId: z.string().optional(),
 })
 
 export const SceneSchema = z.object({
@@ -59,3 +59,4 @@ export const SceneSchema = z.object({
 })
 
 export type Scene = z.infer<typeof SceneSchema>
+export type PreRequireScene = z.infer<typeof PreRequireSchema>
