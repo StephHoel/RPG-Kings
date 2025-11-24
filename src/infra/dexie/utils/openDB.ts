@@ -19,6 +19,7 @@ export async function openCatchDB(db: Dexie, err: any) {
       throw deleteErr
     }
   } else {
+    console.error('Não é erro de versão:', err)
     throw err
   }
 }

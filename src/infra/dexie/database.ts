@@ -34,13 +34,16 @@ export class RPGDatabase extends Dexie {
 
   constructor() {
     super('rpg_db')
+    registerV1(this)
+    registerV2(this)
+    registerV3(this)
+
     this.on('populate', () => populateDB(this))
     this.on('versionchange', () => versionChange(this))
-    this.open().catch(async (err) => await openCatchDB(this, err))
+
+    if (typeof window !== 'undefined')
+      this.open().catch(async (err) => await openCatchDB(this, err))
   }
 }
 
 export const db = new RPGDatabase()
-registerV1(db)
-registerV2(db)
-registerV3(db)
