@@ -2,7 +2,6 @@ import { Stats } from '@/infra/schemas'
 
 export const statsSeed: Stats[] = [
   {
-    id: 1,
     saveId: 'save_1',
     strength: 7,
     agility: 6,

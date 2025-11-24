@@ -1,4 +1,4 @@
-export const ANIMALS_ENUM = {
+export const ANIMAL_ENUM = {
   wolf: 'Lobo',
   bear: 'Urso',
   lion: 'Leão',
@@ -15,4 +15,4 @@ export const ANIMALS_ENUM = {
 } as const
 
 // Tipo derivado
-export type AnimalEnum = (typeof ANIMALS_ENUM)[keyof typeof ANIMALS_ENUM]
+export type AnimalEnum = (typeof ANIMAL_ENUM)[keyof typeof ANIMAL_ENUM]

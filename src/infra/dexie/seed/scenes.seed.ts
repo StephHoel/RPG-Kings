@@ -1,3 +1,4 @@
+import { STAT_ENUM } from '@/domain/constants'
 import { Scene } from '@/infra/schemas'
 
 export const scenesSeed: Scene[] = [
@@ -21,7 +22,7 @@ export const scenesSeed: Scene[] = [
       hours: [7],
       statsRequired: [
         {
-          stat: 'stamina',
+          stat: STAT_ENUM.stamina,
           min: 0,
           max: 100,
         },
@@ -43,7 +44,7 @@ export const scenesSeed: Scene[] = [
       hours: [8],
       statsRequired: [
         {
-          stat: 'stamina',
+          stat: STAT_ENUM.stamina,
           min: 10,
           max: 100,
         },

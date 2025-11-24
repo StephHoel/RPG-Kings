@@ -3,7 +3,7 @@ import {
   Animal,
   Discipline,
   Inventory,
-  ItemList,
+  Item,
   Log,
   Race,
   Save,
@@ -21,7 +21,7 @@ export class RPGDatabase extends Dexie {
   animals!: Table<Animal, number>
   disciplines!: Table<Discipline, number>
   inventories!: Table<Inventory, number>
-  items!: Table<ItemList, number>
+  items!: Table<Item, number>
   logs!: Table<Log, number>
   races!: Table<Race, number>
   saves!: Table<Save, string>

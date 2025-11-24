@@ -1,9 +1,9 @@
+import { LOG_TYPE } from '@/domain/constants'
 import { Log } from '@/infra/schemas'
 
 export const logsSeed: Log[] = [
   {
-    id: 1,
-    type: 'info',
+    type: LOG_TYPE.info,
     message: 'Banco populado com sucesso.',
     payload: { saveId: 'save_1' },
     createdAt: new Date(),

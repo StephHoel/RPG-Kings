@@ -1,4 +1,4 @@
-export const RACES_ENUM = {
+export const RACE_ENUM = {
   arcane: 'Arcano',
   banshee: 'Banshee',
   kanime: 'Kanima',
@@ -10,4 +10,4 @@ export const RACES_ENUM = {
 } as const
 
 // Tipo derivado
-export type RaceEnum = (typeof RACES_ENUM)[keyof typeof RACES_ENUM]
+export type RaceEnum = (typeof RACE_ENUM)[keyof typeof RACE_ENUM]

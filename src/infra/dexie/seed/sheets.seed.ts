@@ -1,12 +1,11 @@
+import { RACE_ENUM } from '@/domain/constants'
 import { Sheet } from '@/infra/schemas'
 
 export const sheetsSeed: Sheet[] = [
   {
-    id: 1,
     saveId: 'save_1',
     name: 'Aiden',
-    race: 'Beastborn',
-    animal: 'Wolf',
+    race: RACE_ENUM.werewolf,
     coins: 10,
     updatedAt: new Date(),
     createdAt: new Date(),

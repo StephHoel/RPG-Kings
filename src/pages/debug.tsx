@@ -1,17 +1,16 @@
 'use client'
 import { Button, GenericTable, H1, Input, Panel } from '@/ui/components'
 import { db } from '@/infra/dexie/database'
-import { LogCategoryLabels } from '@/types'
 import { exportLogsNDJSON, clearLogs, formatDate, formatPayload } from '@/services/lib'
 import { useState, useEffect, useMemo, Activity } from 'react'
 import { toast } from 'sonner'
 import Head from 'next/head'
 import { Log } from '@/infra/schemas'
-import { LOG_ALL_TYPE } from '@/domain/constants'
+import { LOG_ALL_TYPE, LogAllType } from '@/domain/constants'
 
 export default function Debug() {
   const [logs, setLogs] = useState<Log[]>([])
-  const [type, setType] = useState<LogCategoryLabels>('all')
+  const [type, setType] = useState<LogAllType>('all')
   const [q, setQ] = useState('')
   const [sortAsc, setSortAsc] = useState<boolean>(false)
 

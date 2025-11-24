@@ -1,11 +1,11 @@
+import { ITEM_ENUM, ITEM_TYPE } from '@/domain/constants'
 import { Inventory } from '@/infra/schemas'
 
 export const inventoriesSeed: Inventory[] = [
   {
-    id: 1,
     saveId: 'save_1',
-    item: 'Potion',
-    type: 'healing',
+    item: ITEM_ENUM.notebook,
+    type: ITEM_TYPE.wearable,
     acquiredWeek: 1,
     durationWeeks: 1,
     expiresAtWeek: 2,
@@ -13,23 +13,11 @@ export const inventoriesSeed: Inventory[] = [
     createdAt: new Date(),
   },
   {
-    id: 2,
     saveId: 'default',
-    item: 'Notebook',
-    type: 'eletronic',
+    item: ITEM_ENUM.laptop,
+    type: ITEM_TYPE.eletronic,
     durationWeeks: 0,
     acquiredWeek: 1,
-    updatedAt: new Date(),
-    createdAt: new Date(),
-  },
-  {
-    id: 3,
-    saveId: 'default',
-    item: 'Lanterna',
-    type: 'eletronic',
-    durationWeeks: 0,
-    acquiredWeek: 1,
-    expiresAtWeek: 5,
     updatedAt: new Date(),
     createdAt: new Date(),
   },

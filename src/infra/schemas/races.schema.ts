@@ -1,11 +1,12 @@
 import z from 'zod'
 import { numericId } from './shared'
+import { ANIMAL_ENUM, RACE_ENUM } from '@/domain/constants'
 
 export const RaceSchema = z.object({
   id: numericId.optional(),
-  name: z.string(),
+  name: z.enum(RACE_ENUM),
   hasAnimal: z.boolean(),
-  defaultAnimal: z.string().nullable(),
+  defaultAnimal: z.enum(ANIMAL_ENUM).optional(),
 })
 
 export type Race = z.infer<typeof RaceSchema>

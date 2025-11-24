@@ -7,7 +7,7 @@ import { ROUTES, routeWithSaveId } from '@/domain'
 import { useRouter } from 'next/router'
 import { CreateSaveFormValues } from '@/types'
 import { toast } from 'sonner'
-import { RACES_ENUM } from '@/domain/constants'
+import { RACE_ENUM } from '@/domain/constants'
 
 export default function SaveNew() {
   const router = useRouter()
@@ -19,7 +19,7 @@ export default function SaveNew() {
   const { errors, isSubmitting } = formState
 
   const onSubmit = async (data: CreateSaveFormValues) => {
-    data.race = RACES_ENUM.werewolf
+    data.race = RACE_ENUM.werewolf
 
     createSave.mutate(data, {
       onError(err) {

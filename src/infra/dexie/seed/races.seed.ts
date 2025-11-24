@@ -1,22 +1,38 @@
 import { Race } from '@/infra/schemas'
+import { ANIMAL_ENUM, RACE_ENUM } from '@/domain/constants'
 
 export const racesSeed: Race[] = [
   {
-    id: 1,
-    name: 'Human',
+    name: RACE_ENUM.arcane,
     hasAnimal: false,
-    defaultAnimal: null,
   },
   {
-    id: 2,
-    name: 'Beastborn',
-    hasAnimal: true,
-    defaultAnimal: 'Wolf',
+    name: RACE_ENUM.banshee,
+    hasAnimal: false,
   },
   {
-    id: 3,
-    name: 'Skyfolk',
+    name: RACE_ENUM.kanime,
+    hasAnimal: false,
+  },
+  {
+    name: RACE_ENUM.kitsune,
     hasAnimal: true,
-    defaultAnimal: 'Falcon',
+    defaultAnimal: ANIMAL_ENUM.kitsune,
+  },
+  {
+    name: RACE_ENUM.werewolf,
+    hasAnimal: false,
+  },
+  {
+    name: RACE_ENUM.shapeshift,
+    hasAnimal: true,
+  },
+  {
+    name: RACE_ENUM.vampire,
+    hasAnimal: false,
+  },
+  {
+    name: RACE_ENUM.wiccan,
+    hasAnimal: false,
   },
 ]

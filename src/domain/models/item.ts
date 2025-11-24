@@ -1,3 +1,3 @@
-import { ItemList } from '@/infra/schemas'
+import { Item } from '@/infra/schemas'
 
-export type ItemsModel = ItemList
+export type ItemsModel = Item

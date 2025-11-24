@@ -1,57 +1,57 @@
-import { ANIMALS_ENUM, RACES_ENUM } from '@/domain/constants'
+import { ANIMAL_ENUM, RACE_ENUM } from '@/domain/constants'
 import { Animal } from '@/infra/schemas'
 
 export const animalsSeed: Animal[] = [
   {
-    name: ANIMALS_ENUM.wolf,
-    race: RACES_ENUM.werewolf,
+    name: ANIMAL_ENUM.wolf,
+    race: RACE_ENUM.werewolf,
   },
   {
-    name: ANIMALS_ENUM.bear,
-    race: RACES_ENUM.werewolf,
+    name: ANIMAL_ENUM.bear,
+    race: RACE_ENUM.werewolf,
   },
   {
-    name: ANIMALS_ENUM.lion,
-    race: RACES_ENUM.werewolf,
+    name: ANIMAL_ENUM.lion,
+    race: RACE_ENUM.werewolf,
   },
   {
-    name: ANIMALS_ENUM.tiger,
-    race: RACES_ENUM.werewolf,
+    name: ANIMAL_ENUM.tiger,
+    race: RACE_ENUM.werewolf,
   },
   {
-    name: ANIMALS_ENUM.eagle,
-    race: RACES_ENUM.werewolf,
+    name: ANIMAL_ENUM.eagle,
+    race: RACE_ENUM.werewolf,
   },
   {
-    name: ANIMALS_ENUM.hawk,
-    race: RACES_ENUM.werewolf,
+    name: ANIMAL_ENUM.hawk,
+    race: RACE_ENUM.werewolf,
   },
   {
-    name: ANIMALS_ENUM.owl,
-    race: RACES_ENUM.werewolf,
+    name: ANIMAL_ENUM.owl,
+    race: RACE_ENUM.werewolf,
   },
   {
-    name: ANIMALS_ENUM.snake,
-    race: RACES_ENUM.werewolf,
+    name: ANIMAL_ENUM.snake,
+    race: RACE_ENUM.werewolf,
   },
   {
-    name: ANIMALS_ENUM.horse,
-    race: RACES_ENUM.werewolf,
+    name: ANIMAL_ENUM.horse,
+    race: RACE_ENUM.werewolf,
   },
   {
-    name: ANIMALS_ENUM.fox,
-    race: RACES_ENUM.werewolf,
+    name: ANIMAL_ENUM.fox,
+    race: RACE_ENUM.werewolf,
   },
   {
-    name: ANIMALS_ENUM.dog,
-    race: RACES_ENUM.werewolf,
+    name: ANIMAL_ENUM.dog,
+    race: RACE_ENUM.werewolf,
   },
   {
-    name: ANIMALS_ENUM.cat,
-    race: RACES_ENUM.werewolf,
+    name: ANIMAL_ENUM.cat,
+    race: RACE_ENUM.werewolf,
   },
   {
-    name: ANIMALS_ENUM.kitsune,
-    race: RACES_ENUM.kitsune,
+    name: ANIMAL_ENUM.kitsune,
+    race: RACE_ENUM.kitsune,
   },
 ]

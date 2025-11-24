@@ -3,7 +3,7 @@ import { RPGDatabase } from '../database'
 import {
   animalsSeed,
   disciplinesSeed,
-  itemsListSeed,
+  itemsSeed,
   racesSeed,
   scenesSeed,
   skillsSeed,
@@ -13,7 +13,7 @@ import {
 const seedMap = {
   animals: animalsSeed,
   disciplines: disciplinesSeed,
-  items: itemsListSeed,
+  items: itemsSeed,
   races: racesSeed,
   scenes: scenesSeed,
   skills: skillsSeed,

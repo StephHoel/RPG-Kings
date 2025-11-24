@@ -1,8 +1,10 @@
 export * from './enum/animal.enum'
 export * from './enum/discipline.enum'
+export * from './enum/item.enum'
 export * from './enum/race.enum'
 export * from './enum/skills.enum'
 export * from './enum/stats.enum'
+export * from './enum/xp.enum'
 
 export * from './types/discipline.type'
 export * from './types/item.type'

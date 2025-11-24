@@ -10,3 +10,5 @@ export const LOG_ALL_TYPE = {
 
 // Tipo derivado
 export type LogType = (typeof LOG_TYPE)[keyof typeof LOG_TYPE]
+
+export type LogAllType = (typeof LOG_ALL_TYPE)[keyof typeof LOG_ALL_TYPE]
