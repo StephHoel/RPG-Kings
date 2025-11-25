@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useQueryKeys } from '../../../domain/queryKeys'
+import { useQueryKeys } from '@/domain/queryKeys'
 import { CreateSaveFormValues } from '@/ui/types'
 import { createSaveService, log } from '@/services'
 
@@ -42,7 +42,7 @@ export function useCreateSave() {
 
       console.error(msg, err)
 
-      log.error(msg, { error: err })
+      await log.error(msg, { error: err })
     },
   })
 }

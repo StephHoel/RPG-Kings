@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from 'next/router'
 import { toast } from 'sonner'
-import { ROUTES } from '@/infra/config'
+import { ROUTES } from '@/domain/routes'
 import { useGetScene } from '@/ui/hooks'
 import { ChoiceList, H1, Panel, SceneCard } from '@/ui/components'
 import { useEffect } from 'react'

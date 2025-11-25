@@ -1,7 +1,7 @@
 'use client'
 import { Button, H1, Panel } from '@/ui/components'
 import { useRouter } from 'next/router'
-import { ROUTES } from '@/infra/config'
+import { ROUTES } from '@/domain/routes'
 import Head from 'next/head'
 
 export default function NotFound() {

@@ -1,8 +1,10 @@
 import { getSceneById } from '@/infra/repositories'
-import { Scene } from '@/infra/schemas'
-import { log } from '../lib'
+import { SceneModel } from '@/domain/models'
+import { log } from '@/services'
 
-export async function getSceneByIdService(sceneId: Scene['id']): Promise<Scene | undefined> {
+export async function getSceneByIdService(
+  sceneId: SceneModel['id']
+): Promise<SceneModel | undefined> {
   const scene = await getSceneById(sceneId)
 
   await log.info(`[${getSceneByIdService.name}] Cena obtida`, { scene: scene })

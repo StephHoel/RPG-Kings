@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useQueryKeys } from '../../../domain/queryKeys'
+import { useQueryKeys } from '@/domain/queryKeys'
 import { deleteSaveService } from '@/services'
 import { log } from '@/services'
 
@@ -22,7 +22,7 @@ export function useDeleteSave() {
 
       console.error(msg, err)
 
-      log.error(msg, { error: err })
+      await log.error(msg, { error: err })
     },
   })
 }

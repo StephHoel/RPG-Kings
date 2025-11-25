@@ -1,7 +1,7 @@
 'use client'
 import Head from 'next/head'
 import { Button, H1, Panel } from '@/ui/components'
-import { ROUTES } from '@/infra/config'
+import { ROUTES } from '@/domain/routes'
 import { useRouter } from 'next/router'
 import { Activity } from 'react'
 import { useActiveSaveContext } from '@/ui/providers/useActiveSaveContext'

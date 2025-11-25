@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router'
 import { useDeleteSave, useGetAllSaves } from '@/ui/hooks'
 import { Button, H1, Panel } from '@/ui/components'
-import { ROUTES, routeWithSaveId } from '@/infra/config'
+import { ROUTES, routeWithSaveId } from '@/domain/routes'
 import { toast } from 'sonner'
 import Head from 'next/head'
 

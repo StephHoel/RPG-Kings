@@ -1,8 +1,8 @@
 import { getAllSaves } from '@/infra/repositories'
-import { Save } from '@/infra/schemas'
-import { log } from '@/services/lib'
+import { SaveModel } from '@/domain/models'
+import { log } from '@/services'
 
-export async function listSavesService(): Promise<Save[]> {
+export async function listSavesService(): Promise<SaveModel[]> {
   const saves = await getAllSaves()
 
   await log.info(`[${listSavesService.name}] Saves obtidos`, { countSaves: saves.length })

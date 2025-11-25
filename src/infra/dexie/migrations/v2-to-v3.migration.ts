@@ -31,17 +31,16 @@ export async function migrateV2toV3(tx: Transaction) {
 
     console.log(`[Dexie] Sheets encontradas: ${allSheets.length}`)
 
-    // Reescrever a tabela para forçar nova estrutura (clear + bulkAdd permite ++id ser atribuído)
-    await sheetsTable.clear()
-
+    // Recreate-and-copy: re-insert records without `id` so the new store (++id) assigns PKs.
     if (allSheets.length > 0) {
-      // Remover propriedade id antiga se existir e garantir saveId
       const toInsert = allSheets.map((s) => {
         const { id, ...rest } = s as any
 
         return {
+          // preserve original id as legacyId for traceability
+          legacyId: typeof id === 'number' ? id : null,
+          // do NOT include `id` so bulkAdd assigns a new ++id
           ...rest,
-          // garante campos mínimos
           name: rest.name ?? 'Unnamed',
           saveId: rest.saveId,
           race: rest.race ?? null,
@@ -52,10 +51,71 @@ export async function migrateV2toV3(tx: Transaction) {
       })
 
       try {
+        // clear and bulkAdd so Dexie assigns new auto-increment ids
+        await sheetsTable.clear()
         await sheetsTable.bulkAdd(toInsert)
-        console.log(`[Dexie] Sheets migradas: ${toInsert.length}`)
+        console.log(`[Dexie] Sheets migradas (recreate-and-copy): ${toInsert.length}`)
       } catch (err) {
-        console.error('[Dexie] Erro ao migrar sheets', err)
+        console.error('[Dexie] Erro ao migrar sheets (recreate-and-copy)', err)
+      }
+      // Build mapping legacyId -> newId to update dependent tables
+      try {
+        const migrated = await tx
+          .table('sheets')
+          .filter((r: any) => r.legacyId != null)
+          .toArray()
+        const idMap = new Map<number, number>()
+        for (const rec of migrated) {
+          if (typeof rec.legacyId === 'number' && typeof rec.id === 'number') {
+            idMap.set(rec.legacyId, rec.id)
+          }
+        }
+
+        if (idMap.size > 0) {
+          console.log('[Dexie] sheet id mapping criada:', idMap.size)
+
+          const candidateTables = [
+            'milestones',
+            'inventory',
+            'inventories',
+            'xp_records',
+            'stats',
+            'logs',
+            'animals_list',
+            'disciplines_list',
+            'skills_list',
+            'scenes_list',
+            'items_list',
+          ]
+
+          for (const tname of candidateTables) {
+            if (!hasTable(tx, tname)) continue
+            const t = tx.table(tname) as AnyTable
+            try {
+              const all = await t.toArray()
+              const toUpdate: any[] = []
+              for (const row of all) {
+                if (row && typeof row.sheetId === 'number') {
+                  const newId = idMap.get(row.sheetId)
+                  if (newId && newId !== row.sheetId) {
+                    row.sheetId = newId
+                    toUpdate.push(row)
+                  }
+                }
+              }
+              if (toUpdate.length > 0) {
+                await t.bulkPut(toUpdate)
+                console.log(
+                  `[Dexie] Atualizados ${toUpdate.length} registros em ${tname} para novos sheetId`
+                )
+              }
+            } catch (err) {
+              console.warn('[Dexie] Falha ao atualizar referências em', tname, err)
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('[Dexie] Falha ao construir mapeamento de sheet ids', err)
       }
     }
   }

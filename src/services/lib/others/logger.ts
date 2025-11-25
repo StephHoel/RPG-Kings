@@ -1,6 +1,7 @@
 import { LOG_TYPE, LogType } from '@/domain/constants'
 import { db } from '@/infra/dexie/database'
 import { LogSchema } from '@/infra/schemas'
+import { LogModel } from '@/domain/models'
 
 export const log = {
   async error(message: string, payload?: any) {
@@ -19,7 +20,7 @@ async function toLog(type: LogType, message?: string, payload?: any) {
     payload,
   }
 
-  const parsed = LogSchema.parse(entry)
+  const parsed = LogSchema.parse(entry) as LogModel
 
   try {
     await db.logs.add(parsed)

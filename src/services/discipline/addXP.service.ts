@@ -4,11 +4,11 @@ import {
   getXPBySaveIdAndDiscipline,
 } from '@/infra/repositories'
 import { log } from '@/services'
-import { XPRecord } from '@/infra/schemas'
+import { XPRecordModel } from '@/domain/models'
 
 export async function addXPService(
-  saveId: XPRecord['saveId'],
-  discipline: XPRecord['target'],
+  saveId: XPRecordModel['saveId'],
+  discipline: XPRecordModel['target'],
   amountToAdd: number
 ) {
   const disciplineData = await getDisciplineByName(discipline)
@@ -20,7 +20,7 @@ export async function addXPService(
       target: discipline,
       type: disciplineData?.type,
       xp: amountToAdd,
-    } as XPRecord
+    } as XPRecordModel
   } else {
     record.xp += amountToAdd
   }

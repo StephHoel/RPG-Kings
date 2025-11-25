@@ -5,10 +5,10 @@ import {
   getAllSaves,
   getSaveById,
 } from '@/infra/repositories'
-import { Save } from '@/infra/schemas'
+import { SaveModel } from '@/domain/models'
 
 describe('saves.repo', () => {
-  const save: Save = {
+  const save: SaveModel = {
     id: 'save_test_1',
     isActive: true,
     currentWeek: 0,

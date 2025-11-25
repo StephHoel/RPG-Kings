@@ -39,10 +39,13 @@ export function useSeedAll() {
           toast.success(`Semeado ${tableName} (${entries.length} itens)`)
           anySeeded = true
         } catch (err) {
-          toast.error(`Falha ao semear ${tableName}`)
-          console.error(`Falha ao semear ${tableName}:`, err)
+          const msg = `Falha ao semear ${tableName}`
 
-          throw err
+          toast.error(msg)
+
+          console.error(`${msg}:`, err)
+
+          await log.error(msg, { tableName, error: String(err) })
         }
       }
 

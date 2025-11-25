@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid'
-import { Save } from '@/infra/schemas'
-import { log } from '@/services/lib'
+import { SaveModel } from '@/domain/models'
+import { log } from '@/services'
 import { desactiveAll, createOrUpdateSave } from '@/infra/repositories'
 
 export async function createSaveService(): Promise<string> {
@@ -9,7 +9,7 @@ export async function createSaveService(): Promise<string> {
 
   const saveId = nanoid(10)
 
-  const save: Save = {
+  const save: SaveModel = {
     id: saveId,
     isActive: true,
     currentWeek: 1,

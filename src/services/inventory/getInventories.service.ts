@@ -1,8 +1,8 @@
 import { getInventoriesBySaveId } from '@/infra/repositories'
-import { Inventory } from '@/infra/schemas'
-import { log } from '../lib'
+import { InventoryModel } from '@/domain/models'
+import { log } from '@/services'
 
-export async function getInventoriesService(saveId: string): Promise<Inventory[]> {
+export async function getInventoriesService(saveId: string): Promise<InventoryModel[]> {
   const inventories = await getInventoriesBySaveId(saveId)
 
   await log.info(`[${getInventoriesService.name}] Inventário obtido`, {

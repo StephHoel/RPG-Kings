@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { useQueryKeys } from '../../../domain/queryKeys'
+import { useQueryKeys } from '@/domain/queryKeys'
 import { SheetModel } from '@/domain/models'
-import { getSheetService } from '@/services'
+import { getSheetService, log } from '@/services'
 
 export function useGetSheet(saveId: SheetModel['saveId']): SheetModel | undefined {
   const { data: sheet } = useQuery({
@@ -10,7 +10,17 @@ export function useGetSheet(saveId: SheetModel['saveId']): SheetModel | undefine
     staleTime: 60_000,
     refetchOnWindowFocus: false,
 
-    queryFn: async () => await getSheetService(saveId),
+    queryFn: async () => {
+      try {
+        return await getSheetService(saveId)
+      } catch (err) {
+        const msg = `[${useGetSheet.name}] Erro ao obter ficha`
+
+        console.error(msg, err)
+
+        await log.error(msg, { saveId, error: String(err) })
+      }
+    },
   })
 
   return sheet

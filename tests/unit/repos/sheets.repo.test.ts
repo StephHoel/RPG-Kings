@@ -1,9 +1,9 @@
 import { RACE_ENUM } from '@/domain/constants'
 import { getSheetBySaveId, createOrUpdateSheet, deleteSheet } from '@/infra/repositories'
-import { Sheet } from '@/infra/schemas'
+import { SheetModel } from '@/domain/models'
 
 describe('sheets.repo', () => {
-  const sheet: Sheet = {
+  const sheet: SheetModel = {
     saveId: 'save_test_1',
     name: 'Hero',
     race: RACE_ENUM.vampire,

@@ -43,7 +43,7 @@ export class RPGDatabase extends Dexie {
 
     this.on('versionchange', () => versionChange(this))
 
-    if (typeof window !== 'undefined' || process.env.NODE_ENV !== 'test')
+    if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'test')
       this.open().catch(async (err) => await openCatchDB(this, err))
   }
 }

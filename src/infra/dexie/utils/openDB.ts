@@ -4,7 +4,9 @@ import Dexie from 'dexie'
 export async function openCatchDB(db: Dexie, err: any) {
   console.error('Falha ao abrir IndexedDB:', err)
 
-  const isVersionError = err && (err.name === 'VersionError' || err.name === 'InvalidStateError')
+  const isVersionError =
+    err &&
+    (err.name === 'VersionError' || err.name === 'InvalidStateError' || err.name === 'UpgradeError' || err.name === 'MissingAPIError')
 
   if (isVersionError) {
     console.warn('Incompatibilidade de versão detectada. Deletando e recriando DB como fallback.')

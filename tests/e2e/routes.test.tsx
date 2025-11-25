@@ -1,4 +1,4 @@
-import { ROUTES } from '@/infra/config/routes'
+import { ROUTES } from '@/domain/routes'
 
 describe('E2E routes should return 200', () => {
   const routes = Object.entries(ROUTES).filter(

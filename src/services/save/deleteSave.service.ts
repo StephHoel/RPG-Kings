@@ -1,5 +1,5 @@
 import { deleteSave } from '@/infra/repositories'
-import { log } from '@/services/lib'
+import { log } from '@/services'
 
 export async function deleteSaveService(id: string): Promise<void> {
   await deleteSave(id)

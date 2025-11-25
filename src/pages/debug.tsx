@@ -5,11 +5,11 @@ import { exportLogsNDJSON, clearLogs, formatDate, formatPayload } from '@/servic
 import { useState, useEffect, useMemo, Activity } from 'react'
 import { toast } from 'sonner'
 import Head from 'next/head'
-import { Log } from '@/infra/schemas'
+import { LogModel } from '@/domain/models'
 import { LOG_ALL_TYPE, LogAllType } from '@/domain/constants'
 
 export default function Debug() {
-  const [logs, setLogs] = useState<Log[]>([])
+  const [logs, setLogs] = useState<LogModel[]>([])
   const [type, setType] = useState<LogAllType>('all')
   const [q, setQ] = useState('')
   const [sortAsc, setSortAsc] = useState<boolean>(false)
@@ -74,22 +74,24 @@ export default function Debug() {
       key: 'createdAt',
       label: createdAtLabel,
       onHeaderClick: () => setSortAsc((s) => !s),
-      render: (r: Log) => formatDate(r.createdAt),
+      render: (r: LogModel) => formatDate(r.createdAt),
     },
     {
       key: 'type',
       label: 'Type',
-      render: (r: Log) => r.type,
+      render: (r: LogModel) => r.type,
     },
     {
       key: 'message',
       label: 'Message',
-      render: (r: Log) => r.message ?? '—',
+      render: (r: LogModel) => r.message ?? '—',
     },
     {
       key: 'payload',
       label: 'Payload',
-      render: (r: Log) => <pre className="whitespace-pre-wrap">{formatPayload(r.payload)}</pre>,
+      render: (r: LogModel) => (
+        <pre className="whitespace-pre-wrap">{formatPayload(r.payload)}</pre>
+      ),
     },
   ]
 
