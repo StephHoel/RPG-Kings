@@ -7,7 +7,7 @@ export async function getXPBySaveId(saveId: string): Promise<XPRecord[]> {
 
 export async function createOrUpdateXP(record: XPRecord): Promise<void> {
   if (record.id !== undefined) {
-    await db.xp_records.put(record)
+    await db.xp_records.put({ ...record, updatedAt: new Date() })
     return
   }
 

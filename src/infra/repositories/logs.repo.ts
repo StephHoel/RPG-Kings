@@ -6,10 +6,6 @@ export async function getAllLogs(): Promise<Log[]> {
 }
 
 export async function createLog(log: Log): Promise<void> {
-  if (log.id !== undefined) {
-    await db.logs.put(log)
-  }
-
   await db.logs.add(log)
 }
 

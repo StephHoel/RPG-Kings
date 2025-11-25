@@ -13,7 +13,7 @@ export async function createOrUpdateSave(save: Save): Promise<void> {
   const saveFound = await getSaveById(save.id)
 
   if (saveFound) {
-    await db.saves.put(save)
+    await db.saves.put({ ...save, updatedAt: new Date() })
     return
   }
 
@@ -21,7 +21,7 @@ export async function createOrUpdateSave(save: Save): Promise<void> {
 }
 
 export async function desactiveAll(): Promise<void> {
-  await db.saves.toCollection().modify({ isActive: false })
+  await db.saves.toCollection().modify({ isActive: false, updatedAt: new Date() })
 }
 
 export async function deleteSave(id: string): Promise<void> {
