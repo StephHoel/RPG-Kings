@@ -5,7 +5,7 @@ import { AlertError, Button, H1, Input, Loader, Panel } from '@/ui/components'
 import { useForm } from 'react-hook-form'
 import { ROUTES, routeWithSaveId } from '@/domain'
 import { useRouter } from 'next/router'
-import { CreateSaveFormValues } from '@/types'
+import { CreateSaveFormValues } from '@/ui/types'
 import { toast } from 'sonner'
 import { RACE_ENUM } from '@/domain/constants'
 

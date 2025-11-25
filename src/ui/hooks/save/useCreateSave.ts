@@ -3,7 +3,7 @@ import { db } from '@/infra/dexie/database'
 import { log } from '@/services/lib'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
-import { CreateSaveFormValues } from '@/types'
+import { CreateSaveFormValues } from '@/ui/types'
 
 export function useCreateSave() {
   const queryClient = useQueryClient()
