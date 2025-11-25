@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useQueryKeys } from '../queries/queryKeys'
+import { useQueryKeys } from '../../../domain/queryKeys'
 import { deleteSaveService } from '@/services'
 import { log } from '@/services'
 

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useQueryKeys } from '../queries/queryKeys'
+import { useQueryKeys } from '../../../domain/queryKeys'
 import { Inventory } from '@/infra/schemas'
 import { getInventoriesService } from '@/services'
 

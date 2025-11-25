@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useQueryKeys } from '../queries/queryKeys'
+import { useQueryKeys } from '../../../domain/queryKeys'
 import { addXPService, log } from '@/services'
 
 export function useAddXP(saveId: string, discipline: string, xpToAdd: number) {

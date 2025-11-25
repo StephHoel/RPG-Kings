@@ -4,6 +4,7 @@ import { log, safeBulkAdd } from '@/services'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
+// TODO migrar para um service
 export function useSeedAll() {
   const candidateSeeds: Record<string, any[]> = {}
 

@@ -1,6 +1,3 @@
-// Queries
-export * from './queries/queryKeys'
-
 // Save
 export * from './save/useActiveSave'
 export * from './save/useCreateSave'

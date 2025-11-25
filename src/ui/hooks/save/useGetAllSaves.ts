@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useQueryKeys } from '../queries/queryKeys'
+import { useQueryKeys } from '../../../domain/queryKeys'
 import { Save } from '@/infra/schemas'
 import { listSavesService } from '@/services'
 
