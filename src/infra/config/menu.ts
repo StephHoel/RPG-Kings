@@ -14,10 +14,10 @@ export const MENUS = [
     route: (_id: string | null): string => (_id ? routeWithSaveId(ROUTES.SHEET, _id) : ''),
     label: 'Ficha',
   },
-  {
-    route: (_id: string | null): string => (_id ? routeWithSaveId(ROUTES.PROGRESS, _id) : ''),
-    label: 'Progresso',
-  },
+  // {
+  //   route: (_id: string | null): string => (_id ? routeWithSaveId(ROUTES.PROGRESS, _id) : ''),
+  //   label: 'Progresso',
+  // },
   {
     route: (_id: string | null): string => ROUTES.SAVES,
     label: 'Saves',

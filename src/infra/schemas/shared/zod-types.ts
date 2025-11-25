@@ -5,13 +5,17 @@ export const idString = z.string().min(1, 'ID não pode ser vazio')
 export const numericId = z.number().int().nonnegative()
 
 // Datas
-export const isoDate = z.union([
-  z.date(),
-  z
-    .string()
-    .refine((val) => !isNaN(new Date(val).getTime()), 'Data inválida')
-    .transform((val) => new Date(val)),
-])
+export const isoDate = z
+  .union([
+    z.date(),
+    z
+      .string()
+      .refine((s) => !isNaN(new Date(s).getTime()), 'Data inválida')
+      .transform((s) => new Date(s)),
+  ])
+  .optional()
+  .transform((v) => v ?? new Date())
+export const isoDateOptional = isoDate.optional()
 
 // Strings comuns
 export const nonEmptyString = z.string().min(1)

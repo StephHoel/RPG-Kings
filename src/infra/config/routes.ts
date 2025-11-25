@@ -3,13 +3,13 @@ export const BASE = '/RPG-Kings'
 
 export const ROUTES = {
   ROOT: '/',
-  AUTH: '/auth',
+  // AUTH: '/auth',
   SAVES: '/saves',
   SAVE_NEW: '/saves/new',
   GAME: '/game',
-  PROGRESS: '/progress',
+  // PROGRESS: '/progress',
   SHEET: '/sheet',
-  SETTINGS: '/settings',
+  // SETTINGS: '/settings',
   DEV_SEED: '/dev/seed',
   DEBUG: '/debug',
 } as const

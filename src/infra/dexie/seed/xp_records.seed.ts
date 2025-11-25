@@ -7,15 +7,11 @@ export const xpRecordsSeed: XPRecord[] = [
     type: XP_TYPE.class,
     target: DISCIPLINE_ENUM.athletics,
     xp: 10,
-    createdAt: new Date(),
-    updatedAt: new Date()
   },
   {
     saveId: 'save_1',
     type: XP_TYPE.skill,
     target: SKILL_ENUM.divination,
     xp: 5,
-    createdAt: new Date(),
-    updatedAt: new Date()
   },
 ]

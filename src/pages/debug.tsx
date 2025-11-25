@@ -1,7 +1,7 @@
 'use client'
 import { Button, GenericTable, H1, Input, Panel } from '@/ui/components'
 import { db } from '@/infra/dexie/database'
-import { exportLogsNDJSON, clearLogs, formatDate, formatPayload } from '@/services/lib'
+import { exportLogsNDJSON, clearLogs, formatDate, formatPayload } from '@/services'
 import { useState, useEffect, useMemo, Activity } from 'react'
 import { toast } from 'sonner'
 import Head from 'next/head'

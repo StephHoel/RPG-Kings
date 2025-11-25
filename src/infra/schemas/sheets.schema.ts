@@ -1,5 +1,5 @@
 import z from 'zod'
-import { buildEnumRecord, idString, isoDate, numericId } from './shared'
+import { buildEnumRecord, idString, isoDateOptional, numericId } from './shared'
 import { ANIMAL_ENUM, RACE_ENUM } from '@/domain/constants'
 
 export const SheetSchema = z.object({
@@ -9,8 +9,8 @@ export const SheetSchema = z.object({
   race: buildEnumRecord(RACE_ENUM),
   animal: buildEnumRecord(ANIMAL_ENUM).optional(),
   coins: z.number().int(),
-  updatedAt: isoDate,
-  createdAt: isoDate,
+  updatedAt: isoDateOptional,
+  createdAt: isoDateOptional,
 })
 
 export type Sheet = z.infer<typeof SheetSchema>

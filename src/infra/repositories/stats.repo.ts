@@ -7,7 +7,7 @@ export async function getStatsBySaveId(saveId: string): Promise<Stats | undefine
 
 export async function createOrUpdateStats(s: Stats): Promise<void> {
   if (s.id !== undefined) {
-    await db.stats.put({ ...s, updatedAt: new Date() })
+    await db.stats.put({ ...s, updatedAt: undefined })
     return
   }
 

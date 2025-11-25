@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from 'next/router'
 import { useGetInventory, useGetSheet } from '@/ui/hooks'
-import { ROUTES } from '@/domain'
+import { ROUTES } from '@/infra/config'
 import { H1, Panel } from '@/ui/components'
 import { Suspense } from 'react'
 import Head from 'next/head'

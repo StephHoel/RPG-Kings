@@ -1,50 +1,33 @@
-import { nanoid } from 'nanoid'
-import { db } from '@/infra/dexie/database'
-import { log } from '@/services/lib'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '../queries/queryKeys'
 import { CreateSaveFormValues } from '@/ui/types'
+import { createSaveService, log } from '@/services'
 
 export function useCreateSave() {
   const queryClient = useQueryClient()
 
   return useMutation<string, Error, CreateSaveFormValues>({
     mutationFn: async ({ name, race }: CreateSaveFormValues): Promise<string> => {
-      // desativar saves ativos anteriores
-      await db.saves.toCollection().modify({ isActive: false })
+      const saveId = await createSaveService()
 
-      await log.info('[useCreateSave] Jogos anteriores inativados')
+      // TODO migrar para hook específico
+      // sheets creation currently remains in hook until a dedicated service is implemented
+      // // const animal = getAnimal(race)
+      // // const stats = statsByRace(race, animal)
+      // // const developSkills = getDevelopSkills(race)
+      // // const fixedSkills = getFixedSkills(race)
 
-      const saveId = nanoid(10)
+      // await db.sheets.add({
+      //   saveId,
+      //   race,
+      //   // animal: animal ?? null,
+      //   coins: 0,
+      //   name,
+      //   createdAt: new Date(),
+      //   updatedAt: new Date(),
+      // })
 
-      await db.saves.add({
-        id: saveId,
-        isActive: true,
-        currentWeek: 1,
-        currentDay: 1,
-        currentHour: 8,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      })
-
-      await log.info('[useCreateSave] Save criado', { saveId, name })
-
-      // const animal = getAnimal(race)
-      // const stats = statsByRace(race, animal)
-      // const developSkills = getDevelopSkills(race)
-      // const fixedSkills = getFixedSkills(race)
-
-      await db.sheets.add({
-        saveId,
-        race,
-        // animal: animal ?? null,
-        coins: 0,
-        name,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      })
-
-      await log.info('[useCreateSave] Ficha de personagem criada', { saveId })
+      // await log.info('[useCreateSave] Ficha de personagem criada', { saveId })
 
       return saveId
     },
@@ -55,9 +38,11 @@ export function useCreateSave() {
     },
 
     onError: async (err) => {
-      await log.error('[useCreateSave] Erro inesperado na mutação', {
-        error: String(err),
-      })
+      const msg = `[${useCreateSave.name}] Erro na criação do save`
+
+      console.error(msg, err)
+
+      log.error(msg, { error: err })
     },
   })
 }

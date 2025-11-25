@@ -2,7 +2,7 @@ import { z } from 'zod'
 import {
   buildEnumRecord,
   idString,
-  isoDate,
+  isoDateOptional,
   nonNegativeInt,
   numericId,
   positiveInt,
@@ -26,8 +26,8 @@ export const InventorySchema = z.object({
   durationWeeks: positiveInt.optional(),
   expiresAtWeek: nonNegativeInt.optional(),
   usedAtWeek: z.number().optional(),
-  updatedAt: isoDate,
-  createdAt: isoDate,
+  updatedAt: isoDateOptional,
+  createdAt: isoDateOptional,
 })
 
 export type Inventory = z.infer<typeof InventorySchema>

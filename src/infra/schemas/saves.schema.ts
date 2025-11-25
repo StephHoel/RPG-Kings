@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { idString, isoDate } from './shared'
+import { idString, isoDateOptional } from './shared'
 
 export const SaveSchema = z.object({
   id: idString,
@@ -7,8 +7,8 @@ export const SaveSchema = z.object({
   currentWeek: z.number().int().nonnegative(),
   currentDay: z.number().int().nonnegative(),
   currentHour: z.number().int().nonnegative(),
-  updatedAt: isoDate,
-  createdAt: isoDate,
+  updatedAt: isoDateOptional,
+  createdAt: isoDateOptional,
 })
 
 export type Save = z.infer<typeof SaveSchema>

@@ -13,7 +13,5 @@ export const statsSeed: Stats[] = [
     health: 100,
     magic: 10,
     mana: 10,
-    createdAt: new Date(),
-    updatedAt: new Date()
   },
 ]

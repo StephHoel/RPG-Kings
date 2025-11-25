@@ -1,5 +1,5 @@
 import z from 'zod'
-import { numericId, idString, isoDate } from './shared'
+import { numericId, idString, isoDateOptional } from './shared'
 
 export const StatsSchema = z.object({
   id: numericId.optional(),
@@ -14,8 +14,8 @@ export const StatsSchema = z.object({
   health: z.number(),
   magic: z.number(),
   mana: z.number(),
-  updatedAt: isoDate,
-  createdAt: isoDate,
+  updatedAt: isoDateOptional,
+  createdAt: isoDateOptional,
 })
 
 export type Stats = z.infer<typeof StatsSchema>

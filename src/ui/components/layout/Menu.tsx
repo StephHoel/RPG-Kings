@@ -1,6 +1,6 @@
 'use client'
-import { MENUS } from '@/domain'
-import { isValidRoute, isSameRoute } from '@/services/lib'
+import { MENUS } from '@/infra/config'
+import { isValidRoute, isSameRoute } from '@/services'
 import { useActiveSaveContext } from '@/ui/providers/useActiveSaveContext'
 import Link from 'next/link'
 import { useRouter } from 'next/router'

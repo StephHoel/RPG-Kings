@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ROUTES } from '@/domain'
+import { ROUTES } from '@/infra/config'
 
 export function Header() {
   return (

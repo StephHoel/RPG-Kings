@@ -1,6 +1,6 @@
 'use client'
 import { db } from '@/infra/dexie/database'
-import { log, safeBulkAdd } from '@/services/lib'
+import { log, safeBulkAdd } from '@/services'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 

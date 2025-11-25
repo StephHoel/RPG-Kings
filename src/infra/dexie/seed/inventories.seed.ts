@@ -9,8 +9,6 @@ export const inventoriesSeed: Inventory[] = [
     acquiredWeek: 1,
     durationWeeks: 1,
     expiresAtWeek: 2,
-    updatedAt: new Date(),
-    createdAt: new Date(),
   },
   {
     saveId: 'default',
@@ -18,7 +16,5 @@ export const inventoriesSeed: Inventory[] = [
     type: ITEM_TYPE.eletronic,
     durationWeeks: 0,
     acquiredWeek: 1,
-    updatedAt: new Date(),
-    createdAt: new Date(),
   },
 ]

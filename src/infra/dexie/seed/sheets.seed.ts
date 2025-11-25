@@ -7,7 +7,5 @@ export const sheetsSeed: Sheet[] = [
     name: 'Aiden',
     race: RACE_ENUM.werewolf,
     coins: 10,
-    updatedAt: new Date(),
-    createdAt: new Date(),
   },
 ]

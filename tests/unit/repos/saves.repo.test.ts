@@ -4,7 +4,7 @@ import {
   desactiveAll,
   getAllSaves,
   getSaveById,
-} from '@/infra/repositories/saves.repo'
+} from '@/infra/repositories'
 import { Save } from '@/infra/schemas'
 
 describe('saves.repo', () => {

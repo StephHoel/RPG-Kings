@@ -1,4 +1,4 @@
-import { safeBulkAdd } from '@/services/lib'
+import { safeBulkAdd } from '@/services'
 import { RPGDatabase } from '../database'
 import { SEED_MAP_V3 } from '../versioning'
 

@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { numericId, isoDate, buildEnumRecord } from './shared'
+import { numericId, isoDateOptional, buildEnumRecord } from './shared'
 import { LOG_TYPE } from '@/domain/constants'
 
 export const LogSchema = z.object({
@@ -7,7 +7,7 @@ export const LogSchema = z.object({
   type: buildEnumRecord(LOG_TYPE),
   message: z.string().nullable().optional(),
   payload: z.any().optional(),
-  createdAt: isoDate,
+  createdAt: isoDateOptional,
 })
 
 export type Log = z.infer<typeof LogSchema>

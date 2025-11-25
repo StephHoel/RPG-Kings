@@ -8,7 +8,5 @@ export const savesSeed: Save[] = [
     currentWeek: 1,
     currentDay: 1,
     currentHour: 8,
-    updatedAt: new Date(),
-    createdAt: new Date(),
   },
 ]

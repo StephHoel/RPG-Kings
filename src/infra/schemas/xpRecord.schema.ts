@@ -1,5 +1,5 @@
 import z from 'zod'
-import { numericId, idString, buildEnumRecord, isoDate } from './shared'
+import { numericId, idString, buildEnumRecord, isoDateOptional } from './shared'
 import { DISCIPLINE_ENUM, SKILL_ENUM, XP_TYPE } from '@/domain/constants'
 
 export const XPRecordSchema = z.object({
@@ -8,8 +8,8 @@ export const XPRecordSchema = z.object({
   type: buildEnumRecord(XP_TYPE),
   target: buildEnumRecord(DISCIPLINE_ENUM).or(buildEnumRecord(SKILL_ENUM)),
   xp: z.number().nonnegative(),
-  updatedAt: isoDate,
-  createdAt: isoDate,
+  updatedAt: isoDateOptional,
+  createdAt: isoDateOptional,
 })
 
 export type XPRecord = z.infer<typeof XPRecordSchema>

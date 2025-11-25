@@ -7,7 +7,7 @@ export async function getSheetBySaveId(saveId: string): Promise<Sheet | undefine
 
 export async function createOrUpdateSheet(sheet: Sheet): Promise<void> {
   if (sheet.id) {
-    await db.sheets.put({ ...sheet, updatedAt: new Date() })
+    await db.sheets.put({ ...sheet, updatedAt: undefined })
     return
   }
 

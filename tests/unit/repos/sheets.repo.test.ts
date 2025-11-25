@@ -1,9 +1,5 @@
 import { RACE_ENUM } from '@/domain/constants'
-import {
-  getSheetBySaveId,
-  createOrUpdateSheet,
-  deleteSheet,
-} from '@/infra/repositories/sheets.repo'
+import { getSheetBySaveId, createOrUpdateSheet, deleteSheet } from '@/infra/repositories'
 import { Sheet } from '@/infra/schemas'
 
 describe('sheets.repo', () => {
