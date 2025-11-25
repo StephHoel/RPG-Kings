@@ -60,7 +60,9 @@ export async function safeBulkAdd<T, K = any>(
             inserted += toInsert.length
           } catch (_err: unknown) {
             errors += toInsert.length
-            console.error(_err)
+            toInsert.map((i) =>
+              console.error(`[SafeBulkAdd] Erro ao tentar inserir ${i} | ${_err}`)
+            )
           }
         }
       } catch (_err: unknown) {

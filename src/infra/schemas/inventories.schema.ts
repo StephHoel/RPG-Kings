@@ -1,5 +1,12 @@
 import { z } from 'zod'
-import { idString, isoDate, nonNegativeInt, numericId, positiveInt } from './shared'
+import {
+  buildEnumRecord,
+  idString,
+  isoDate,
+  nonNegativeInt,
+  numericId,
+  positiveInt,
+} from './shared'
 import { ITEM_ENUM, ITEM_TYPE } from '@/domain/constants'
 
 /**
@@ -13,8 +20,8 @@ import { ITEM_ENUM, ITEM_TYPE } from '@/domain/constants'
 export const InventorySchema = z.object({
   id: numericId.optional(),
   saveId: idString,
-  item: z.enum(ITEM_ENUM),
-  type: z.enum(ITEM_TYPE),
+  item: buildEnumRecord(ITEM_ENUM),
+  type: buildEnumRecord(ITEM_TYPE),
   acquiredWeek: positiveInt,
   durationWeeks: positiveInt.optional(),
   expiresAtWeek: nonNegativeInt.optional(),

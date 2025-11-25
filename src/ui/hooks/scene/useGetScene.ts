@@ -16,7 +16,7 @@ export function useGetScene(saveId: string): Scene | null {
         const save = await db.saves.get(saveId)
         if (!save) return null
 
-        const scenes = await db.scenes.toArray()
+        const scenes = await db.scenes_list.toArray()
 
         await log.info('[useGetScene] Cena obtida', { scene: scenes[0] })
 

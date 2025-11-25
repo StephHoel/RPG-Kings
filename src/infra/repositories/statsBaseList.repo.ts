@@ -4,5 +4,5 @@ import { StatsBase } from '@/infra/schemas'
 export async function getStatsBaseByTarget(
   target: StatsBase['target']
 ): Promise<StatsBase | undefined> {
-  return db.statsBases.where({ target }).first()
+  return db.stats_base_list.where({ target }).first()
 }

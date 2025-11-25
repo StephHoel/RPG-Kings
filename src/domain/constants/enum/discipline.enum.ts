@@ -12,7 +12,7 @@ export const DISCIPLINE_ENUM = {
   biology: 'Biologia',
   physics: 'Física',
   chemistry: 'Química',
-  
+
   // TODO adicionar disciplinas aqui
   ESPORTES_DE_QUADRA: 'Esportes de Quadra', // TODO colocar cada esporte
   ESPORTES_DE_GRAMA: 'Esportes de Grama', // TODO colocar cada esporte

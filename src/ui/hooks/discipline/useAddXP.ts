@@ -11,7 +11,7 @@ export function useAddXP(saveId: string, discipline: string, xpToAdd: number) {
   return useMutation<boolean, never, void>({
     mutationFn: async () => {
       try {
-        const existing = await db.disciplines
+        const existing = await db.disciplines_list
           .where({ saveId: saveId, discipline: discipline })
           .first()
 
@@ -21,7 +21,7 @@ export function useAddXP(saveId: string, discipline: string, xpToAdd: number) {
           // const now = new Date()
 
           // TODO mudar isso
-          await db.disciplines.add({
+          await db.disciplines_list.add({
             name: DISCIPLINE_ENUM.english,
             type: DISCIPLINE_TYPE.mandatory,
             skills: [],

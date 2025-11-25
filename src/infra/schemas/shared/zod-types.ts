@@ -24,6 +24,3 @@ export const nonNegativeInt = z.number().int().nonnegative()
 // Arrays
 export const stringArray = z.array(z.string())
 export const numberArray = z.array(z.number())
-
-// Enum helper
-export const buildEnum = <T extends string[]>(values: [...T]) => z.enum(values)

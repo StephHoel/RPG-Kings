@@ -1,10 +1,10 @@
 import { z } from 'zod'
-import { numericId, isoDate } from './shared'
+import { numericId, isoDate, buildEnumRecord } from './shared'
 import { LOG_TYPE } from '@/domain/constants'
 
 export const LogSchema = z.object({
   id: numericId.optional(),
-  type: z.enum(LOG_TYPE),
+  type: buildEnumRecord(LOG_TYPE),
   message: z.string().nullable().optional(),
   payload: z.any().optional(),
   createdAt: isoDate,

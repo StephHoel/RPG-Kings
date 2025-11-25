@@ -4,21 +4,21 @@ import { Discipline } from '@/infra/schemas'
 export async function getDisciplineByName(
   name: Discipline['name']
 ): Promise<Discipline | undefined> {
-  return db.disciplines.where({ name }).first()
+  return db.disciplines_list.where({ name }).first()
 }
 
 export async function getDisciplinesByType(type: Discipline['type']): Promise<Discipline[]> {
-  return db.disciplines.where({ type }).toArray()
+  return db.disciplines_list.where({ type }).toArray()
 }
 
 export async function getDisciplinesBySkills(skills: Discipline['skills']): Promise<Discipline[]> {
-  return db.disciplines.where({ skills }).toArray()
+  return db.disciplines_list.where({ skills }).toArray()
 }
 
 export async function getDisciplinesByStats(stats: Discipline['stats']): Promise<Discipline[]> {
-  return db.disciplines.where({ stats }).toArray()
+  return db.disciplines_list.where({ stats }).toArray()
 }
 
 export async function getAllDisciplines(): Promise<Discipline[]> {
-  return db.disciplines.toArray()
+  return db.disciplines_list.toArray()
 }

@@ -18,19 +18,19 @@ import { registerV1, registerV2, registerV3 } from './versioning'
 import { openCatchDB, populateDB, versionChange } from './utils'
 
 export class RPGDatabase extends Dexie {
-  animals!: Table<Animal, number>
-  disciplines!: Table<Discipline, number>
+  animals_list!: Table<Animal, number>
+  disciplines_list!: Table<Discipline, number>
   inventories!: Table<Inventory, number>
-  items!: Table<Item, number>
+  items_list!: Table<Item, number>
   logs!: Table<Log, number>
-  races!: Table<Race, number>
+  races_list!: Table<Race, number>
   saves!: Table<Save, string>
-  scenes!: Table<Scene, string>
+  scenes_list!: Table<Scene, string>
   sheets!: Table<Sheet, number>
-  skills!: Table<Skill, number>
+  skills_list!: Table<Skill, number>
   stats!: Table<Stats, number>
-  statsBases!: Table<StatsBase, number>
-  xpRecord!: Table<XPRecord, number>
+  stats_base_list!: Table<StatsBase, number>
+  xp_records!: Table<XPRecord, number>
 
   constructor() {
     super('rpg_db')
@@ -38,10 +38,12 @@ export class RPGDatabase extends Dexie {
     registerV2(this)
     registerV3(this)
 
+    // if (process.env.NODE_ENV !== 'test')
     this.on('populate', () => populateDB(this))
+
     this.on('versionchange', () => versionChange(this))
 
-    if (typeof window !== 'undefined')
+    if (typeof window !== 'undefined' || process.env.NODE_ENV !== 'test')
       this.open().catch(async (err) => await openCatchDB(this, err))
   }
 }
