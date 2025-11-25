@@ -8,6 +8,7 @@ export async function getInventoriesBySaveId(saveId: string): Promise<Inventory[
 export async function createOrUpdateInventory(item: Inventory): Promise<void> {
   if (item.id !== undefined) {
     await db.inventories.put(item)
+    return
   }
 
   await db.inventories.add(item)

@@ -14,6 +14,7 @@ export async function createOrUpdateSave(save: Save): Promise<void> {
 
   if (saveFound) {
     await db.saves.put(save)
+    return
   }
 
   await db.saves.add(save)
