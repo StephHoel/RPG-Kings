@@ -1,7 +1,7 @@
 'use client'
 import Head from 'next/head'
 import { useCreateSave } from '@/ui/hooks'
-import { Button, H1, Input, Loader, Panel } from '@/ui/components'
+import { Button, H1, Select, Input, Loader, Panel } from '@/ui/components'
 import { useForm } from 'react-hook-form'
 import { ROUTES, routeWithSaveId } from '@/domain/routes'
 import { useRouter } from 'next/router'
@@ -14,13 +14,11 @@ export default function SaveNew() {
   const createSave = useCreateSave()
 
   const { register, handleSubmit, formState } = useForm<CreateSaveFormValues>({
-    defaultValues: { name: '', race: undefined },
+    defaultValues: { name: '', race: '' },
   })
   const { errors, isSubmitting } = formState
 
   const onSubmit = async (data: CreateSaveFormValues) => {
-    data.race = RACE_ENUM.werewolf
-
     createSave.mutate(data, {
       onError(err) {
         toast.error('Erro ao criar save')
@@ -51,14 +49,15 @@ export default function SaveNew() {
             Nome do Personagem
           </Input>
 
-          <Input
-            placeholder="Insira a raça aqui"
+          <Select
             {...register('race', { required: 'Raça é obrigatório' })}
             aria-invalid={errors.race ? 'true' : 'false'}
             error={errors.race?.message}
+            placeholder="Selecione a raça"
+            options={Object.entries(RACE_ENUM).map(([value, label]) => ({ value, label }))}
           >
             Raça
-          </Input>
+          </Select>
 
           <Button type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>
             {isSubmitting ? <Loader text="Criando..." /> : 'Criar'}

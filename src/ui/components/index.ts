@@ -13,6 +13,7 @@ export * from './standard/Button'
 export * from './standard/GenericTable'
 export * from './standard/H1'
 export * from './standard/Input'
+export * from './standard/Select'
 
 // Others Components
 export * from './ChoiceList'
