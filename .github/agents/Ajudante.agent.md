@@ -78,3 +78,52 @@ Este agente personalizado auxilia no desenvolvimento do repositório RPG-Kings, 
 ### Como pedir ajuda:
 
 Se a tarefa for ambígua, o agente pergunta por esclarecimentos (ex.: "Qual é o schema exato?").
+ 
+### Regra de fluxo obrigatório
+
+- **Fluxo estrito:** Todas as implementações e alterações devem seguir a sequência: `ui > hook > service > repo > db`.
+- **Proibições:** Componentes de `ui` não devem acessar `service`, `repo` ou `db` diretamente. Hooks não devem acessar `db` diretamente. Services podem usar `repo`, e `repo` é o único responsável por acessar o `db`.
+- **Responsabilidades:**
+  - `ui`: componentes React/Next.js — apenas interação e apresentação.
+  - `hook`: hooks customizados que orquestram lógica de UI e delegam para `service`.
+  - `service`: lógica de aplicação, validações e composição de chamadas a `repo`.
+  - `repo`: camada de acesso a dados (Dexie, fetch, storage), única que fala com `db`.
+  - `db`: implementação de persistência (Dexie DB, localStorage, API externa).
+
+### Convenções e exemplos rápidos
+
+- Exemplo mínimo de fluxo:
+  - `components/CharacterForm.tsx` chama `useCharacterForm` (hook).
+  - `useCharacterForm` chama `characterService.createCharacter()`.
+  - `characterService.createCharacter()` valida e chama `characterRepo.add()`.
+  - `characterRepo.add()` executa `db.characters.add()`.
+
+- Nomes e locais recomendados:
+  - Hooks: `src/ui/hooks/*` ou `src/ui/components/hooks/*`.
+  - Services: `src/services/*` (ex.: `src/services/character.ts`).
+  - Repos: `src/infra/repositories/*` ou `src/infra/dexie/*`.
+
+### Checklist para PRs (verificação de fluxo)
+
+- Arquitetura: confirme que as mudanças obedecem `ui > hook > service > repo > db`.
+- Importações: nenhum arquivo em `ui` deve importar `service`, `repo` ou `db` diretamente.
+- Encapsulamento: hooks não importam `db` diretamente — use `service`.
+- Testes: adicione testes unitários para `service` e `repo` quando a lógica estiver neles.
+- Commit: mensagens convencionais (`feat:`, `fix:`, `refactor:`). Se relevante, mencione que o commit corrige/segue o fluxo (ex.: `feat: adicionar characterService — segue fluxo ui>hook>service>repo>db`).
+
+### Como aplicar a regra em tarefas existentes
+
+- Se encontrar código que quebra o fluxo, abra uma issue/task descrevendo o refactor necessário e proponha a implementação com:
+  - Extração de lógica para `service`/`repo`.
+  - Criação de hooks para invocação a `service`.
+  - Migração de chamadas diretas ao `db` para métodos em `repo`.
+
+### Exemplos de anti-padrões (o que evitar)
+
+- Componentes que importam `db` ou `repo` diretamente.
+- Hooks que executam queries no `db` sem passar pelo `service`.
+- Services que manipulam diretamente UI (renderização, navegação) — isso cabe ao `ui`/`hook`.
+
+### Observações finais
+
+- Esta regra existe para manter separação de responsabilidades, testabilidade e previsibilidade do código. Ao revisar PRs, priorize clareza do fluxo e pequenas mudanças que respeitem a regra.
