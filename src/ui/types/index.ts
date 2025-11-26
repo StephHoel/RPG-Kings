@@ -1,5 +1,5 @@
-export * from './standard/ButtonProps'
-export * from './standard/HeaderProps'
-export * from './standard/GenericTableProps'
+export * from './form/createSaveFormValues.type'
 
-export * from './form/CreateSaveFormValues'
+export * from './standard/header.type'
+export * from './standard/genericTable.type'
+export * from './standard/input.type'

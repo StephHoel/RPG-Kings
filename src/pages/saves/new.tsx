@@ -1,7 +1,7 @@
 'use client'
 import Head from 'next/head'
 import { useCreateSave } from '@/ui/hooks'
-import { AlertError, Button, H1, Input, Loader, Panel } from '@/ui/components'
+import { Button, H1, Input, Loader, Panel } from '@/ui/components'
 import { useForm } from 'react-hook-form'
 import { ROUTES, routeWithSaveId } from '@/domain/routes'
 import { useRouter } from 'next/router'
@@ -46,6 +46,7 @@ export default function SaveNew() {
             placeholder="Insira o nome aqui"
             {...register('name', { required: 'Nome é obrigatório' })}
             aria-invalid={errors.name ? 'true' : 'false'}
+            error={errors.name?.message}
           >
             Nome do Personagem
           </Input>
@@ -53,14 +54,11 @@ export default function SaveNew() {
           <Input
             placeholder="Insira a raça aqui"
             {...register('race', { required: 'Raça é obrigatório' })}
-            aria-invalid={errors.name ? 'true' : 'false'}
+            aria-invalid={errors.race ? 'true' : 'false'}
+            error={errors.race?.message}
           >
             Raça
           </Input>
-
-          <AlertError mode={errors.name ? 'visible' : 'hidden'}>
-            {errors.name?.message ?? 'Erro no nome'}
-          </AlertError>
 
           <Button type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>
             {isSubmitting ? <Loader text="Criando..." /> : 'Criar'}

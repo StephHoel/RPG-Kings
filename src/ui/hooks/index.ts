@@ -13,6 +13,3 @@ export * from './scene/useGetScene'
 
 // Sheet
 export * from './sheet/useGetSheet'
-
-// Seed
-export * from './seed/useSeedAll'

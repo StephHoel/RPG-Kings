@@ -9,7 +9,6 @@ export * from './layout/Sidebar'
 export * from './layout/ToasterResponsive'
 
 // Standard Components
-export * from './standard/AlertError'
 export * from './standard/Button'
 export * from './standard/GenericTable'
 export * from './standard/H1'
