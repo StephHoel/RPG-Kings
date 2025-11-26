@@ -1,4 +1,4 @@
-export * from './lib'
+export * from './log/logger.service'
 
 export * from './discipline/addXP.service'
 

@@ -6,7 +6,10 @@ export async function openCatchDB(db: Dexie, err: any) {
 
   const isVersionError =
     err &&
-    (err.name === 'VersionError' || err.name === 'InvalidStateError' || err.name === 'UpgradeError' || err.name === 'MissingAPIError')
+    (err.name === 'VersionError' ||
+      err.name === 'InvalidStateError' ||
+      err.name === 'UpgradeError' ||
+      err.name === 'MissingAPIError')
 
   if (isVersionError) {
     console.warn('Incompatibilidade de versão detectada. Deletando e recriando DB como fallback.')

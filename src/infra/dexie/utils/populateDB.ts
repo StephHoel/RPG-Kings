@@ -1,6 +1,6 @@
-import { safeBulkAdd } from '@/services'
 import { RPGDatabase } from '../database'
 import { SEED_MAP_V3 } from '../versioning'
+import { safeBulkAdd } from './safeBulkAdd'
 
 // Popula seed ao criar pela primeira vez
 export async function populateDB(db: RPGDatabase) {

@@ -12,3 +12,7 @@ export async function createLog(log: Log): Promise<void> {
 export async function deleteLog(id: number): Promise<void> {
   await db.logs.delete(id)
 }
+
+export async function clearLogs(): Promise<void> {
+  await db.logs.clear()
+}

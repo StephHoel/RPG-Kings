@@ -1,7 +1,7 @@
 import { LOG_TYPE, LogType } from '@/domain/constants'
-import { db } from '@/infra/dexie/database'
-import { LogSchema } from '@/infra/schemas'
 import { LogModel } from '@/domain/models'
+import { createLog, getAllLogs } from '@/infra/repositories'
+import { LogSchema } from '@/infra/schemas'
 
 export const log = {
   async error(message: string, payload?: any) {
@@ -23,32 +23,19 @@ async function toLog(type: LogType, message?: string, payload?: any) {
   const parsed = LogSchema.parse(entry) as LogModel
 
   try {
-    await db.logs.add(parsed)
+    await createLog(parsed)
   } catch (err) {
-    try {
-      const last = await db.logs
-        .orderBy('id')
-        .reverse()
-        .first()
-        .catch(() => null)
-
-      const lastIdNum = last && typeof last.id === 'number' ? last.id : 0
-
-      await db.logs.add({ ...parsed, id: lastIdNum + 1 })
-    } catch (err2) {
-      console.error('Falha ao gravar log:', err, err2)
-
-      throw err2
-    }
+    console.error('[LoggerService] Falha ao gravar log:', err)
+    throw err
   }
 }
 
 export async function exportLogsNDJSON(): Promise<string> {
-  const all = await db.logs.orderBy('createdAt').toArray()
+  const all = await getAllLogs()
 
   return all.map((x) => JSON.stringify(x)).join('\n')
 }
 
 export async function clearLogs() {
-  await db.logs.clear()
+  await clearLogs()
 }

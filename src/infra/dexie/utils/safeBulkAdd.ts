@@ -10,7 +10,7 @@ export async function safeBulkAdd<T, K = any>(
   table: Table<T, K>,
   data: T[],
   chunkSize = 3000, // evita limites do IndexedDB em lotes grandes
-  // eslint-disable-next-line no-unused-vars
+
   keySelector?: (item: T) => K
 ): Promise<SafeBulkAddResult> {
   let inserted = 0
