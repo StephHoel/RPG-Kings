@@ -1,5 +1,5 @@
 import { ErrorIcon } from '@/ui/components/icons'
-import { SelectProps } from '@/ui/types'
+import { SelectProps } from '@/domain/types'
 
 export function Select({ className = '', options, children, error, ...rest }: SelectProps) {
   const ariaLabel =

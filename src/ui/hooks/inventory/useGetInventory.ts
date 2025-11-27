@@ -5,7 +5,7 @@ import { getInventoriesService, log } from '@/services'
 import { HookResult } from '@/domain/types'
 
 export function useGetInventory(saveId: string): HookResult<InventoryModel[]> {
-  const { data, isLoading, error } = useQuery({
+  return useQuery({
     queryKey: useQueryKeys.inventory(saveId),
     enabled: !!saveId,
     staleTime: 60_000,
@@ -23,6 +23,4 @@ export function useGetInventory(saveId: string): HookResult<InventoryModel[]> {
       }
     },
   })
-
-  return { data, isLoading, error }
 }

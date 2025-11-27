@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '@/domain/queryKeys'
 import { SaveModel } from '@/domain/models'
-import { listSavesService, log } from '@/services'
+import { getAllSavesService, log } from '@/services'
 import { HookResult } from '@/domain/types'
 
 export function useGetAllSaves(): HookResult<SaveModel[]> {
@@ -11,7 +11,7 @@ export function useGetAllSaves(): HookResult<SaveModel[]> {
 
     queryFn: async () => {
       try {
-        return await listSavesService()
+        return await getAllSavesService()
       } catch (err) {
         const msg = `[${useGetAllSaves.name}] Erro ao listar saves`
 

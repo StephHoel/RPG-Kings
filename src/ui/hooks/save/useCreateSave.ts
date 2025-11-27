@@ -1,9 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '@/domain/queryKeys'
-import { CreateSaveFormValues } from '@/ui/types'
 import { createSaveService, createSheetService, createStatsService, log } from '@/services'
 import { RACE_ENUM } from '@/domain/constants'
-import { CreateSaveResult } from '@/domain/types'
+import { CreateSaveFormValues, CreateSaveResult } from '@/domain/types'
 
 export function useCreateSave() {
   const queryClient = useQueryClient()

@@ -1,4 +1,4 @@
-import { InputProps } from '@/ui/types'
+import { InputProps } from '@/domain/types'
 import { ErrorIcon } from '@/ui/components/icons'
 
 export function Input({ className = '', children, error, ...rest }: InputProps) {
