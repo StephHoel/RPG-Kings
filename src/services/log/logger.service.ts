@@ -1,6 +1,6 @@
 import { LOG_TYPE, LogType } from '@/domain/constants'
 import { LogModel } from '@/domain/models'
-import { createLog, getAllLogs } from '@/infra/repositories'
+import { createLog, getAllLogs, clearLogs as clearLogsRepo } from '@/infra/repositories'
 import { LogSchema } from '@/infra/schemas'
 
 export const log = {
@@ -40,6 +40,11 @@ export async function exportLogsNDJSON(): Promise<string> {
   return all.map((x) => JSON.stringify(x)).join('\n')
 }
 
+export async function getAllLogsService() {
+  const { getAllLogs } = await import('@/infra/repositories')
+  return getAllLogs()
+}
+
 export async function clearLogs() {
-  await clearLogs()
+  await clearLogsRepo()
 }

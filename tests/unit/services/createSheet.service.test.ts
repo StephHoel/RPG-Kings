@@ -16,10 +16,10 @@ describe('createSheetService', () => {
     ;(repos.getSheetBySaveId as jest.Mock).mockResolvedValue({
       saveId: 's1',
       name: 'n',
-      race: RACE_ENUM.human,
+      race: RACE_ENUM.arcane,
     })
 
-    const res = await createSheetService({ saveId: 's1', name: 'n', race: RACE_ENUM.human })
+    const res = await createSheetService({ saveId: 's1', name: 'n', race: RACE_ENUM.arcane })
 
     expect(repos.createOrUpdateSheet).toHaveBeenCalled()
     expect(repos.getSheetBySaveId).toHaveBeenCalledWith('s1')
