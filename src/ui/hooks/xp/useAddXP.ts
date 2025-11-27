@@ -9,7 +9,7 @@ export function useAddXP(saveId: string, discipline: string, xpToAdd: number) {
     mutationFn: async () => await addXPService(saveId, discipline, xpToAdd),
 
     onSuccess: () => {
-      queryClient.refetchQueries({ queryKey: useQueryKeys.xps(saveId) })
+      queryClient.refetchQueries({ queryKey: useQueryKeys.xps(saveId), exact: true })
     },
 
     onError: async (err) => {

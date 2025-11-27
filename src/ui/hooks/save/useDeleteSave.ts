@@ -23,10 +23,10 @@ export function useDeleteSave() {
 
     onSuccess: async () => {
       try {
-        await queryClient.refetchQueries({ queryKey: useQueryKeys.allSaves() })
-        await queryClient.refetchQueries({ queryKey: useQueryKeys.saveActive() })
-        await queryClient.refetchQueries({ queryKey: useQueryKeys.sheetActive() })
-        await queryClient.refetchQueries({ queryKey: useQueryKeys.statsActive() })
+        await queryClient.refetchQueries({ queryKey: useQueryKeys.allSaves(), exact: true })
+        await queryClient.refetchQueries({ queryKey: useQueryKeys.saveActive(), exact: true })
+        await queryClient.refetchQueries({ queryKey: useQueryKeys.sheetActive(), exact: true })
+        await queryClient.refetchQueries({ queryKey: useQueryKeys.statsActive(), exact: true })
       } catch (err) {
         console.error(`[${useDeleteSave.name}] Erro ao invalidar queries após deleção`, err)
       }
