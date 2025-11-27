@@ -103,6 +103,12 @@ Se a tarefa for ambígua, o agente pergunta por esclarecimentos (ex.: "Qual é o
   - Services: `src/services/*` (ex.: `src/services/character.ts`).
   - Repos: `src/infra/repositories/*` ou `src/infra/dexie/*`.
 
+### Exports
+
+- **Regra de exports:** Não use `export default`. Prefira sempre *named exports* (por exemplo `export function foo()` ou `export const foo = ...`).
+- **Exportar na declaração:** Faça a exportação diretamente na declaração (ex.: `export function foo() {}`), e evite re-exportar no final do arquivo (`export { foo }`). Isso mantém o estilo consistente e evita duplicação/confusão.
+
+
 ### Checklist para PRs (verificação de fluxo)
 
 - Arquitetura: confirme que as mudanças obedecem `ui > hook > service > repo > db`.
