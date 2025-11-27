@@ -3,16 +3,10 @@ import { useQueryKeys } from '@/domain/queryKeys'
 import { CreateSaveFormValues } from '@/ui/types'
 import { createSaveService, createSheetService, createStatsService, log } from '@/services'
 import { RACE_ENUM } from '@/domain/constants'
-import { SaveModel, SheetModel, StatsModel } from '@/domain/models'
+import { CreateSaveResult } from '@/domain/types'
 
 export function useCreateSave() {
   const queryClient = useQueryClient()
-
-  type CreateSaveResult = {
-    save?: SaveModel | undefined
-    sheet?: SheetModel | undefined
-    stats?: StatsModel | undefined
-  }
 
   return useMutation<CreateSaveResult | undefined, Error, CreateSaveFormValues>({
     mutationFn: async ({

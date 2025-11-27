@@ -19,20 +19,19 @@ export default function SaveNew() {
   const { errors, isSubmitting } = formState
 
   const onSubmit = async (data: CreateSaveFormValues) => {
-    createSave.mutate(data, {
-      onError(err) {
-        toast.error('Erro ao criar save')
-        console.error(err)
-      },
-      onSuccess(result) {
-        if (!result?.save?.id) {
-          toast.error('Não foi possível criar o Save, tente novamente')
-          return
-        }
+    try {
+      const result = await createSave.mutateAsync(data)
 
-        router.push(routeWithSaveId(ROUTES.GAME, result.save.id))
-      },
-    })
+      if (!result?.save?.id) {
+        toast.error('Não foi possível criar o Save, tente novamente')
+        return
+      }
+
+      router.push(routeWithSaveId(ROUTES.GAME, result.save.id))
+    } catch (err) {
+      toast.error('Erro ao criar save')
+      console.error(err)
+    }
   }
 
   return (

@@ -1,13 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '@/domain/queryKeys'
 import { getActiveSaveService, log } from '@/services'
+import { SaveModel } from '@/domain/models'
+import { HookResult } from '@/domain/types'
 
-export function useActiveSave() {
-  const {
-    data: active,
-    isLoading,
-    error,
-  } = useQuery({
+export function useActiveSave(): HookResult<SaveModel> {
+  const { data, isLoading, error } = useQuery<SaveModel | undefined>({
     queryKey: useQueryKeys.saveActive(),
     staleTime: 60_000 * 60, // 60 minutes
 
@@ -23,5 +21,5 @@ export function useActiveSave() {
     },
   })
 
-  return { activeSaveId: active?.id ?? null, isLoading, error }
+  return { data, isLoading, error }
 }

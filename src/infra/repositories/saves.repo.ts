@@ -5,7 +5,7 @@ export async function getSaveById(id: string): Promise<Save | undefined> {
   return db.saves.get(id)
 }
 
-export async function getSaveActive(): Promise<Save | undefined> {
+export async function getActiveSave(): Promise<Save | undefined> {
   return db.saves.filter((save) => save.isActive === true).first()
 }
 

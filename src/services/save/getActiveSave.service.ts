@@ -1,8 +1,11 @@
-import { getSaveActive } from '@/infra/repositories'
+import { getActiveSave } from '@/infra/repositories'
 import { SaveModel } from '@/domain/models'
+import { log } from '@/services'
 
-export async function getActiveSaveService(): Promise<SaveModel | null> {
-  const active = await getSaveActive()
+export async function getActiveSaveService(): Promise<SaveModel | undefined> {
+  const activeSave = await getActiveSave()
 
-  return active ?? null
+  await log.info(`[${getActiveSaveService.name}] Save obtido com sucesso`, { activeSave })
+
+  return activeSave
 }
