@@ -5,7 +5,7 @@ export default function Auth() {
   return (
     <>
       <Head>
-        <title>Auth</title>
+        <title>Auth — King's Academy</title>
       </Head>
 
       <Panel>

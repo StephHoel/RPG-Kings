@@ -37,7 +37,7 @@ export default function SaveNew() {
   return (
     <>
       <Head>
-        <title>Novo Jogo</title>
+        <title>Novo Jogo — King's Academy</title>
       </Head>
 
       <Panel>

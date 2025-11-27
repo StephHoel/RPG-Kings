@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router'
 import { useGetInventory, useGetSheetActive } from '@/ui/hooks'
 import { ROUTES } from '@/domain/routes'
-import { H1, Panel } from '@/ui/components'
+import { H1, H2, Panel } from '@/ui/components'
 import { Suspense } from 'react'
 import Head from 'next/head'
 
@@ -11,28 +11,30 @@ export default function Sheet() {
   const query = router.query
   const saveId = Array.isArray(query.saveId) ? query.saveId[0] : query.saveId
 
-  const back = () => router.push(ROUTES.ROOT)
+  if (!saveId) {
+    router.push(ROUTES.ROOT)
+  }
 
-  if (saveId === null) back()
-
-  const sheet = useGetSheetActive(saveId!)
+  const { data: sheet } = useGetSheetActive(saveId!)
   const { data: items } = useGetInventory(saveId!)
 
   return (
     <>
       <Head>
-        <title>Ficha de Personagem</title>
+        <title>Ficha de Personagem — King's Academy</title>
       </Head>
 
       <Suspense fallback={<div>Carregando...</div>}>
         <Panel>
-          <H1>Ficha</H1>
+          <H1>Ficha & Inventário</H1>
+
+          <H2>Ficha</H2>
 
           <pre className="bg-gray-500 p-3 border rounded overflow-auto text-sm">
             {JSON.stringify(sheet ?? 'Sem sheet', null, 2)}
           </pre>
 
-          <h2 className="font-medium">Inventário</h2>
+          <H2>Inventário</H2>
 
           <ul className="space-y-2">
             {!items || items.length === 0
@@ -42,8 +44,8 @@ export default function Sheet() {
                     <div className="font-medium">{i.item}</div>
 
                     <div className="opacity-70 text-sm">
-                      Comprado semana {i.acquiredWeek} · Duração{' '}
-                      {i.durationWeeks === 0 ? 'ilimitada' : `${i.durationWeeks} semanas`} · Expira{' '}
+                      Comprado semana: {i.acquiredWeek} · Duração:{' '}
+                      {i.durationWeeks === 0 ? 'ilimitada' : `${i.durationWeeks} semanas`} · Expira:{' '}
                       {i.expiresAtWeek ?? '—'}
                     </div>
                   </li>

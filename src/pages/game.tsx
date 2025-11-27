@@ -13,8 +13,6 @@ export default function Game() {
   const query = router.query
   const saveId = Array.isArray(query.saveId) ? query.saveId[0] : query.saveId ?? null
 
-  // If saveId is missing, show an error toast and redirect.
-  // Do the redirect inside useEffect so the component always returns a valid React node.
   useEffect(() => {
     if (!router.isReady) return
 
@@ -37,7 +35,7 @@ export default function Game() {
   return (
     <>
       <Head>
-        <title>Jogo</title>
+        <title>Jogo — King's Academy</title>
       </Head>
 
       <Suspense fallback={<div>Carregando...</div>}>

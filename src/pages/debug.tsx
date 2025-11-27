@@ -12,7 +12,7 @@ import { exportLogsNDJSON, clearLogs } from '@/services'
 export default function Debug() {
   const [logs, setLogs] = useState<LogModel[]>([])
   const [type, setType] = useState<LogAllType>('all')
-  const [q, setQ] = useState('')
+  const [query, setQuery] = useState('')
   const [sortAsc, setSortAsc] = useState<boolean>(false)
 
   useEffect(() => {
@@ -28,13 +28,13 @@ export default function Debug() {
     const out = logs
       .filter((r) => type === 'all' || r.type === type)
       .filter((r) => {
-        if (!q) return true
+        if (!query) return true
 
         const hay = `${r.type} ${r.message ?? ''} ${JSON.stringify(
           r.payload ?? ''
         )} ${JSON.stringify(r.createdAt ?? '')}`.toLowerCase()
 
-        return hay.includes(q.toLowerCase())
+        return hay.includes(query.toLowerCase())
       })
 
     out.sort((a, b) => {
@@ -44,7 +44,7 @@ export default function Debug() {
     })
 
     return out
-  }, [logs, type, q, sortAsc])
+  }, [logs, type, query, sortAsc])
 
   async function onCopy() {
     const ndjson = await exportLogsNDJSON()
@@ -99,7 +99,7 @@ export default function Debug() {
   return (
     <>
       <Head>
-        <title>Debug</title>
+        <title>Debug — King's Academy</title>
       </Head>
 
       <Panel>
@@ -131,8 +131,8 @@ export default function Debug() {
             <div className="sm:w-auto md:w-full">
               <Input
                 placeholder="Filtrar texto..."
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 className="w-full"
               />
             </div>

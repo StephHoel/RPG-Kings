@@ -25,7 +25,7 @@ export default function Saves() {
   return (
     <>
       <Head>
-        <title>Saves</title>
+        <title>Saves — King's Academy</title>
       </Head>
 
       <Panel>
