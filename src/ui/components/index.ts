@@ -12,6 +12,7 @@ export * from './layout/ToasterResponsive'
 export * from './standard/Button'
 export * from './standard/GenericTable'
 export * from './standard/H1'
+export * from './standard/H2'
 export * from './standard/Input'
 export * from './standard/Select'
 
