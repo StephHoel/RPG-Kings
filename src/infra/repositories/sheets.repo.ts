@@ -14,6 +14,10 @@ export async function createOrUpdateSheet(sheet: Sheet): Promise<void> {
   await db.sheets.add(sheet)
 }
 
-export async function deleteSheet(id: number): Promise<void> {
-  await db.sheets.delete(id)
+export async function deleteSheetsBySaveId(saveId: Sheet['saveId']): Promise<void> {
+  const sheets = await db.sheets.where({ saveId }).toArray()
+
+  const idsToDelete = sheets.map((s) => s.id).filter((s) => s !== undefined)
+
+  await db.sheets.bulkDelete(idsToDelete)
 }

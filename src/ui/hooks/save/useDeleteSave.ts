@@ -1,6 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '@/domain/queryKeys'
-import { deleteSaveService } from '@/services'
+import {
+  deleteInventoriesService,
+  deleteSaveService,
+  deleteSheetService,
+  deleteStatsService,
+  deleteXPService,
+} from '@/services'
 import { log } from '@/services'
 
 export function useDeleteSave() {
@@ -9,9 +15,10 @@ export function useDeleteSave() {
   return useMutation<void, Error, string>({
     mutationFn: async (saveId: string) => {
       await deleteSaveService(saveId)
-
-      // TODO implementar deletar sheet service
-      // await deleteSheetService(saveId)
+      await deleteSheetService(saveId)
+      await deleteStatsService(saveId)
+      await deleteInventoriesService(saveId)
+      await deleteXPService(saveId)
     },
 
     onSuccess: async () => {

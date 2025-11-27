@@ -14,6 +14,10 @@ export async function createOrUpdateStats(s: Stats): Promise<void> {
   await db.stats.add(s)
 }
 
-export async function deleteStats(id: number): Promise<void> {
-  await db.stats.delete(id)
+export async function deleteStatsBySaveId(saveId: Stats['saveId']): Promise<void> {
+  const stats = await db.stats.where({ saveId }).toArray()
+
+  const idsToDelete = stats.map((s) => s.id).filter((s) => s !== undefined)
+
+  await db.stats.bulkDelete(idsToDelete)
 }

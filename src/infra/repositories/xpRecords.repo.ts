@@ -21,6 +21,10 @@ export async function createOrUpdateXP(record: XPRecord): Promise<void> {
   await db.xp_records.add(record)
 }
 
-export async function deleteXP(id: number): Promise<void> {
-  await db.xp_records.delete(id)
+export async function deleteXPBySaveId(saveId: XPRecord['saveId']): Promise<void> {
+  const xp = await db.xp_records.where({ saveId }).toArray()
+
+  const idsToDelete = xp.map((s) => s.id).filter((s) => s !== undefined)
+
+  await db.xp_records.bulkDelete(idsToDelete)
 }

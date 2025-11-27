@@ -9,8 +9,7 @@ export function useAddXP(saveId: string, discipline: string, xpToAdd: number) {
     mutationFn: async () => await addXPService(saveId, discipline, xpToAdd),
 
     onSuccess: () => {
-      // TODO adicionar setQuery para atualizar lista de xps
-      // queryClient.refetchQueries({ queryKey: useQueryKeys.discipline(saveId, discipline) })
+      queryClient.refetchQueries({ queryKey: useQueryKeys.xps(saveId) })
     },
 
     onError: async (err) => {

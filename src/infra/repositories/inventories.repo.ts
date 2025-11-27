@@ -1,8 +1,8 @@
 import { db } from '@/infra/dexie/database'
 import { Inventory } from '@/infra/schemas'
 
-export async function getInventoriesBySaveId(saveId: string): Promise<Inventory[]> {
-  return db.inventories.where({ saveId }).toArray() // TODO ordenar por acquiredWeek desc, expiresAtWeek e usedAtWeek undefined primeiro
+export async function getInventoriesBySaveId(saveId: Inventory['saveId']): Promise<Inventory[]> {
+  return await db.inventories.where({ saveId }).toArray()
 }
 
 export async function createOrUpdateInventory(item: Inventory): Promise<void> {
@@ -14,6 +14,10 @@ export async function createOrUpdateInventory(item: Inventory): Promise<void> {
   await db.inventories.add(item)
 }
 
-export async function deleteInventory(id: number): Promise<void> {
-  await db.inventories.delete(id)
+export async function deleteInventoriesBySaveId(saveId: Inventory['saveId']): Promise<void> {
+  const inventories = await db.inventories.where({ saveId }).toArray()
+
+  const idsToDelete = inventories.map((s) => s.id).filter((s) => s !== undefined)
+
+  await db.inventories.bulkDelete(idsToDelete)
 }
