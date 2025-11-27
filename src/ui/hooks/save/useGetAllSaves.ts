@@ -2,9 +2,10 @@ import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '@/domain/queryKeys'
 import { SaveModel } from '@/domain/models'
 import { listSavesService, log } from '@/services'
+import { HookResult } from '@/domain/types'
 
-export function useGetAllSaves(): SaveModel[] {
-  const { data: saves } = useQuery({
+export function useGetAllSaves(): HookResult<SaveModel[]> {
+  return useQuery({
     queryKey: useQueryKeys.saves(),
     staleTime: 60_000 * 60,
 
@@ -20,6 +21,4 @@ export function useGetAllSaves(): SaveModel[] {
       }
     },
   })
-
-  return saves ?? []
 }

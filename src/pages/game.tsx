@@ -24,13 +24,13 @@ export default function Game() {
     }
   }, [saveId, router])
 
-  const scene = useGetScene(saveId ?? '')
+  const result = useGetScene(saveId ?? '')
 
   useEffect(() => {
     if (!saveId) return
 
     toast('Scene carregada')
-  }, [scene, saveId])
+  }, [result, saveId])
 
   if (!saveId) return null
 
@@ -43,9 +43,9 @@ export default function Game() {
       <Suspense fallback={<div>Carregando...</div>}>
         <Panel>
           <SceneCard>
-            <H1>{scene?.title ?? 'Sem título'}</H1>
+            <H1>{result?.data?.title ?? 'Sem título'}</H1>
 
-            <p>{scene?.content ?? 'Nenhuma cena disponível neste horário.'}</p>
+            <p>{result?.data?.content ?? 'Nenhuma cena disponível neste horário.'}</p>
           </SceneCard>
 
           <ChoiceList />

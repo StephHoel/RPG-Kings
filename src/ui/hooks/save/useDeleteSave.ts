@@ -10,11 +10,19 @@ export function useDeleteSave() {
     mutationFn: async (saveId: string) => {
       await deleteSaveService(saveId)
 
-      // TODO deletar sheet também
+      // TODO implementar deletar sheet service
+      // await deleteSheetService(saveId)
     },
 
-    onSuccess: () => {
-      queryClient.refetchQueries({ queryKey: useQueryKeys.saves() })
+    onSuccess: async () => {
+      try {
+        await queryClient.refetchQueries({ queryKey: useQueryKeys.saves() })
+        await queryClient.refetchQueries({ queryKey: useQueryKeys.saveActive() })
+        await queryClient.refetchQueries({ queryKey: useQueryKeys.sheetActive() })
+        await queryClient.refetchQueries({ queryKey: useQueryKeys.statsActive() })
+      } catch (err) {
+        console.error(`[${useDeleteSave.name}] Erro ao invalidar queries após deleção`, err)
+      }
     },
 
     onError: async (err) => {

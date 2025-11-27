@@ -16,7 +16,7 @@ export default function Sheet() {
   if (saveId === null) back()
 
   const sheet = useGetSheet(saveId!)
-  const items = useGetInventory(saveId!)
+  const { data: items } = useGetInventory(saveId!)
 
   return (
     <>

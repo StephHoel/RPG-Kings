@@ -2,9 +2,10 @@ import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '@/domain/queryKeys'
 import { InventoryModel } from '@/domain/models'
 import { getInventoriesService, log } from '@/services'
+import { HookResult } from '@/domain/types'
 
-export function useGetInventory(saveId: string): InventoryModel[] {
-  const { data: items } = useQuery({
+export function useGetInventory(saveId: string): HookResult<InventoryModel[]> {
+  const { data, isLoading, error } = useQuery({
     queryKey: useQueryKeys.inventory(saveId),
     enabled: !!saveId,
     staleTime: 60_000,
@@ -23,5 +24,5 @@ export function useGetInventory(saveId: string): InventoryModel[] {
     },
   })
 
-  return items ?? []
+  return { data, isLoading, error }
 }

@@ -2,9 +2,10 @@ import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '@/domain/queryKeys'
 import { getSceneByIdService, log } from '@/services'
 import { SceneModel } from '@/domain/models'
+import { HookResult } from '@/domain/types'
 
-export function useGetScene(sceneId: SceneModel['id']): SceneModel | null {
-  const { data: scene } = useQuery({
+export function useGetScene(sceneId: SceneModel['id']): HookResult<SceneModel> {
+  return useQuery({
     queryKey: useQueryKeys.scene(sceneId),
     enabled: !!sceneId,
     staleTime: 5 * 60 * 1000, // 5 minutes
@@ -22,6 +23,4 @@ export function useGetScene(sceneId: SceneModel['id']): SceneModel | null {
       }
     },
   })
-
-  return scene ?? null
 }

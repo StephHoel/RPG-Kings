@@ -22,10 +22,10 @@ export function ReactQueryProvider({ children }: PropsWithChildren) {
 }
 
 function ActiveSaveProviderInner({ children }: PropsWithChildren) {
-  const { activeSaveId, isLoading, error } = useActiveSave()
+  const { data, isLoading, error } = useActiveSave()
 
   return (
-    <ActiveSaveContext.Provider value={{ activeSaveId, isLoading, error }}>
+    <ActiveSaveContext.Provider value={{ activeSaveId: data?.id, isLoading, error }}>
       {children}
     </ActiveSaveContext.Provider>
   )

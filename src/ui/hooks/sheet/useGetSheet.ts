@@ -2,9 +2,10 @@ import { useQuery } from '@tanstack/react-query'
 import { useQueryKeys } from '@/domain/queryKeys'
 import { SheetModel } from '@/domain/models'
 import { getSheetService, log } from '@/services'
+import { HookResult } from '@/domain/types'
 
-export function useGetSheet(saveId: SheetModel['saveId']): SheetModel | undefined {
-  const { data: sheet } = useQuery({
+export function useGetSheet(saveId: SheetModel['saveId']): HookResult<SheetModel> {
+  return useQuery({
     queryKey: useQueryKeys.sheetActive(),
     enabled: !!saveId,
     staleTime: 60_000,
@@ -22,6 +23,4 @@ export function useGetSheet(saveId: SheetModel['saveId']): SheetModel | undefine
       }
     },
   })
-
-  return sheet
 }

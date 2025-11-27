@@ -1,5 +1,5 @@
 export type MenuItem = {
-  route: (id: string | null) => string
+  route: (id: string | undefined) => string
   label: string
   type?: 'dev'
 }

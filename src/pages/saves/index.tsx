@@ -9,7 +9,7 @@ import Head from 'next/head'
 export default function Saves() {
   const router = useRouter()
   const deleteMutation = useDeleteSave()
-  let saves = useGetAllSaves()
+  let { data: saves } = useGetAllSaves()
 
   const toDeleteSave = (saveId: string) => {
     deleteMutation

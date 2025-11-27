@@ -1,5 +1,5 @@
 export type ActiveSaveState = {
-  activeSaveId: string | null
+  activeSaveId: string | undefined
   isLoading: boolean
   error: unknown
 }
