@@ -1,5 +1,5 @@
 import { RACE_ENUM } from '@/domain/constants'
-import { getSheetBySaveId, createOrUpdateSheet, deleteSheet } from '@/infra/repositories'
+import { getSheetBySaveId, createOrUpdateSheet, deleteSheetsBySaveId } from '@/infra/repositories'
 import { SheetModel } from '@/domain/models'
 
 describe('sheets.repo', () => {
@@ -30,7 +30,7 @@ describe('sheets.repo', () => {
   })
 
   test('delete', async () => {
-    await deleteSheet(sheet.id as number)
+    await deleteSheetsBySaveId(sheet.saveId)
 
     const after = await getSheetBySaveId(sheet.saveId)
     expect(after).toBeUndefined()

@@ -48,7 +48,7 @@ export function useCreateSave() {
 
     onMutate: async () => {
       try {
-        await queryClient.cancelQueries({ queryKey: useQueryKeys.saves() })
+        await queryClient.cancelQueries({ queryKey: useQueryKeys.allSaves() })
         await queryClient.cancelQueries({ queryKey: useQueryKeys.saveActive() })
         await queryClient.cancelQueries({ queryKey: useQueryKeys.sheetActive() })
         await queryClient.cancelQueries({ queryKey: useQueryKeys.statsActive() })
@@ -62,7 +62,7 @@ export function useCreateSave() {
         if (!data) return
 
         // Atualiza a lista de saves: adiciona o novo save ao cache se existir
-        queryClient.setQueryData(useQueryKeys.saves(), (old: any) => {
+        queryClient.setQueryData(useQueryKeys.allSaves(), (old: any) => {
           if (!old) return old
 
           return [...old, data.save]

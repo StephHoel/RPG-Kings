@@ -4,7 +4,7 @@ import { SheetModel } from '@/domain/models'
 import { getSheetService, log } from '@/services'
 import { HookResult } from '@/domain/types'
 
-export function useGetSheet(saveId: SheetModel['saveId']): HookResult<SheetModel> {
+export function useGetSheetActive(saveId: SheetModel['saveId']): HookResult<SheetModel> {
   return useQuery({
     queryKey: useQueryKeys.sheetActive(),
     enabled: !!saveId,
@@ -15,7 +15,7 @@ export function useGetSheet(saveId: SheetModel['saveId']): HookResult<SheetModel
       try {
         return await getSheetService(saveId)
       } catch (err) {
-        const msg = `[${useGetSheet.name}] Erro ao obter ficha`
+        const msg = `[${useGetSheetActive.name}] Erro ao obter ficha`
 
         console.error(msg, err)
 

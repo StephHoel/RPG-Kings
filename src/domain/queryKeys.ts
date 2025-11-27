@@ -4,9 +4,9 @@ export const useQueryKeys = {
   saveActive: () => ['saves', 'active'],
   sheetActive: () => ['sheet', 'active'],
   statsActive: () => ['stats', 'active'],
-  
-  saves: () => ['saves'],
-  
+
+  allSaves: () => ['saves'],
+
   saveId: (id: SaveModel['id']) => ['save', id],
 
   inventory: (saveId: InventoryModel['saveId']) => ['inventory', saveId],

@@ -6,7 +6,7 @@ import { HookResult } from '@/domain/types'
 
 export function useGetAllSaves(): HookResult<SaveModel[]> {
   return useQuery({
-    queryKey: useQueryKeys.saves(),
+    queryKey: useQueryKeys.allSaves(),
     staleTime: 60_000 * 60,
 
     queryFn: async () => {

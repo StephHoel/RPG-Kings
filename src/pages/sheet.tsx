@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/router'
-import { useGetInventory, useGetSheet } from '@/ui/hooks'
+import { useGetInventory, useGetSheetActive } from '@/ui/hooks'
 import { ROUTES } from '@/domain/routes'
 import { H1, Panel } from '@/ui/components'
 import { Suspense } from 'react'
@@ -15,7 +15,7 @@ export default function Sheet() {
 
   if (saveId === null) back()
 
-  const sheet = useGetSheet(saveId!)
+  const sheet = useGetSheetActive(saveId!)
   const { data: items } = useGetInventory(saveId!)
 
   return (

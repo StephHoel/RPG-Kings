@@ -23,7 +23,7 @@ export function useDeleteSave() {
 
     onSuccess: async () => {
       try {
-        await queryClient.refetchQueries({ queryKey: useQueryKeys.saves() })
+        await queryClient.refetchQueries({ queryKey: useQueryKeys.allSaves() })
         await queryClient.refetchQueries({ queryKey: useQueryKeys.saveActive() })
         await queryClient.refetchQueries({ queryKey: useQueryKeys.sheetActive() })
         await queryClient.refetchQueries({ queryKey: useQueryKeys.statsActive() })
