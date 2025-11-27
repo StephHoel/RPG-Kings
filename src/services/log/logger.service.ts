@@ -11,6 +11,10 @@ export const log = {
   async info(message: string, payload?: any) {
     await toLog(LOG_TYPE.info, message, payload)
   },
+
+  async warn(message: string, payload?: any) {
+    await toLog(LOG_TYPE.warn, message, payload)
+  },
 }
 
 async function toLog(type: LogType, message?: string, payload?: any) {

@@ -5,7 +5,7 @@ import { getSheetService, log } from '@/services'
 
 export function useGetSheet(saveId: SheetModel['saveId']): SheetModel | undefined {
   const { data: sheet } = useQuery({
-    queryKey: useQueryKeys.sheet(saveId),
+    queryKey: useQueryKeys.sheetActive(),
     enabled: !!saveId,
     staleTime: 60_000,
     refetchOnWindowFocus: false,

@@ -1,10 +1,14 @@
 export const useQueryKeys = {
   saveActive: () => ['saves', 'active'],
-  saveId: (id: string) => ['save', id],
+  sheetActive: () => ['sheet', 'active'],
+  statsActive: () => ['stats', 'active'],
+  
   saves: () => ['saves'],
+  
+  saveId: (id: string) => ['save', id],
+
   inventory: (saveId: string) => ['inventory', saveId],
-  discipline: (saveId: string, discipline: string) => ['discipline', saveId, discipline],
-  sheet: (saveId: string) => ['sheet', saveId],
-  milestones: (saveId: string) => ['milestones', saveId],
+
+  // TODO tirar query de scene futuramente
   scene: (saveId: string) => ['scene', saveId],
 } as const

@@ -1,3 +1,4 @@
+export * from './game/selectRandom'
 export * from './game/class'
 export * from './game/dice'
 export * from './game/level'

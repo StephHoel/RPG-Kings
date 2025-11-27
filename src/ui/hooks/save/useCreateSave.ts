@@ -1,40 +1,91 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '@/domain/queryKeys'
 import { CreateSaveFormValues } from '@/ui/types'
-import { createSaveService, log } from '@/services'
+import { createSaveService, createSheetService, createStatsService, log } from '@/services'
+import { RACE_ENUM } from '@/domain/constants'
+import { SaveModel, SheetModel, StatsModel } from '@/domain/models'
 
 export function useCreateSave() {
   const queryClient = useQueryClient()
 
-  return useMutation<string, Error, CreateSaveFormValues>({
-    mutationFn: async ({ name, race }: CreateSaveFormValues): Promise<string> => {
-      const saveId = await createSaveService()
+  type CreateSaveResult = {
+    save?: SaveModel | undefined
+    sheet?: SheetModel | undefined
+    stats?: StatsModel | undefined
+  }
 
-      // TODO migrar para hook específico
-      // sheets creation currently remains in hook until a dedicated service is implemented
-      // // const animal = getAnimal(race)
-      // // const stats = statsByRace(race, animal)
-      // // const developSkills = getDevelopSkills(race)
-      // // const fixedSkills = getFixedSkills(race)
+  return useMutation<CreateSaveResult | undefined, Error, CreateSaveFormValues>({
+    mutationFn: async ({
+      name,
+      race,
+    }: CreateSaveFormValues): Promise<CreateSaveResult | undefined> => {
+      const save = await createSaveService()
 
-      // await db.sheets.add({
-      //   saveId,
-      //   race,
-      //   // animal: animal ?? null,
-      //   coins: 0,
-      //   name,
-      //   createdAt: new Date(),
-      //   updatedAt: new Date(),
-      // })
+      if (!save) {
+        const msg = `[${createSaveService.name}] Falha ao criar save`
 
-      // await log.info('[useCreateSave] Ficha de personagem criada', { saveId })
+        console.error(msg)
+        await log.error(msg, { name, race })
+        return
+      }
 
-      return saveId
+      const sheet = await createSheetService({ saveId: save?.id, name, race })
+
+      if (!sheet) {
+        const msg = `[${createSheetService.name}] Falha ao criar sheet para save ${save?.id}`
+
+        console.error(msg)
+        await log.error(msg, { save, name, race })
+        return { save, sheet, stats: undefined }
+      }
+
+      const raceOrAnimal = race === RACE_ENUM.shapeshift && sheet?.animal ? sheet?.animal : race
+
+      const stats = await createStatsService({ raceOrAnimal, saveId: save.id })
+
+      if (!stats) {
+        const msg = `[${createStatsService.name}] Falha ao criar stats para save ${save.id}`
+
+        console.error(msg)
+        await log.error(msg, { save, sheet })
+      }
+
+      return { save, sheet, stats }
     },
 
-    onSuccess: async () => {
-      queryClient.refetchQueries({ queryKey: useQueryKeys.saveActive() })
-      queryClient.refetchQueries({ queryKey: useQueryKeys.saves() })
+    onMutate: async () => {
+      try {
+        await queryClient.cancelQueries({ queryKey: useQueryKeys.saves() })
+        await queryClient.cancelQueries({ queryKey: useQueryKeys.saveActive() })
+        await queryClient.cancelQueries({ queryKey: useQueryKeys.sheetActive() })
+        await queryClient.cancelQueries({ queryKey: useQueryKeys.statsActive() })
+      } catch (err) {
+        console.error(`[${useCreateSave.name}] Erro ao invalidar queries antes da criação`, err)
+      }
+    },
+
+    onSuccess: async (data) => {
+      try {
+        if (!data) return
+
+        // Atualiza a lista de saves: adiciona o novo save ao cache se existir
+        queryClient.setQueryData(useQueryKeys.saves(), (old: any) => {
+          if (!old) return old
+
+          return [...old, data.save]
+        })
+
+        // Atualiza o save ativo
+        queryClient.setQueryData(useQueryKeys.saveActive(), data.save)
+
+        // Atualiza a sheet ativa
+        queryClient.setQueryData(useQueryKeys.sheetActive(), data.sheet)
+
+        // Atualiza o stats ativo
+        queryClient.setQueryData(useQueryKeys.statsActive(), data.stats)
+      } catch (err) {
+        console.error(`[${useCreateSave.name}] Erro ao atualizar cache após sucesso`, err)
+      }
     },
 
     onError: async (err) => {

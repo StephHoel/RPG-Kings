@@ -1,6 +1,7 @@
 export const LOG_TYPE = {
   error: 'error',
   info: 'info',
+  warn: 'warn',
 } as const
 
 export const LOG_ALL_TYPE = {

@@ -24,8 +24,13 @@ export default function SaveNew() {
         toast.error('Erro ao criar save')
         console.error(err)
       },
-      onSuccess(id) {
-        router.push(routeWithSaveId(ROUTES.GAME, id))
+      onSuccess(result) {
+        if (!result?.save?.id) {
+          toast.error('Não foi possível criar o Save, tente novamente')
+          return
+        }
+
+        router.push(routeWithSaveId(ROUTES.GAME, result.save.id))
       },
     })
   }

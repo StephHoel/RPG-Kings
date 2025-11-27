@@ -11,4 +11,8 @@ export * from './save/getSave.service'
 export * from './save/listSaves.service'
 
 export * from './scene/getScene.service'
+
 export * from './sheet/getSheet.service'
+export * from './sheet/createSheet.service'
+
+export * from './stats/createStats.service'
