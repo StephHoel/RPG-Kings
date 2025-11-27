@@ -9,7 +9,7 @@ export async function getXPBySaveIdAndDiscipline(
   saveId: string,
   discipline: string
 ): Promise<XPRecord | undefined> {
-  return db.xp_records.where({ saveId, discipline }).first()
+  return db.xp_records.where({ saveId, target: discipline }).first()
 }
 
 export async function createOrUpdateXP(record: XPRecord): Promise<void> {

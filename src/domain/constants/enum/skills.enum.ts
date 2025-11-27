@@ -21,4 +21,4 @@ export const SKILL_ENUM = {
 } as const
 
 // Tipo derivado
-export type SKillEnum = (typeof SKILL_ENUM)[keyof typeof SKILL_ENUM]
+export type SkillEnum = (typeof SKILL_ENUM)[keyof typeof SKILL_ENUM]
