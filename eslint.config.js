@@ -27,9 +27,23 @@ export default [
     settings: { react: { version: 'detect' } },
     rules: {
       // Basic rules; add more if you want stricter checks
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'no-unused-vars': ['warn', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
       'no-console': 'off',
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'ExportDefaultDeclaration',
+          message: 'Do not use `export default`. Use named exports instead.',
+        },
+      ],
       'react/react-in-jsx-scope': 'off',
+    },
+  },
+  {
+    files: ['src/pages/**', '*.config.*'],
+    rules: {
+      'no-restricted-syntax': 'off',
     },
   },
 ]

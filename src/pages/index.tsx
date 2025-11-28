@@ -1,11 +1,10 @@
 'use client'
 import Head from 'next/head'
-import { Button, H1, Panel } from '@/components'
-import { ROUTES } from '@/config'
+import { Button, H1, Panel } from '@/ui/components'
+import { ROUTES } from '@/domain/routes'
 import { useRouter } from 'next/router'
-import { Activity } from 'react'
-import { useActiveSaveContext } from '@/providers/useActiveSaveContext'
-import { routeWithSaveId } from '../config/files/routes'
+import { useActiveSaveContext } from '@/ui/providers/useActiveSaveContext'
+import { routeWithSaveId } from '../infra/config/routes'
 
 export default function Home() {
   const router = useRouter()
@@ -27,11 +26,13 @@ export default function Home() {
         <p className="mb-6 text-lg text-center">Continue seu jogo ou crie um novo save.</p>
 
         <div className="flex md:flex-row flex-col md:justify-between gap-6 md:gap-2 px-4">
-          <Activity mode={activeSaveId !== null ? 'visible' : 'hidden'}>
-            <Button onClick={goToGame} aria-busy={activeSaveId ? 'true' : 'false'}>
-              Continuar
-            </Button>
-          </Activity>
+          <Button
+            onClick={goToGame}
+            aria-busy={activeSaveId ? 'true' : 'false'}
+            className={`${activeSaveId !== null ? 'block' : 'hidden'}`}
+          >
+            Continuar
+          </Button>
 
           <Button onClick={goToSaveNew}>Novo save</Button>
         </div>

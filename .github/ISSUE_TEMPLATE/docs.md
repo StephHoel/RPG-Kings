@@ -31,3 +31,9 @@ Adicione contexto adicional, referências ou prints.
 ## Prioridade / Estimativa
 
 `priority/p3` / `size/s`
+
+## Referências
+
+Parent Feature: `#(feature-issue-number) || N/A`
+Related Epic: `#(epic-issue-number) || N/A`
+Others related: `N/A`

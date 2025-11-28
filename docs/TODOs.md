@@ -9,8 +9,9 @@ Segue a lista dos TODOs encontrados no código. Cada seção usa o texto exato q
 
 ---
 
-## verificar se isso vai ser necessário
+## pensar se vamos usar configurações, hoje não é necessário e não vejo motivo para usar
 
+Nota: Despriorizado
 Arquivo: `src/schemas/SettingsSchema.ts` (linha aproximada: 5)
 
 Sugestões para resolver:
@@ -19,19 +20,6 @@ Sugestões para resolver:
 - **Decidir retenção:** se a propriedade ou validação é necessária, remover o TODO e adicionar um comentário mais específico (ex.: "manter se suportarmos high-contrast theme").
 - **Testes/Exemplos:** adicionar testes de validação do `SettingsSchema` cobrindo `highContrast` presente/ausente.
 - **Remover ou arquivar:** se não for necessário, remover a propriedade/linha ou mover a nota para um issue no tracker.
-
----
-
-## talvez mudar de string para enum/nome
-
-Arquivo: `src/schemas/SheetSchema.ts` (linha aproximada: 32)
-
-Sugestões para resolver:
-
-- **Avaliar necessidade:** identificar como `reputation` é acessado/consultado (buscas por chave de NPC).
-- **Modelagem:** se as keys são entidades conhecidas, criar um `NPCEnum` ou usar IDs (ex.: `Record<NPCId, number>`). Caso as chaves sejam arbitrárias, manter string.
-- **Migração/compatibilidade:** se mudar o tipo, criar rotina de migração para dados existentes (converter string keys para enum/ids).
-- **Testes:** adicionar testes que confirmem serialização/deserialização e validação com `zod`.
 
 ---
 
@@ -125,8 +113,9 @@ Sugestões para resolver:
 
 ---
 
-## adicionar uma forma de criar sheet se não existir e implementar ao tentar recuperar o sheet tbm
+## criar sheet se não existir e implementar ao tentar recuperar o sheet tbm
 
+Nota: depois do refactor talvez deixe de ser usado
 Arquivo: `src/db/index.ts` (linha aproximada: 76)
 
 Sugestões para resolver:

@@ -1,0 +1,38 @@
+src/
+ ├─ assets/
+ │   └─ images/
+ ├─ domain/
+ │   ├─ constants/ # type/enums estáticos
+ │   └─ models/
+ │       ├─ save.ts
+ │       └─ ...
+ ├─ infra/
+ │   ├─ dexie/
+ │   │   ├─ migrations/ # arquivos de migração
+ │   │   ├─ seed/ # arquivos de seed
+ │   │   ├─ versioning/ # versionamento do banco
+ │   │   └─ database.ts
+ │   ├─ repositories/
+ │   │   ├─ saves.repo.ts
+ │   │   └─ ...
+ │   └─ schemas/
+ │       ├─ shared/
+ │       │   └─ zod-types.ts # tipos Zod aqui
+ │       ├─ index.ts
+ │       ├─ saves.schema.ts
+ │       └─ ...
+ ├─ pages/
+ │   └─ (rotas do Next)
+ ├─ services/
+ │   └─ scenes/
+ │       ├─ index.ts
+ │       ├─ scene.service.ts
+ │       └─ ...
+ ├─ ui/
+ │   ├─ components/
+ │   ├─ hooks/
+ │   ├─ providers/
+ │   └─ styles/
+tests/
+ └─ e2e/
+     └─ routes.test.tsx

@@ -30,6 +30,6 @@ Descreva a tarefa e por que ela é necessária.
 
 ## Referências
 
-- Links para docs / designs / issues relacionadas
-
-Se esta tarefa faz parte de um Epic, linkar aqui: `#(epic-issue-number)`
+Parent Feature: `#(feature-issue-number) || N/A`
+Related Epic: `#(epic-issue-number) || N/A`
+Branch:

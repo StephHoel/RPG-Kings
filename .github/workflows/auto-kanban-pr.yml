@@ -13,12 +13,17 @@ jobs:
       - name: Set token
         id: token
         run: |
+          set -euo pipefail
+          trap 'rc=$?; echo "[auto-kanban-pr][ERRO] Falha no script (exit $rc). Comando: \"$BASH_COMMAND\". Linha: $LINENO"; exit $rc' ERR
           if [ -n "${{ secrets.PROJECT_TOKEN }}" ]; then echo "TOKEN=${{ secrets.PROJECT_TOKEN }}" >> $GITHUB_OUTPUT; else echo "TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT; fi
+          echo "[auto-kanban-pr] Token definido com sucesso (não exibindo valor completo)."
       - name: Export GH token for gh CLI
         run: echo "GH_TOKEN=${{ steps.token.outputs.TOKEN }}" >> $GITHUB_ENV
       - name: Determine issue number from branch
         id: issue
         run: |
+          set -euo pipefail
+          trap 'rc=$?; echo "[auto-kanban-pr][ERRO] Falha no script (exit $rc). Comando: \"$BASH_COMMAND\". Linha: $LINENO"; exit $rc' ERR
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             BRANCH=${{ github.head_ref }}
           else
@@ -27,6 +32,8 @@ jobs:
           fi
           # expect patterns like feat/10-desc or fix/12-desc
           ISS=$(echo "$BRANCH" | sed -E 's#^.*/([0-9]+).*#\1#')
+          echo "[auto-kanban-pr] Branch detectado: $BRANCH"
+          echo "[auto-kanban-pr] Número extraído: $ISS"
           echo "ISSUE=$ISS" >> $GITHUB_OUTPUT
       - name: Move issue on PR events
         env:
@@ -36,8 +43,10 @@ jobs:
           PR_STATE: ${{ github.event.action }}
           ISSUE_NUM: ${{ steps.issue.outputs.ISSUE }}
         run: |
-          if [ -z "$ISSUE_NUM" ] || [ "$ISSUE_NUM" = "feat" ]; then echo "No issue number found in branch; skipping"; exit 0; fi
-          echo "Handling event=$GITHUB_EVENT_NAME pr_action=$PR_STATE for issue #$ISSUE_NUM"
+          set -euo pipefail
+          trap 'rc=$?; echo "[auto-kanban-pr][ERRO] Falha no script (exit $rc). Comando: \"$BASH_COMMAND\". Linha: $LINENO"; exit $rc' ERR
+          if [ -z "$ISSUE_NUM" ] || [ "$ISSUE_NUM" = "feat" ]; then echo "[auto-kanban-pr] Nenhum número de issue encontrado no branch; pulando."; exit 0; fi
+          echo "[auto-kanban-pr] Handling event=$GITHUB_EVENT_NAME pr_action=$PR_STATE para issue #$ISSUE_NUM"
           if [ "$GITHUB_EVENT_NAME" = "push" ]; then
             # For push events mark the issue as in-progress (remove any other status/* first)
             EXISTING_LABELS_JSON=$(gh issue view $ISSUE_NUM --repo $REPO --json labels --jq '.labels[].name' 2>/dev/null || true)
@@ -45,15 +54,21 @@ jobs:
               for L in $EXISTING_LABELS_JSON; do
                 case "$L" in
                   status/*)
+                    echo "[auto-kanban-pr] Removendo rótulo: $L"
                     gh issue edit $ISSUE_NUM --remove-label "$L" --repo $REPO || true ;;
                   *) ;;
                 esac
               done
             fi
+            echo "[auto-kanban-pr] Adicionando label status/in-progress"
             gh issue edit $ISSUE_NUM --add-label status/in-progress --repo $REPO --cache 2>/dev/null || gh api repos/$REPO/issues/$ISSUE_NUM -X PATCH -f labels[]="status/in-progress" -H "Authorization: token $TOKEN"
-            gh issue comment $ISSUE_NUM --body "Branch pushed: ${BRANCH} (commit: https://github.com/$REPO/commit/$GITHUB_SHA)" --repo $REPO || true
+            if gh issue comment $ISSUE_NUM --body "Branch pushed: ${BRANCH} (commit: https://github.com/$REPO/commit/$GITHUB_SHA)" --repo $REPO; then
+              echo "[auto-kanban-pr] Comentário adicionado na issue"
+            else
+              echo "[auto-kanban-pr] ATENÇÃO: não foi possível adicionar comentário na issue"
+            fi
              # Try to sync ProjectV2 status (requires PROJECT_TOKEN or adequate GITHUB_TOKEN scope)
-            PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "In progress" || true
+            PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "In progress" || echo "[auto-kanban-pr] ATENÇÃO: sync-projectv2 falhou (não bloqueante)"
           else
             if [ "$PR_STATE" = "opened" ] || [ "$PR_STATE" = "reopened" ]; then
               # label issue as in-review (remove any other status/* first)
@@ -62,14 +77,20 @@ jobs:
                 for L in $EXISTING_LABELS_JSON; do
                   case "$L" in
                     status/*)
+                      echo "[auto-kanban-pr] Removendo rótulo: $L"
                       gh issue edit $ISSUE_NUM --remove-label "$L" --repo $REPO || true ;;
                     *) ;;
                   esac
                 done
               fi
+              echo "[auto-kanban-pr] Adicionando label status/in-review"
               gh issue edit $ISSUE_NUM --add-label status/in-review --repo $REPO || true
-              gh issue comment $ISSUE_NUM --body "PR opened: $PR_URL" --repo $REPO || true
-                PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "In review" || true
+              if gh issue comment $ISSUE_NUM --body "PR opened: $PR_URL" --repo $REPO; then
+                echo "[auto-kanban-pr] Comentário 'PR opened' adicionado"
+              else
+                echo "[auto-kanban-pr] ATENÇÃO: não foi possível comentar PR opened"
+              fi
+                PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "In review" || echo "[auto-kanban-pr] ATENÇÃO: sync-projectv2 falhou (não bloqueante)"
             elif [ "$PR_STATE" = "closed" ]; then
               if [ "${{ github.event.pull_request.merged }}" = "true" ]; then
                 # ensure only one status/* label exists: remove existing status/* labels then add status/done
@@ -78,13 +99,15 @@ jobs:
                   for L in $EXISTING_LABELS_JSON; do
                     case "$L" in
                       status/*)
+                        echo "[auto-kanban-pr] Removendo rótulo: $L"
                         gh issue edit $ISSUE_NUM --remove-label "$L" --repo $REPO || true ;;
                       *) ;;
                     esac
                   done
                 fi
+                echo "[auto-kanban-pr] Adicionando label status/done"
                 gh issue edit $ISSUE_NUM --add-label status/done --repo $REPO || true
               fi
-                PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "Done" || true
+                PROJECT_TOKEN=${{ secrets.PROJECT_TOKEN }} node ./scripts/sync-projectv2.mjs --owner ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --project-number 1 --issue $ISSUE_NUM --status "Done" || echo "[auto-kanban-pr] ATENÇÃO: sync-projectv2 falhou (não bloqueante)"
             fi
           fi

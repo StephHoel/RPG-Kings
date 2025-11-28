@@ -1,39 +1,42 @@
 'use client'
-import { Button, GenericTable, H1, Input, Panel } from '@/components'
-import { LogTypeEnum } from '@/enums'
-import { db } from '@/db'
-import { LogCategoryLabels, Log } from '@/interfaces'
-import { exportLogsNDJSON, clearLogs, formatDate, formatPayload } from '@/lib'
+import { Button, GenericTable, H1, Input, Panel } from '@/ui/components'
 import { useState, useEffect, useMemo, Activity } from 'react'
 import { toast } from 'sonner'
 import Head from 'next/head'
+import { LogModel } from '@/domain/models'
+import { LOG_ALL_TYPE, LogAllType } from '@/domain/constants'
+import { formatDate, formatPayload } from '@/domain/utils'
+import { exportLogsNDJSON, clearLogs, getAllLogsService } from '@/services'
 
 export default function Debug() {
-  const [logs, setLogs] = useState<Log[]>([])
-  const [type, setType] = useState<LogCategoryLabels>('all')
-  const [q, setQ] = useState('')
+  const [logs, setLogs] = useState<LogModel[]>([])
+  const [type, setType] = useState<LogAllType>('all')
+  const [query, setQuery] = useState('')
   const [sortAsc, setSortAsc] = useState<boolean>(false)
 
   useEffect(() => {
-    db.logs
-      .orderBy('createdAt')
-      .toArray()
-      .then((rows) => {
-        setLogs(rows)
-      })
+    let mounted = true
+
+    getAllLogsService().then((rows: any) => {
+      if (mounted) setLogs(rows)
+    })
+
+    return () => {
+      mounted = false
+    }
   }, [])
 
   const filtered = useMemo(() => {
     const out = logs
       .filter((r) => type === 'all' || r.type === type)
       .filter((r) => {
-        if (!q) return true
+        if (!query) return true
 
         const hay = `${r.type} ${r.message ?? ''} ${JSON.stringify(
           r.payload ?? ''
         )} ${JSON.stringify(r.createdAt ?? '')}`.toLowerCase()
 
-        return hay.includes(q.toLowerCase())
+        return hay.includes(query.toLowerCase())
       })
 
     out.sort((a, b) => {
@@ -43,7 +46,7 @@ export default function Debug() {
     })
 
     return out
-  }, [logs, type, q, sortAsc])
+  }, [logs, type, query, sortAsc])
 
   async function onCopy() {
     const ndjson = await exportLogsNDJSON()
@@ -59,13 +62,12 @@ export default function Debug() {
     }
 
     await clearLogs()
-
-    const rows = await db.logs.orderBy('createdAt').toArray()
+    const rows = await getAllLogsService()
 
     setLogs(rows)
   }
 
-  const types = ['all', ...LogTypeEnum.options.sort()] as const
+  const types = Object.values(LOG_ALL_TYPE).sort()
 
   const createdAtLabel = `CreatedAt ${sortAsc ? '↑' : '↓'}`
 
@@ -74,29 +76,31 @@ export default function Debug() {
       key: 'createdAt',
       label: createdAtLabel,
       onHeaderClick: () => setSortAsc((s) => !s),
-      render: (r: Log) => formatDate(r.createdAt),
+      render: (r: LogModel) => formatDate(r.createdAt),
     },
     {
       key: 'type',
       label: 'Type',
-      render: (r: Log) => r.type,
+      render: (r: LogModel) => r.type,
     },
     {
       key: 'message',
       label: 'Message',
-      render: (r: Log) => r.message ?? '—',
+      render: (r: LogModel) => r.message ?? '—',
     },
     {
       key: 'payload',
       label: 'Payload',
-      render: (r: Log) => <pre className="whitespace-pre-wrap">{formatPayload(r.payload)}</pre>,
+      render: (r: LogModel) => (
+        <pre className="whitespace-pre-wrap">{formatPayload(r.payload)}</pre>
+      ),
     },
   ]
 
   return (
     <>
       <Head>
-        <title>Debug</title>
+        <title>Debug — King's Academy</title>
       </Head>
 
       <Panel>
@@ -128,8 +132,8 @@ export default function Debug() {
             <div className="sm:w-auto md:w-full">
               <Input
                 placeholder="Filtrar texto..."
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 className="w-full"
               />
             </div>
