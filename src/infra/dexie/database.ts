@@ -14,7 +14,7 @@ import {
   StatsBase,
   XPRecord,
 } from '@/infra/schemas'
-import { registerV1, registerV2, registerV3 } from './versioning'
+import { registerV1, registerV2, registerV3, registerV4 } from './versioning'
 import { openCatchDB, populateDB, versionChange } from './utils'
 
 export class RPGDatabase extends Dexie {
@@ -37,6 +37,7 @@ export class RPGDatabase extends Dexie {
     registerV1(this)
     registerV2(this)
     registerV3(this)
+    registerV4(this)
 
     // if (process.env.NODE_ENV !== 'test')
     this.on('populate', () => populateDB(this))

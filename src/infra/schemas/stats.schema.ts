@@ -9,11 +9,26 @@ export const StatsSchema = z.object({
   intelligence: z.number(),
   charisma: z.number(),
   stamina: z.number(),
-  hungry: z.number(),
-  mood: z.number(),
-  health: z.number(),
-  magic: z.number(),
-  mana: z.number(),
+  hungry: z.object({
+    current: z.number(),
+    max: z.number(),
+  }),
+  mood: z.object({
+    current: z.number(),
+    max: z.number(),
+  }),
+  health: z.object({
+    current: z.number(),
+    max: z.number(),
+  }),
+  magic: z.object({
+    current: z.number(),
+    max: z.number(),
+  }),
+  mana: z.object({
+    current: z.number(),
+    max: z.number(),
+  }),
   updatedAt: isoDateOptional,
   createdAt: isoDateOptional,
 })

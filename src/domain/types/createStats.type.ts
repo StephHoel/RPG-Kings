@@ -1,6 +1,6 @@
 import { StatsBaseModel, StatsModel } from '../models'
 
 export type CreateStats = {
-  raceOrAnimal: StatsBaseModel['target']
+  target: StatsBaseModel['target']
   saveId: StatsModel['saveId']
 }

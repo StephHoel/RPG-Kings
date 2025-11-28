@@ -34,7 +34,7 @@ export function useCreateSave() {
 
       const raceOrAnimal = race === RACE_ENUM.shapeshift && sheet?.animal ? sheet?.animal : race
 
-      const stats = await createStatsService({ raceOrAnimal, saveId: save.id })
+      const stats = await createStatsService({ target: raceOrAnimal, saveId: save.id })
 
       if (!stats) {
         const msg = `[${createStatsService.name}] Falha ao criar stats para save ${save.id}`
