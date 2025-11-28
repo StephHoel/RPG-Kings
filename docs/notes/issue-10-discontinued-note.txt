@@ -1,0 +1,12 @@
+Esta issue foi descontinuada devido à reestruturação do repositório e ao fato de o fluxo de criação de fichas ter sido integrado ao processo de criação de saves.
+
+Contexto técnico resumido:
+- Reestruturação: durante a refatoração do projeto a responsabilidade pela criação de fichas foi consolidada no fluxo de criação de saves.
+- Fluxo atual: `src/ui/hooks/save/useCreateSave.ts` chama `createSheetService` durante a criação do save, garantindo que a ficha padrão seja criada automaticamente.
+- Implementação: `createSheetService` (`src/services/sheet/createSheet.service.ts`) monta a `SheetModel` (nome, raça, animal quando aplicável, `coins = 0`) e persiste via `createOrUpdateSheet` em `src/infra/repositories/sheets.repo.ts` (armazenamento em `db.sheets`, Dexie).
+
+Motivo da descontinuação:
+- A issue originalmente pedia um utilitário separado `createDefaultSheet`, porém esse utilitário é redundante com o fluxo atual; manter a issue aberta causa ruído e risco de trabalho duplicado.
+
+Ação tomada:
+- Fecharemos esta issue por estar desatualizada.
