@@ -4,8 +4,7 @@ src/
  ├─ domain/
  │   ├─ constants/ # type/enums estáticos
  │   └─ models/
- │       ├─ save.ts
- │       └─ ...
+ │       └─ (types dos schemas para o resto da aplicação)
  ├─ infra/
  │   ├─ dexie/
  │   │   ├─ migrations/ # arquivos de migração
@@ -13,26 +12,20 @@ src/
  │   │   ├─ versioning/ # versionamento do banco
  │   │   └─ database.ts
  │   ├─ repositories/
- │   │   ├─ saves.repo.ts
- │   │   └─ ...
+ │   │   └─ (repositórios de cada tabela)
  │   └─ schemas/
  │       ├─ shared/
- │       │   └─ zod-types.ts # tipos Zod aqui
- │       ├─ index.ts
- │       ├─ saves.schema.ts
- │       └─ ...
+ │       │   └─ (schemas compartilhados)
+ │       └─ (schemas de cada tabela)
  ├─ pages/
  │   └─ (rotas do Next)
  ├─ services/
- │   └─ scenes/
- │       ├─ index.ts
- │       ├─ scene.service.ts
- │       └─ ...
+ │   └─ (serviços separados por domínios)
  ├─ ui/
  │   ├─ components/
  │   ├─ hooks/
  │   ├─ providers/
  │   └─ styles/
 tests/
- └─ e2e/
-     └─ routes.test.tsx
+ ├─ e2e/
+ └─ unit/
