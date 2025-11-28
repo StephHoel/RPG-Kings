@@ -20,10 +20,57 @@ export const DISCIPLINE_ENUM = {
   INSTRUMENTOS_MUSICAIS: 'Instrumentos Musicais', // TODO colocar cada instrumento
   DANCAS: 'Danças', // TODO colocar cada dança
   LUTAS: 'Lutas', // TODO colocar cada luta
-  performing: 'Artes Cênicas',
-  figure_skating: 'Patinação Artística no Gelo',
-  ice_hockey: 'Hóquei no Gelo',
   athletics: 'Atletismo',
+  // Danças
+  ballet: 'Balé',
+  hip_hop: 'Hip-Hop',
+  kizomba: 'Kizomba',
+  kuduro: 'Kuduro',
+
+  // Esportes Aquáticos
+  swimming: 'Natação',
+  water_polo: 'Polo Aquático',
+
+  // Esportes de Grama
+  soccer: 'Futebol',
+  field_hockey: 'Hóquei de Grama',
+  rugby: 'Rúgbi',
+
+  // Esportes de Quadra
+  basketball: 'Basquete',
+  handball: 'Handebol',
+  volleyball: 'Vôlei',
+
+  // Esportes diversos / Gelo
+  ice_hockey: 'Hóquei no Gelo',
+  figure_skating: 'Patinação Artística no Gelo',
+
+  // Lutas
+  capoeira: 'Capoeira',
+  fencing: 'Esgrima',
+  olympic_wrestling: 'Luta Livre Olímpica',
+
+  // Música
+  atabaque: 'Atabaque',
+  singing: 'Canto',
+  choir: 'Coral',
+  flute: 'Flauta Transversa',
+  piano: 'Piano',
+  guitar: 'Violão/Guitarra',
+  violin: 'Violino',
+  cello: 'Violoncelo',
+
+  // Outras atividades
+  performing: 'Artes Cênicas',
+  publishing: 'Editoração',
+  sculpture: 'Escultura',
+  filming: 'Filmagem',
+  journalism: 'Jornalismo',
+  audiovisual_editing: 'Montagem Audiovisual',
+  painting: 'Pintura',
+  game_production: 'Produção de Jogos',
+  programming: 'Programação',
+  robotics: 'Robótica',
 } as const
 
 // Tipo derivado

@@ -8,6 +8,7 @@ export const DisciplineSchema = z.object({
   type: buildEnumRecord(DISCIPLINE_TYPE),
   skills: buildEnumRecord(SKILL_ENUM).array(),
   stats: buildEnumRecord(STAT_ENUM).array(),
+  disciplines: buildEnumRecord(DISCIPLINE_ENUM).array(),
 })
 
 export type Discipline = z.infer<typeof DisciplineSchema>
