@@ -9,6 +9,15 @@ Base de links: <https://github.com/StephHoel/RPG-Kings>
 
 ---
 
+## v0.1.9 — 2025-11-27
+
+- Refatoração estrutural e padronização do fluxo `ui` → `hook` → `service` → `repo` → `db`, reorganizando responsabilidades e melhorando testabilidade.
+- Centralização de schemas e validações em `src/infra/schemas` e extração de serviços/repos para seguir o novo fluxo arquitetural.
+- Atualizações na camada de persistência (Dexie): registro de versões e migração (v3 → v4) para normalizar o formato de stats e recursos.
+- Ajustes em testes unitários e de integração para refletir a nova separação de responsabilidades; atualizações leves nas CI e templates de PR.
+
+> Justificativa da versão: reorganização e refatoração de arquitetura sem breaking API externo → PATCH.
+
 ## v0.1.0 — 2025-11-10
 
 - Atualização do layout global e da navegação, melhor compatibilidade mobile/desktop e ajuste de organização das áreas principais da aplicação. (commit: [718829e](https://github.com/StephHoel/RPG-Kings/commit/718829e))
