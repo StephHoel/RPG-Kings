@@ -32,16 +32,49 @@ export async function migrateV3toV4(tx: Transaction) {
       return
     }
 
-    // Replace records in-place using primary key
-    for (const rec of migrated) {
+    const withId = migrated.filter((r: any) => r.id !== undefined)
+    const withoutId = migrated.filter((r: any) => r.id === undefined)
+
+    let updated = 0
+    let added = 0
+
+    if (withId.length > 0) {
       try {
-        await statsTable.put(rec)
+        await (statsTable as any).bulkPut(withId)
+        updated = withId.length
       } catch (e) {
-        console.warn('[Dexie] Falha ao atualizar registro de stats', e)
+        console.warn('[Dexie] bulkPut falhou, fallback para put individual', e)
+        for (const rec of withId) {
+          try {
+            await statsTable.put(rec)
+            updated++
+          } catch (err) {
+            console.warn('[Dexie] Falha ao atualizar registro de stats', err)
+          }
+        }
       }
     }
 
-    console.log('[Dexie] Migração v3 → v4 concluída.')
+    if (withoutId.length > 0) {
+      try {
+        await (statsTable as any).bulkAdd(withoutId)
+        added = withoutId.length
+      } catch (e) {
+        console.warn('[Dexie] bulkAdd falhou, fallback para add individual', e)
+        for (const rec of withoutId) {
+          try {
+            await statsTable.add(rec)
+            added++
+          } catch (err) {
+            console.warn('[Dexie] Falha ao inserir novo registro de stats', err)
+          }
+        }
+      }
+    }
+
+    console.log(
+      `[Dexie] Migração v3 → v4 concluída. updated=${updated}, added=${added}, total=${migrated.length}`
+    )
   } catch (err) {
     console.error('[Dexie] Erro na migração v3 → v4', err)
     throw err

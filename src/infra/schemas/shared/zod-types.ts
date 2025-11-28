@@ -28,3 +28,5 @@ export const nonNegativeInt = z.number().int().nonnegative()
 // Arrays
 export const stringArray = z.array(z.string())
 export const numberArray = z.array(z.number())
+
+export const resourceSchema = z.object({ current: z.number(), max: z.number() })

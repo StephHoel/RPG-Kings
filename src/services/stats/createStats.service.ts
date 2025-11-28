@@ -1,5 +1,6 @@
 import { StatsModel } from '@/domain/models'
 import { CreateStats } from '@/domain/types'
+import { normalizeResource } from '@/domain/utils'
 import { createOrUpdateStats, getStatsBaseByTarget, getStatsBySaveId } from '@/infra/repositories'
 import { log } from '@/services'
 
@@ -28,11 +29,11 @@ export async function createStatsService({
     intelligence: baseStats.intelligence,
     stamina: baseStats.stamina,
     strength: baseStats.strength,
-    health: defaultResource(100, 100),
-    hungry: defaultResource(100, 0),
-    magic: defaultResource(100, 0),
-    mana: defaultResource(100, 0),
-    mood: defaultResource(100, 50),
+    health: normalizeResource(defaultResource(100, 100)),
+    hungry: normalizeResource(defaultResource(100, 0)),
+    magic: normalizeResource(defaultResource(100, 0)),
+    mana: normalizeResource(defaultResource(100, 0)),
+    mood: normalizeResource(defaultResource(100, 50)),
   })
 
   const statsCreated = await getStatsBySaveId(saveId)
