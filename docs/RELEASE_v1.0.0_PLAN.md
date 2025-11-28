@@ -1,10 +1,10 @@
-# Plano de Release v0.1.9
+# Plano de Release v1.0.0
 
 Objetivo: entrega incremental com correções e pequenas melhorias identificadas nos TODOs e estabilização do fluxo de saves/sheets.
 
 ## Epic
 
-- `Epic: Release v0.1.9` — issue #6
+- `Epic: Release v1.0.0` — issue #6
 
 ## Features planejadas
 
@@ -54,7 +54,7 @@ Objetivo: entrega incremental com correções e pequenas melhorias identificadas
    - Critérios de aceitação:
      - templates em `.github` revisados e commitados
      - workflows de Kanban testados em fluxo real
-     - arquivo de release (`docs/RELEASE_v0.1.9_PLAN.md`) presente
+     - arquivo de release (`docs/RELEASE_v1.0.0_PLAN.md`) presente
    - Estimativa: `size/s`
    - Sub-tasks:
      - validar workflows (criar issue/test PR) e ajustar se necessário
@@ -71,10 +71,10 @@ Objetivo: entrega incremental com correções e pequenas melhorias identificadas
 ## Observações de processo
 
 - Priorize a correção de dados e migração (feature 1) antes de mudanças em enums e seeds para evitar incompatibilidades.
-- Use branches `release/v0.1.9/feat-...` para as features.
+- Use branches `release/v1.0.0/feat-...` para as features.
 - Vincule cada issue/feature criada à epic #6 (use `scripts/create-issues.sh` ou `gh issue create --milestone 1 --label type/feature --body "..."`).
 
 ## Próximos passos recomendados (imediatos)
 
-- Criar issues de feature para cada item acima e atribuir ao milestone `v0.1.9` e epic #6.
+- Criar issues de feature para cada item acima e atribuir ao milestone `v1.0.0` e epic #6.
 - Implementar a subtask crítica: `createDefaultSheet(saveId)` e teste de migração.
