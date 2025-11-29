@@ -87,14 +87,14 @@ describe('deleteSaveCascade', () => {
 
     // verify dependent stores are empty for this saveId
     // use repo-specific getters to assert emptiness
-    const sheets = await getSheetBySaveId?.(save.id)
-    const statsFetched = await getStatsBySaveId?.(save.id)
-    const inv = await getInventoriesBySaveId?.(save.id)
-    const xprecs = await getXPsBySaveId?.(save.id)
+    const sheets = await getSheetBySaveId(save.id)
+    const statsFetched = await getStatsBySaveId(save.id)
+    const inv = await getInventoriesBySaveId(save.id)
+    const xprecs = await getXPsBySaveId(save.id)
 
     expect(sheets).toBeUndefined()
     expect(statsFetched).toBeUndefined()
-    expect(inv && inv.length).toBe(0)
-    expect(xprecs && xprecs.length).toBe(0)
+    expect(inv).toEqual([])
+    expect(xprecs).toEqual([])
   })
 })
