@@ -130,13 +130,25 @@ Se a tarefa for ambígua, o agente pergunta por esclarecimentos (ex.: "Qual é o
 - Hooks que executam queries no `db` sem passar pelo `service`.
 - Services que manipulam diretamente UI (renderização, navegação) — isso cabe ao `ui`/`hook`.
 
+### Proibição de imports dinâmicos
+
+- **Regra:** Não use imports dinâmicos (`import(...)` ou `require` com caminho dinâmico) em código dentro de `src/` nem em arquivos de teste. Imports dinâmicos também não devem ser introduzidos por geradores de código ou templates automáticos que afetem o código fonte do projeto.
+- **Por quê:** Imports dinâmicos quebram análise estática (types, bundlers, tree-shaking), tornam o comportamento dos testes não determinístico, complicam a composição de dependências e dificultam revisões e refactors.
+- **Exceções:** Scripts de build/infra fora de `src/` (por exemplo, ferramentas de migração ou scripts de CI em `scripts/`) podem usar imports dinâmicos se houver justificativa e aprovação da equipe. Qualquer exceção deve ser documentada na PR.
+- **Alternativas:**
+  - Prefira `import` estático e named exports.
+  - Use injeção de dependência ou patterns de fábrica para trocar implementações em testes.
+  - Nos testes, use `jest.mock()` / helpers de mocking em vez de carregar módulos dinamicamente.
+  - Se precisar de code-splitting em runtime, utilize APIs do framework que aceitem imports estáticos explícitos e documente a razão.
+
+
 ### Observações finais
 
 - Esta regra existe para manter separação de responsabilidades, testabilidade e previsibilidade do código. Ao revisar PRs, priorize clareza do fluxo e pequenas mudanças que respeitem a regra.
 
 ### Testes
 
-- **Comando unitários:**: Execute os testes unitários com `npm run test:unit`.
+- **Comando unitários:** Execute os testes unitários com `npm run test:unit`.
 - **Comando e2e:** Execute os testes end-to-end com `npm run test:e2e`.
 
 As pipelines e revisores devem seguir estes comandos para consistência. Se o projeto adicionar outra task de teste, atualize este documento.
