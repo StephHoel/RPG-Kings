@@ -11,10 +11,6 @@ export async function getDisciplinesByType(type: Discipline['type']): Promise<Di
   return db.disciplines_list.where({ type }).toArray()
 }
 
-export async function getDisciplinesBySkills(skills: Discipline['skills']): Promise<Discipline[]> {
-  return db.disciplines_list.where({ skills }).toArray()
-}
-
 export async function getDisciplinesByStats(stats: Discipline['stats']): Promise<Discipline[]> {
   return db.disciplines_list.where({ stats }).toArray()
 }

@@ -12,7 +12,7 @@ import {
 
 const TABLES_VERSION_3 = {
   animals_list: '++id, name, race',
-  disciplines_list: '++id, name, type, skills, stats',
+  disciplines_list: '++id, name, type, stats',
   inventories: '++id, saveId, type, expiresAtWeek, usedAtWeek',
   items_list: '++id, name, type',
   logs: '++id, type, createdAt',

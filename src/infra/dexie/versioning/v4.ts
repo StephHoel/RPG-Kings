@@ -12,7 +12,7 @@ import { migrateV3toV4 } from '../migrations/v3-to-v4.migration'
 
 const TABLES_VERSION_4 = {
   animals_list: '++id, name, race',
-  disciplines_list: '++id, name, type, skills, stats',
+  disciplines_list: '++id, name, type, stats',
   inventories: '++id, saveId, type, expiresAtWeek, usedAtWeek',
   items_list: '++id, name, type',
   logs: '++id, type, createdAt',

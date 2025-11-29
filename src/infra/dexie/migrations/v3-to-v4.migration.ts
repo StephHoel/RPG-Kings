@@ -29,7 +29,6 @@ export async function migrateV3toV4(tx: Transaction) {
 
     if (migrated.length === 0) {
       console.log('[Dexie] Nenhum registro para migrar em stats.')
-      return
     }
 
     const withId = migrated.filter((r: any) => r.id !== undefined)
@@ -75,6 +74,40 @@ export async function migrateV3toV4(tx: Transaction) {
     console.log(
       `[Dexie] Migração v3 → v4 concluída. updated=${updated}, added=${added}, total=${migrated.length}`
     )
+
+    // Remove `skills` and `disciplines` fields from existing disciplines_list records
+    try {
+      const disciplinesTable = tx.table('disciplines_list') as Table<any>
+      const allDisc = await disciplinesTable.toArray()
+      console.log(`[Dexie] Disciplines encontrados: ${allDisc.length}`)
+
+      const sanitized = allDisc.map((rec: any) => {
+        const { skills, disciplines, ...rest } = rec
+        return rest
+      })
+
+      let updatedCount = 0
+      if (sanitized.length > 0) {
+        try {
+          await (disciplinesTable as any).bulkPut(sanitized)
+          updatedCount = sanitized.length
+        } catch (e) {
+          console.warn('[Dexie] bulkPut failed for disciplines_list, falling back', e)
+          for (const rec of sanitized) {
+            try {
+              await disciplinesTable.put(rec)
+              updatedCount++
+            } catch (err) {
+              console.warn('[Dexie] Failed to update discipline record', err)
+            }
+          }
+        }
+      }
+
+      console.log(`[Dexie] Disciplines sanitized: ${updatedCount}`)
+    } catch (err) {
+      console.warn('[Dexie] Error sanitizing disciplines_list', err)
+    }
   } catch (err) {
     console.error('[Dexie] Erro na migração v3 → v4', err)
     throw err
