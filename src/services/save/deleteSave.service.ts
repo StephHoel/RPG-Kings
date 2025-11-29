@@ -1,8 +1,8 @@
-import { deleteSave } from '@/infra/repositories'
+import { deleteSaveCascade } from '@/infra/repositories'
 import { log } from '@/services'
 
 export async function deleteSaveService(id: string): Promise<void> {
-  await deleteSave(id)
+  await deleteSaveCascade(id)
 
   await log.info(`[${deleteSaveService.name}] Save deletado`, { id })
 }
