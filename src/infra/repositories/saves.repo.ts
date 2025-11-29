@@ -31,3 +31,18 @@ export async function desactiveAll(): Promise<void> {
 export async function deleteSave(id: string): Promise<void> {
   await db.saves.delete(id)
 }
+
+export async function deleteSaveCascade(id: string): Promise<void> {
+  // Delete save and all dependent records in a single transaction
+  await db.transaction(
+    'rw',
+    [db.saves, db.sheets, db.stats, db.inventories, db.xp_records],
+    async () => {
+      await db.sheets.where({ saveId: id }).delete()
+      await db.stats.where({ saveId: id }).delete()
+      await db.inventories.where({ saveId: id }).delete()
+      await db.xp_records.where({ saveId: id }).delete()
+      await db.saves.delete(id)
+    }
+  )
+}
