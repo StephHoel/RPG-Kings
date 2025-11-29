@@ -1,7 +1,7 @@
 {
   "name": "kings-academy",
   "private": true,
-  "version": "0.1.8",
+  "version": "0.1.10",
   "type": "module",
   "homepage": "https://stephhoel.github.io/RPG-Kings/",
   "scripts": {

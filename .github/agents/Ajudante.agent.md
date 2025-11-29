@@ -148,3 +148,14 @@ As pipelines e revisores devem seguir estes comandos para consistência. Se o pr
 - **Services/Hooks/UI:** Services chamam métodos de `repo` que encapsulam a lógica de deleção — hooks/UI não devem chamar múltiplos repositórios para tentar replicar cascata em nível superior.
 - **Exceptions:** Para deleções parciais ou operações específicas (por exemplo, remoção de apenas um `item` de `inventory`), use os métodos individuais dos repositórios correspondentes. Somente empregue cascata quando for necessário remover uma entidade raiz e todos seus dependentes.
 - **Documentação/Testes:** Toda mudança que introduza deleção em cascata deve ser acompanhada por testes unitários que verifiquem que os registros dependentes são removidos e por uma nota curta na documentação (ou na mensagem do PR) explicando quais stores são afetados.
+
+### Templates
+
+- **PR:** `.github/PULL_REQUEST_TEMPLATE.md`
+- **Task:** `.github/ISSUE_TEMPLATE/task.md`
+- **Bug:** `.github/ISSUE_TEMPLATE/bug.md`
+- **Docs:** `.github/ISSUE_TEMPLATE/docs.md`
+- **Epic:** `.github/ISSUE_TEMPLATE/epic.md`
+- **Feature:** `.github/ISSUE_TEMPLATE/feature.md`
+
+Use estes templates sempre que for pedido criar uma Pull Request ou uma Issue correspondente ao tipo. Eles garantem consistência nas descrições, critérios de aceitação e checklists que os revisores esperam encontrar.
