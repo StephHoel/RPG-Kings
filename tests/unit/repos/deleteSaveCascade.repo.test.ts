@@ -1,12 +1,17 @@
-import { createOrUpdateSave, deleteSaveCascade, getAllSaves } from '@/infra/repositories'
-import { createOrUpdateSheet } from '@/infra/repositories/sheets.repo'
-import { createOrUpdateStats } from '@/infra/repositories/stats.repo'
-import { createOrUpdateInventory } from '@/infra/repositories/inventories.repo'
-import { createOrUpdateXP } from '@/infra/repositories/xpRecords.repo'
-import { Sheet } from '@/infra/schemas'
-import { Stats } from '@/infra/schemas'
-import { Inventory } from '@/infra/schemas'
-import { XPRecord } from '@/infra/schemas'
+import {
+  createOrUpdateSave,
+  createOrUpdateStats,
+  createOrUpdateXP,
+  deleteSaveCascade,
+  getAllSaves,
+  getStatsBySaveId,
+  getXPsBySaveId,
+  createOrUpdateSheet,
+  getSheetBySaveId,
+  createOrUpdateInventory,
+  getInventoriesBySaveId,
+} from '@/infra/repositories'
+import { Sheet, Stats, Inventory, XPRecord } from '@/infra/schemas'
 import { SaveModel } from '@/domain/models'
 import { ITEM_ENUM, ITEM_TYPE, RACE_ENUM } from '@/domain/constants'
 
@@ -82,10 +87,10 @@ describe('deleteSaveCascade', () => {
 
     // verify dependent stores are empty for this saveId
     // use repo-specific getters to assert emptiness
-    const sheets = await (await import('@/infra/repositories')).getSheetBySaveId?.(save.id)
-    const statsFetched = await (await import('@/infra/repositories')).getStatsBySaveId?.(save.id)
-    const inv = await (await import('@/infra/repositories')).getInventoriesBySaveId?.(save.id)
-    const xprecs = await (await import('@/infra/repositories')).getXPsBySaveId?.(save.id)
+    const sheets = await getSheetBySaveId?.(save.id)
+    const statsFetched = await getStatsBySaveId?.(save.id)
+    const inv = await getInventoriesBySaveId?.(save.id)
+    const xprecs = await getXPsBySaveId?.(save.id)
 
     expect(sheets).toBeUndefined()
     expect(statsFetched).toBeUndefined()
