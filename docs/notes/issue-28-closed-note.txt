@@ -1,0 +1,5 @@
+Resumo técnico:
+- Refatoração estrutural concluída. Alterações envolveram reorganização de módulos e migrações (ex.: Dexie migrations, schema updates) e limpeza de responsabilidades.
+
+Impacto:
+- Melhor separação entre `ui > hook > service > repo > db` e facilitação de futuras alterações.

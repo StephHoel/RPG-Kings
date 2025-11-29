@@ -1,0 +1,7 @@
+Resumo técnico:
+- A issue solicita melhorias no modelo de `Sheet` para suportar novos requisitos de jogo.
+- Revisões recentes no repositório ajustaram o `SheetSchema` e fluxos relacionados; parte do trabalho pode estar já implementada em `src/infra/schemas` e `src/services/sheet`.
+
+Evidência de implementação parcial:
+- `createSheetService` está implementado em `src/services/sheet/createSheet.service.ts` e coberto por testes unitários em `tests/unit/services/createSheet.service.test.ts`.
+- Operações de persistência são realizadas por `src/infra/repositories/sheets.repo.ts`.

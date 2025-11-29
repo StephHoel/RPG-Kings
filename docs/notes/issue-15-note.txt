@@ -1,0 +1,5 @@
+Resumo e estado atual:
+- Existem testes unitários cobrindo repositório de sheets e remoção por save (`tests/unit/repos/sheets.repo.test.ts`) que validam `deleteSheetsBySaveId`.
+
+Recomendação:
+- Para teste de integração completo de deleção em cascata (save + sheets + inventories/xp_records), criar um teste de integração que use `fake-indexeddb` e, preferencialmente, valide comportamento transacional se `removeSaveCascade` for implementado.

@@ -1,0 +1,9 @@
+Resumo técnico:
+- A funcionalidade de afinidade não está implementada atualmente no core do repositório.
+- A implementação exigirá: modelo de afinidade, armazenamento (DB), integração com sheet/saves e regras de cálculo.
+
+Recomendação:
+- Criar RFC/descrição de dados e regras de cálculo antes de implementar; adicionar como sub-tasks no epic de release.
+
+Decisão:
+- Mantido em backlog até definir especificação.

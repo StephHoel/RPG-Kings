@@ -1,0 +1,2 @@
+Resumo e evidências:
+- Recentes alterações removeram campos obsoletos (`skills`, `disciplines`) do `DisciplineSchema` e atualizaram o seed `src/infra/dexie/seed/disciplines.seed.ts` e `src/domain/constants/enum/discipline.enum.ts` para refletir chaves em inglês e values em pt-BR.
