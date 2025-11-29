@@ -1,10 +1,10 @@
 ---
-name: Tarefa / Filho
+type: Task / Filho
 about: Uma tarefa que pertence a um Epic ou é um item de trabalho independente
-labels: type/task, status/backlog
+labels: type/task, status/backlog, priority/?, size/?
 ---
 
-# Tarefa: [TÍTULO CURTO]
+# Task: [TÍTULO CURTO]
 
 ## Descrição
 
@@ -30,6 +30,6 @@ Descreva a tarefa e por que ela é necessária.
 
 ## Referências
 
-Parent Feature: `#(feature-issue-number) || N/A`
-Related Epic: `#(epic-issue-number) || N/A`
-Branch:
+Parent Feature: `feature# || N/A`
+Related Epic: `epic# || N/A`
+Branch: `<type>/<issue#>-<descricao-curta>`

@@ -131,6 +131,26 @@ As pipelines e revisores devem seguir estes comandos para consistência. Se o pr
 - **Exceptions:** Para deleções parciais ou operações específicas (por exemplo, remoção de apenas um `item` de `inventory`), use os métodos individuais dos repositórios correspondentes. Somente empregue cascata quando for necessário remover uma entidade raiz e todos seus dependentes.
 - **Documentação/Testes:** Toda mudança que introduza deleção em cascata deve ser acompanhada por testes unitários que verifiquem que os registros dependentes são removidos e por uma nota curta na documentação (ou na mensagem do PR) explicando quais stores são afetados.
 
+## Passo obrigatório: Ajuste de formatação antes de aplicar patches
+
+- Antes de commitar e abrir um PR, sempre execute formatação e validação de lint nos arquivos alterados. Isso evita avisos de lint e mantém o repositório consistente.
+
+- Comandos sugeridos (executar na raiz do projeto):
+
+```bash
+npx prettier --write "<paths>"
+npx markdownlint "<paths>" # opcional, para arquivos Markdown
+```
+
+- Exemplos práticos:
+
+```bash
+npx prettier --write docs/notes/issue-16-new-note.md
+npx markdownlint docs/notes/issue-16-new-note.md
+```
+
+- Recomenda-se adicionar hooks de pre-commit (ex.: `husky`) para automatizar esta etapa no futuro.
+
 ## Templates
 
 - **PR:** `.github/PULL_REQUEST_TEMPLATE.md`
