@@ -133,3 +133,18 @@ Se a tarefa for ambígua, o agente pergunta por esclarecimentos (ex.: "Qual é o
 ### Observações finais
 
 - Esta regra existe para manter separação de responsabilidades, testabilidade e previsibilidade do código. Ao revisar PRs, priorize clareza do fluxo e pequenas mudanças que respeitem a regra.
+
+### Testes
+
+- **Comando unitários:**: Execute os testes unitários com `npm run test:unit`.
+- **Comando e2e:** Execute os testes end-to-end com `npm run test:e2e`.
+
+As pipelines e revisores devem seguir estes comandos para consistência. Se o projeto adicionar outra task de teste, atualize este documento.
+
+### Política de Deleção em Cascata
+
+- **Responsabilidade:** A deleção em cascata deve ser implementada apenas na camada `repo` (repositório), que é a única responsável por acessar o DB.
+- **Atomicidade:** Quando uma entidade principal (ex.: `save`) tiver dependentes (ex.: `sheets`, `stats`, `inventories`, `xp_records`), a remoção completa deve ocorrer dentro de uma transação do DB (por exemplo, `db.transaction('rw', [...stores], async () => { ... })`) para garantir atomicidade.
+- **Services/Hooks/UI:** Services chamam métodos de `repo` que encapsulam a lógica de deleção — hooks/UI não devem chamar múltiplos repositórios para tentar replicar cascata em nível superior.
+- **Exceptions:** Para deleções parciais ou operações específicas (por exemplo, remoção de apenas um `item` de `inventory`), use os métodos individuais dos repositórios correspondentes. Somente empregue cascata quando for necessário remover uma entidade raiz e todos seus dependentes.
+- **Documentação/Testes:** Toda mudança que introduza deleção em cascata deve ser acompanhada por testes unitários que verifiquem que os registros dependentes são removidos e por uma nota curta na documentação (ou na mensagem do PR) explicando quais stores são afetados.
