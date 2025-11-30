@@ -1,33 +1,26 @@
 import { LOG_TYPE, LogType } from '@/domain/constants'
-import { LogModel } from '@/domain/models'
 import { createLog, getAllLogs, clearLogs as clearLogsRepo } from '@/infra/repositories'
-import { LogSchema } from '@/infra/schemas'
+import { buildMessage } from '@/domain/utils'
 
 export const log = {
-  async error(message: string, payload?: any) {
-    await toLog(LOG_TYPE.error, message, payload)
+  async error(template: string, params?: Record<string, any>, payload?: any) {
+    await toLog(LOG_TYPE.error, template, params, payload)
   },
 
-  async info(message: string, payload?: any) {
-    await toLog(LOG_TYPE.info, message, payload)
+  async info(template: string, params?: Record<string, any>, payload?: any) {
+    await toLog(LOG_TYPE.info, template, params, payload)
   },
 
-  async warn(message: string, payload?: any) {
-    await toLog(LOG_TYPE.warn, message, payload)
+  async warn(template: string, params?: Record<string, any>, payload?: any) {
+    await toLog(LOG_TYPE.warn, template, params, payload)
   },
 }
 
-async function toLog(type: LogType, message?: string, payload?: any) {
-  const entry = {
-    type,
-    message,
-    payload,
-  }
-
-  const parsed = LogSchema.parse(entry) as LogModel
+async function toLog(type: LogType, template: string, params?: Record<string, any>, payload?: any) {
+  const message = buildMessage(template, params)
 
   try {
-    await createLog(parsed)
+    await createLog({ type, message, payload })
   } catch (err) {
     console.error('[LoggerService] Falha ao gravar log:', err)
     throw err
@@ -40,11 +33,6 @@ export async function exportLogsNDJSON(): Promise<string> {
   return all.map((x) => JSON.stringify(x)).join('\n')
 }
 
-export async function getAllLogsService() {
-  const { getAllLogs } = await import('@/infra/repositories')
-  return getAllLogs()
-}
+export const getAllLogsService = async () => getAllLogs()
 
-export async function clearLogs() {
-  await clearLogsRepo()
-}
+export const clearLogs = async () => await clearLogsRepo()

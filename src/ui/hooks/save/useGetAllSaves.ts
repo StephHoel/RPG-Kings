@@ -17,7 +17,7 @@ export function useGetAllSaves(): HookResult<SaveModel[]> {
 
         console.error(msg, err)
 
-        await log.error(msg, { error: String(err) })
+        await log.error(msg, undefined, { error: String(err) })
       }
     },
   })

@@ -19,7 +19,7 @@ export function useGetSave(saveId: string): HookResult<SaveModel> {
 
         console.error(msg, err)
 
-        await log.error(msg, { saveId, error: String(err) })
+        await log.error(msg, undefined, { saveId, error: String(err) })
       }
     },
   })

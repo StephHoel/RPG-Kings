@@ -18,7 +18,7 @@ export function useCreateSave() {
         const msg = `[${createSaveService.name}] Falha ao criar save`
 
         console.error(msg)
-        await log.error(msg, { name, race })
+        await log.error(msg, undefined, { name, race })
         return
       }
 
@@ -28,7 +28,7 @@ export function useCreateSave() {
         const msg = `[${createSheetService.name}] Falha ao criar sheet para save ${save?.id}`
 
         console.error(msg)
-        await log.error(msg, { save, name, race })
+        await log.error(msg, undefined, { save, name, race })
         return { save, sheet, stats: undefined }
       }
 
@@ -40,7 +40,7 @@ export function useCreateSave() {
         const msg = `[${createStatsService.name}] Falha ao criar stats para save ${save.id}`
 
         console.error(msg)
-        await log.error(msg, { save, sheet })
+        await log.error(msg, undefined, { save, sheet })
       }
 
       return { save, sheet, stats }
@@ -86,7 +86,7 @@ export function useCreateSave() {
 
       console.error(msg, err)
 
-      await log.error(msg, { error: err })
+      await log.error(msg, undefined, { error: err })
     },
   })
 }

@@ -27,7 +27,7 @@ export function useDeleteSave() {
 
       console.error(msg, err)
 
-      await log.error(msg, { error: err })
+      await log.error(msg, undefined, { error: err })
     },
   })
 }

@@ -19,7 +19,7 @@ export function useGetScene(sceneId: SceneModel['id']): HookResult<SceneModel> {
 
         console.error(msg, err)
 
-        await log.error(msg, { sceneId, error: String(err) })
+        await log.error(msg, undefined, { sceneId, error: String(err) })
       }
     },
   })

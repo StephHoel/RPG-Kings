@@ -38,7 +38,7 @@ export async function createStatsService({
 
   const statsCreated = await getStatsBySaveId(saveId)
 
-  await log.info(`[${createStatsService.name}] Stats criado com sucesso`, { stats: statsCreated })
+  await log.info(`[${createStatsService.name}] Stats criado com sucesso`, undefined, { stats: statsCreated })
 
   return statsCreated
 }

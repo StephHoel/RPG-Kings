@@ -17,7 +17,7 @@ export function useAddXP(saveId: string, discipline: string, xpToAdd: number) {
 
       console.error(msg, err)
 
-      await log.error(msg, {
+      await log.error(msg, undefined, {
         saveId,
         discipline,
         error: String(err),

@@ -5,7 +5,7 @@ import { log } from '@/services'
 export async function getSheetService(saveId: string): Promise<SheetModel | undefined> {
   const sheet = await getSheetBySaveId(saveId)
 
-  await log.info(`[${getSheetService.name}] Ficha obtida`, { saveId, present: !!sheet })
+  await log.info(`[${getSheetService.name}] Ficha obtida`, undefined, { saveId, present: !!sheet })
 
   return sheet
 }

@@ -27,7 +27,7 @@ export async function addXPService(
 
   await createOrUpdateXP(record)
 
-  await log.info(`[${addXPService.name}] XP adicionado`, {
+  await log.info(`[${addXPService.name}] XP adicionado`, undefined, {
     saveId,
     discipline,
     xpAdded: amountToAdd,

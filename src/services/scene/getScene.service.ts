@@ -7,7 +7,7 @@ export async function getSceneByIdService(
 ): Promise<SceneModel | undefined> {
   const scene = await getSceneById(sceneId)
 
-  await log.info(`[${getSceneByIdService.name}] Cena obtida`, { scene: scene })
+  await log.info(`[${getSceneByIdService.name}] Cena obtida`, undefined, { scene: scene })
 
   return scene
 }

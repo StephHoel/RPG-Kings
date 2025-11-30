@@ -28,7 +28,7 @@ export async function getInventoriesService(saveId: string): Promise<InventoryMo
     return 0
   })
 
-  await log.info(`[${getInventoriesService.name}] Inventário obtido`, {
+  await log.info(`[${getInventoriesService.name}] Inventário obtido`, undefined, {
     saveId,
     amountItems: inventories.length,
   })

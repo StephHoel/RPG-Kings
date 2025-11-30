@@ -18,7 +18,7 @@ export async function createSheetService({
 
     if (!animal) {
       await log.warn(
-        `[${createSheetService.name}] Nenhum animal disponível para ${RACE_ENUM.shapeshift}`,
+        `[${createSheetService.name}] Nenhum animal disponível para ${RACE_ENUM.shapeshift}`, undefined,
         { race }
       )
     }
@@ -38,7 +38,7 @@ export async function createSheetService({
 
   const sheetCreated = await getSheetBySaveId(saveId)
 
-  await log.info(`[${createSheetService.name}] Ficha criada com sucesso`, { sheet: sheetCreated })
+  await log.info(`[${createSheetService.name}] Ficha criada com sucesso`, undefined, { sheet: sheetCreated })
 
   return sheetCreated
 }

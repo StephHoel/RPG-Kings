@@ -9,7 +9,7 @@ export async function getSaveService(saveId: string): Promise<SaveModel | undefi
   }
 
   const save = await getSaveById(saveId)
-  await log.info(`[${getSaveService.name}] Jogo obtido`, { save })
+  await log.info(`[${getSaveService.name}] Jogo obtido`, undefined, { save })
 
   return save
 }

@@ -18,7 +18,7 @@ export async function createSaveService(): Promise<SaveModel | undefined> {
   } as SaveModel)
 
   const save = await getSaveById(saveId)
-  await log.info(`[${createSaveService.name}] Save criado`, save)
+  await log.info(`[${createSaveService.name}] Save criado`, undefined, save)
 
   return save
 }

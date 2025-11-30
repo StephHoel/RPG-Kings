@@ -16,7 +16,7 @@ export function useActiveSave(): HookResult<SaveModel> {
         const msg = `[${useActiveSave.name}] Erro ao obter save ativo`
 
         console.error(msg, err)
-        await log.error(msg, { error: String(err) })
+        await log.error(msg, undefined, { error: String(err) })
       }
     },
   })

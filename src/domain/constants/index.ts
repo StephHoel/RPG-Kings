@@ -12,3 +12,5 @@ export * from './types/log.type'
 export * from './types/skills.type'
 export * from './types/statsBase.type'
 export * from './types/xp.type'
+
+export * from './logMessages'
