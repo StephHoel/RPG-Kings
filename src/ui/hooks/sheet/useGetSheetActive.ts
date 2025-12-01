@@ -3,6 +3,7 @@ import { useQueryKeys } from '@/domain/queryKeys'
 import { SheetModel } from '@/domain/models'
 import { getSheetService, log } from '@/services'
 import { HookResult } from '@/domain/types'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 export function useGetSheetActive(saveId: SheetModel['saveId']): HookResult<SheetModel> {
   return useQuery({
@@ -15,11 +16,11 @@ export function useGetSheetActive(saveId: SheetModel['saveId']): HookResult<Shee
       try {
         return await getSheetService(saveId)
       } catch (err) {
-        const msg = `[${useGetSheetActive.name}] Erro ao obter ficha`
+        const msg = LOG_MESSAGES.sheet.error.get({ method: useGetSheetActive.name })
 
         console.error(msg, err)
 
-        await log.error(msg, undefined, { saveId, error: String(err) })
+        await log.error(msg, { saveId, error: String(err) })
       }
     },
   })

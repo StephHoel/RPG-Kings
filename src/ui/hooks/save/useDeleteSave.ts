@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '@/domain/queryKeys'
 import { deleteSaveService } from '@/services'
 import { log } from '@/services'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 export function useDeleteSave() {
   const queryClient = useQueryClient()
@@ -22,12 +23,12 @@ export function useDeleteSave() {
       }
     },
 
-    onError: async (err) => {
-      const msg = `[${useDeleteSave.name}] Erro ao deletar save`
+    onError: async (err, saveId) => {
+      const msg = LOG_MESSAGES.save.error.delete({ method: useDeleteSave.name })
 
       console.error(msg, err)
 
-      await log.error(msg, undefined, { error: err })
+      await log.error(msg, { saveId, error: err })
     },
   })
 }

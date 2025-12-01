@@ -1,3 +1,4 @@
+import { LOG_MESSAGES } from '@/domain/constants'
 import { StatsModel } from '@/domain/models'
 import { CreateStats } from '@/domain/types'
 import { normalizeResource } from '@/domain/utils'
@@ -15,7 +16,7 @@ export async function createStatsService({
   const baseStats = await getStatsBaseByTarget(target)
 
   if (!baseStats) {
-    await log.warn(`[${createStatsService.name}] Nenhum status base disponível para ${target}`)
+    await log.warn(LOG_MESSAGES.stats.error.unavaiable({ method: createStatsService.name, target }))
 
     return
   }
@@ -38,7 +39,9 @@ export async function createStatsService({
 
   const statsCreated = await getStatsBySaveId(saveId)
 
-  await log.info(`[${createStatsService.name}] Stats criado com sucesso`, undefined, { stats: statsCreated })
+  await log.info(LOG_MESSAGES.stats.created({ method: createStatsService.name }), {
+    stats: statsCreated,
+  })
 
   return statsCreated
 }

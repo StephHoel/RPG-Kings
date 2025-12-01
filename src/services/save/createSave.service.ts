@@ -2,10 +2,11 @@ import { nanoid } from 'nanoid'
 import { SaveModel } from '@/domain/models'
 import { log } from '@/services'
 import { desactiveAll, createOrUpdateSave, getSaveById } from '@/infra/repositories'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 export async function createSaveService(): Promise<SaveModel | undefined> {
   await desactiveAll()
-  await log.info(`[${createSaveService.name}] Jogos anteriores inativados`)
+  await log.info(LOG_MESSAGES.saves.desactiveAll({ method: createSaveService.name }))
 
   const saveId = nanoid(10)
 
@@ -18,7 +19,8 @@ export async function createSaveService(): Promise<SaveModel | undefined> {
   } as SaveModel)
 
   const save = await getSaveById(saveId)
-  await log.info(`[${createSaveService.name}] Save criado`, undefined, save)
+
+  await log.info(LOG_MESSAGES.save.created({ method: createSaveService.name }), save)
 
   return save
 }

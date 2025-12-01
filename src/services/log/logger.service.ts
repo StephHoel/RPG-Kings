@@ -1,28 +1,25 @@
-import { LOG_TYPE, LogType } from '@/domain/constants'
+import { LOG_MESSAGES, LOG_TYPE, LogType } from '@/domain/constants'
 import { createLog, getAllLogs, clearLogs as clearLogsRepo } from '@/infra/repositories'
-import { buildMessage } from '@/domain/utils'
 
 export const log = {
-  async error(template: string, params?: Record<string, any>, payload?: any) {
-    await toLog(LOG_TYPE.error, template, params, payload)
+  async error(message: string, payload?: any) {
+    await toLog(LOG_TYPE.error, message, payload)
   },
 
-  async info(template: string, params?: Record<string, any>, payload?: any) {
-    await toLog(LOG_TYPE.info, template, params, payload)
+  async info(message: string, payload?: any) {
+    await toLog(LOG_TYPE.info, message, payload)
   },
 
-  async warn(template: string, params?: Record<string, any>, payload?: any) {
-    await toLog(LOG_TYPE.warn, template, params, payload)
+  async warn(message: string, payload?: any) {
+    await toLog(LOG_TYPE.warn, message, payload)
   },
 }
 
-async function toLog(type: LogType, template: string, params?: Record<string, any>, payload?: any) {
-  const message = buildMessage(template, params)
-
+async function toLog(type: LogType, message: string, payload?: any) {
   try {
     await createLog({ type, message, payload })
   } catch (err) {
-    console.error('[LoggerService] Falha ao gravar log:', err)
+    console.error(LOG_MESSAGES.log.failed({ method: 'LoggerService' }), err)
     throw err
   }
 }

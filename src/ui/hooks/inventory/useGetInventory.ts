@@ -3,6 +3,7 @@ import { useQueryKeys } from '@/domain/queryKeys'
 import { InventoryModel } from '@/domain/models'
 import { getInventoriesService, log } from '@/services'
 import { HookResult } from '@/domain/types'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 export function useGetInventory(saveId: string): HookResult<InventoryModel[]> {
   return useQuery({
@@ -15,11 +16,11 @@ export function useGetInventory(saveId: string): HookResult<InventoryModel[]> {
       try {
         return await getInventoriesService(saveId)
       } catch (err) {
-        const msg = `[${useGetInventory.name}] Erro ao obter inventário`
+        const msg = LOG_MESSAGES.inventory.error({ method: useGetInventory.name })
 
         console.error(msg, err)
 
-        await log.error(msg, undefined, { saveId, error: String(err) })
+        await log.error(msg, { saveId, error: String(err) })
       }
     },
   })

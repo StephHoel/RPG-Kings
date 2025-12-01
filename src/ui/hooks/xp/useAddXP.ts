@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '@/domain/queryKeys'
 import { addXPService, log } from '@/services'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 export function useAddXP(saveId: string, discipline: string, xpToAdd: number) {
   const queryClient = useQueryClient()
@@ -13,11 +14,11 @@ export function useAddXP(saveId: string, discipline: string, xpToAdd: number) {
     },
 
     onError: async (err) => {
-      const msg = `[${useAddXP.name}] Erro inesperado na mutação`
+      const msg = LOG_MESSAGES.xp.error.unexpected({ method: useAddXP.name })
 
       console.error(msg, err)
 
-      await log.error(msg, undefined, {
+      await log.error(msg, {
         saveId,
         discipline,
         error: String(err),

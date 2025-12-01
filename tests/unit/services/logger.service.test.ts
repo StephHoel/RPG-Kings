@@ -1,5 +1,4 @@
 import { LOG_TYPE, LOG_MESSAGES } from '@/domain/constants'
-import { formatMessage } from '@/domain/utils'
 import { createLog } from '@/infra/repositories'
 import { log } from '@/services'
 
@@ -10,41 +9,47 @@ describe('logger.service', () => {
     jest.resetAllMocks()
   })
 
-  it('persists legacy message format (message, payload)', async () => {
+  it('info message format (message, payload)', async () => {
     ;(createLog as jest.Mock).mockResolvedValue(undefined)
 
-    await log.info('uma mensagem qualquer', { raw: true })
+    const logMessage = LOG_MESSAGES.save.deleted({ method: 'LoggerServiceTest', id: 's1' })
+    const logPayload = { raw: true }
+
+    await log.info(logMessage, logPayload)
 
     expect(createLog).toHaveBeenCalledTimes(1)
     const entry = (createLog as jest.Mock).mock.calls[0][0]
     expect(entry.type).toBe(LOG_TYPE.info)
-    expect(entry.message).toBe('uma mensagem qualquer')
-    expect(entry.payload).toEqual({ raw: true })
+    expect(entry.message).toBe(logMessage)
+    expect(entry.payload).toEqual(logPayload)
   })
 
-  it('formats message from path with params and payload', async () => {
-    ;(createLog as jest.Mock).mockResolvedValue(undefined)
+  it('error message format (message, payload)', async () => {
+    ; (createLog as jest.Mock).mockResolvedValue(undefined)
+    
+    const logMessage = LOG_MESSAGES.save.deleted({ method: 'LoggerServiceTest', id: 's1' })
 
-    await log.info(LOG_MESSAGES.save.deleted, { id: 's1' }, { saveId: 's1' })
+    await log.error(logMessage, {
+      saveId: 's1',
+    })
 
     expect(createLog).toHaveBeenCalledTimes(1)
     const entry = (createLog as jest.Mock).mock.calls[0][0]
-    expect(entry.type).toBe(LOG_TYPE.info)
-    const expected = formatMessage(LOG_MESSAGES.save.deleted, { id: 's1' })
-    expect(entry.message).toBe(expected)
+    expect(entry.type).toBe(LOG_TYPE.error)
+    expect(entry.message).toBe(logMessage)
     expect(entry.payload).toEqual({ saveId: 's1' })
   })
 
-  it('formats message from path with params and no payload', async () => {
+  it('warn message format (message, payload)', async () => {
     ;(createLog as jest.Mock).mockResolvedValue(undefined)
 
-    await log.warn(LOG_MESSAGES.sheet.load.error, { id: 's2', error: 'boom' })
+    const logMessage = LOG_MESSAGES.sheet.error.load({ method: 'LoggerServiceTest', id: 's2' })
+    await log.warn(logMessage)
 
     expect(createLog).toHaveBeenCalledTimes(1)
     const entry = (createLog as jest.Mock).mock.calls[0][0]
     expect(entry.type).toBe(LOG_TYPE.warn)
-    const expected = formatMessage(LOG_MESSAGES.sheet.load.error, { id: 's2', error: 'boom' })
-    expect(entry.message).toBe(expected)
+    expect(entry.message).toBe(logMessage)
     expect(entry.payload).toBeUndefined()
   })
 })

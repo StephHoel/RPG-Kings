@@ -3,6 +3,7 @@ import { useQueryKeys } from '@/domain/queryKeys'
 import { getSceneByIdService, log } from '@/services'
 import { SceneModel } from '@/domain/models'
 import { HookResult } from '@/domain/types'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 export function useGetScene(sceneId: SceneModel['id']): HookResult<SceneModel> {
   return useQuery({
@@ -15,11 +16,11 @@ export function useGetScene(sceneId: SceneModel['id']): HookResult<SceneModel> {
       try {
         return await getSceneByIdService(sceneId)
       } catch (err) {
-        const msg = `[${useGetScene.name}] Erro ao obter cena`
+        const msg = LOG_MESSAGES.scene.error.get({ method: useGetScene.name })
 
         console.error(msg, err)
 
-        await log.error(msg, undefined, { sceneId, error: String(err) })
+        await log.error(msg, { sceneId, error: String(err) })
       }
     },
   })

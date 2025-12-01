@@ -3,6 +3,7 @@ import { useQueryKeys } from '@/domain/queryKeys'
 import { StatsModel } from '@/domain/models'
 import { getStatsService, log } from '@/services'
 import { HookResult } from '@/domain/types'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 export function useGetStatsActive(saveId: StatsModel['saveId']): HookResult<StatsModel> {
   return useQuery({
@@ -15,11 +16,11 @@ export function useGetStatsActive(saveId: StatsModel['saveId']): HookResult<Stat
       try {
         return await getStatsService(saveId)
       } catch (err) {
-        const msg = `[${useGetStatsActive.name}] Erro ao obter stats`
+        const msg = LOG_MESSAGES.stats.error.get({ method: useGetStatsActive.name })
 
         console.error(msg, err)
 
-        await log.error(msg, undefined, { saveId, error: String(err) })
+        await log.error(msg, { saveId, error: String(err) })
       }
     },
   })

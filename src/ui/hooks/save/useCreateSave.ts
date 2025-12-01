@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '@/domain/queryKeys'
 import { createSaveService, createSheetService, createStatsService, log } from '@/services'
-import { RACE_ENUM } from '@/domain/constants'
+import { LOG_MESSAGES, RACE_ENUM } from '@/domain/constants'
 import { CreateSaveFormValues, CreateSaveResult } from '@/domain/types'
 
 export function useCreateSave() {
@@ -15,20 +15,24 @@ export function useCreateSave() {
       const save = await createSaveService()
 
       if (!save) {
-        const msg = `[${createSaveService.name}] Falha ao criar save`
+        const msg = LOG_MESSAGES.save.error.create({ method: createSaveService.name })
 
         console.error(msg)
-        await log.error(msg, undefined, { name, race })
+        await log.error(msg, { name, race })
         return
       }
 
       const sheet = await createSheetService({ saveId: save?.id, name, race })
 
       if (!sheet) {
-        const msg = `[${createSheetService.name}] Falha ao criar sheet para save ${save?.id}`
+        const msg = LOG_MESSAGES.sheet.error.create({
+          method: createSheetService.name,
+          saveId: save?.id,
+        })
 
         console.error(msg)
-        await log.error(msg, undefined, { save, name, race })
+        await log.error(msg, { save, name, race })
+
         return { save, sheet, stats: undefined }
       }
 
@@ -37,10 +41,13 @@ export function useCreateSave() {
       const stats = await createStatsService({ target: raceOrAnimal, saveId: save.id })
 
       if (!stats) {
-        const msg = `[${createStatsService.name}] Falha ao criar stats para save ${save.id}`
+        const msg = LOG_MESSAGES.stats.error.create({
+          method: createStatsService.name,
+          saveId: save.id,
+        })
 
         console.error(msg)
-        await log.error(msg, undefined, { save, sheet })
+        await log.error(msg, { save, sheet })
       }
 
       return { save, sheet, stats }
@@ -82,11 +89,11 @@ export function useCreateSave() {
     },
 
     onError: async (err) => {
-      const msg = `[${useCreateSave.name}] Erro na criação do save`
+      const msg = LOG_MESSAGES.save.error.create({ method: useCreateSave.name })
 
       console.error(msg, err)
 
-      await log.error(msg, undefined, { error: err })
+      await log.error(msg, { error: err })
     },
   })
 }
