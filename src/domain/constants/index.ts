@@ -14,3 +14,4 @@ export * from './types/statsBase.type'
 export * from './types/xp.type'
 
 export * from './logMessages'
+export * from './toastMessages'

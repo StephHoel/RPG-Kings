@@ -7,6 +7,7 @@ import { ROUTES, routeWithSaveId } from '@/domain/routes'
 import { useRouter } from 'next/router'
 import { CreateSaveFormValues } from '@/domain/types'
 import { toast } from 'sonner'
+import { TOAST_MESSAGES } from '@/domain/constants'
 import { RACE_ENUM } from '@/domain/constants'
 
 export default function SaveNew() {
@@ -23,13 +24,17 @@ export default function SaveNew() {
       const result = await createSave.mutateAsync(data)
 
       if (!result?.save?.id) {
-        toast.error('Não foi possível criar o Save, tente novamente')
+        toast.error(
+          TOAST_MESSAGES.game.error.new({
+            method: 'SavesNew',
+          })
+        )
         return
       }
 
       router.push(routeWithSaveId(ROUTES.GAME, result.save.id))
     } catch (err) {
-      toast.error('Erro ao criar save')
+      toast.error(TOAST_MESSAGES.game.error.create({ method: 'SavesNew' }))
       console.error(err)
     }
   }
