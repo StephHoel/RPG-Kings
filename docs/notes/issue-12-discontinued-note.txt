@@ -1,0 +1,9 @@
+Esta task foi considerada desatualizada e será descontinuada e fechada como não planejada.
+
+Motivo:
+- A reestruturação do projeto consolidou o formato de `Sheet` e a criação de fichas no fluxo de `createSave`, tornando esta tarefa redundante em grande parte dos casos.
+- Revisões recentes já ajustaram o schema e as validações em locais centrais; manter uma issue separada para pequenos ajustes de `zod` e `reputation` adicionaria trabalho duplicado.
+- Observações: o repositório já contém testes e validações organizadas; ajustar o `SheetSchema` pode ser feito sob demanda com contexto de dados reais, não como tarefa genérica.
+
+Decisão:
+- Fechar esta issue como não planejada — não será implementada neste momento.

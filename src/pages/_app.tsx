@@ -1,7 +1,7 @@
-import '@/styles/globals.css'
+import '@/ui/styles/globals.css'
 import type { AppProps } from 'next/app'
-import { ReactQueryProvider } from '@/providers/ReactQueryProvider'
-import { Background, FooterNav, Header, Sidebar, ToasterResponsive } from '@/components'
+import { ReactQueryProvider } from '@/ui/providers/ReactQueryProvider'
+import { Background, FooterNav, Header, Sidebar, ToasterResponsive } from '@/ui/components'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (

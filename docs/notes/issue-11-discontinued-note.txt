@@ -1,0 +1,15 @@
+Esta task será descontinuada e fechada como “não planejada”. Motivo:
+
+- Após inspeção do código e das migrações existentes, não há referências a `reputation` nem chaves equivalentes no schema atual que exijam conversão. Implementar uma migração para uma chave inexistente expõe o repositório a riscos desnecessários sem benefício real.
+
+- As migrações já implementadas estão organizadas em `src/infra/dexie/migrations` e registradas em `src/infra/dexie/database.ts` (ex.: `migrateV3toV4`). A alteração solicitada não encontra dados a serem transformados nas stores atuais.
+
+- Durante a reestruturação do projeto, o modelo de dados foi ajustado e consolidado; por esse motivo a necessidade original descrita na issue ficou desatualizada.
+
+Decisão:
+- Não iremos implementar a migração solicitada nesta issue. Ela será fechada como não planejada por não corresponder ao estado atual do código/dados.
+
+Observação técnica (breve):
+- Se futuramente surgir um caso concreto com dados legados que contenham `reputation`, a implementação de migração deverá ser feita como uma função em `src/infra/dexie/migrations` e registrada na versão apropriada em `src/infra/dexie/versioning`/`database.ts`. Isso não será tratado nesta issue.
+
+Fechando a issue agora.

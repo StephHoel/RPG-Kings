@@ -24,10 +24,18 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          set -euo pipefail
+          trap 'rc=$?; echo "[gh-pages][e2e][ERRO] Falha no script (exit $rc). Comando: \"$BASH_COMMAND\". Linha: $LINENO"; exit $rc' ERR
+          echo "[gh-pages][e2e] Instalando dependências..."
+          npm install
 
       - name: Build (static export)
-        run: npm run build
+        run: |
+          set -euo pipefail
+          trap 'rc=$?; echo "[gh-pages][e2e][ERRO] Falha no script (exit $rc). Comando: \"$BASH_COMMAND\". Linha: $LINENO"; exit $rc' ERR
+          echo "[gh-pages][e2e] Fazendo build (export estático)..."
+          npm run build
 
       - name: Run Test
         run: npm run test:e2e:ci
@@ -45,11 +53,18 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          set -euo pipefail
+          trap 'rc=$?; echo "[gh-pages][lint][ERRO] Falha no script (exit $rc). Comando: \"$BASH_COMMAND\". Linha: $LINENO"; exit $rc' ERR
+          echo "[gh-pages][lint] Instalando dependências..."
+          npm install
 
       - name: Run Lint
-        run: npm run lint
-      
+        run: |
+          set -euo pipefail
+          trap 'rc=$?; echo "[gh-pages][lint][ERRO] Falha no script (exit $rc). Comando: \"$BASH_COMMAND\". Linha: $LINENO"; exit $rc' ERR
+          echo "[gh-pages][lint] Executando eslint..."
+          npm run lint
 
   build:
     name: Build
@@ -65,13 +80,21 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          set -euo pipefail
+          trap 'rc=$?; echo "[gh-pages][build][ERRO] Falha no script (exit $rc). Comando: \"$BASH_COMMAND\". Linha: $LINENO"; exit $rc' ERR
+          echo "[gh-pages][build] Instalando dependências..."
+          npm install
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
       - name: Build (static export)
-        run: npm run build
+        run: |
+          set -euo pipefail
+          trap 'rc=$?; echo "[gh-pages][build][ERRO] Falha no script (exit $rc). Comando: \"$BASH_COMMAND\". Linha: $LINENO"; exit $rc' ERR
+          echo "[gh-pages][build] Fazendo build (export estático)..."
+          npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

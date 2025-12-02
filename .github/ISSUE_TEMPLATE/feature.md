@@ -26,3 +26,7 @@ Adicione detalhes técnicos, endpoints, migrations ou mudanças de schema.
 ## Prioridade / Estimativa
 
 `priority/p2` / `size/m`
+
+## Referências
+
+Related Epic: `#(epic-issue-number) || N/A`

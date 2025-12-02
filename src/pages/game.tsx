@@ -1,9 +1,10 @@
 'use client'
 import { useRouter } from 'next/router'
 import { toast } from 'sonner'
-import { ROUTES } from '@/config'
-import { useGetScene } from '@/hooks'
-import { ChoiceList, H1, Panel, SceneCard } from '@/components'
+import { TOAST_MESSAGES } from '@/domain/constants'
+import { ROUTES } from '@/domain/routes'
+import { useGetScene } from '@/ui/hooks'
+import { ChoiceList, H1, Panel, SceneCard } from '@/ui/components'
 import { useEffect } from 'react'
 import { Suspense } from 'react'
 import Head from 'next/head'
@@ -13,39 +14,37 @@ export default function Game() {
   const query = router.query
   const saveId = Array.isArray(query.saveId) ? query.saveId[0] : query.saveId ?? null
 
-  // If saveId is missing, show an error toast and redirect.
-  // Do the redirect inside useEffect so the component always returns a valid React node.
   useEffect(() => {
     if (!router.isReady) return
 
     if (!saveId) {
-      toast.error('Erro ao carregar saveId')
+      toast.error(TOAST_MESSAGES.game.error.load({ method: 'GamePage' }))
       router.replace(ROUTES.ROOT)
     }
   }, [saveId, router])
 
-  const scene = useGetScene(saveId ?? '')
+  const result = useGetScene(saveId ?? '')
 
   useEffect(() => {
     if (!saveId) return
 
     toast('Scene carregada')
-  }, [scene, saveId])
+  }, [result, saveId])
 
   if (!saveId) return null
 
   return (
     <>
       <Head>
-        <title>Jogo</title>
+        <title>Jogo — King's Academy</title>
       </Head>
 
       <Suspense fallback={<div>Carregando...</div>}>
         <Panel>
           <SceneCard>
-            <H1>{scene?.title ?? 'Sem título'}</H1>
+            <H1>{result?.data?.title ?? 'Sem título'}</H1>
 
-            <p>{scene?.content ?? 'Nenhuma cena disponível neste horário.'}</p>
+            <p>{result?.data?.content ?? 'Nenhuma cena disponível neste horário.'}</p>
           </SceneCard>
 
           <ChoiceList />

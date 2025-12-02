@@ -1,0 +1,5 @@
+Contexto e estado atual:
+- Existe `deleteSheetService` em `src/services/sheet/deleteSheet.service.ts` que delega a `deleteSheetsBySaveId` (repositório) e o hook `useDeleteSave` chama `deleteSaveService` e `deleteSheetService` sequencialmente.
+
+Decisão / Recomendação:
+- A remoção em cascata atualmente é feita em duas chamadas separadas; para garantir atomicidade, recomenda-se implementar uma função transacional em `src/services/save` que execute todas as operações em `db.transaction`.
