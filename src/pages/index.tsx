@@ -4,7 +4,7 @@ import { Button, H1, Panel } from '@/ui/components'
 import { ROUTES } from '@/domain/routes'
 import { useRouter } from 'next/router'
 import { useActiveSaveContext } from '@/ui/providers/useActiveSaveContext'
-import { routeWithSaveId } from '../infra/config/routes'
+import { routeWithSaveId } from '@/infra/config/routes'
 
 export default function Home() {
   const router = useRouter()
