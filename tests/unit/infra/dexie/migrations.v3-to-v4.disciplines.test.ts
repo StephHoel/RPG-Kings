@@ -55,7 +55,6 @@ describe('migrateV3toV4 - disciplines sanitization', () => {
 
     const all = await db.table('disciplines_list').toArray()
     console.log('records after migration:', all)
-    console.log('records after migration:', all)
     expect(all.length).toBe(2)
 
     try {
