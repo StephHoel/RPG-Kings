@@ -2,6 +2,7 @@
 import { Button, GenericTable, H1, Input, Panel } from '@/ui/components'
 import { useState, useEffect, useMemo, Activity } from 'react'
 import { toast } from 'sonner'
+import { TOAST_MESSAGES } from '@/domain/constants'
 import Head from 'next/head'
 import { LogModel } from '@/domain/models'
 import { LOG_ALL_TYPE, LogAllType } from '@/domain/constants'
@@ -53,7 +54,7 @@ export default function Debug() {
 
     await navigator.clipboard.writeText(ndjson)
 
-    toast.success('Log copiado (NDJSON).')
+    toast.success(TOAST_MESSAGES.debug.copied({ method: 'DebugPage' }))
   }
 
   async function onClear() {

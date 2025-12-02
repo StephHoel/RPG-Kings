@@ -3,6 +3,7 @@ import { useQueryKeys } from '@/domain/queryKeys'
 import { SaveModel } from '@/domain/models'
 import { getAllSavesService, log } from '@/services'
 import { HookResult } from '@/domain/types'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 export function useGetAllSaves(): HookResult<SaveModel[]> {
   return useQuery({
@@ -13,7 +14,7 @@ export function useGetAllSaves(): HookResult<SaveModel[]> {
       try {
         return await getAllSavesService()
       } catch (err) {
-        const msg = `[${useGetAllSaves.name}] Erro ao listar saves`
+        const msg = LOG_MESSAGES.saves.error.getAll({ method: useGetAllSaves.name })
 
         console.error(msg, err)
 

@@ -25,7 +25,6 @@ Objetivo: centralizar o logger e padronizar mensagens e níveis (info, warn, err
 - [ ] Criar `src/domain/constants/logMessages.ts` com um objeto exportado contendo as chaves e templates de mensagem.
 - [ ] Atualizar serviços/hook que já usam `log` para consumir as mensagens do novo módulo.
 - [ ] Atualizar/Adicionar testes que dependam das mensagens (usar mocks para `log`).
-- [ ] Atualizar `.github/instructions/rpg.instructions.md` para incluir a etapa obrigatória de formatação.
 - [ ] Rodar `npm run test:unit` e corrigir falhas.
 
 ## Prioridade

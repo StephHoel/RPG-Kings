@@ -3,6 +3,7 @@ import { useQueryKeys } from '@/domain/queryKeys'
 import { getActiveSaveService, log } from '@/services'
 import { SaveModel } from '@/domain/models'
 import { HookResult } from '@/domain/types'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 export function useActiveSave(): HookResult<SaveModel> {
   return useQuery<SaveModel | undefined>({
@@ -13,7 +14,7 @@ export function useActiveSave(): HookResult<SaveModel> {
       try {
         return await getActiveSaveService()
       } catch (err) {
-        const msg = `[${useActiveSave.name}] Erro ao obter save ativo`
+        const msg = LOG_MESSAGES.save.error.activeSave({ method: useActiveSave.name })
 
         console.error(msg, err)
         await log.error(msg, { error: String(err) })

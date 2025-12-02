@@ -1,6 +1,7 @@
 import { getInventoriesBySaveId } from '@/infra/repositories'
 import { InventoryModel } from '@/domain/models'
 import { log } from '@/services'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 export async function getInventoriesService(saveId: string): Promise<InventoryModel[]> {
   const inventories = (await getInventoriesBySaveId(saveId)).sort((a, b) => {
@@ -28,7 +29,7 @@ export async function getInventoriesService(saveId: string): Promise<InventoryMo
     return 0
   })
 
-  await log.info(`[${getInventoriesService.name}] Inventário obtido`, {
+  await log.info(LOG_MESSAGES.inventory.obtained({ method: getInventoriesService.name }), {
     saveId,
     amountItems: inventories.length,
   })

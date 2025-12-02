@@ -1,4 +1,5 @@
 import { Table } from 'dexie'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 type SafeBulkAddResult = {
   inserted: number
@@ -20,9 +21,12 @@ export async function safeBulkAdd<T, K = any>(
   if (data.length === 0) return { inserted, skipped, errors }
 
   console.info(
-    `[SafeBulkAdd] Iniciando... Total=${data.length}, ChunkSize=${chunkSize}, KeySelector=${
-      keySelector ? 'presente' : 'ausente'
-    }`
+    LOG_MESSAGES.dexie.dexieUtils.safeBulkAdd.start({
+      method: 'safeBulkAdd',
+      total: data.length,
+      chunkSize,
+      keySelector: keySelector ? 'presente' : 'ausente',
+    })
   )
 
   if (keySelector) {
@@ -32,7 +36,11 @@ export async function safeBulkAdd<T, K = any>(
       try {
         map.set(keySelector(item), item)
       } catch (e) {
-        console.error('[SafeBulkAdd] Erro no keySelector ao processar item:', item, e)
+        console.error(
+          LOG_MESSAGES.dexie.dexieUtils.safeBulkAdd.keySelectorError({ method: 'safeBulkAdd' }),
+          item,
+          e
+        )
       }
     }
 
@@ -61,13 +69,19 @@ export async function safeBulkAdd<T, K = any>(
           } catch (_err: unknown) {
             errors += toInsert.length
             toInsert.map((i) =>
-              console.error(`[SafeBulkAdd] Erro ao tentar inserir ${i} | ${_err}`)
+              console.error(
+                LOG_MESSAGES.dexie.dexieUtils.safeBulkAdd.insertAttemptFail({
+                  method: 'safeBulkAdd',
+                }),
+                i,
+                _err
+              )
             )
           }
         }
       } catch (_err: unknown) {
         console.error(
-          '[SafeBulkAdd] Falha ao verificar existência (bulkGet). Tentando inserir o chunk via bulkAdd. Erro:',
+          LOG_MESSAGES.dexie.dexieUtils.safeBulkAdd.bulkGetFail({ method: 'safeBulkAdd' }),
           _err
         )
         try {
@@ -76,8 +90,10 @@ export async function safeBulkAdd<T, K = any>(
         } catch (_err2: unknown) {
           errors += chunk.length
           console.error(
-            '[SafeBulkAdd] Falha ao inserir chunk via bulkAdd. Itens afetados:',
-            chunk.length,
+            LOG_MESSAGES.dexie.dexieUtils.safeBulkAdd.bulkAddChunkFail({
+              method: 'safeBulkAdd',
+              count: chunk.length,
+            }),
             _err2
           )
         }
@@ -92,7 +108,7 @@ export async function safeBulkAdd<T, K = any>(
         uniqueMap.set(key, item)
       } catch (e) {
         console.error(
-          '[SafeBulkAdd] Não foi possível serializar item para deduplicação; usando chave fallback. Erro:',
+          LOG_MESSAGES.dexie.dexieUtils.safeBulkAdd.serializeFail({ method: 'safeBulkAdd' }),
           e
         )
         const fallbackKey = Math.random().toString(36).slice(2)
@@ -111,7 +127,7 @@ export async function safeBulkAdd<T, K = any>(
         inserted += chunk.length
       } catch (_err: unknown) {
         console.error(
-          '[SafeBulkAdd] Falha no bulkPut do chunk. Tentando inserir itens individualmente. Erro:',
+          LOG_MESSAGES.dexie.dexieUtils.safeBulkAdd.bulkPutChunkFail({ method: 'safeBulkAdd' }),
           _err
         )
         for (const item of chunk) {
@@ -120,7 +136,11 @@ export async function safeBulkAdd<T, K = any>(
             inserted += 1
           } catch (_err2: unknown) {
             errors += 1
-            console.error('[SafeBulkAdd] Falha ao inserir item individualmente:', item, _err2)
+            console.error(
+              LOG_MESSAGES.dexie.dexieUtils.safeBulkAdd.itemInsertFail({ method: 'safeBulkAdd' }),
+              item,
+              _err2
+            )
           }
         }
       }
@@ -130,7 +150,12 @@ export async function safeBulkAdd<T, K = any>(
   }
 
   console.info(
-    `[SafeBulkAdd] Concluído! Inseridos=${inserted}, Ignorados=${skipped}, Erros=${errors}`
+    LOG_MESSAGES.dexie.dexieUtils.safeBulkAdd.finished({
+      method: 'safeBulkAdd',
+      inserted,
+      skipped,
+      errors,
+    })
   )
 
   return { inserted, skipped, errors }

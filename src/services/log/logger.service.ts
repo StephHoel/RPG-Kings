@@ -1,7 +1,5 @@
-import { LOG_TYPE, LogType } from '@/domain/constants'
-import { LogModel } from '@/domain/models'
+import { LOG_MESSAGES, LOG_TYPE, LogType } from '@/domain/constants'
 import { createLog, getAllLogs, clearLogs as clearLogsRepo } from '@/infra/repositories'
-import { LogSchema } from '@/infra/schemas'
 
 export const log = {
   async error(message: string, payload?: any) {
@@ -17,19 +15,11 @@ export const log = {
   },
 }
 
-async function toLog(type: LogType, message?: string, payload?: any) {
-  const entry = {
-    type,
-    message,
-    payload,
-  }
-
-  const parsed = LogSchema.parse(entry) as LogModel
-
+async function toLog(type: LogType, message: string, payload?: any) {
   try {
-    await createLog(parsed)
+    await createLog({ type, message, payload })
   } catch (err) {
-    console.error('[LoggerService] Falha ao gravar log:', err)
+    console.error(LOG_MESSAGES.log.failed({ method: 'LoggerService' }), err)
     throw err
   }
 }
@@ -40,11 +30,6 @@ export async function exportLogsNDJSON(): Promise<string> {
   return all.map((x) => JSON.stringify(x)).join('\n')
 }
 
-export async function getAllLogsService() {
-  const { getAllLogs } = await import('@/infra/repositories')
-  return getAllLogs()
-}
+export const getAllLogsService = async () => getAllLogs()
 
-export async function clearLogs() {
-  await clearLogsRepo()
-}
+export const clearLogs = async () => await clearLogsRepo()

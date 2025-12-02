@@ -9,6 +9,15 @@ Base de links: <https://github.com/StephHoel/RPG-Kings>
 
 ---
 
+## v0.1.11 — 2025-12-01
+
+- Padronização do sistema de logging: refatoração do `logger.service` para delegar persistência ao repositório (`logs.repo`), padronização de formatos e locais de logs e ajustes nas assinaturas de criação/limpeza de logs.
+- Reforço da arquitetura `ui > hook > service > repo > db` em pontos identificados e atualização de imports para as novas convenções (`@/ui/*`, `@/services/*`, `@/infra/repositories/*`).
+- Atualização de testes unitários para compatibilidade com a nova API do logger e com `fake-indexeddb` no ambiente de testes.
+- Ajustes menores em migrations/schemas quando necessário para suportar novos campos/formatos de logs; pequenas melhorias em workflows/CI relacionadas a geração e limpeza de logs.
+
+> Justificativa da versão: alteração localizada (logger/migration/tests) sem quebra de API externa significativa → PATCH.
+
 ## v0.1.9 — 2025-11-27
 
 - Refatoração estrutural e padronização do fluxo `ui` → `hook` → `service` → `repo` → `db`, reorganizando responsabilidades e melhorando testabilidade.

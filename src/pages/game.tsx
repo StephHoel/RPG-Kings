@@ -1,6 +1,7 @@
 'use client'
 import { useRouter } from 'next/router'
 import { toast } from 'sonner'
+import { TOAST_MESSAGES } from '@/domain/constants'
 import { ROUTES } from '@/domain/routes'
 import { useGetScene } from '@/ui/hooks'
 import { ChoiceList, H1, Panel, SceneCard } from '@/ui/components'
@@ -17,7 +18,7 @@ export default function Game() {
     if (!router.isReady) return
 
     if (!saveId) {
-      toast.error('Erro ao carregar saveId')
+      toast.error(TOAST_MESSAGES.game.error.load({ method: 'GamePage' }))
       router.replace(ROUTES.ROOT)
     }
   }, [saveId, router])

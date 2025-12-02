@@ -1,6 +1,6 @@
 import { Table, Transaction } from 'dexie'
 import { populateDB } from '@/infra/dexie/utils/populateDB'
-import { XP_TYPE } from '@/domain/constants'
+import { LOG_MESSAGES, XP_TYPE } from '@/domain/constants'
 import { RPGDatabase } from '../database'
 
 type AnyTable = Table<any, any>
@@ -13,7 +13,7 @@ type AnyTable = Table<any, any>
  * mantendo Clean Code e SRP.
  */
 export async function migrateV2toV3(tx: Transaction) {
-  console.log('[Dexie] Iniciando migração da versão 2 → 3...')
+  console.log(LOG_MESSAGES.dexie.migrate.V2toV3.start({ method: 'Dexie' }))
 
   // 1) Detectar stores legados e usados no código e criar backups (exceto milestones)
   const legacyToCheck = ['sheets', 'inventory', 'disciplines', 'saves']
@@ -29,7 +29,9 @@ export async function migrateV2toV3(tx: Transaction) {
     const sheetsTable = tx.table('sheets') as AnyTable
     const allSheets = await sheetsTable.toArray()
 
-    console.log(`[Dexie] Sheets encontradas: ${allSheets.length}`)
+    console.log(
+      LOG_MESSAGES.dexie.migrate.V2toV3.foundSheets({ method: 'Dexie', count: allSheets.length })
+    )
 
     // Recreate-and-copy: re-insert records without `id` so the new store (++id) assigns PKs.
     if (allSheets.length > 0) {
@@ -54,9 +56,17 @@ export async function migrateV2toV3(tx: Transaction) {
         // clear and bulkAdd so Dexie assigns new auto-increment ids
         await sheetsTable.clear()
         await sheetsTable.bulkAdd(toInsert)
-        console.log(`[Dexie] Sheets migradas (recreate-and-copy): ${toInsert.length}`)
+        console.log(
+          LOG_MESSAGES.dexie.migrate.V2toV3.migratedSheets({
+            method: 'Dexie',
+            count: toInsert.length,
+          })
+        )
       } catch (err) {
-        console.error('[Dexie] Erro ao migrar sheets (recreate-and-copy)', err)
+        console.error(
+          LOG_MESSAGES.dexie.migrate.V2toV3.migrateError({ method: 'Dexie', step: 'sheets' }),
+          err
+        )
       }
       // Build mapping legacyId -> newId to update dependent tables
       try {
@@ -72,7 +82,9 @@ export async function migrateV2toV3(tx: Transaction) {
         }
 
         if (idMap.size > 0) {
-          console.log('[Dexie] sheet id mapping criada:', idMap.size)
+          console.log(
+            LOG_MESSAGES.dexie.migrate.V2toV3.sheetIdMap({ method: 'Dexie', count: idMap.size })
+          )
 
           const candidateTables = [
             'milestones',
@@ -106,16 +118,26 @@ export async function migrateV2toV3(tx: Transaction) {
               if (toUpdate.length > 0) {
                 await t.bulkPut(toUpdate)
                 console.log(
-                  `[Dexie] Atualizados ${toUpdate.length} registros em ${tname} para novos sheetId`
+                  LOG_MESSAGES.dexie.migrate.V2toV3.updatedReferences({
+                    method: 'Dexie',
+                    table: tname,
+                    count: toUpdate.length,
+                  })
                 )
               }
             } catch (err) {
-              console.warn('[Dexie] Falha ao atualizar referências em', tname, err)
+              console.warn(
+                LOG_MESSAGES.dexie.migrate.V2toV3.updateReferencesFail({
+                  method: 'Dexie',
+                  table: tname,
+                }),
+                err
+              )
             }
           }
         }
       } catch (err) {
-        console.warn('[Dexie] Falha ao construir mapeamento de sheet ids', err)
+        console.warn(LOG_MESSAGES.dexie.migrate.V2toV3.sheetIdMapFail({ method: 'Dexie' }), err)
       }
     }
   }
@@ -143,9 +165,17 @@ export async function migrateV2toV3(tx: Transaction) {
 
       try {
         await target.bulkAdd(mapped)
-        console.log(`[Dexie] inventory → inventories: ${mapped.length} registros`)
+        console.log(
+          LOG_MESSAGES.dexie.migrate.V2toV3.migratedInventories({
+            method: 'Dexie',
+            count: mapped.length,
+          })
+        )
       } catch (err) {
-        console.error('[Dexie] Erro ao migrar inventory → inventories', err)
+        console.error(
+          LOG_MESSAGES.dexie.migrate.V2toV3.migrateError({ method: 'Dexie', step: 'inventory' }),
+          err
+        )
       }
     }
   }
@@ -181,9 +211,17 @@ export async function migrateV2toV3(tx: Transaction) {
         if (mapped.length > 0) {
           await xpTarget.bulkAdd(mapped)
         }
-        console.log(`[Dexie] disciplines → xp_records: ${mapped.length} registros`)
+        console.log(
+          LOG_MESSAGES.dexie.migrate.V2toV3.migratedDisciplines({
+            method: 'Dexie',
+            count: mapped.length,
+          })
+        )
       } catch (err) {
-        console.error('[Dexie] Erro ao migrar disciplines → xp_records', err)
+        console.error(
+          LOG_MESSAGES.dexie.migrate.V2toV3.migrateError({ method: 'Dexie', step: 'disciplines' }),
+          err
+        )
       }
     }
   }
@@ -192,9 +230,9 @@ export async function migrateV2toV3(tx: Transaction) {
   try {
     // populateDB espera receber a instância do DB; tx.db é a instância do Dexie
     await populateDB(tx.db as RPGDatabase)
-    console.log('[Dexie] Seeds aplicadas via populateDB')
+    console.log(LOG_MESSAGES.dexie.migrate.V2toV3.seedsApplied({ method: 'Dexie' }))
   } catch (err) {
-    console.warn('[Dexie] populateDB falhou (ok se já populado):', err)
+    console.warn(LOG_MESSAGES.dexie.migrate.V2toV3.seedsApplyFail({ method: 'Dexie' }), err)
   }
 
   // Limpeza: remover tabela `milestones` e `settings` se existir
@@ -206,7 +244,7 @@ export async function migrateV2toV3(tx: Transaction) {
     }
   }
 
-  console.log('[Dexie] Migração v2 → v3 concluída.')
+  console.log(LOG_MESSAGES.dexie.migrate.V2toV3.end({ method: 'Dexie' }))
 }
 
 // Helper: verifica se uma table existe no transaction (evita erros se store não existir)
@@ -235,10 +273,16 @@ async function backupTable(tx: Transaction, name: string) {
       await backupTable.clear()
       if (all.length > 0) await backupTable.bulkPut(all)
     }
-    console.log(`[Dexie] Backup criado: ${backupName} (${all.length} registros)`)
+    console.log(
+      LOG_MESSAGES.dexie.migrate.V2toV3.backupCreated({
+        method: 'Dexie',
+        backupName,
+        count: all.length,
+      })
+    )
   } catch (err) {
     // Não crítico: apenas log
-    console.warn('[Dexie] Não foi possível criar backup para', name, err)
+    console.warn(LOG_MESSAGES.dexie.migrate.V2toV3.backupFail({ method: 'Dexie', name }), err)
   }
   return all.length
 }
@@ -247,8 +291,13 @@ async function clearTable(table: AnyTable) {
   try {
     await table.clear()
 
-    console.log(`[Dexie] tabela ${table.name} removida conforme política`)
+    console.log(
+      LOG_MESSAGES.dexie.migrate.V2toV3.tableCleared({ method: 'Dexie', table: table.name })
+    )
   } catch (e) {
-    console.warn(`[Dexie] Falha ao limpar tabela ${table.name} (não crítico)`, e)
+    console.warn(
+      LOG_MESSAGES.dexie.migrate.V2toV3.tableClearFail({ method: 'Dexie', table: table.name }),
+      e
+    )
   }
 }

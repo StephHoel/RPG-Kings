@@ -4,6 +4,7 @@ import { useDeleteSave, useGetAllSaves } from '@/ui/hooks'
 import { Button, H1, Panel } from '@/ui/components'
 import { ROUTES, routeWithSaveId } from '@/domain/routes'
 import { toast } from 'sonner'
+import { TOAST_MESSAGES } from '@/domain/constants'
 import Head from 'next/head'
 
 export default function Saves() {
@@ -14,8 +15,8 @@ export default function Saves() {
   const toDeleteSave = (saveId: string) => {
     deleteMutation
       .mutateAsync(saveId)
-      .then(() => toast.success('Save apagado!'))
-      .catch(() => toast.error('Erro ao apagar save'))
+      .then(() => toast.success(TOAST_MESSAGES.game.delete({ method: 'SavesIndex' })))
+      .catch(() => toast.error(TOAST_MESSAGES.game.error.delete({ method: 'SavesIndex' })))
   }
 
   const toSaveNew = () => router.push(ROUTES.SAVE_NEW)

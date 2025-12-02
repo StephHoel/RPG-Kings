@@ -3,6 +3,7 @@ import { useQueryKeys } from '@/domain/queryKeys'
 import { SaveModel } from '@/domain/models'
 import { getSaveService, log } from '@/services'
 import { HookResult } from '@/domain/types'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 export function useGetSave(saveId: string): HookResult<SaveModel> {
   return useQuery<SaveModel | undefined>({
@@ -15,7 +16,7 @@ export function useGetSave(saveId: string): HookResult<SaveModel> {
       try {
         return await getSaveService(saveId)
       } catch (err) {
-        const msg = `[${useGetSave.name}] Erro ao obter save`
+        const msg = LOG_MESSAGES.save.error.get({ method: useGetSave.name })
 
         console.error(msg, err)
 

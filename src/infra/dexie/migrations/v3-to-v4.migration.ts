@@ -1,13 +1,16 @@
 import { Table, Transaction } from 'dexie'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 // Migrate stats numeric resources to objects { current, max }
 export async function migrateV3toV4(tx: Transaction) {
-  console.log('[Dexie] Iniciando migração da versão 3 → 4...')
+  console.log(LOG_MESSAGES.dexie.migrate.V3toV4.start({ method: 'Dexie' }))
 
   try {
     const statsTable = tx.table('stats') as Table<any>
     const all = await statsTable.toArray()
-    console.log(`[Dexie] Stats encontrados: ${all.length}`)
+    console.log(
+      LOG_MESSAGES.dexie.migrate.V3toV4.statsFound({ method: 'Dexie', count: all.length })
+    )
 
     const migrated = all.map((rec: any) => {
       const convert = (val: any, defaultMax = 100, defaultCurrent?: any) => {
@@ -28,7 +31,7 @@ export async function migrateV3toV4(tx: Transaction) {
     })
 
     if (migrated.length === 0) {
-      console.log('[Dexie] Nenhum registro para migrar em stats.')
+      console.log(LOG_MESSAGES.dexie.migrate.V3toV4.noStatsToMigrate({ method: 'Dexie' }))
     }
 
     const withId = migrated.filter((r: any) => r.id !== undefined)
@@ -42,13 +45,16 @@ export async function migrateV3toV4(tx: Transaction) {
         await (statsTable as any).bulkPut(withId)
         updated = withId.length
       } catch (e) {
-        console.warn('[Dexie] bulkPut falhou, fallback para put individual', e)
+        console.warn(LOG_MESSAGES.dexie.migrate.V3toV4.statsBulkPutFallback({ method: 'Dexie' }), e)
         for (const rec of withId) {
           try {
             await statsTable.put(rec)
             updated++
           } catch (err) {
-            console.warn('[Dexie] Falha ao atualizar registro de stats', err)
+            console.warn(
+              LOG_MESSAGES.dexie.migrate.V3toV4.statsUpdateFail({ method: 'Dexie' }),
+              err
+            )
           }
         }
       }
@@ -59,27 +65,40 @@ export async function migrateV3toV4(tx: Transaction) {
         await (statsTable as any).bulkAdd(withoutId)
         added = withoutId.length
       } catch (e) {
-        console.warn('[Dexie] bulkAdd falhou, fallback para add individual', e)
+        console.warn(LOG_MESSAGES.dexie.migrate.V3toV4.statsBulkAddFallback({ method: 'Dexie' }), e)
         for (const rec of withoutId) {
           try {
             await statsTable.add(rec)
             added++
           } catch (err) {
-            console.warn('[Dexie] Falha ao inserir novo registro de stats', err)
+            console.warn(
+              LOG_MESSAGES.dexie.migrate.V3toV4.statsInsertFail({ method: 'Dexie' }),
+              err
+            )
           }
         }
       }
     }
 
     console.log(
-      `[Dexie] Migração v3 → v4 concluída. updated=${updated}, added=${added}, total=${migrated.length}`
+      LOG_MESSAGES.dexie.migrate.V3toV4.migrateSummary({
+        method: 'Dexie',
+        updated,
+        added,
+        total: migrated.length,
+      })
     )
 
     // Remove `skills` and `disciplines` fields from existing disciplines_list records
     try {
       const disciplinesTable = tx.table('disciplines_list') as Table<any>
       const allDisc = await disciplinesTable.toArray()
-      console.log(`[Dexie] Disciplines encontrados: ${allDisc.length}`)
+      console.log(
+        LOG_MESSAGES.dexie.migrate.V3toV4.disciplinesFound({
+          method: 'Dexie',
+          count: allDisc.length,
+        })
+      )
 
       const sanitized = allDisc.map((rec: any) => {
         const { skills, disciplines, ...rest } = rec
@@ -92,24 +111,38 @@ export async function migrateV3toV4(tx: Transaction) {
           await (disciplinesTable as any).bulkPut(sanitized)
           updatedCount = sanitized.length
         } catch (e) {
-          console.warn('[Dexie] bulkPut failed for disciplines_list, falling back', e)
+          console.warn(
+            LOG_MESSAGES.dexie.migrate.V3toV4.disciplinesBulkPutFail({ method: 'Dexie' }),
+            e
+          )
           for (const rec of sanitized) {
             try {
               await disciplinesTable.put(rec)
               updatedCount++
             } catch (err) {
-              console.warn('[Dexie] Failed to update discipline record', err)
+              console.warn(
+                LOG_MESSAGES.dexie.migrate.V3toV4.disciplinesUpdateFail({ method: 'Dexie' }),
+                err
+              )
             }
           }
         }
       }
 
-      console.log(`[Dexie] Disciplines sanitized: ${updatedCount}`)
+      console.log(
+        LOG_MESSAGES.dexie.migrate.V3toV4.disciplinesSanitized({
+          method: 'Dexie',
+          count: updatedCount,
+        })
+      )
     } catch (err) {
-      console.warn('[Dexie] Error sanitizing disciplines_list', err)
+      console.warn(
+        LOG_MESSAGES.dexie.migrate.V3toV4.disciplinesSanitizeFail({ method: 'Dexie' }),
+        err
+      )
     }
   } catch (err) {
-    console.error('[Dexie] Erro na migração v3 → v4', err)
+    console.error(LOG_MESSAGES.dexie.migrate.V3toV4.migrateError({ method: 'Dexie' }), err)
     throw err
   }
 }

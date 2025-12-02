@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useQueryKeys } from '@/domain/queryKeys'
 import { createSaveService, createSheetService, createStatsService, log } from '@/services'
-import { RACE_ENUM } from '@/domain/constants'
+import { LOG_MESSAGES, RACE_ENUM } from '@/domain/constants'
 import { CreateSaveFormValues, CreateSaveResult } from '@/domain/types'
 
 export function useCreateSave() {
@@ -15,7 +15,7 @@ export function useCreateSave() {
       const save = await createSaveService()
 
       if (!save) {
-        const msg = `[${createSaveService.name}] Falha ao criar save`
+        const msg = LOG_MESSAGES.save.error.create({ method: createSaveService.name })
 
         console.error(msg)
         await log.error(msg, { name, race })
@@ -25,7 +25,10 @@ export function useCreateSave() {
       const sheet = await createSheetService({ saveId: save?.id, name, race })
 
       if (!sheet) {
-        const msg = `[${createSheetService.name}] Falha ao criar sheet para save ${save?.id}`
+        const msg = LOG_MESSAGES.sheet.error.create({
+          method: createSheetService.name,
+          saveId: save?.id,
+        })
 
         console.error(msg)
         await log.error(msg, { save, name, race })
@@ -37,7 +40,10 @@ export function useCreateSave() {
       const stats = await createStatsService({ target: raceOrAnimal, saveId: save.id })
 
       if (!stats) {
-        const msg = `[${createStatsService.name}] Falha ao criar stats para save ${save.id}`
+        const msg = LOG_MESSAGES.stats.error.create({
+          method: createStatsService.name,
+          saveId: save.id,
+        })
 
         console.error(msg)
         await log.error(msg, { save, sheet })
@@ -53,7 +59,10 @@ export function useCreateSave() {
         await queryClient.cancelQueries({ queryKey: useQueryKeys.sheetActive() })
         await queryClient.cancelQueries({ queryKey: useQueryKeys.statsActive() })
       } catch (err) {
-        console.error(`[${useCreateSave.name}] Erro ao invalidar queries antes da criação`, err)
+        const msg = LOG_MESSAGES.queries.error.invalidateCreate({
+          method: useCreateSave.name,
+        })
+        console.error(msg, err)
       }
     },
 
@@ -77,12 +86,15 @@ export function useCreateSave() {
         // Atualiza o stats ativo
         queryClient.setQueryData(useQueryKeys.statsActive(), data.stats)
       } catch (err) {
-        console.error(`[${useCreateSave.name}] Erro ao atualizar cache após sucesso`, err)
+        const msg = LOG_MESSAGES.queries.error.updateCache({
+          method: useCreateSave.name,
+        })
+        console.error(msg, err)
       }
     },
 
     onError: async (err) => {
-      const msg = `[${useCreateSave.name}] Erro na criação do save`
+      const msg = LOG_MESSAGES.save.error.create({ method: useCreateSave.name })
 
       console.error(msg, err)
 

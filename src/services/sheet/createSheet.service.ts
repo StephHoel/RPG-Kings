@@ -1,7 +1,7 @@
 import { createOrUpdateSheet, getAnimalsByRace, getSheetBySaveId } from '@/infra/repositories'
 import { SheetModel } from '@/domain/models'
 import { log } from '@/services'
-import { RACE_ENUM } from '@/domain/constants'
+import { LOG_MESSAGES, RACE_ENUM } from '@/domain/constants'
 import { CreateSheet } from '@/domain/types'
 import { selectRandom } from '@/domain/utils'
 
@@ -17,10 +17,9 @@ export async function createSheetService({
     animal = selectRandom(animals)
 
     if (!animal) {
-      await log.warn(
-        `[${createSheetService.name}] Nenhum animal disponível para ${RACE_ENUM.shapeshift}`,
-        { race }
-      )
+      await log.warn(LOG_MESSAGES.animal.unavaiable({ method: createSheetService.name, race }), {
+        race,
+      })
     }
   } else if (race === RACE_ENUM.kitsune) {
     animal = animals && animals.length > 0 ? animals[0] : undefined
@@ -38,7 +37,9 @@ export async function createSheetService({
 
   const sheetCreated = await getSheetBySaveId(saveId)
 
-  await log.info(`[${createSheetService.name}] Ficha criada com sucesso`, { sheet: sheetCreated })
+  await log.info(LOG_MESSAGES.sheet.created({ method: createSheetService.name }), {
+    sheet: sheetCreated,
+  })
 
   return sheetCreated
 }

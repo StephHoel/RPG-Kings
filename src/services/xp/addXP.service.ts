@@ -5,6 +5,7 @@ import {
 } from '@/infra/repositories'
 import { log } from '@/services'
 import { XPRecordModel } from '@/domain/models'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 export async function addXPService(
   saveId: XPRecordModel['saveId'],
@@ -27,7 +28,7 @@ export async function addXPService(
 
   await createOrUpdateXP(record)
 
-  await log.info(`[${addXPService.name}] XP adicionado`, {
+  await log.info(LOG_MESSAGES.xp.added({ method: addXPService.name }), {
     saveId,
     discipline,
     xpAdded: amountToAdd,

@@ -1,8 +1,9 @@
 import Dexie from 'dexie'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 // Tenta abrir; em caso de erro de versão incompatível, apaga e recria (fallback)
 export async function openCatchDB(db: Dexie, err: any) {
-  console.error('Falha ao abrir IndexedDB:', err)
+  console.error(LOG_MESSAGES.dexie.dexieUtils.openDB.openFail({ method: 'openCatchDB' }), err)
 
   const isVersionError =
     err &&
@@ -12,19 +13,19 @@ export async function openCatchDB(db: Dexie, err: any) {
       err.name === 'MissingAPIError')
 
   if (isVersionError) {
-    console.warn('Incompatibilidade de versão detectada. Deletando e recriando DB como fallback.')
+    console.warn(LOG_MESSAGES.dexie.dexieUtils.openDB.versionIncompat({ method: 'openCatchDB' }))
 
     try {
       await Dexie.delete(db.name)
 
       await db.open()
     } catch (deleteErr) {
-      console.error('Não foi possível recriar o DB:', deleteErr)
+      console.error(LOG_MESSAGES.dexie.dexieUtils.openDB.recreateFail({ method: 'openCatchDB' }), deleteErr)
 
       throw deleteErr
     }
   } else {
-    console.error('Não é erro de versão:', err)
+    console.error(LOG_MESSAGES.dexie.dexieUtils.openDB.notVersionError({ method: 'openCatchDB' }), err)
     throw err
   }
 }
