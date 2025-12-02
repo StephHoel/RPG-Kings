@@ -24,11 +24,7 @@ export default function SaveNew() {
       const result = await createSave.mutateAsync(data)
 
       if (!result?.save?.id) {
-        toast.error(
-          TOAST_MESSAGES.game.error.new({
-            method: 'SavesNew',
-          })
-        )
+        toast.error(TOAST_MESSAGES.game.error.new({ method: 'SavesNew' }))
         return
       }
 
