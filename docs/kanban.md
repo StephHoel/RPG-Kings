@@ -100,7 +100,7 @@ Checklist (prioridade média):
 
 ---
 
-## v0.1.9 — 2025 (Curto Prazo: Estabilização)
+## v1.0.0 — 2025 (Curto Prazo: Estabilização)
 
 Objetivo: Concluir itens de infraestrutura e pequenas features que desbloqueiam testes e playthroughs rápidos.
 

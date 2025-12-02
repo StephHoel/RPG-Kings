@@ -1,0 +1,9 @@
+Esta task será descontinuada e fechada como não planejada.
+
+Justificativa:
+- O fluxo de criação de saves atualmente integra a criação da sheet (via `createSheetService`), portanto um teste que valida um fallback `createDefaultSheet` fica desatualizado — o comportamento de fallback está incorporado ao fluxo principal.
+- Implementar um teste que force a criação de um save sem sheet corresponderia a um cenário artificial após a reestruturação; o valor dessa contra-prova é baixo comparado ao custo de manutenção do teste.
+- É preferível ter testes que cubram o fluxo real de criação de save (que já está coberto) em vez de forçar condições que não ocorrem no código atual.
+
+Conclusão:
+- Não iremos implementar este teste de integração. A issue será fechada como não planejada.

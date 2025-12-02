@@ -1,0 +1,31 @@
+src/
+ ├─ assets/
+ │   └─ images/
+ ├─ domain/
+ │   ├─ constants/ # type/enums estáticos
+ │   └─ models/
+ │       └─ (types dos schemas para o resto da aplicação)
+ ├─ infra/
+ │   ├─ dexie/
+ │   │   ├─ migrations/ # arquivos de migração
+ │   │   ├─ seed/ # arquivos de seed
+ │   │   ├─ versioning/ # versionamento do banco
+ │   │   └─ database.ts
+ │   ├─ repositories/
+ │   │   └─ (repositórios de cada tabela)
+ │   └─ schemas/
+ │       ├─ shared/
+ │       │   └─ (schemas compartilhados)
+ │       └─ (schemas de cada tabela)
+ ├─ pages/
+ │   └─ (rotas do Next)
+ ├─ services/
+ │   └─ (serviços separados por domínios)
+ ├─ ui/
+ │   ├─ components/
+ │   ├─ hooks/
+ │   ├─ providers/
+ │   └─ styles/
+tests/
+ ├─ e2e/
+ └─ unit/

@@ -39,7 +39,7 @@ Closes #42
 
 - Triagem rápido: rotacione triagem semanalmente ou ao início do sprint.
 - Marcar DoR (Definition of Ready): descrição, critérios de aceitação e estimativa.
-- Para começar uma issue, mova para `status/in-progress` e crie uma branch `feat/<short-name>` ou `fix/<short-name>`.
+- Para começar uma issue, mova para `status/in-progress` e crie uma branch `feat/<issue-number>-<short-name>` ou `fix/<issue-number>-<short-name>`.
 
 ## Automação sugerida
 

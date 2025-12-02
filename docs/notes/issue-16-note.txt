@@ -1,0 +1,14 @@
+Resumo e evidências:
+- O repositório já possui chamadas a `log` em diversos serviços (ex.: `src/services/sheet/createSheet.service.ts`, `src/services/save/deleteSave.service.ts`) e testes existem para fluxos que usam essas funções.
+- Ainda é possível melhorar a centralização e consistência do logger e instrumentar mensagens de erro em módulos críticos.
+
+Recomendação:
+- Criar utilitário de logger central e padronizar níveis (info, warn, error). Adicionar monitoramento de erros nas migrations/DB.
+
+Questionamento ao Copilot:
+- O que você quer dizer com 'padronização de níveis de log'.
+- Como fazer monitoramento dos erros?
+- Como melhorar a centralização e consistência do logger?
+
+- Implemente logs de erros em módulos críticos.
+- Implemente centralização das mensagens de log em uma constante em `domain/constants/logMessages.ts` para haver padronização e evitar repetição desnecessária.
