@@ -20,12 +20,18 @@ export async function openCatchDB(db: Dexie, err: any) {
 
       await db.open()
     } catch (deleteErr) {
-      console.error(LOG_MESSAGES.dexie.dexieUtils.openDB.recreateFail({ method: 'openCatchDB' }), deleteErr)
+      console.error(
+        LOG_MESSAGES.dexie.dexieUtils.openDB.recreateFail({ method: 'openCatchDB' }),
+        deleteErr
+      )
 
       throw deleteErr
     }
   } else {
-    console.error(LOG_MESSAGES.dexie.dexieUtils.openDB.notVersionError({ method: 'openCatchDB' }), err)
+    console.error(
+      LOG_MESSAGES.dexie.dexieUtils.openDB.notVersionError({ method: 'openCatchDB' }),
+      err
+    )
     throw err
   }
 }

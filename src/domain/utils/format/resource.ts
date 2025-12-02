@@ -9,10 +9,7 @@ export function normalizeResource(resource: { current: number; max: number }) {
   return { current, max }
 }
 
-export function applyDeltaToResource(
-  resource: { current: number; max: number },
-  delta: number
-) {
+export function applyDeltaToResource(resource: { current: number; max: number }, delta: number) {
   const newCurrent = clamp(resource.current + delta, 0, Math.max(1, resource.max))
   return { current: newCurrent, max: resource.max }
 }
