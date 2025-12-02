@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useGetInventory, useGetSheetActive } from '@/ui/hooks'
 import { ROUTES } from '@/domain/routes'
 import { H1, H2, Panel } from '@/ui/components'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import Head from 'next/head'
 
 export default function Sheet() {
@@ -11,9 +11,11 @@ export default function Sheet() {
   const query = router.query
   const saveId = Array.isArray(query.saveId) ? query.saveId[0] : query.saveId
 
-  if (!saveId) {
-    router.push(ROUTES.ROOT)
-  }
+  useEffect(() => {
+    if (!saveId) {
+      router.push(ROUTES.ROOT)
+    }
+  }, [saveId])
 
   const { data: sheet } = useGetSheetActive(saveId!)
   const { data: items } = useGetInventory(saveId!)

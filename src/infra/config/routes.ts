@@ -10,7 +10,7 @@ export const ROUTES = {
   // PROGRESS: '/progress',
   SHEET: '/sheet',
   // SETTINGS: '/settings',
-  DEV_SEED: '/dev/seed',
+  // DEV_SEED: '/dev/seed',
   DEBUG: '/debug',
 } as const
 

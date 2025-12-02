@@ -6,7 +6,7 @@ const MENU_CONFIG: MenuConfig[] = [
   { key: 'GAME', label: 'Jogo', requiresSave: true },
   { key: 'SHEET', label: 'Ficha', requiresSave: true },
   { key: 'SAVES', label: 'Saves' },
-  { key: 'DEV_SEED', label: 'Seed', type: 'dev' },
+  // { key: 'DEV_SEED', label: 'Seed', type: 'dev' },
   { key: 'DEBUG', label: 'Debug', type: 'dev' },
 ]
 
