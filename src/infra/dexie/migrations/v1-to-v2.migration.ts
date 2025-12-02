@@ -1,3 +1,4 @@
+import { LOG_MESSAGES } from '@/domain/constants'
 import { Table, Transaction } from 'dexie'
 
 /**
@@ -8,7 +9,7 @@ import { Table, Transaction } from 'dexie'
  * mantendo Clean Code e SRP.
  */
 export async function migrateV1toV2(tx: Transaction) {
-  console.log('[Dexie] Iniciando migração da versão 1 → 2...')
+  console.log(LOG_MESSAGES.dexie.migrate.V1toV2.start({ method: 'Dexie' }))
 
   // Migração: remover o campo "id" das sheets e passar a usar "saveId" como chave primária.
   // Estratégia:
@@ -46,5 +47,5 @@ export async function migrateV1toV2(tx: Transaction) {
     await sheetsTable.bulkPut(Array.from(bySaveId.values()))
   }
 
-  console.log('[Dexie] Migração v1 → v2 concluída.')
+  console.log(LOG_MESSAGES.dexie.migrate.V1toV2.end({ method: '[Dexie]' }))
 }

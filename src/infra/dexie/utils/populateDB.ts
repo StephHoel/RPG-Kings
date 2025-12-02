@@ -1,11 +1,14 @@
 import { RPGDatabase } from '../database'
 import { SEED_MAP_V3 } from '../versioning'
 import { safeBulkAdd } from './safeBulkAdd'
+import { LOG_MESSAGES } from '@/domain/constants'
 
 // Popula seed ao criar pela primeira vez
 export async function populateDB(db: RPGDatabase) {
   for (const key of Object.keys(SEED_MAP_V3) as (keyof typeof SEED_MAP_V3)[]) {
-    console.info(`[populateDB] Tentando popular tabela ${key}`)
+    console.info(
+      LOG_MESSAGES.dexie.dexieUtils.populateDB.start({ method: 'populateDB', table: String(key) })
+    )
 
     const table = db[key]
     if (!table) continue
@@ -25,7 +28,10 @@ export async function populateDB(db: RPGDatabase) {
           await table.put(e)
         } catch (err) {
           // ignore individual insert errors during populate
-          console.warn('[populateDB] Falha ao inserir item individualmente:', err)
+          console.warn(
+            LOG_MESSAGES.dexie.dexieUtils.populateDB.itemInsertFail({ method: 'populateDB' }),
+            err
+          )
         }
       }
     }

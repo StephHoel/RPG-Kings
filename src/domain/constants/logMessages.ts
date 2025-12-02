@@ -13,6 +13,14 @@ const LOG_MESSAGE_TEMPLATES = {
     },
   },
 
+  queries: {
+    error: {
+      invalidateCreate: 'Erro ao invalidar queries antes da criação',
+      invalidateDelete: 'Erro ao invalidar queries após deleção',
+      updateCache: 'Erro ao atualizar cache após sucesso',
+    },
+  },
+
   saves: {
     obtained: 'Saves obtidos com sucesso',
     desactiveAll: 'Jogos anteriores inativados',
@@ -77,15 +85,91 @@ const LOG_MESSAGE_TEMPLATES = {
 
   xp: {
     added: 'XP adicionado',
-    deleted: 'XP deletado para {saveId}',
-    get: 'XPs obtido para {saveId}',
+    deleted: 'XP deletado para save {saveId}',
+    get: 'XPs obtido para save {saveId}',
     error: {
-      unexpected: 'Erro inesperado na mutação',
+      unexpected: 'Erro inesperado ao manipular XP',
     },
   },
 
   animal: {
     unavaiable: 'Nenhum animal disponível para {race}',
+  },
+
+  dexie: {
+    migrate: {
+      V1toV2: {
+        start: 'Iniciando migração da versão 1 → 2...',
+        end: 'Migração v1 → v2 concluída.',
+      },
+
+      V2toV3: {
+        start: 'Iniciando migração da versão 2 → 3...',
+        end: 'Migração v2 → v3 concluída.',
+        foundSheets: 'Sheets encontradas: {count}',
+        migratedSheets: 'Sheets migradas (recreate-and-copy): {count}',
+        migrateError: 'Erro na migração ({step})',
+        sheetIdMap: 'sheet id mapping criada: {count}',
+        updatedReferences: 'Atualizados {count} registros em {table} para novos sheetId',
+        updateReferencesFail: 'Falha ao atualizar referências em {table}',
+        sheetIdMapFail: 'Falha ao construir mapeamento de sheet ids',
+        migratedInventories: 'inventory → inventories: {count} registros',
+        migratedDisciplines: 'disciplines → xp_records: {count} registros',
+        seedsApplied: 'Seeds aplicadas via populateDB',
+        seedsApplyFail: 'populateDB falhou (ok se já populado)',
+        backupCreated: 'Backup criado: {backupName} ({count} registros)',
+        backupFail: 'Não foi possível criar backup para {name}',
+        tableCleared: 'tabela {table} removida conforme política',
+        tableClearFail: 'Falha ao limpar tabela {table} (não crítico)',
+      },
+
+      V3toV4: {
+        start: 'Iniciando migração da versão 3 → 4...',
+        statsFound: 'Stats encontrados: {count}',
+        noStatsToMigrate: 'Nenhum registro para migrar em stats.',
+        statsBulkPutFallback: 'bulkPut falhou em stats, fallback para put individual',
+        statsUpdateFail: 'Falha ao atualizar registro de stats',
+        statsBulkAddFallback: 'bulkAdd falhou em stats, fallback para add individual',
+        statsInsertFail: 'Falha ao inserir novo registro de stats',
+        migrateSummary:
+          'Migração v3 → v4 concluída. updated={updated}, added={added}, total={total}',
+        disciplinesFound: 'Disciplines encontrados: {count}',
+        disciplinesSanitized: 'Disciplines sanitized: {count}',
+        disciplinesBulkPutFail: 'bulkPut failed for disciplines_list, falling back',
+        disciplinesUpdateFail: 'Failed to update discipline record',
+        disciplinesSanitizeFail: 'Error sanitizing disciplines_list',
+        migrateError: 'Erro na migração v3 → v4',
+      },
+    },
+
+    dexieUtils: {
+      openDB: {
+        openFail: 'Falha ao abrir IndexedDB',
+        versionIncompat:
+          'Incompatibilidade de versão detectada. Deletando e recriando DB como fallback.',
+        recreateFail: 'Não foi possível recriar o DB',
+        notVersionError: 'Não é erro de versão',
+      },
+      safeBulkAdd: {
+        start:
+          'SafeBulkAdd iniciando. Total={total}, ChunkSize={chunkSize}, KeySelector={keySelector}',
+        keySelectorError: 'Erro no keySelector ao processar item',
+        insertAttemptFail: 'Erro ao tentar inserir item',
+        bulkGetFail:
+          'Falha ao verificar existência (bulkGet). Tentando inserir o chunk via bulkAdd',
+        bulkAddChunkFail: 'Falha ao inserir chunk via bulkAdd. Itens afetados={count}',
+        serializeFail: 'Não foi possível serializar item para deduplicação; usando chave fallback',
+        bulkPutChunkFail: 'Falha no bulkPut do chunk. Tentando inserir itens individualmente',
+        itemInsertFail: 'Falha ao inserir item individualmente',
+        finished:
+          'SafeBulkAdd concluído. Inseridos={inserted}, Ignorados={skipped}, Erros={errors}',
+      },
+
+      populateDB: {
+        start: 'Tentando popular tabela {table}',
+        itemInsertFail: 'Falha ao inserir item individualmente',
+      },
+    },
   },
 } as const
 

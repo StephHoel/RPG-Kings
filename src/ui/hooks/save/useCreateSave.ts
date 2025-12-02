@@ -60,7 +60,10 @@ export function useCreateSave() {
         await queryClient.cancelQueries({ queryKey: useQueryKeys.sheetActive() })
         await queryClient.cancelQueries({ queryKey: useQueryKeys.statsActive() })
       } catch (err) {
-        console.error(`[${useCreateSave.name}] Erro ao invalidar queries antes da criação`, err)
+        const msg = LOG_MESSAGES.queries.error.invalidateCreate({
+          method: useCreateSave.name,
+        })
+        console.error(msg, err)
       }
     },
 
@@ -84,7 +87,10 @@ export function useCreateSave() {
         // Atualiza o stats ativo
         queryClient.setQueryData(useQueryKeys.statsActive(), data.stats)
       } catch (err) {
-        console.error(`[${useCreateSave.name}] Erro ao atualizar cache após sucesso`, err)
+        const msg = LOG_MESSAGES.queries.error.updateCache({
+          method: useCreateSave.name,
+        })
+        console.error(msg, err)
       }
     },
 

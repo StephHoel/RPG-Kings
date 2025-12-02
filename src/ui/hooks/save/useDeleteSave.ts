@@ -19,7 +19,10 @@ export function useDeleteSave() {
         await queryClient.refetchQueries({ queryKey: useQueryKeys.sheetActive(), exact: true })
         await queryClient.refetchQueries({ queryKey: useQueryKeys.statsActive(), exact: true })
       } catch (err) {
-        console.error(`[${useDeleteSave.name}] Erro ao invalidar queries após deleção`, err)
+        const msg = LOG_MESSAGES.queries.error.invalidateDelete({
+          method: useDeleteSave.name,
+        })
+        console.error(msg, err)
       }
     },
 
