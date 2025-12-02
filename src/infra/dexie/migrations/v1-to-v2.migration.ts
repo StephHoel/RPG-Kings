@@ -47,5 +47,5 @@ export async function migrateV1toV2(tx: Transaction) {
     await sheetsTable.bulkPut(Array.from(bySaveId.values()))
   }
 
-  console.log(LOG_MESSAGES.dexie.migrate.V1toV2.end({ method: '[Dexie]' }))
+  console.log(LOG_MESSAGES.dexie.migrate.V1toV2.end({ method: 'Dexie' }))
 }

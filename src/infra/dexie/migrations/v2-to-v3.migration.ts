@@ -115,7 +115,6 @@ export async function migrateV2toV3(tx: Transaction) {
                   }
                 }
               }
-
               if (toUpdate.length > 0) {
                 await t.bulkPut(toUpdate)
                 console.log(

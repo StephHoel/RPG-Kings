@@ -25,7 +25,7 @@ describe('logger.service', () => {
   })
 
   it('error message format (message, payload)', async () => {
-    ; (createLog as jest.Mock).mockResolvedValue(undefined)
+    ;(createLog as jest.Mock).mockResolvedValue(undefined)
     
     const logMessage = LOG_MESSAGES.save.deleted({ method: 'LoggerServiceTest', id: 's1' })
 

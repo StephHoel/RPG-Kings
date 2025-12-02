@@ -32,7 +32,6 @@ export function useCreateSave() {
 
         console.error(msg)
         await log.error(msg, { save, name, race })
-
         return { save, sheet, stats: undefined }
       }
 
