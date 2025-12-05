@@ -27,8 +27,6 @@ export async function migrateV1toV2(tx: Transaction) {
 
       // Se não houver saveId, tente usar o antigo id como fallback; caso contrário gere um id.
       saveId = sheet.id
-
-      // TODO criar sheet se não existir e implementar ao tentar recuperar o sheet tbm
     }
 
     if (!bySaveId.has(saveId)) {
