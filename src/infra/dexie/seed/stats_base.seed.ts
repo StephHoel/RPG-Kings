@@ -177,17 +177,3 @@ export const statsBaseSeed: StatsBase[] = [
     strength: 1,
   },
 ]
-
-// TODO criar helper para pegar animal aleatório:  buscar stats base por 'animal' e depois escolher um aleatório
-
-// TODO criar um helper para pegar os stats da raça (se transformo pega animal aleatório | se kitsune pega animal fixo)
-
-// TODO implementar stats base:
-/*
-  hungry: 50,
-  mood: 50,
-  health: 100,
-
-  magic: 0,
-  mana: 0,
- */

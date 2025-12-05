@@ -13,3 +13,7 @@ export function applyDeltaToResource(resource: { current: number; max: number },
   const newCurrent = clamp(resource.current + delta, 0, Math.max(1, resource.max))
   return { current: newCurrent, max: resource.max }
 }
+
+export function defaultResourceNormalized(max = 100, current = max) {
+  return normalizeResource({ current, max })
+}
