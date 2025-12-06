@@ -1,7 +1,9 @@
 export const ITEM_ENUM = {
-  // TODO adicionar mais items e não esquecer de completar o seed também
   notebook: 'Caderno',
   laptop: 'Notebook',
+  nanotraje: 'Nanotraje',
+  mochila: 'Mochila',
+  pasta_notebook: 'Pasta para Notebook',
 } as const
 
 // Tipo derivado
