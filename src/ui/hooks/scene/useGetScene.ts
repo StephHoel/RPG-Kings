@@ -1,27 +1,24 @@
-import { useQuery } from '@tanstack/react-query'
-import { useQueryKeys } from '@/domain/queryKeys'
 import { getSceneByIdService, log } from '@/services'
+import { useFetch } from '@/ui/hooks/useFetch'
 import { SceneModel } from '@/domain/models'
 import { HookResult } from '@/domain/types'
 import { LOG_MESSAGES } from '@/domain/constants'
 
 export function useGetScene(sceneId: SceneModel['id']): HookResult<SceneModel> {
-  return useQuery({
-    queryKey: useQueryKeys.scene(sceneId),
+  const fetchFn = sceneId ? () => getSceneByIdService(sceneId) : null
+
+  const { data, isLoading, error } = useFetch<SceneModel>(fetchFn, {
     enabled: !!sceneId,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 30 * 60 * 1000, // 30 minutes
-
-    queryFn: async () => {
-      try {
-        return await getSceneByIdService(sceneId)
-      } catch (err) {
-        const msg = LOG_MESSAGES.scene.error.get({ method: useGetScene.name })
-
-        console.error(msg, err)
-
-        await log.error(msg, { sceneId, error: String(err) })
-      }
-    },
+    deps: [sceneId],
   })
+
+  if (error) {
+    const msg = LOG_MESSAGES.scene.error.get({ method: useGetScene.name })
+
+    console.error(msg, error)
+
+    log.error(msg, { sceneId, error: String(error) })
+  }
+
+  return { data, isLoading, error }
 }
