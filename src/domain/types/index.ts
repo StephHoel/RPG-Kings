@@ -6,6 +6,7 @@ export * from './createStats.type'
 
 export * from './queryResult/createSave.type'
 export * from './queryResult/hook.type'
+export * from './queryResult/fetchResult.type'
 
 export * from './form/createSaveFormValues.type'
 

@@ -25,15 +25,13 @@ export async function createSheetService({
     animal = animals && animals.length > 0 ? animals[0] : undefined
   }
 
-  const sheet = {
+  await createOrUpdateSheet({
     saveId,
     name,
     race,
     animal,
     coins: 0,
-  } as SheetModel
-
-  await createOrUpdateSheet(sheet)
+  } as SheetModel)
 
   const sheetCreated = await getSheetBySaveId(saveId)
 
