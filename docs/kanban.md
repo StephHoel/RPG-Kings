@@ -106,11 +106,11 @@ Objetivo: Concluir itens de infraestrutura e pequenas features que desbloqueiam 
 
 Checklist (prioridade alta):
 
-- [ ] Resolver TODOs críticos
+- [x] Resolver TODOs críticos
 
-  - [ ] Fazer varredura no repositório por `TODO` / `FIXME`
-  - [ ] Agrupar e priorizar TODOs em issues
-  - [ ] Implementar/atribuir os 3 TODOs de maior impacto
+  - [x] Fazer varredura no repositório por `TODO` / `FIXME`
+  - [x] Agrupar e priorizar TODOs em issues
+  - [x] Implementar/atribuir os 3 TODOs de maior impacto
 
 - [ ] Conteúdo mínimo para testes de fluxo
 
