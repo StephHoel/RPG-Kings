@@ -1,7 +1,8 @@
-export * from './game/selectRandom'
 export * from './game/class'
 export * from './game/dice'
 export * from './game/level'
+export * from './game/matchRequired'
+export * from './game/selectRandom'
 
 export * from './format/formatDate'
 export * from './format/formatPayload'

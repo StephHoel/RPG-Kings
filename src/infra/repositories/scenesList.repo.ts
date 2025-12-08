@@ -1,3 +1,4 @@
+import { matchesPreRequire } from '@/domain/utils'
 import { db } from '@/infra/dexie/database'
 import { PreRequireScene, Scene } from '@/infra/schemas'
 
@@ -6,8 +7,12 @@ export async function getSceneById(id: string): Promise<Scene | undefined> {
 }
 
 export async function getScenesByPreRequire(preRequire: PreRequireScene): Promise<Scene[]> {
-  // TODO precisa ter todos os require informado, mas pode ter require que foram passados como undefined
-  return db.scenes_list.where(preRequire).toArray()
+  // If no preRequire provided, return all scenes
+  if (!preRequire) return db.scenes_list.toArray()
+
+  const scenes = await db.scenes_list.toArray()
+
+  return scenes.filter((scene) => matchesPreRequire(scene, preRequire))
 }
 
 export async function getAllScenes(): Promise<Scene[]> {
