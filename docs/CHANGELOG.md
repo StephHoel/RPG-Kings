@@ -9,6 +9,16 @@ Base de links: <https://github.com/StephHoel/RPG-Kings>
 
 ---
 
+## v1.0.1 — 2025-12-07
+
+- Adição de novos itens ao jogo: `nanotraje`, `mochila`, `pasta_notebook` (enum + seeds).
+- Refatoração de hooks assíncronos: introdução de `useFetch` (utilitário genérico) e refatoração de `useGetScene` para não depender de `react-query`.
+- Implementação de lógica de filtragem `preRequire` com função pura `matchesPreRequire` e atualização de `getScenesByPreRequire` para usar filtragem em memória quando necessário.
+- Ajuste semântico: `itemsRequired.any` agora funciona como OR (qualquer um dos itens) e testes unitários foram adicionados para cobrir esse caso.
+- Adição de testes puros para `matchesPreRequire` cobrindo `xpRequired` e `statsRequired` e remoção de testes de depuração residuais.
+
+> Justificativa da versão: conjunto de melhorias e pequenas features locais (itens, testes, utilitários) sem breaking changes aparentes → PATCH.
+
 ## v0.1.11 — 2025-12-01
 
 - Padronização do sistema de logging: refatoração do `logger.service` para delegar persistência ao repositório (`logs.repo`), padronização de formatos e locais de logs e ajustes nas assinaturas de criação/limpeza de logs.
