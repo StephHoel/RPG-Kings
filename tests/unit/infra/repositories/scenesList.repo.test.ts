@@ -34,7 +34,7 @@ describe('scenesList repo - getScenesByPreRequire', () => {
     )
     // should match sceneWithA and sceneWithBoth
     expect(res.map((s) => s.id).sort()).toEqual(
-      [sceneWithA.id, sceneWithBoth.id].map((x) => x).sort()
+      [sceneWithA.id, sceneWithBoth.id].sort()
     )
   })
 
